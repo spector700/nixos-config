@@ -11,7 +11,7 @@
 #            └─ ./home.nix 
 #
 
-{ lib, inputs, nixpkgs, nixpkgs-unstable, home-manager, user, location, hyprland, ... }:
+{ lib, inputs, nixpkgs, nixpkgs-unstable, home-manager, user, location, hyprland, gaming, ... }:
 
 let
   system = "x86_64-linux";
@@ -34,7 +34,7 @@ in
   desktop = nixpkgs.lib.nixosSystem {
     inherit system;
     specialArgs = {
-      inherit inputs unstable system user location hyprland;
+      inherit inputs unstable system user location hyprland gaming;
       host = {
         hostName = "Alfhiem-Nix";
         mainMonitor = "DP-2";
@@ -45,6 +45,7 @@ in
     # Modules that are used
     modules = [  
       hyprland.nixosModules.default
+      gaming.nixosModules.default
       ./desktop
       ./configuration.nix
 

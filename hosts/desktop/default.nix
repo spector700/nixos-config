@@ -18,7 +18,7 @@
 #           └─ default.nix
 #
 
-{ pkgs, lib, user, ... }:
+{ pkgs, lib, user, gaming, ... }:
 
 {
     imports =
@@ -42,13 +42,20 @@
 
     services.xserver = {
         videoDrivers = ["nvidia"];
+
      libinput = {
        enable = true;
        # disable mouse acceleration
        mouse.accelProfile = "flat";
        mouse.accelSpeed ="0";
        };
+
+
      };
+
+     services = {
+       pipewire.lowLatency.enable = true; 
+       };
 
      networking = {
      	hostName = "Alfhiem-Nix";

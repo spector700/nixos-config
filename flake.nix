@@ -22,9 +22,13 @@
       url = "github:hyprwm/Hyprland";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+     
+    gaming = {
+      url = "github:fufexan/nix-gaming";
+    };
   };
 
-  outputs = inputs @ { self, nixpkgs, nixpkgs-unstable, home-manager, hyprland, ... }:
+  outputs = inputs @ { self, nixpkgs, nixpkgs-unstable, home-manager, hyprland, gaming, ... }:
     let 
       user="nick";
       location = "$HOME/.setup";
@@ -35,7 +39,7 @@
         # Imports ./hosts/default.nix
         import ./hosts {
             inherit (nixpkgs) lib;
-            inherit inputs nixpkgs nixpkgs-unstable home-manager user location hyprland;
+            inherit inputs nixpkgs nixpkgs-unstable home-manager user location hyprland gaming;
         }
       );
 

@@ -31,7 +31,7 @@
       style = ''
         * {
           border: none;
-          font-family: FiraCode Nerd Font Mono;
+          font-family: JetBrainsMono Nerd Font;
           /*font-weight: bold;*/
           font-size: 12px;
           text-shadow: 0px 0px 5px #000000;
@@ -185,11 +185,6 @@
           cpu = {
             format = " {usage}% <span font='11'></span> ";
             interval = 1;
-          };
-          disk = {
-            format = "{percentage_used}% <span font='11'></span>";
-            path = "/";
-            interval = 30;
           };
           memory = {
             format = "{}% <span font='11'></span>";

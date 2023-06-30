@@ -18,6 +18,10 @@
     (import ../modules/programs); #++
     #(import ../modules/services);
 
+  programs = {
+    home-manager.enable = true;
+  };
+
   home = {
       username = "${user}";
       homeDirectory = "/home/${user}";
@@ -35,8 +39,6 @@
         # Apps
         brave
         spotify
-        steam
-        lutris
 
         # File Management
         xfce.thunar
@@ -44,6 +46,9 @@
         unzip
         
       ];
+
+
+
       file.".config/wallpaper".source = ../modules/themes/wallpaper;
 
       pointerCursor = {
@@ -69,6 +74,4 @@
         name = "JetBrains Mono Regular";
       };
     };
-
-    programs.home-manager.enable = true;
 }

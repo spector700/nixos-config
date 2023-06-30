@@ -52,7 +52,6 @@
       VISUAL = "nvim";
     };
     systemPackages = with pkgs; [           # Default packages installed system-wide
-      git
       wget
       neofetch
     ];
