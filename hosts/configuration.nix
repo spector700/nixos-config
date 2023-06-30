@@ -12,9 +12,9 @@
 { config, lib, pkgs, inputs, user, ... }:
 
 {
-  imports =
-    [(import ../modules/editors)] ++
-    [(import ../modules/shell)];
+   imports =
+    (import ../modules/editors) ++
+    (import ../modules/shell);  
 
   users.users.${user} = {                   # System User
     isNormalUser = true;
