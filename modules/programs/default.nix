@@ -5,7 +5,7 @@
 #   ├─ ./hosts
 #   │   └─ home.nix
 #   └─ ./modules
-#       └─ ./apps
+#       └─ ./programs
 #           └─ default.nix *
 #               └─ ...
 #

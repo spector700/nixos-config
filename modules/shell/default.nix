@@ -9,7 +9,6 @@
 #           └─ default.nix *
 #               └─ ...
 #
-
 [
   ./git.nix
   ./zsh.nix
