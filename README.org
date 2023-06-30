@@ -8,9 +8,6 @@
 - [[#system-components][System Components]]
 - [[#nixos-installation-guide][NixOS Installation Guide]]
 - [[#nix-installation-guide][Nix Installation Guide]]
-- [[#nix-darwin-installation-guide][Nix-Darwin Installation Guide]]
-- [[#guides][Guides]]
-- [[#faq][FAQ]]
 :END:
 
 * System Components
