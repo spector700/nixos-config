@@ -26,7 +26,7 @@
       '';     
 
     shellAliases = {
-      rebuild_system_desktop= "sudo nixos-rebuild switch --flake ~/.config/nix#desktop";
+      rebuild_system_desktop= "sudo nixos-rebuild switch --flake ~/.config/nixos-config#desktop";
     };
   };
  };

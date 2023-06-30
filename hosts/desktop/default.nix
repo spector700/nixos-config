@@ -41,7 +41,6 @@
     };
 
     services.xserver = {
-       # enable = true;
         videoDrivers = ["nvidia"];
      libinput = {
        enable = true;
