@@ -1,5 +1,3 @@
-#+title: Nixos config
-
 * Table of Content
 :PROPERTIES:
 :TOC:      :include all :depth 2 :force (depth) :ignore (this)
