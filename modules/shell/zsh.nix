@@ -27,7 +27,13 @@
       '';     
 
     shellAliases = {
-      rebuild_system_desktop= "sudo nixos-rebuild switch --flake ~/.config/nixos-config#desktop";
+      rebuild_desktop= "sudo nixos-rebuild switch --flake ~/.config/nixos-config#desktop";
+      ".."= "cd ..";
+      "..."= "cd ../..";
+      ".3"= "cd ../../..";
+
+      lg= "lazygit";
+      nv= "nvim";
     };
   };
  };
