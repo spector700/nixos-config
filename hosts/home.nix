@@ -15,6 +15,7 @@
 
 {
   imports = 
+    [../modules/editors/vscode/home.nix] ++
     (import ../modules/programs); #++
     #(import ../modules/services);
 

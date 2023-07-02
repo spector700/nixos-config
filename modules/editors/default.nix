@@ -12,5 +12,6 @@
 
 [
   ./neovim
+  #./vscode         #pulled from host/home.nix
 ]
 
