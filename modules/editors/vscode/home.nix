@@ -27,11 +27,48 @@
       "editor.acceptSuggestionOnEnter" = "smart"; 
       "terminal.external.linuxExec" = "kitty";
       "telemetry.telemetryLevel" = "off";
+      "editor.guides.bracketPairs" = true;
+      "workbench.iconTheme" = "vscode-icons";
+      "workbench.colorTheme" = "One Dark";
       # Nix
       "nix.enableLanguageServer" = true;
       "nix.serverPath" = "nil";
       #Nvim
+      "vim.enableNeovim" = true;
+      "vim.easymotion" = true;
+      "vim.useSystemClipboard" = true;
       "nvim-ui.nvimColorCustomizationKeys" = ["tab.activeBorder" "editorCursor.foreground"];
+      "vim.normalModeKeyBindingsNonRecursive" = [
+        {
+          "before" = [ "<space>" ];
+          "commands" = [ "vspacecode.space" ];
+        }
+        {
+          "before" = [ "," ];
+          "commands" = [ "vspacecode.space" { "command" = "whichkey.triggerKey"; "args" = "m"; } ];
+        }
+      ];
+      "vim.visualModeKeyBindingsNonRecursive" = [
+        {
+          "before" = [
+            "<space>"
+          ];
+          "commands" = [
+            "vspacecode.space" ];
+        }
+        {
+          "before" = [
+            ","
+          ];
+          "commands" = [
+            "vspacecode.space"
+            {
+              "command" = "whichkey.triggerKey";
+              "args" = "m";
+            }
+          ];
+        }
+      ];
     };
     
     keybindings = [

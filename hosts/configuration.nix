@@ -54,6 +54,7 @@
     systemPackages = with pkgs; [           # Default packages installed system-wide
       wget
       neofetch
+      xdg-utils
     ];
   };
 
