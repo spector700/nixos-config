@@ -54,17 +54,6 @@ let
     '' else "";
 in
 let
- # wayland.windowManager.hyprland = {
-   # enable = true;
-   # nvidiaPatches = true;
-   # systemdIntegration = true;
-   # recommendedEnvironment = true;
-   # xwayland = {
-   #   enable = true;
-   #   hidpi = true;
-   # };
-   #};
-
   hyprlandConf = with host; ''
     ${workspaces}
     ${monitors}
@@ -74,7 +63,7 @@ let
       #main_mod=SUPER
       border_size=3
       gaps_in=5
-      gaps_out=7
+      gaps_out=5
       col.active_border=0x80ffffff
       col.inactive_border=0x66333333
       layout=dwindle
@@ -87,7 +76,7 @@ let
       inactive_opacity=0.93
       fullscreen_opacity=1
       blur=true
-      blur_new_optimizations = on
+      blur_new_optimizations = true
       drop_shadow=false
     }
 
@@ -103,11 +92,11 @@ let
     input {
       kb_layout=us
       #kb_options=caps:ctrl_modifier
-      follow_mouse=2
+      follow_mouse=1
       repeat_delay=250
       numlock_by_default=1
       accel_profile=flat
-      sensitivity=0.8
+      sensitivity=1.0
       ${touchpad}
     }
 
@@ -117,6 +106,11 @@ let
       pseudotile=false
       force_split=2
       #preserve_split=true
+    }
+
+    misc {
+      disable_hyprland_logo=true
+      disable_splash_rendering=true
     }
 
     debug {
@@ -199,16 +193,26 @@ let
     windowrule=move 75% 75% ,title:^(Picture-in-Picture)$
     windowrule=size 24% 24% ,title:^(Picture-in-Picture)$
 
+    # start spotify tiled in ws5
+    windowrulev2 = tile, title:^(Spotify)$
+    windowrulev2 = workspace 5 silent, title:^(Spotify)$`
+
+    # start Discord/WebCord in ws4
+    windowrulev2 = workspace 4, title:^(.*(Disc|WebC)ord.*)$
+
+    windowrule=workspace 8 silent,steam$
+
     #------------#
     # auto start #
     #------------#
-    exec-once=dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+    #exec-once=dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
     exec-once=${pkgs.waybar}/bin/waybar
     exec-once=${pkgs.blueman}/bin/blueman-applet
     ${execute}
   '';
 in
 {
+
   xdg.configFile."hypr/hyprland.conf".text = hyprlandConf;
 
   programs.swaylock.settings = {

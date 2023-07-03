@@ -18,7 +18,7 @@
 #           └─ default.nix
 #
 
-{ pkgs, lib, user, gaming, ... }:
+{ pkgs, lib, user, ... }:
 
 {
     imports =
@@ -35,6 +35,7 @@
          efi.canTouchEfiVariables = true;
          timeout = 1;
        };
+       kernelPackages = pkgs.linuxPackages_xanmod_latest;
        kernelParams = [
         "nvidia-drm.modeset=1"
        ];
@@ -43,12 +44,12 @@
     services.xserver = {
         videoDrivers = ["nvidia"];
 
-     libinput = {
-       enable = true;
-       # disable mouse acceleration
-       mouse.accelProfile = "flat";
-       mouse.accelSpeed ="0";
-       };
+    #  libinput = {
+    #    enable = true;
+    #    # disable mouse acceleration
+    #    mouse.accelProfile = "flat";
+    #    mouse.accelSpeed ="0";
+    #    };
 
 
      };
@@ -59,7 +60,7 @@
 
      networking = {
      	hostName = "Alfhiem-Nix";
-	enableIPv6 = false;
+      enableIPv6 = false;
      };
 
     hardware = {

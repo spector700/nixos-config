@@ -11,7 +11,7 @@
 #           └─ default.nix
 #
 
-{ config, lib, pkgs, unstable, user, ... }:
+{ pkgs, user, ... }:
 
 {
   imports = 

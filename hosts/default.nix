@@ -11,7 +11,7 @@
 #            └─ ./home.nix 
 #
 
-{ lib, inputs, nixpkgs, nixpkgs-unstable, home-manager, user, location, hyprland, gaming, ... }:
+{ inputs, nixpkgs, nixpkgs-unstable, home-manager, user, location, hyprland, gaming, ... }:
 
 let
   system = "x86_64-linux";
@@ -50,6 +50,7 @@ in
       ./configuration.nix
 
        # Home-Manager module that is used.
+
       home-manager.nixosModules.home-manager {
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;

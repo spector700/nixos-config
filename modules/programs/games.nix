@@ -5,7 +5,7 @@
 # Do not forget to enable Steam play for all title in the settings menu
 #
 
-{ config, pkgs, nur, lib, unstable, gaming, ... }:
+{ pkgs, unstable, ... }:
 
 {
   nix.settings = {
@@ -18,7 +18,7 @@
     unstable.heroic                             # Game launchers
     unstable.lutris
     unstable.prismlauncher
-    unstable.steam
+    #unstable.steam
   ];
 
   programs = {                                  # Needed to succesfully start Steam
