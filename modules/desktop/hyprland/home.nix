@@ -11,7 +11,7 @@
 #               └─ home.nix *
 #
 
-{ config, lib, pkgs, host, ... }:
+{ pkgs, host, ... }:
 
 let
   touchpad = with host;
@@ -34,7 +34,7 @@ let
 
   workspaces = with host;
     if hostName == "Alfhiem-Nix" then ''
-      monitor=${toString mainMonitor},3440x1440@100,1920x0,1.5
+      monitor=${toString mainMonitor},3440x1440@100,1920x0,1.0
       monitor=${toString secondMonitor},3840x2160@60,0x0,2.0
     '' else ''
       monitor=${toString mainMonitor},1920x1080@60,0x0,1
@@ -54,7 +54,7 @@ let
     '' else "";
 in
 let
-  hyprlandConf = with host; ''
+  hyprlandConf = ''
     ${workspaces}
     ${monitors}
 
@@ -64,8 +64,8 @@ let
       border_size=3
       gaps_in=5
       gaps_out=5
-      col.active_border=0x80ffffff
-      col.inactive_border=0x66333333
+      col.active_border=rgba(bb9af7ff) rgba(b4f9f8ff) 45deg
+      col.inactive_border=rgba(565f89cc) rgba(9aa5cecc) 45deg
       layout=dwindle
     }
 
@@ -96,7 +96,7 @@ let
       repeat_delay=250
       numlock_by_default=1
       accel_profile=flat
-      sensitivity=1.0
+      sensitivity=0
       ${touchpad}
     }
 
@@ -194,7 +194,7 @@ let
     windowrule=size 24% 24% ,title:^(Picture-in-Picture)$
 
     # start spotify tiled in ws5
-    windowrulev2 = tile, title:^(Spotify)$
+    #windowrulev2 = tile, title:^(Spotify)$
     windowrulev2 = workspace 5 silent, title:^(Spotify)$`
 
     # start Discord/WebCord in ws4
@@ -205,13 +205,20 @@ let
     #------------#
     # auto start #
     #------------#
-    #exec-once=dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
     exec-once=${pkgs.waybar}/bin/waybar
     exec-once=${pkgs.blueman}/bin/blueman-applet
+    exec-once=${pkgs.spotify}/bin/spotify
     ${execute}
   '';
 in
 {
+
+   wayland.windowManager.hyprland = {
+      enable = true;
+      package = null;
+      systemdIntegration = true;
+      recommendedEnvironment = true;
+    };
 
   xdg.configFile."hypr/hyprland.conf".text = hyprlandConf;
 

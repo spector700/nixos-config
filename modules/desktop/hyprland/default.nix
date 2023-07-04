@@ -38,8 +38,8 @@ in {
       GDK_BACKEND = "wayland";
       WLR_NO_HARDWARE_CURSORS = "1";
       MOZ_ENABLE_WAYLAND = "1";
-      GDK_SCALE = "2";
-      XCURSOR_SIZE = "32";
+     # GDK_SCALE = "2";
+     # XCURSOR_SIZE = "32";
      };
 
      systemPackages = with pkgs; [
@@ -72,7 +72,6 @@ in {
      };
    };
 
-  programs.dconf.enable = true;
   xdg.portal = {
       extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
    };
