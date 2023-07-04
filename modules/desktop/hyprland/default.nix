@@ -58,9 +58,8 @@ in {
       auth include login
       '';
     };
-   programs.hyprland = {
-     enable = true;
-     xwayland.hidpi = true;
+  programs.hyprland = {
+    enable = true;
     };
 
   services.greetd = {
@@ -73,9 +72,8 @@ in {
      };
    };
 
-
+  programs.dconf.enable = true;
   xdg.portal = {
-      wlr.enable = true;
       extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
    };
 

@@ -44,7 +44,6 @@ in
     # Pass flake variable
     # Modules that are used
     modules = [  
-      hyprland.nixosModules.default
       gaming.nixosModules.default
       ./desktop
       ./configuration.nix
@@ -64,6 +63,7 @@ in
         };                                                  # Pass flake variable
         home-manager.users.${user} = {
           imports = [
+            hyprland.homeManagerModules.default
             ./home.nix
             ./desktop/home.nix
           ];

@@ -18,7 +18,6 @@
     unstable.heroic                             # Game launchers
     unstable.lutris
     unstable.prismlauncher
-    #unstable.steam
   ];
 
   programs = {                                  # Needed to succesfully start Steam

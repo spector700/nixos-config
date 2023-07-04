@@ -9,7 +9,7 @@
     neovim = {
       enable = true;
 
-      configure = {
+      # configure = {
        # customRC = ''
        #   syntax enable
        #   colorscheme srcery
@@ -25,17 +25,18 @@
 
        #   nmap <F6> :NERDTreeToggle<CR>
        # '';
-        packages.myVimPackages = with pkgs.vimPlugins; {
-          start = [
-            LazyVim
-           ];
-        };
-      };
+      #   packages.myVimPackages = with pkgs.vimPlugins; {
+      #     start = [
+      #      ];
+      #   };
+      # };
     };
   };
   environment.systemPackages = with pkgs; [
     ripgrep
+    cargo
     fd
     lazygit
-  ];      
+    gcc
+  ];
 }
