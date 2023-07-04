@@ -8,6 +8,9 @@
   programs = {
     neovim = {
       enable = true;
+      withNodeJs = true;
+      withRuby = true;
+      withPython3 = true;
 
       # configure = {
        # customRC = ''
@@ -31,6 +34,7 @@
       #   };
       # };
     };
+#       ├─ ./editors
   };
   environment.systemPackages = with pkgs; [
     ripgrep

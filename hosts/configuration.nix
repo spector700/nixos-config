@@ -3,8 +3,6 @@
 #   ├─ ./hosts
 #   │   └─ configuration.nix *
 #   └─ ./modules
-#       ├─ ./editors
-#       │   └─ default.nix
 #       └─ ./shell
 #           └─ default.nix
 #
@@ -13,7 +11,6 @@
 
 {
    imports =
-    (import ../modules/editors) ++
     (import ../modules/shell);  
 
   users.users.${user} = {                   # System User

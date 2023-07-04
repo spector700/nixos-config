@@ -5,6 +5,8 @@
 #   ├─ ./hosts
 #   │   └─ home.nix *
 #   └─ ./modules
+#       ├─ ./editors
+#       │   └─ default.nix
 #       ├─ ./programs
 #       │   └─ default.nix
 #       └─ ./services
@@ -15,7 +17,7 @@
 
 {
   imports = 
-    [../modules/editors/vscode/home.nix] ++
+    (import ../modules/editors) ++
     (import ../modules/programs); #++
     #(import ../modules/services);
 

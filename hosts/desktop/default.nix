@@ -44,12 +44,12 @@
     services.xserver = {
         videoDrivers = ["nvidia"];
 
-    #  libinput = {
-    #    enable = true;
-    #    # disable mouse acceleration
-    #    mouse.accelProfile = "flat";
-    #    mouse.accelSpeed ="0";
-    #    };
+        libinput = {
+          enable = true;
+      #   # disable mouse acceleration
+      #   mouse.accelProfile = "flat";
+      #   mouse.accelSpeed = "0";
+          };
 
 
      };
@@ -68,6 +68,11 @@
       #  enable = true;
       #  extraBackends = [ pkgs.sane-airscan ];
       # };
+      openrazer = {
+          enable = true;
+          users = ["${user}"];
+        };
+
       nvidia = {
           modesetting.enable = true;
        };
@@ -77,7 +82,10 @@
           driSupport32Bit = true;
         };
      };
-      
+    environment.systemPackages = with pkgs; [
+      razergenie
+    ];
+
     services = {
         blueman.enable = true;
      };
