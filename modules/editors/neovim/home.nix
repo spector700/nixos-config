@@ -11,6 +11,7 @@
       withNodeJs = true;
       withRuby = true;
       withPython3 = true;
+      extraPython3Packages = pyPkgs: with pyPkgs; [ pip ];
 
       # configure = {
        # customRC = ''
@@ -34,9 +35,8 @@
       #   };
       # };
     };
-#       ├─ ./editors
   };
-  environment.systemPackages = with pkgs; [
+  home.packages = with pkgs; [
     ripgrep
     cargo
     fd
