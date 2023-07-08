@@ -35,7 +35,7 @@ let
   workspaces = with host;
     if hostName == "Alfhiem-Nix" then ''
       monitor=${toString mainMonitor},3440x1440@100,1920x0,1.0
-      monitor=${toString secondMonitor},3840x2160@60,0x0,2.0
+      monitor=${toString secondMonitor},highres,0x0,2,bitdepth,10
     '' else ''
       monitor=${toString mainMonitor},1920x1080@60,0x0,1
     '';
@@ -77,7 +77,12 @@ let
       fullscreen_opacity=1
       blur=true
       blur_new_optimizations = true
-      drop_shadow=false
+      drop_shadow = true
+      shadow_ignore_window = true
+      shadow_offset = 0 5
+      shadow_range = 50
+      shadow_render_power = 3
+      col.shadow = rgba(00000099)
     }
 
     animations {
@@ -113,6 +118,11 @@ let
       disable_splash_rendering=true
     }
 
+    # use this instead of hidpi patches
+    xwayland {
+      force_zero_scaling = true
+    }
+
     debug {
       damage_tracking=2
     }
@@ -133,7 +143,7 @@ let
     bind=SUPER,F,fullscreen,
     bind=SUPER,R,forcerendererreload
     bind=SUPERSHIFT,R,exec,${pkgs.hyprland}/bin/hyprctl reload
-    bind=SUPER,T,exec,${pkgs.neovim}/bin/nvim
+    bind=SUPER,T,exec,${pkgs.neovim}/bin/neovim
 
     bind=SUPER,left,movefocus,l
     bind=SUPER,right,movefocus,r
@@ -186,6 +196,9 @@ let
     bind=,XF86MonBrightnessDown,exec,${pkgs.light}/bin/light -U 10
     bind=,XF86MonBrightnessUP,exec,${pkgs.light}/bin/light -A 10
 
+    # only allow shadows for floating windows
+    windowrulev2 = noshadow, floating:0
+
     #windowrule=float,^(Rofi)$
     windowrule=float,title:^(Volume Control)$
     windowrule=float,title:^(Picture-in-Picture)$
@@ -195,30 +208,33 @@ let
 
     # start spotify tiled in ws5
     #windowrulev2 = tile, title:^(Spotify)$
-    windowrulev2 = workspace 5 silent, title:^(Spotify)$`
+    windowrulev2 = workspace 5 silent, title:^(Spotify)$
 
     # start Discord/WebCord in ws4
-    windowrulev2 = workspace 4, title:^(.*(Disc|WebC)ord.*)$
+    windowrulev2 = workspace 4 silent, title:^(.*(Disc|WebC)ord.*)$
 
     windowrule=workspace 8 silent,steam$
 
     #------------#
     # auto start #
     #------------#
+    exec-once = xprop -root -f _XWAYLAND_GLOBAL_OUTPUT_SCALE 32c -set _XWAYLAND_GLOBAL_OUTPUT_SCALE 2
     exec-once=${pkgs.waybar}/bin/waybar
     exec-once=${pkgs.blueman}/bin/blueman-applet
     exec-once=${pkgs.spotify}/bin/spotify
+    exec-once=${pkgs.discord}/bin/discord
     ${execute}
   '';
 in
 {
 
-   wayland.windowManager.hyprland = {
-      enable = true;
-      package = null;
-      systemdIntegration = true;
-      recommendedEnvironment = true;
-    };
+  wayland.windowManager.hyprland = {
+     enable = true;
+     #xwayland.hidpi = true;
+     nvidiaPatches = true;
+     systemdIntegration = true;
+     recommendedEnvironment = true;
+   };
 
   xdg.configFile."hypr/hyprland.conf".text = hyprlandConf;
 
