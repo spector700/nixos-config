@@ -55,8 +55,8 @@
      };
 
      services = {
-       pipewire.lowLatency.enable = true; 
-       };
+      pipewire.lowLatency.enable = true; 
+      };
 
      networking = {
      	hostName = "Alfhiem-Nix";
@@ -79,7 +79,15 @@
       opengl = {
           enable = true;
           driSupport = true;
+          extraPackages = with pkgs; [
+            vaapiVdpau
+            libvdpau-va-gl
+          ];
           driSupport32Bit = true;
+          extraPackages32 = with pkgs.pkgsi686Linux; [
+            vaapiVdpau
+            libvdpau-va-gl
+          ];
         };
      };
     environment.systemPackages = with pkgs; [

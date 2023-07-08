@@ -44,7 +44,6 @@
         spotify
 
         # File Management
-        xfce.thunar
         okular
         unzip
         
@@ -66,8 +65,8 @@
     gtk = { 
       enable = true;
       theme = {
-        name = "Dracula";
-        package = pkgs.dracula-theme;
+        name = "Tokyonight-Dark-BL";
+        package = pkgs.tokyo-night-gtk;
       };
       iconTheme = {
         name = "Papirus-Dark";
