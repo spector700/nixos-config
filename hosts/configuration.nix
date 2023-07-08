@@ -29,6 +29,10 @@
     };
   };
 
+  systemd.extraConfig = ''
+     DefaultTimeoutStopSec=10s
+   '';
+
   console = {
     font = "JetBrainsMono Nerd Font";
     keyMap = "us";

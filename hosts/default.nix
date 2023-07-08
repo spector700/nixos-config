@@ -11,7 +11,7 @@
 #            └─ ./home.nix 
 #
 
-{ inputs, nixpkgs, nixpkgs-unstable, home-manager, user, location, hyprland, gaming, ... }:
+{ inputs, nixpkgs, nixpkgs-stable, home-manager, user, location, hyprland, gaming, ... }:
 
 let
   system = "x86_64-linux";
@@ -22,7 +22,7 @@ let
     config.allowUnfree = true;
   };
 
-  unstable = import nixpkgs-unstable { 
+  stable = import nixpkgs-stable { 
     inherit system;
     # Allow proprietary software
     config.allowUnfree = true;
@@ -34,7 +34,7 @@ in
   desktop = nixpkgs.lib.nixosSystem {
     inherit system;
     specialArgs = {
-      inherit inputs unstable system user location hyprland gaming;
+      inherit inputs stable system user location hyprland gaming;
       host = {
         hostName = "Alfhiem-Nix";
         mainMonitor = "DP-2";
@@ -54,7 +54,7 @@ in
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
         home-manager.extraSpecialArgs = {
-          inherit unstable user;
+          inherit user;
           host = {
             hostName = "Alfhiem-Nix";     #For Xorg iGPU  | Videocard     | Hyprland iGPU
             mainMonitor = "DP-2"; #HDMIA3         | HDMI-A-1      | HDMI-A-3

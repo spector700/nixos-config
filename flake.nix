@@ -11,8 +11,8 @@
 
   inputs = {
 
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-23.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     home-manager = {
       url = "github:nix-community/home-manager/release-23.05";
@@ -29,7 +29,7 @@
     };
   };
 
-  outputs = inputs @ { self, nixpkgs, nixpkgs-unstable, home-manager, hyprland, gaming, ... }:
+  outputs = inputs @ { self, nixpkgs, nixpkgs-stable, home-manager, hyprland, gaming, ... }:
     let 
       user="nick";
       location = "$HOME/.setup";
@@ -40,7 +40,7 @@
         # Imports ./hosts/default.nix
         import ./hosts {
             inherit (nixpkgs) lib;
-            inherit inputs nixpkgs nixpkgs-unstable home-manager user location hyprland gaming;
+            inherit inputs nixpkgs nixpkgs-stable home-manager user location hyprland gaming;
         }
       );
 
@@ -48,7 +48,7 @@
       #homeConfigurations = (
         #import ./nix {
             #inherit (nixpkgs) lib;
-            #inherit inputs nixpkgs nixpkgs-unstable home-manager user;
+            #inherit inputs nixpkgs nixpkgs-stable home-manager user;
         #}
       #);
 
