@@ -15,7 +15,7 @@
 let 
   exec = "exec Hyprland";
 in {
-  imports = [ ../../programs/waybar.nix ];
+  imports = [ ../../programs/waybar ];
 
   environment = {
      # start from tty
@@ -28,13 +28,13 @@ in {
      variables = {
      };
      sessionVariables = {
-       XDG_CURRENT_DESKTOP="Hyprland";
-       XDG_SESSION_TYPE="wayland";
-       XDG_SESSION_DESKTOP="Hyprland";
-       __GLX_VENDOR_LIBRARY_NAME = "nvidia";
-       LIBVA_DRIVER_NAME = "nvidia";
-       GBM_BACKEND = "nvidia-drm";
-      QT_QPA_PLATFORM = "wayland";
+      XDG_CURRENT_DESKTOP="Hyprland";
+      XDG_SESSION_TYPE="wayland";
+      XDG_SESSION_DESKTOP="Hyprland";
+      __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+      LIBVA_DRIVER_NAME = "nvidia";
+      GBM_BACKEND = "nvidia-drm";
+      QT_QPA_PLATFORM = "wayland;xcb";
       QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
       __GL_GSYNC_ALLOWED = "1";
       QT_AUTO_SCREEN_SCALE_FACTOR="1";

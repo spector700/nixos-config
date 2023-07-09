@@ -49,6 +49,14 @@
         window#waybar.hidden {
           opacity: 0.2;
         }
+        tooltip {
+            background: #414868;
+            color: #b4f9f8;
+            border-radius: 21px;
+            border-width: 1px;
+            border-style: solid;
+            border-color: #565f89;
+        }
         #workspace,
         #mode,
         #clock,

@@ -1,0 +1,10 @@
+
+    "custom/wallchange": {
+        "format": "{}",
+        "exec": "echo ; echo 󰆊 switch wallpaper",
+        "on-click": "~/.config/swww/swwwallpaper.sh -n ${mod_pos}",
+        "on-click-right": "~/.config/swww/swwwallpaper.sh -p ${mod_pos}",
+        "interval" : 86400, // once every day
+        "tooltip": true
+    },
+

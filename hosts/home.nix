@@ -41,7 +41,21 @@
 
         # Apps
         brave
+        (brave.override {
+          commandLineArgs = [
+            "--ignore-gpu-blocklist"
+            "--enable-gpu-rasterization"
+            "--enable-zero-copy"
+            "--force-dark-mode"
+            "--enable-features=VaapiVideoDecoder,VaapiVideoEncoder"
+            "--disable-features=UseChromeOSDirectVideoDecoder"
+            "--use-vulkan"
+            "--ozone-platform-hint=auto"
+            "--enable-hardware-overlays"
+          ];
+        })
         spotify
+        discord
 
         # File Management
         okular
@@ -65,8 +79,8 @@
     gtk = { 
       enable = true;
       theme = {
-        name = "Tokyonight-Dark-BL";
-        package = pkgs.tokyo-night-gtk;
+        name = "Dracula";
+        package = pkgs.dracula-theme;
       };
       iconTheme = {
         name = "Papirus-Dark";
