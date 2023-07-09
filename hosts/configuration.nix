@@ -60,12 +60,21 @@
   };
 
   services = {
-    printing = {                                # Printing and drivers for TS5300
+    printing = {                               # Go to the CUPS settings and add: socket://HPC85ACF1BB858.local 
       enable = true;
-      #drivers = [ pkgs.cnijfilter2 ];          # There is the possibility cups will complain about missing cmdtocanonij3. I guess this is just an error that can be ignored for now. Also no longer need required since server uses ipp to share printer over network.
+      drivers = with pkgs; [ hplip ];
+      browsedConf = ''
+          BrowseDNSSDSubTypes _cups,_print
+          BrowseLocalProtocols all
+          BrowseRemoteProtocols all
+          CreateIPPPrinterQueues All
+
+          BrowseProtocols all
+              '';
     };
     avahi = {                                   # Needed to find wireless printer
       enable = true;
+      openFirewall = true;
       nssmdns = true;
       publish = {                               # Needed for detecting the scanner
         enable = true;
@@ -102,14 +111,9 @@
         HostKeyAlgorithms +ssh-rsa
       '';                                   # Temporary extra config so ssh will work in guacamole
     };
-    flatpak.enable = true;                  # download flatpak file from website - sudo flatpak install <path> - reboot if not showing up
-                                            # sudo flatpak uninstall --delete-data <app-id> (> flatpak list --app) - flatpak uninstall --unused
-                                            # List:
-                                            # com.obsproject.Studio
-                                            # com.parsecgaming.parsec
-                                            # com.usebottles.bottles
-  };
-
+    flatpak.enable = true;
+   };
+ 
   nix = {                                   # Nix Package Manager settings
     settings ={
       auto-optimise-store = true;           # Optimise syslinks
