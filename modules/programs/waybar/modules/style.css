@@ -7,7 +7,7 @@
     min-height: 10px;
 }
 
-@import "themes/${cur_theme}.css";
+@import "../nixos-config/modules/programs/waybar/themes/${cur_theme}.css";
 
 window#waybar {
     background: @bar-bg;

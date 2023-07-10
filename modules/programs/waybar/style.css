@@ -3,11 +3,11 @@
     border-radius: 0px;
     font-family: "JetBrainsMono Nerd Font";
     font-weight: bold;
-    font-size: px;
+    font-size: 12px;
     min-height: 10px;
 }
 
-@import "themes/.css";
+@import "../nixos-config/modules/programs/waybar/themes/Tokyo-Night.css";
 
 window#waybar {
     background: @bar-bg;

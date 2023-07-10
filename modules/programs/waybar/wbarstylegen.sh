@@ -6,7 +6,7 @@ waybar_dir=$(dirname $(realpath $0))
 in_file="$waybar_dir/modules/style.css"
 out_file="$waybar_dir/style.css"
 src_file="../../desktop/hyprland/home.nix"
-export cur_theme=$(echo $(readlink "$src_file") | awk -F "/" '{print $NF}' | cut -d '.' -f 1)
+export cur_theme=$(basename "./themes/Tokyo-Night.css" .css)
 
 # calculate height from control file or monitor res
 
@@ -33,12 +33,7 @@ if [ $b_height -lt 30 ]; then
 	export e_paddin=0
 fi
 
-output=$(eval "cat <<EOF
-$(cat "$in_file")
-EOF
-")
-
-echo "$output" >"$out_file"
+envsubst <$in_file >$out_file
 
 # override rounded couners
 
@@ -48,13 +43,10 @@ if [ "$hypr_border" == "0" ]; then
 fi
 
 # override waybar font size based on gsettings
-
-fnt_size=$(awk '{if($6=="font-name") print $NF}' $src_file | sed "s/'//g")
-#fnt_size=`gsettings get org.gnome.desktop.interface font-name | awk '{gsub(/'\''/,""); print $NF}'`
+fnt_size=$(awk -F ' = ' '/font = {/ {found=1} found && /size =/ {gsub(/[;]/, "", $2); print $2; exit}' ../../../hosts/home.nix)
 sed -i "/font-size: /c\    font-size: ${fnt_size}px;" $out_file
 
 # restart waybar
 
 pkill waybar
 waybar >/dev/null 2>&1 &
-# killall -SIGUSR2 waybar
