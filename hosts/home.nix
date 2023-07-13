@@ -18,8 +18,8 @@
 {
   imports = 
     (import ../modules/editors) ++
-    (import ../modules/programs); #++
-    #(import ../modules/services);
+    (import ../modules/programs) ++
+    (import ../modules/services);
 
   programs = {
     home-manager.enable = true;
@@ -40,7 +40,7 @@
         pavucontrol
 
         # Apps
-        brave
+       # brave
         (brave.override {
           commandLineArgs = [
             "--ignore-gpu-blocklist"
@@ -52,6 +52,7 @@
             "--use-vulkan"
             "--ozone-platform-hint=auto"
             "--enable-hardware-overlays"
+            "--disable-gpu-driver-bug-workarounds"
           ];
         })
         spotify
@@ -88,6 +89,7 @@
       };
       font = {
         name = "JetBrains Mono Regular";
+        size = 12;
       };
     };
 }

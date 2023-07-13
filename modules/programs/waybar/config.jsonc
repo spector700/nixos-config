@@ -1,45 +1,42 @@
 {
   "layer": "top",
-  "position": "bottom",
+  "position": "top",
   "mod": "dock",
-  "height": 31,
+  "height": 32,
   "exclusive": true,
   "passthrough": false,
   "gtk-layer-shell": true,
   "modules-left": [
     "custom/padd",
-    "custom/l_end",
-    "custom/power",
-    "custom/cliphist",
-    "custom/wbar",
-    "custom/mode",
-    "custom/wallchange",
-    "custom/r_end",
-    "custom/l_end",
-    "wlr/taskbar",
-    "mpris",
-    "custom/r_end",
     "",
     "custom/padd"
   ],
   "modules-center": [
     "custom/padd",
     "custom/l_end",
+    "custom/power",
+    "custom/r_end",
+    "custom/l_end",
+    "tray",
+    "custom/r_end",
+    "custom/l_end",
+    "wlr/taskbar",
     "clock",
+    "custom/r_end",
+    "custom/l_end",
+    "custom/wbar",
+    "custom/r_end",
+    "custom/l_end",
+    "custom/wallchange",
+    "custom/r_end",
+    "custom/l_end",
+    "custom/mode",
     "custom/r_end",
     "custom/padd"
   ],
   "modules-right": [
     "custom/padd",
-    "custom/l_end",
-    "tray",
-    "custom/r_end",
-    "custom/l_end",
-    "network",
-    "bluetooth",
-    "pulseaudio",
-    "pulseaudio#microphone",
-    "custom/r_end",
+    "",
     "custom/padd"
   ],
   "custom/power": {
@@ -49,42 +46,13 @@
     "interval": 86400,
     "tooltip": true
   },
-  "custom/cliphist": {
-    "format": "{}",
-    "exec": "echo ; echo 󰅇 clipboard history",
-    "on-click": "sleep 0.1 && ~/.config/hypr/scripts/cliphist.sh c 4",
-    "on-click-middle": "sleep 0.1 && ~/.config/hypr/scripts/cliphist.sh w 4",
-    "interval": 86400,
-    "tooltip": true
-  },
-  "custom/wallchange": {
-    "format": "{}",
-    "exec": "echo ; echo 󰆊 switch wallpaper",
-    "on-click": "~/.config/swww/swwwallpaper.sh -n 4",
-    "on-click-right": "~/.config/swww/swwwallpaper.sh -p 4",
-    "interval": 86400,
-    "tooltip": true
-  },
-  "custom/mode": {
-    "format": "{}",
-    "exec": "echo ; echo 󰟡 switch mode",
-    "on-click": "~/.config/hypr/scripts/themeswitch.sh -n",
-    "on-click-right": "~/.config/hypr/scripts/themeswitch.sh -p",
-    "on-click-middle": "sleep 0.1 && ~/.config/hypr/scripts/themeselect.sh",
-    "interval": 86400,
-    "tooltip": true
-  },
-  "custom/wallchange": {
-    "format": "{}",
-    "exec": "echo ; echo 󰆊 switch wallpaper",
-    "on-click": "~/.config/swww/swwwallpaper.sh -n 4",
-    "on-click-right": "~/.config/swww/swwwallpaper.sh -p 4",
-    "interval": 86400,
-    "tooltip": true
+  "tray": {
+    "icon-size": 19,
+    "spacing": 5
   },
   "wlr/taskbar": {
     "format": "{icon}",
-    "icon-size": 18,
+    "icon-size": 19,
     "icon-theme": "Papirus-Dark",
     "spacing": 0,
     "tooltip-format": "{title}",
@@ -97,76 +65,27 @@
       "firefoxdeveloperedition": "firefox-developer-edition"
     }
   },
-  "mpris": {
-    "format": "{player_icon} {dynamic}",
-    "format-paused": "{status_icon} <i>{dynamic}</i>",
-    "player-icons": {
-      "default": "▶",
-      "mpv": "🎵"
-    },
-    "status-icons": {
-      "paused": "⏸"
-    },
-  },
   "clock": {
     "format": "{: %I:%M %p 󰃭 %a %d}",
     "format-alt": "{:󰥔 %H:%M  %b %Y}",
     "tooltip-format": "<tt><big>{calendar}</big></tt>"
   },
-  "tray": {
-    "icon-size": 18,
-    "spacing": 5
+  "custom/wallchange": {
+    "format": "{}",
+    "exec": "echo ; echo 󰆊 switch wallpaper",
+    "on-click": "~/.config/swww/swwwallpaper.sh -n 2",
+    "on-click-right": "~/.config/swww/swwwallpaper.sh -p 2",
+    "interval": 86400,
+    "tooltip": true
   },
-  "network": {
-    "format-wifi": "󰤨 {essid}",
-    "format-ethernet": "󱘖 Wired",
-    "tooltip-format": "󱘖 {ipaddr}  {bandwidthUpBytes}  {bandwidthDownBytes}",
-    "format-linked": "󱘖 {ifname} (No IP)",
-    "format-disconnected": " Disconnected",
-    "format-alt": "󰤨 {signalStrength}%",
-    "interval": 5
-  },
-  "bluetooth": {
-    "format": "",
-    "format-disabled": "",
-    "format-connected": " {num_connections}",
-    "tooltip-format": " {device_alias}",
-    "tooltip-format-connected": "{device_enumerate}",
-    "tooltip-format-enumerate-connected": " {device_alias}"
-  },
-  "pulseaudio": {
-    "format": "{icon} {volume}",
-    "format-muted": "婢",
-    "on-click": "pavucontrol -t 3",
-    "on-click-middle": "~/.config/hypr/scripts/volumecontrol.sh -o m",
-    "on-scroll-up": "~/.config/hypr/scripts/volumecontrol.sh -o i",
-    "on-scroll-down": "~/.config/hypr/scripts/volumecontrol.sh -o d",
-    "tooltip-format": "{icon} {desc} / {volume}%",
-    "scroll-step": 5,
-    "format-icons": {
-      "headphone": "",
-      "hands-free": "",
-      "headset": "",
-      "phone": "",
-      "portable": "",
-      "car": "",
-      "default": [
-        "",
-        "",
-        ""
-      ]
-    }
-  },
-  "pulseaudio#microphone": {
-    "format": "{format_source}",
-    "format-source": "",
-    "format-source-muted": "",
-    "on-click": "pavucontrol -t 4",
-    "on-click-middle": "~/.config/hypr/scripts/volumecontrol.sh -i m",
-    "on-scroll-up": "~/.config/hypr/scripts/volumecontrol.sh -i i",
-    "on-scroll-down": "~/.config/hypr/scripts/volumecontrol.sh -i d",
-    "tooltip-format": "{format_source} {source_desc} / {source_volume}%",
-    "scroll-step": 5
+  "custom/mode": {
+    "format": "{}",
+    "exec": "echo ; echo 󰟡 switch mode",
+    "on-click": "~/.config/hypr/scripts/themeswitch.sh -n",
+    "on-click-right": "~/.config/hypr/scripts/themeswitch.sh -p",
+    "on-click-middle": "sleep 0.1 && ~/.config/hypr/scripts/themeselect.sh",
+    "interval": 86400,
+    "tooltip": true
   },
   "custom/l_end": {
     "format": " ",

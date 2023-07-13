@@ -11,5 +11,5 @@
 #
 
 [
-  ./redshift.nix
+  ./dunst.nix
 ]
