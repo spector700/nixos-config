@@ -11,5 +11,5 @@
 #
 
 [
-  ./dunst.nix
+  ./dunst
 ]
