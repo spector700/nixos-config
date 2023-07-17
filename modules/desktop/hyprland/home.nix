@@ -137,13 +137,13 @@ let
     bind=SUPER,L,exec,${pkgs.swaylock}/bin/swaylock
     bind=SUPER,E,exec,${pkgs.xfce.thunar}/bin/thunar
     bind=SUPER,H,togglefloating,
-    #bind=SUPER,Space,exec,${pkgs.rofi}/bin/rofi -show drun
-    bind=SUPER,Space,exec, pkill wofi || ${pkgs.wofi}/bin/wofi --show drun
+    bind=SUPER,Space,exec, pkill rofi || ${pkgs.rofi-wayland}/bin/rofi -show drun
+    bind=SUPER,V,exec, pkill rofi || ${pkgs.cliphist}/bin/cliphist list | rofi -dmenu -display-columns 2 | cliphist decode | wl-copy
     bind=SUPER,P,pseudo,
     bind=SUPER,F,fullscreen,
     bind=SUPER,R,forcerendererreload
     bind=SUPERSHIFT,R,exec,${pkgs.hyprland}/bin/hyprctl reload
-    bind=SUPER,T,exec,${pkgs.neovim}/bin/neovim
+    bind=SUPER,T,exec,${pkgs.neovim}/bin/nvim
 
     bind=SUPER,left,movefocus,l
     bind=SUPER,right,movefocus,r
@@ -199,7 +199,7 @@ let
     # only allow shadows for floating windows
     windowrulev2 = noshadow, floating:0
 
-    #windowrule=float,^(Rofi)$
+    windowrule=float,^(Rofi)$
     windowrule=float,title:^(Volume Control)$
     windowrule=float,title:^(Picture-in-Picture)$
     windowrule=pin,title:^(Picture-in-Picture)$
@@ -220,6 +220,7 @@ let
     #------------#
     exec-once = xprop -root -f _XWAYLAND_GLOBAL_OUTPUT_SCALE 32c -set _XWAYLAND_GLOBAL_OUTPUT_SCALE 2
     exec-once=${pkgs.waybar}/bin/waybar
+    exec-once=wl-paste --watch cliphist store
     exec-once=${pkgs.blueman}/bin/blueman-applet
     exec-once=${pkgs.spotify}/bin/spotify
     exec-once=${pkgs.discord}/bin/discord

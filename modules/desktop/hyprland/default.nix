@@ -52,6 +52,7 @@ in {
       swaybg
       swaylock
       wl-clipboard
+      cliphist
       wlr-randr
       xorg.xprop
     ];
