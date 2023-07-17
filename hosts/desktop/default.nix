@@ -60,6 +60,7 @@
 
      networking = {
      	hostName = "Alfhiem-Nix";
+      networkmanager.enable = true;
       #enableIPv6 = false;
      };
 
