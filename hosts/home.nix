@@ -40,21 +40,7 @@
         pavucontrol
 
         # Apps
-       # brave
-        (brave.override {
-          commandLineArgs = [
-            "--ignore-gpu-blocklist"
-            "--enable-gpu-rasterization"
-            "--enable-zero-copy"
-            "--force-dark-mode"
-            "--enable-features=VaapiVideoDecoder,VaapiVideoEncoder"
-            "--disable-features=UseChromeOSDirectVideoDecoder"
-            "--use-vulkan"
-            "--ozone-platform-hint=auto"
-            "--enable-hardware-overlays"
-            "--disable-gpu-driver-bug-workarounds"
-          ];
-        })
+        brave
         spotify
         discord
 
@@ -90,6 +76,17 @@
       font = {
         name = "JetBrains Mono Regular";
         size = 12;
+      };
+      gtk3.extraConfig = {
+      Settings = ''
+        gtk-application-prefer-dark-theme=1
+      '';
+      };
+
+      gtk4.extraConfig = {
+      Settings = ''
+        gtk-application-prefer-dark-theme=1
+      '';
       };
     };
 }
