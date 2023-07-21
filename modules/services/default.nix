@@ -13,4 +13,5 @@
 [
   #./dunst
   ./swaync
+  ./swayidle.nix
 ]

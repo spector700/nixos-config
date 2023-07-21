@@ -22,7 +22,7 @@ let
           tap-to-click=true
         }
       }
-      '' else "";
+    '' else "";
   gestures = with host;
     if hostName == "laptop" then ''
       gestures {
@@ -55,11 +55,11 @@ let
 in
 {
   wayland.windowManager.hyprland = {
-     enable = true;
-     #package = pkgs.hyprland;
-     enableNvidiaPatches = true;
-     systemdIntegration = true;
-     extraConfig = ''
+    enable = true;
+    #package = pkgs.hyprland;
+    enableNvidiaPatches = true;
+    systemdIntegration = true;
+    extraConfig = ''
 
     ${workspaces}
     ${monitors}
@@ -124,7 +124,8 @@ in
     misc {
       disable_hyprland_logo=true
       disable_splash_rendering=true
-      animate_manual_resizes = true
+      key_press_enables_dpms=true
+      mouse_move_enables_dpms=true
     }
 
     # use this instead of hidpi patches
@@ -276,8 +277,6 @@ in
   };
 
 
-  #xdg.configFile."hypr/hyprland.conf".text = hyprlandConf;
-
   programs.swaylock = {
     enable = true;
     settings = {
@@ -304,22 +303,9 @@ in
       text-color = "e0def4";
       text-ver-color = "ffffff";
       text-wrong-color = "ffffff";
-      text-caps-lock-color="";
+      text-caps-lock-color = "";
       show-failed-attempts = true;
     };
   };
 
-  services.swayidle = with host; if hostName == "laptop" then {
-    enable = true;
-    events = [
-      { event = "before-sleep"; command = "${pkgs.swaylock}/bin/swaylock -f"; }
-      { event = "lock"; command = "lock"; }
-    ];
-    timeouts = [
-      { timeout= 300; command = "${pkgs.swaylock}/bin/swaylock -f";}
-    ];
-    systemdTarget = "xdg-desktop-portal-hyprland.service";
-  } else {
-    enable = false;
-  };
 }
