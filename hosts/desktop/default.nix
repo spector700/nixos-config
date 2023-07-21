@@ -69,6 +69,7 @@
       #  enable = true;
       #  extraBackends = [ pkgs.sane-airscan ];
       # };
+      bluetooth.enable = true;
       openrazer = {
           enable = true;
           users = ["${user}"];
