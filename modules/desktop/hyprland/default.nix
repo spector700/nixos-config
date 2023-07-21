@@ -11,10 +11,11 @@
 #               └─ default.nix *
 #
 
-{ pkgs, system, hyprland, user, ... }:
-let 
-  exec = "exec Hyprland";
-in {
+{ inputs, pkgs, system, hyprland, user, ... }:
+ #let 
+ # exec = "exec Hyprland";
+ #in 
+{
   imports = [ ../../programs/waybar ];
 
   environment = {
@@ -46,11 +47,8 @@ in {
      };
 
      systemPackages = with pkgs; [
-      grim
-      slurp
-      swappy
+      inputs.hyprland-contrib.packages.${pkgs.system}.grimblast
       swaybg
-      swaylock
       wl-clipboard
       cliphist
       wlr-randr
@@ -66,11 +64,6 @@ in {
       auth include login
       '';
     };
-   #programs.hyprland = {
-   #  enable = true;
-   #  xwayland.enable = true;
-   #  xwayland.hidpi = true;
-   #  };
 
   services.greetd = {
     enable = true;
@@ -87,9 +80,4 @@ in {
       extraPortals = [ pkgs.xdg-desktop-portal-gtk pkgs.xdg-desktop-portal-hyprland ];
    };
 
-  nixpkgs.overlays = [    # Waybar with experimental features
-    (final: prev: {
-      waybar = hyprland.packages.${system}.waybar-hyprland;
-    })
-  ];
 }
