@@ -26,7 +26,7 @@
     };
 
     dracula = {
-      scheme = "Dracula";
+      scheme = "dracula";
       base00 = "282936"; #background
       base01 = "3a3c4e";
       base02 = "4d4f68";

@@ -8,6 +8,11 @@
   
   services.dunst = {
       enable = true;
+      iconTheme = {                                       # Icons
+        name = "Papirus Dark";
+        package = pkgs.papirus-icon-theme;
+        size = "16x16";
+      };
       settings = {
           global = {
               monitor = 0;
@@ -78,7 +83,7 @@
         };
   };
   home.file = {
-      ".config/dunst/icons/".source = "./icons/";
+      ".config/dunst/icons/".source = ./icons;
   };
 
 
