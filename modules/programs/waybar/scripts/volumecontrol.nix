@@ -1,87 +1,93 @@
 
-{	pkgs, ...}:
+{	pkgs, user, ...}:
 
 {
-		".config/waybar/scripts/volumecontrol.sh" = {
+  home-manager.users.${user} = {                           # Home-manager waybar config
+    home.file = {
+  ".config/waybar/scripts/volumecontrol.sh" = {              # Custom script: Toggle speaker/headset
 		text = ''
-		#!/bin/sh
+#!/usr/bin/env sh
 
-		# define functions
+# define functions
 
-		function print_error {
-			cat <<"EOF"
-    ./volumecontrol.sh -[device] <action>
-    ...valid device are...
-        i -- [i]nput decive
-        o -- [o]utput device
-    ...valid actions are...
-        i -- <i>ncrease volume [+5]
-        d -- <d>ecrease volume [-5]
-        m -- <m>ute [x]
-    EOF
-			exit 1
-		}
+print_error() {
+  cat <<EOF
+./volumecontrol.sh -[device] <action>
+...valid device are...
+    i -- [i]nput decive
+    o -- [o]utput device
+...valid actions are...
+    i -- <i>ncrease volume [+5]
+    d -- <d>ecrease volume [-5]
+    m -- <m>ute [x]
+EOF
+  exit 1
+}
 
-		function notify_vol {
-			vol=$(pamixer $srce --get-volume | cat)
-			angle="$(((($vol + 2) / 5) * 5))"
-			ico="$icodir/vol-$angle.svg"
-			bar=$(seq -s "." $(($vol / 15)) | sed 's/[0-9]//g')
-			dunstify $ncolor "volctl" -a "$vol$bar" "$nsink" -i $ico -r 91190 -t 800
-		}
+notify_vol() {
+  vol=$(${pkgs.pamixer}/bin/pamixer "$srce" --get-volume | cat)
+  angle="$((((vol + 2) / 5) * 5))"
+  ico="$icodir/vol-$angle.svg"
+  notify-send -h int:value:"$vol" -h string:synchronous:my-progress "$nsink" -i "$ico" -t 1000 -e
+}
 
-		function notify_mute {
-			mute=$(pamixer $srce --get-mute | cat)
-			if [ "$mute" == "true" ]; then
-				dunstify $ncolor "volctl" -a "muted" "$nsink" -i $icodir/muted-$dvce.svg -r 91190 -t 800
-			else
-				dunstify $ncolor "volctl" -a "unmuted" "$nsink" -i $icodir/unmuted-$dvce.svg -r 91190 -t 800
-			fi
-		}
+notify_mute() {
+  mute=$(${pkgs.pamixer}/bin/pamixer "$srce" --get-mute | cat)
+  if [ "$mute" = "true" ]; then
+    notify-send "$nsink" -i "$icodir"/muted-"$dvce".svg -t 2000 -e
+  else
+    notify-send "$nsink" -i "$icodir"/unmuted-"$dvce".svg -t 2000 -e
+  fi
+}
 
-		# set device source
+# set device source
 
-		while getopts io SetSrc; do
-			case $SetSrc in
-			i)
-				nsink=$(pamixer --list-sources | grep "alsa_input." | head -1 | awk -F '" "' '{print $NF}' | sed 's/"//')
-				srce="--default-source"
-				dvce="mic"
-				;;
-			o)
-				nsink=$(pamixer --get-default-sink | grep "alsa_output." | awk -F '" "' '{print $NF}' | sed 's/"//')
-				srce=""
-				dvce="speaker"
-				;;
-			esac
-		done
+while getopts io SetSrc; do
+  case $SetSrc in
+  i)
+    nsink=$(${pkgs.pamixer}/bin/pamixer --list-sources | grep "alsa_input." | head -1 | awk -F '" "' '{print $NF}' | sed 's/"//')
+    srce="--default-source"
+    dvce="mic"
+    ;;
+  o)
+    nsink=$(${pkgs.pamixer}/bin/pamixer --get-default-sink | grep "alsa_output." | awk -F '" "' '{print $NF}' | sed 's/"//')
+    srce=""
+    dvce="speaker"
+    ;;
+  *)
+    print_error
+    ;;
+  esac
+done
 
-		if [ $OPTIND -eq 1 ]; then
-			print_error
-		fi
+if [ $OPTIND -eq 1 ]; then
+  print_error
+fi
 
-		# set device action
+# set device action
 
-		shift $((OPTIND - 1))
-		step="$2:-5"
-		icodir="~/.config/dunst/icons/vol"
-		ncolor="-h string:bgcolor:#343d46 -h string:fgcolor:#c0c5ce -h string:frcolor:#c0c5ce"
+shift $((OPTIND - 1))
+step=''${2:-5}
+icodir="$HOME/.config/swaync/icons/vol"
 
-		case $1 in
-		i)
-			pamixer $srce -i $step
-			notify_vol
-			;;
-		d)
-			pamixer $srce -d $step
-			notify_vol
-			;;
-		m)
-			pamixer $srce -t
-			notify_mute
-			;;
-		*) print_error ;;
-		esac
-		'';
-	};
+case $1 in
+i)
+  ${pkgs.pamixer}/bin/pamixer "$srce" -i "$step"
+  notify_vol
+  ;;
+d)
+  ${pkgs.pamixer}/bin/pamixer "$srce" -d "$step"
+  notify_vol
+  ;;
+m)
+  ${pkgs.pamixer}/bin/pamixer "$srce" -t
+  notify_mute
+  ;;
+*) print_error ;;
+esac
+  '';
+  executable = true;
+  };
+  };
+ };
 }

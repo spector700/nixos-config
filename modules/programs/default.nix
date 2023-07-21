@@ -12,8 +12,9 @@
 
 [
   ./kitty.nix
+  ./eww
   #./rofi.nix
-  ./wofi.nix
+  ./rofi
   #./waybar.nix
   #./games.nix
 ]

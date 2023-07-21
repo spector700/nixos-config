@@ -2,17 +2,18 @@
 
 # detect hypr theme and initialize variables
 
-waybar_dir=$(dirname $(realpath $0))
+waybar_dir=$(dirname "$(realpath "$0")")
 in_file="$waybar_dir/modules/style.css"
 out_file="$waybar_dir/style.css"
 src_file="../../desktop/hyprland/home.nix"
-export cur_theme=$(basename "./themes/Tokyo-Night.css" .css)
+cur_theme="$(basename "./themes/catppuccin.css" .css)"
+export cur_theme
 
 # calculate height from control file or monitor res
 
-b_height=$(grep '^1|' $waybar_dir/config.ctl | cut -d '|' -f 2)
+b_height=$(grep '^1|' "$waybar_dir"/config.ctl | cut -d '|' -f 2)
 
-if [ -z $b_height ] || [ "$b_height" == "0" ]; then
+if [ -z "$b_height" ] || [ "$b_height" = "0" ]; then
 	y_monres=$(cat /sys/class/drm/*/modes | head -1 | cut -d 'x' -f 2)
 	b_height=$((y_monres * 3 / 100))
 fi
@@ -29,22 +30,22 @@ export w_margin=$((b_height * 10 / 100)) # workspace margin 10% of height
 export w_paddin=$((b_height * 10 / 100)) # workspace padding 10% of height
 export w_padact=$((b_height * 40 / 100)) # workspace active padding 40% of height
 
-if [ $b_height -lt 30 ]; then
+if [ "$b_height" -lt 30 ]; then
 	export e_paddin=0
 fi
 
-envsubst <$in_file >$out_file
+envsubst <"$in_file" >"$out_file"
 
 # override rounded couners
 
 hypr_border=$(awk -F '=' '{if($1~" rounding ") print $2}' $src_file | sed 's/ //g')
-if [ "$hypr_border" == "0" ]; then
-	sed -i "/border-radius: /c\    border-radius: 0px;" $out_file
+if [ "$hypr_border" = "0" ]; then
+	sed -i "/border-radius: /c\    border-radius: 0px;" "$out_file"
 fi
 
 # override waybar font size based on gsettings
 fnt_size=$(awk -F ' = ' '/font = {/ {found=1} found && /size =/ {gsub(/[;]/, "", $2); print $2; exit}' ../../../hosts/home.nix)
-sed -i "/font-size: /c\    font-size: ${fnt_size}px;" $out_file
+sed -i "/font-size: /c\    font-size: ${fnt_size}px;" "$out_file"
 
 # restart waybar
 
