@@ -13,7 +13,6 @@
 [
   ./kitty.nix
   ./eww
-  #./rofi.nix
   ./rofi
   #./waybar.nix
   #./games.nix

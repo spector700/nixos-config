@@ -11,7 +11,7 @@
 #               └─ default.nix *
 #
 
-{ inputs, pkgs, system, hyprland, user, ... }:
+{ inputs, pkgs, system, user, ... }:
  #let 
  # exec = "exec Hyprland";
  #in 
