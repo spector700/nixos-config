@@ -38,11 +38,13 @@
         feh
         mpv
         pavucontrol
+        gimp
 
         # Apps
         brave
         spotify
-        discord
+        webcord-vencord
+        signal-desktop
 
         # File Management
         okular
@@ -56,9 +58,9 @@
 
       pointerCursor = {
           gtk.enable = true;
-          name = "Dracula-cursors";
-          package = pkgs.dracula-theme;
-          size = 16;
+          name = "macOS-BigSur";
+          package = pkgs.apple-cursor;
+          size = 32;
         };
       stateVersion = "23.05";
     };
@@ -66,8 +68,13 @@
     gtk = { 
       enable = true;
       theme = {
-        name = "Dracula";
-        package = pkgs.dracula-theme;
+        name = "Catppuccin-Mocha-Compact-Blue-dark";
+        package = pkgs.catppuccin-gtk.override {
+            size = "compact";
+            accents = ["blue"];
+            #tweaks = [ "rimless" ];
+            variant = "mocha";
+          };
       };
       iconTheme = {
         name = "Papirus-Dark";
@@ -78,15 +85,11 @@
         size = 12;
       };
       gtk3.extraConfig = {
-      Settings = ''
-        gtk-application-prefer-dark-theme=1
-      '';
+        gtk-application-prefer-dark-theme=1;
       };
 
       gtk4.extraConfig = {
-      Settings = ''
-        gtk-application-prefer-dark-theme=1
-      '';
+        gtk-application-prefer-dark-theme=1;
       };
     };
 }
