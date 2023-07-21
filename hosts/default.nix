@@ -11,7 +11,7 @@
 #            └─ ./home.nix 
 #
 
-{ inputs, nixpkgs, nixpkgs-stable, home-manager, user, location, hyprland, gaming, ... }:
+{ inputs, nixpkgs, nixpkgs-stable, home-manager, user, location, gaming, ... }:
 
 let
   system = "x86_64-linux";
@@ -34,7 +34,7 @@ in
   desktop = nixpkgs.lib.nixosSystem {
     inherit system;
     specialArgs = {
-      inherit inputs stable system user location hyprland gaming;
+      inherit inputs stable system user location gaming;
       host = {
         hostName = "Alfhiem-Nix";
         mainMonitor = "DP-2";
@@ -63,7 +63,6 @@ in
         };                                                  # Pass flake variable
         home-manager.users.${user} = {
           imports = [
-            hyprland.homeManagerModules.default
             ./home.nix
             ./desktop/home.nix
           ];
