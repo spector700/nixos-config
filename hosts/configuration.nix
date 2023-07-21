@@ -56,6 +56,7 @@
       wget
       neofetch
       xdg-utils
+      networkmanagerapplet
     ];
   };
 
@@ -130,6 +131,13 @@
     '';
   };
   nixpkgs.config.allowUnfree = true;        # Allow proprietary software.
+
+  # Show package changes on rebuild
+  system.activationScripts.diff = ''
+    if [[ -e /run/current-system ]]; then
+      ${pkgs.nix}/bin/nix store diff-closures /run/current-system "$systemConfig"
+    fi
+  '';
 
   system = {                                # NixOS settings
     autoUpgrade = {                         # Allow auto update (not useful in flakes)
