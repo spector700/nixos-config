@@ -75,27 +75,22 @@ in
 
     decoration {
       rounding=5
-      multisample_edges=true
       #active_opacity=0.93
       #inactive_opacity=0.93
-      fullscreen_opacity=1
-      blur=true
-      blur_new_optimizations = true
-      blur_xray = true
-      blur_ignore_opacity = true
-      drop_shadow = true
-      shadow_ignore_window = true
-      shadow_offset = 0 5
-      shadow_range = 50
-      shadow_render_power = 3
-      col.shadow = rgba(00000099)
-      blurls = waybar
-      blurls = lockscreen
+      blur_passes=3
+      #blur_xray=true
+      blur_ignore_opacity=true
+      shadow_offset=0 5
+      shadow_range=50
+      shadow_render_power=3
+      col.shadow=rgba(00000099)
     }
+    blurls=waybar
+    blurls=lockscreen
 
     animations {
       enabled=true
-      bezier = myBezier,0.1,0.7,0.1,1.05
+      bezier=myBezier,0.1,0.7,0.1,1.05
       animation=fade,1,7,default
       animation=windows,1,7,myBezier
       animation=windowsOut,1,3,default,popin 60%
@@ -130,7 +125,7 @@ in
 
     # use this instead of hidpi patches
     xwayland {
-      force_zero_scaling = true
+      force_zero_scaling=true
     }
 
     debug {
@@ -198,11 +193,13 @@ in
 
     bind=,print,exec,grimblast --notify edit area ~/Pictures/$(date +%Hh_%Mm_%d_%B_%Y).png
 
-    bind=,XF86AudioLowerVolume,exec,${pkgs.pamixer}/bin/pamixer -d 10
-    bind=,XF86AudioRaiseVolume,exec,${pkgs.pamixer}/bin/pamixer -i 10
-    bind=,XF86AudioMute,exec,${pkgs.pamixer}/bin/pamixer -t
-    bind=SUPER_L,c,exec,${pkgs.pamixer}/bin/pamixer --default-source -t
-    bind=,XF86AudioMicMute,exec,${pkgs.pamixer}/bin/pamixer --default-source -t
+    bind=,XF86AudioPlay,exec,${pkgs.playerctl}/bin/playerctl play-pause
+    bind=,XF86AudioNext,exec,${pkgs.playerctl}/bin/playerctl next 
+    bind=,XF86AudioPrev,exec,${pkgs.playerctl}/bin/playerctl previous 
+    bind=,XF86AudioLowerVolume,exec,${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 10%-
+    bind=,XF86AudioRaiseVolume,exec,${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 10%+
+    bind=,XF86AudioMute,exec,${pkgs.pamixer}/bin/wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+    bind=,XF86AudioMicMute,exec,${pkgs.pamixer}/bin/wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
     bind=,XF86MonBrightnessDown,exec,${pkgs.light}/bin/light -U 10
     bind=,XF86MonBrightnessUP,exec,${pkgs.light}/bin/light -A 10
 
@@ -210,19 +207,19 @@ in
     windowrulev2 = noshadow, floating:0
 
     # Opacity 
-    windowrulev2 = opacity 0.90 0.90,class:^(Brave-browser)$
+    #windowrulev2 = opacity 0.90 0.90,class:^(Brave-browser)$
     windowrulev2 = opacity 0.80 0.80,class:^(Steam)$
     windowrulev2 = opacity 0.80 0.80,class:^(steam)$
     windowrulev2 = opacity 0.80 0.80,class:^(steamwebhelper)$
     windowrulev2 = opacity 0.80 0.80,class:^(Spotify)$
     windowrulev2 = opacity 0.80 0.80,class:^(Code)$
-    windowrulev2 = opacity 0.95 0.95,class:^(kitty)$
-    windowrulev2 = opacity 0.90 0.90,class:^(thunar)$
+    windowrulev2 = opacity 0.88 0.88,class:^(kitty)$
+    windowrulev2 = opacity 0.88 0.88,class:^(thunar)$
     windowrulev2 = opacity 0.80 0.80,class:^(file-roller)$
     windowrulev2 = opacity 0.80 0.80,class:^(qt5ct)$
     windowrulev2 = opacity 0.80 0.80,class:^(discord)$ #Discord-Electron
-    windowrulev2 = opacity 0.90 0.90,class:^(WebCord)$ #WebCord-Electron
-    windowrulev2 = opacity 0.90 0.80,class:^(pavucontrol)$
+    windowrulev2 = opacity 0.88 0.88,class:^(WebCord)$ #WebCord-Electron
+    windowrulev2 = opacity 0.85 0.80,class:^(pavucontrol)$
     windowrulev2 = opacity 0.80 0.70,class:^(org.kde.polkit-kde-authentication-agent-1)$
     windowrulev2 = opacity 0.80 0.80,class:^(org.telegram.desktop)$
 
@@ -271,7 +268,7 @@ in
     exec-once=wl-paste --watch cliphist store
     exec-once=${pkgs.blueman}/bin/blueman-applet
     exec-once=${pkgs.spotify}/bin/spotify
-    exec-once=${pkgs.webcord}/bin/webcord
+    exec-once=${pkgs.webcord-vencord}/bin/webcord
     ${execute}
   '';
   };
@@ -283,7 +280,6 @@ in
       image = "$HOME/.config/wallpaper";
       color = "1f1d2e80";
       font-size = "24";
-      #effect-blur= "7x3";
       indicator-idle-visible = false;
       indicator-radius = 200;
       indicator-thickness = 20;
