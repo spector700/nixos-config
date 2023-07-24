@@ -23,8 +23,14 @@
       url = "github:hyprwm/Hyprland";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
     hyprland-contrib = {
       url = "github:hyprwm/contrib";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nix-index-db = {
+      url = "github:Mic92/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -34,26 +40,27 @@
   };
 
   outputs = inputs @ { self, nixpkgs, nixpkgs-stable, home-manager, gaming, hyprland-contrib, ... }:
-    let 
-      user="nick";
+    let
+      user = "nick";
       location = "$HOME/.setup";
-    in {
+    in
+    {
 
       # NixOS configurations
       nixosConfigurations = (
         # Imports ./hosts/default.nix
         import ./hosts {
-            inherit (nixpkgs) lib;
-            inherit inputs nixpkgs nixpkgs-stable home-manager user location gaming;
+          inherit (nixpkgs) lib;
+          inherit inputs nixpkgs nixpkgs-stable home-manager user location gaming;
         }
       );
 
       # Non-NixOS configurations
       #homeConfigurations = (
-        #import ./nix {
-            #inherit (nixpkgs) lib;
-            #inherit inputs nixpkgs nixpkgs-stable home-manager user;
-        #}
+      #import ./nix {
+      #inherit (nixpkgs) lib;
+      #inherit inputs nixpkgs nixpkgs-stable home-manager user;
+      #}
       #);
 
     };

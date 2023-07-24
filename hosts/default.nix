@@ -22,7 +22,7 @@ let
     config.allowUnfree = true;
   };
 
-  stable = import nixpkgs-stable { 
+  stable = import nixpkgs-stable {
     inherit system;
     # Allow proprietary software
     config.allowUnfree = true;
@@ -40,29 +40,31 @@ in
         mainMonitor = "DP-2";
         secondMonitor = "DP-3";
       };
-    }; 
+    };
     # Pass flake variable
     # Modules that are used
-    modules = [  
+    modules = [
       gaming.nixosModules.default
       ./desktop
       ./configuration.nix
+      
+      # Home-Manager module that is used.
 
-       # Home-Manager module that is used.
-
-      home-manager.nixosModules.home-manager {
+      home-manager.nixosModules.home-manager
+      {
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
         home-manager.extraSpecialArgs = {
           inherit user;
           host = {
-            hostName = "Alfhiem-Nix";     #For Xorg iGPU  | Videocard     | Hyprland iGPU
+            hostName = "Alfhiem-Nix"; #For Xorg iGPU  | Videocard     | Hyprland iGPU
             mainMonitor = "DP-2"; #HDMIA3         | HDMI-A-1      | HDMI-A-3
-            secondMonitor = "DP-3";   #DP1            | DisplayPort-1 | DP-1
+            secondMonitor = "DP-3"; #DP1            | DisplayPort-1 | DP-1
           };
-        };                                                  # Pass flake variable
+        }; # Pass flake variable
         home-manager.users.${user} = {
           imports = [
+            inputs.nix-index-db.hmModules.nix-index
             ./home.nix
             ./desktop/home.nix
           ];

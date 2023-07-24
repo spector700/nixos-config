@@ -10,28 +10,47 @@
 { config, lib, pkgs, inputs, user, ... }:
 
 {
-   imports =
-    (import ../modules/shell);  
+  # configuration used by all hosts
 
-  users.users.${user} = {                   # System User
+  users.users.${user} = {
+    # System User
     isNormalUser = true;
     extraGroups = [ "wheel" "networkmanager" ];
-    shell = pkgs.zsh;                       # Default shell
+    shell = pkgs.zsh; # Default shell
   };
   security.sudo.wheelNeedsPassword = false; # User does not need to give password when using sudo.
 
-  time.timeZone = "America/Chicago";        # Time zone and internationalisation
+  time.timeZone = "America/Chicago"; # Time zone and internationalisation
   i18n = {
     defaultLocale = "en_US.UTF-8";
-    extraLocaleSettings = {                 # Extra locale settings that need to be overwritten
+    extraLocaleSettings = {
+      # Extra locale settings that need to be overwritten
       LC_TIME = "en_US.UTF-8";
       LC_MONETARY = "en_US.UTF-8";
     };
   };
 
+  environment.pathsToLink = [ "/share/zsh" ];
+
+  programs = {
+    zsh = {
+      enable = true;
+      autosuggestions.enable = true;
+      syntaxHighlighting = {
+        enable = true;
+        patterns = { "rm -rf *" = "fg=black,bg=red"; };
+        styles = { "alias" = "fg=blue"; };
+        highlighters = [ "main" "brackets" "pattern" ];
+      };
+    };
+  };
+
+  # remove bloat
+  documentation.nixos.enable = false;
+
   systemd.extraConfig = ''
-     DefaultTimeoutStopSec=10s
-   '';
+    DefaultTimeoutStopSec=10s
+  '';
 
   console = {
     font = "JetBrainsMono Nerd Font";
@@ -41,9 +60,10 @@
   security.rtkit.enable = true;
   security.polkit.enable = true;
 
-  fonts.fonts = with pkgs; [                # Fonts
+  fonts.fonts = with pkgs; [
+    # Fonts
     font-awesome
-       (nerdfonts.override { fonts = [ "FiraCode" "Hack" "JetBrainsMono" ]; })
+    (nerdfonts.override { fonts = [ "FiraCode" "Hack" "JetBrainsMono" ]; })
   ];
 
   environment = {
@@ -52,7 +72,8 @@
       EDITOR = "nvim";
       VISUAL = "nvim";
     };
-    systemPackages = with pkgs; [           # Default packages installed system-wide
+    systemPackages = with pkgs; [
+      # Default packages installed system-wide
       wget
       neofetch
       xdg-utils
@@ -61,29 +82,33 @@
   };
 
   services = {
-    printing = {                               # Go to the CUPS settings and add: socket://HPC85ACF1BB858.local 
+    printing = {
+      # Go to the CUPS settings and add: socket://HPC85ACF1BB858.local 
       enable = true;
       drivers = with pkgs; [ hplip ];
       browsedConf = ''
-          BrowseDNSSDSubTypes _cups,_print
-          BrowseLocalProtocols all
-          BrowseRemoteProtocols all
-          CreateIPPPrinterQueues All
+        BrowseDNSSDSubTypes _cups,_print
+        BrowseLocalProtocols all
+        BrowseRemoteProtocols all
+        CreateIPPPrinterQueues All
 
-          BrowseProtocols all
-              '';
+        BrowseProtocols all
+      '';
     };
-    avahi = {                                   # Needed to find wireless printer
+    avahi = {
+      # Needed to find wireless printer
       enable = true;
       openFirewall = true;
       nssmdns = true;
-      publish = {                               # Needed for detecting the scanner
+      publish = {
+        # Needed for detecting the scanner
         enable = true;
         addresses = true;
         userServices = true;
       };
     };
-    pipewire = {                            # Sound
+    pipewire = {
+      # Sound
       enable = true;
       alsa = {
         enable = true;
@@ -92,45 +117,48 @@
       pulse.enable = true;
       jack.enable = true;
     };
-    openssh = {                             # SSH: secure shell (remote connection to shell of server)
-      enable = true;                        # local: $ ssh <user>@<ip>
-                                            # public:
-                                            #   - port forward 22 TCP to server
-                                            #   - in case you want to use the domain name insted of the ip:
-                                            #       - for me, via cloudflare, create an A record with name "ssh" to the correct ip without proxy
-                                            #   - connect via ssh <user>@<ip or ssh.domain>
-                                            # generating a key:
-                                            #   - $ ssh-keygen   |  ssh-copy-id <ip/domain>  |  ssh-add
-                                            #   - if ssh-add does not work: $ eval `ssh-agent -s`
-      allowSFTP = true;                     # SFTP: secure file transfer protocol (send file to server)
-                                            # connect: $ sftp <user>@<ip/domain>
-                                            #   or with file browser: sftp://<ip address>
-                                            # commands:
-                                            #   - lpwd & pwd = print (local) parent working directory
-                                            #   - put/get <filename> = send or receive file
+    openssh = {
+      # SSH: secure shell (remote connection to shell of server)
+      enable = true; # local: $ ssh <user>@<ip>
+      # public:
+      #   - port forward 22 TCP to server
+      #   - in case you want to use the domain name insted of the ip:
+      #       - for me, via cloudflare, create an A record with name "ssh" to the correct ip without proxy
+      #   - connect via ssh <user>@<ip or ssh.domain>
+      # generating a key:
+      #   - $ ssh-keygen   |  ssh-copy-id <ip/domain>  |  ssh-add
+      #   - if ssh-add does not work: $ eval `ssh-agent -s`
+      allowSFTP = true; # SFTP: secure file transfer protocol (send file to server)
+      # connect: $ sftp <user>@<ip/domain>
+      #   or with file browser: sftp://<ip address>
+      # commands:
+      #   - lpwd & pwd = print (local) parent working directory
+      #   - put/get <filename> = send or receive file
       extraConfig = ''
         HostKeyAlgorithms +ssh-rsa
-      '';                                   # Temporary extra config so ssh will work in guacamole
+      ''; # Temporary extra config so ssh will work in guacamole
     };
     flatpak.enable = true;
-   };
- 
-  nix = {                                   # Nix Package Manager settings
-    settings ={
-      auto-optimise-store = true;           # Optimise syslinks
+  };
+
+  nix = {
+    # Nix Package Manager settings
+    settings = {
+      auto-optimise-store = true; # Optimise syslinks
     };
-    gc = {                                  # Automatic garbage collection
+    gc = {
+      # Automatic garbage collection
       automatic = true;
       dates = "weekly";
       options = "--delete-older-than 7d";
     };
-    package = pkgs.nixVersions.unstable;    # Enable nixFlakes on system
+    package = pkgs.nixVersions.unstable; # Enable nixFlakes on system
     registry.nixpkgs.flake = inputs.nixpkgs;
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
   };
-  nixpkgs.config.allowUnfree = true;        # Allow proprietary software.
+  nixpkgs.config.allowUnfree = true; # Allow proprietary software.
 
   # Show package changes on rebuild
   system.activationScripts.diff = ''
@@ -139,10 +167,7 @@
     fi
   '';
 
-  system = {                                # NixOS settings
-    autoUpgrade = {                         # Allow auto update (not useful in flakes)
-      enable = true;
-    };
+  system = {
     stateVersion = "23.05";
   };
 }
