@@ -3,7 +3,7 @@
 #
 
 
-{ pkgs, config, ... }:
+{ pkgs, config, inputs, ... }:
 
 {
 
@@ -19,29 +19,27 @@
     withNodeJs = true;
     withPython3 = true;
 
-  };
+    extraPackages = with pkgs; [
+      # LSP
+      nodePackages.vscode-langservers-extracted
+      nodePackages_latest.typescript-language-server
+      nodePackages_latest."@tailwindcss/language-server"
+      nodePackages_latest.bash-language-server
+      sumneko-lua-language-server
+      nixd
 
+      # Format
+      nixpkgs-fmt
+      stylua
+      beautysh
+      nodePackages.prettier
+    ];
+  };
   home.packages = with pkgs; [
     gcc
+    cargo
     ripgrep
     fd
     lazygit
-    tree-sitter
-
-    # LSP
-    nodePackages.vscode-langservers-extracted
-    nodePackages_latest.typescript
-    nodePackages_latest.typescript-language-server
-    nodePackages_latest.bash-language-server
-    sumneko-lua-language-server
-    nixd
-
-    # Format
-    nixpkgs-fmt
-    stylua
-    beautysh
-    nodePackages.prettier
   ];
-
-
 }

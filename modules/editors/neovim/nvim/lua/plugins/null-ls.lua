@@ -7,7 +7,6 @@ return {
 			sources = {
 				nls.builtins.formatting.prettier,
 				nls.builtins.formatting.stylua,
-				nls.builtins.formatting.shfmt,
 				nls.builtins.formatting.beautysh,
 				nls.builtins.formatting.nixpkgs_fmt,
 				-- nls.builtins.diagnostics.flake8,
