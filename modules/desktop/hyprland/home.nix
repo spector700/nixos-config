@@ -11,7 +11,7 @@
 #               └─ home.nix *
 #
 
-{ pkgs, host, ... }:
+{ inputs, pkgs, host, ... }:
 
 let
   touchpad = with host;
@@ -44,8 +44,8 @@ let
       workspace=${toString mainMonitor},1
       workspace=${toString mainMonitor},2
       workspace=${toString mainMonitor},3
-      workspace=${toString mainMonitor},4
-      workspace=${toString mainMonitor},5
+      workspace=${toString secondMonitor},4
+      workspace=${toString secondMonitor},5
       workspace=${toString secondMonitor},6
     '' else "";
   execute = with host;
@@ -78,23 +78,32 @@ in
       #active_opacity=0.93
       #inactive_opacity=0.93
       blur_passes=3
-      #blur_xray=true
+      blur_xray=true
       blur_ignore_opacity=true
       shadow_offset=0 5
       shadow_range=50
       shadow_render_power=3
       col.shadow=rgba(00000099)
-    }
-    blurls=waybar
-    blurls=lockscreen
 
-    animations {
-      enabled=true
-      bezier=myBezier,0.1,0.7,0.1,1.05
-      animation=fade,1,7,default
-      animation=windows,1,7,myBezier
-      animation=windowsOut,1,3,default,popin 60%
-      animation=windowsMove,1,7,myBezier
+      blurls = gtk-layer-shell
+      blurls = waybar
+      blurls = lockscreen
+    }
+
+     animations {
+      enabled = true
+      bezier = wind, 0.05, 0.9, 0.1, 1.05
+      bezier = winIn, 0.1, 1.1, 0.1, 1.1
+      bezier = winOut, 0.3, -0.3, 0, 1
+      bezier = liner, 1, 1, 1, 1
+
+
+      animation = windows, 1, 6, wind, slide
+      animation = windowsIn, 1, 6, winIn, slide
+      animation = windowsOut, 1, 5, winOut, slide
+      animation = windowsMove, 1, 5, wind, slide
+      animation = fade, 1, 10, default
+      animation = workspaces, 1, 5, wind
     }
 
     input {
@@ -111,7 +120,6 @@ in
     ${gestures}
 
     dwindle {
-      pseudotile=false
       force_split=2
       preserve_split=true
     }
@@ -128,21 +136,18 @@ in
       force_zero_scaling=true
     }
 
-    debug {
-      damage_tracking=2
-    }
-
     bindm=SUPER,mouse:272,movewindow
     bindm=SUPER,mouse:273,resizewindow
 
     bind=SUPER,B,exec,${pkgs.brave}/bin/brave
     bind=SUPER,X,exec,${pkgs.kitty}/bin/kitty
     bind=SUPER,Q,killactive,
-    bind=CTRL SHIFT,Escape,exec,${pkgs.btop}/bin/btop
-    bind=SUPER,L,exec,${pkgs.swaylock}/bin/swaylock
+    bind=CTRL SHIFT,Escape,exec,${pkgs.kitty}/bin/kitty -e btop
+    bind=SUPERSHIFT,L,exec,${pkgs.swaylock-effects}/bin/swaylock
     bind=SUPER,E,exec,${pkgs.xfce.thunar}/bin/thunar
     bind=SUPER,G,togglefloating,
-    bind=SUPER,Space,exec, pkill rofi || ${pkgs.rofi-wayland}/bin/rofi -show drun
+    #bind=SUPER,Space,exec, pkill rofi || ${pkgs.rofi-wayland}/bin/rofi -show drun
+    bind=SUPER,Space,exec, pkill anyrun || anyrun
     bind=SUPER,V,exec, pkill rofi || ${pkgs.cliphist}/bin/cliphist list | rofi -dmenu -display-columns 2 | cliphist decode | wl-copy
     bind=SUPER,P,pseudo,
     bind=SUPER,F,fullscreen,
@@ -150,15 +155,20 @@ in
     bind=SUPERSHIFT,R,exec,${pkgs.hyprland}/bin/hyprctl reload && ~/.config/waybar/scripts/restart.sh
     bind=SUPER,T,exec,${pkgs.neovim}/bin/nvim
 
-    bind=SUPER,left,movefocus,l
-    bind=SUPER,right,movefocus,r
-    bind=SUPER,up,movefocus,u
-    bind=SUPER,down,movefocus,d
+    bind=SUPER,h,movefocus,l
+    bind=SUPER,l,movefocus,r
+    bind=SUPER,k,movefocus,u
+    bind=SUPER,j,movefocus,d
 
     bind=SUPERSHIFT,left,movewindow,l
     bind=SUPERSHIFT,right,movewindow,r
     bind=SUPERSHIFT,up,movewindow,u
     bind=SUPERSHIFT,down,movewindow,d
+
+    bind=CTRL,right,resizeactive,20 0
+    bind=CTRL,left,resizeactive,-20 0
+    bind=CTRL,up,resizeactive,0 -20
+    bind=CTRL,down,resizeactive,0 20
 
     bind=SUPER,1,workspace,1
     bind=SUPER,2,workspace,2
@@ -170,9 +180,12 @@ in
     bind=SUPER,8,workspace,8
     bind=SUPER,9,workspace,9
     bind=SUPER,0,workspace,10
-    bind=SUPER,right,workspace,+1
-    bind=SUPER,left,workspace,-1
 
+    bind = SUPER, a, togglespecialworkspace
+    #bind = SUPER, a, exec, notify-send 'Toggled Special Workspace' -e
+    bind = SUPER, c, exec, hyprctl dispatch centerwindow
+
+    bind=ALTSHIFT,a,movetoworkspace,special
     bind=ALTSHIFT,1,movetoworkspace,1
     bind=ALTSHIFT,2,movetoworkspace,2
     bind=ALTSHIFT,3,movetoworkspace,3
@@ -183,13 +196,6 @@ in
     bind=ALTSHIFT,8,movetoworkspace,8
     bind=ALTSHIFT,9,movetoworkspace,9
     bind=ALTSHIFT,0,movetoworkspace,10
-    bind=ALTSHIFT,right,movetoworkspace,+1
-    bind=ALTSHIFT,left,movetoworkspace,-1
-
-    bind=CTRL,right,resizeactive,20 0
-    bind=CTRL,left,resizeactive,-20 0
-    bind=CTRL,up,resizeactive,0 -20
-    bind=CTRL,down,resizeactive,0 20
 
     bind=,print,exec,grimblast --notify edit area ~/Pictures/$(date +%Hh_%Mm_%d_%B_%Y).png
 
@@ -207,7 +213,6 @@ in
     windowrulev2 = noshadow, floating:0
 
     # Opacity 
-    #windowrulev2 = opacity 0.90 0.90,class:^(Brave-browser)$
     windowrulev2 = opacity 0.80 0.80,class:^(Steam)$
     windowrulev2 = opacity 0.80 0.80,class:^(steam)$
     windowrulev2 = opacity 0.80 0.80,class:^(steamwebhelper)$
@@ -259,6 +264,16 @@ in
 
     windowrule=workspace 8 silent,steam$
 
+    # idle inhibit while watching videos
+    windowrulev2 = idleinhibit focus, class:^(mpv|.+exe)$
+    windowrulev2 = idleinhibit focus, class:^(brave-browser)$, title:^(.*YouTube.*)$
+
+    windowrulev2 = idleinhibit fullscreen, class:^(firefox)$
+    windowrulev2 = idleinhibit fullscreen,class:^(Brave-browser)$
+
+    layerrule = blur, ^(gtk-layer-shell|anyrun)$
+    layerrule = ignorezero, ^(gtk-layer-shell|anyrun)$
+
     #------------#
     # auto start #
     #------------#
@@ -266,6 +281,7 @@ in
     exec-once=${pkgs.waybar}/bin/waybar
     exec-once=${pkgs.swaynotificationcenter}/bin/swaync
     exec-once=wl-paste --watch cliphist store
+    exec-once=${pkgs.wlsunset}/bin/wlsunset
     exec-once=${pkgs.blueman}/bin/blueman-applet
     exec-once=${pkgs.spotify}/bin/spotify
     exec-once=${pkgs.webcord-vencord}/bin/webcord
@@ -276,9 +292,12 @@ in
 
   programs.swaylock = {
     enable = true;
+    package = pkgs.swaylock-effects;
     settings = {
       image = "$HOME/.config/wallpaper";
       color = "1f1d2e80";
+      effect-blur = "10x2";
+      clock = true;
       font-size = "24";
       indicator-idle-visible = false;
       indicator-radius = 200;

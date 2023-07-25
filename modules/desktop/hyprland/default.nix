@@ -37,6 +37,7 @@
       QT_QPA_PLATFORM = "wayland;xcb";
       QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
       __GL_GSYNC_ALLOWED = "1";
+      __GL_VRR_ALLOWED = "1";
       QT_AUTO_SCREEN_SCALE_FACTOR = "1";
       WLR_NO_HARDWARE_CURSORS = "1";
       NIXOS_OZONE_WL = "1";
@@ -50,7 +51,9 @@
       swaybg
       wl-clipboard
       cliphist
+      hyprpicker
       wlr-randr
+      wlsunset
       xorg.xprop
     ];
   };
@@ -73,6 +76,15 @@
       };
     };
   };
+
+  # fake a tray to let apps start
+  # https://github.com/nix-community/home-manager/issues/2064
+  #systemd.user.targets.tray = {
+  #  Unit = {
+  #    Description = "Home Manager System Tray";
+  #    Requires = [ "graphical-session-pre.target" ];
+  #  };
+  #};
 
   xdg.portal = {
     enable = true;
