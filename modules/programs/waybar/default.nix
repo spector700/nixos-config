@@ -2,10 +2,11 @@
 # Bar
 #
 
-{ config, lib, pkgs, host, user, ... }:
+{ config, pkgs, host, user, ... }:
 
 let
   modules = {
+
     "wlr/workspaces" = {
       "disable-scroll" = true;
       "all-outputs" = true;
@@ -20,17 +21,18 @@ let
     };
 
     "hyprland/window" = {
-      "format" = "  {}";
+      format = "  {}";
       max-length = 200;
-      "separate-outputs" = true;
-      "rewrite" = {
-        "nick@Alfhiem-Nix =(.*)" = " ";
+      separate-outputs = true;
+      rewrite = {
+        "nick@Alfhiem-Nix(.*)" = " ";
         "(.*) - Brave" = " 󰈹";
         "(.*) - Visual Studio Code" = " 󰨞";
         "(.*)Visual Studio Code" = "Code 󰨞";
-        "(.*) — Thunar" = " 󰉋";
+        "(.*) - Thunar" = " 󰉋";
         "(.*)Spotify" = "Spotify 󰓇";
         "(.*)Steam" = "Steam 󰓓";
+        "WebCord - (.*)" = "󰙯";
       };
     };
 
@@ -157,19 +159,6 @@ let
       tooltip = true;
     };
 
-    mpris = {
-      format = "{player_icon} {dynamic}";
-      format-paused = "{status_icon} <i>{dynamic}</i>";
-      player-icons = {
-        default = "▶";
-        mpv = "🎵";
-      };
-      status-icons = {
-        paused = "⏸";
-      };
-      ignored-players = [ "brave" ];
-    };
-
     # modules for padding 
 
     "custom/l_end" = {
@@ -196,11 +185,6 @@ let
       tooltip = false;
     };
 
-    "custom/padd" = {
-      format = "  ";
-      interval = "once";
-      tooltip = false;
-    };
     backlight = {
       device = "intel_backlight";
       format = "{percent}% <span font='11'>{icon}</span>";
@@ -230,6 +214,7 @@ let
       interval = 60;
     };
   };
+  waybar_style = import ./style.nix;
 
 in
 {
@@ -244,33 +229,26 @@ in
   ];
 
   home-manager.users.${user} = {
-    # Home-manager waybar config
     programs.waybar = {
       enable = true;
-      systemd = {
-        enable = true;
-        target = "sway-session.target"; # Needed for waybar to start automatically
-      };
 
-      style = builtins.readFile ./style.css;
+      style = waybar_style;
 
       settings = with host; {
         Main = modules // {
           layer = "top";
           position = "top";
-          height = 31;
+          height = 37;
           gtk-layer-shell = true;
           output = [
             "${mainMonitor}"
           ];
 
-          modules-left = [ "custom/launcher" "custom/l_end" "wlr/workspaces" "hyprland/window" "custom/r_end" "custom/padd" ];
-
-          modules-center = [ "custom/padd" "custom/l_end" "clock" "custom/r_end" "custom/padd" ];
-
+          modules-left = [ "custom/launcher" "wlr/workspaces" "hyprland/window" ];
+          modules-center = [ "custom/l_end" "clock" "custom/r_end" ];
           modules-right =
             if hostName == "Alfhiem-Nix" then
-              [ "custom/padd" "custom/l_end" "cpu" "memory" "custom/r_end" "custom/l_end" "network" "bluetooth" "pulseaudio" "pulseaudio#microphone" "custom/updates" "custom/r_end" "custom/l_end" "tray" "custom/r_end" "custom/l_end" "custom/notification" "custom/wallchange" "custom/wbar" "custom/r_end" "custom/power" ]
+              [ "custom/l_end" "cpu" "memory" "custom/r_end" "custom/l_end" "network" "bluetooth" "pulseaudio" "pulseaudio#microphone" "custom/updates" "custom/r_end" "custom/l_end" "tray" "custom/r_end" "custom/l_end" "custom/notification" "custom/wallchange" "custom/wbar" "custom/r_end" "custom/power" ]
             else
               [ "cpu" "memory" "custom/pad" "battery" "custom/pad" "backlight" "custom/pad" "pulseaudio" "custom/pad" "clock" "tray" ];
         };
@@ -286,16 +264,13 @@ in
               "${secondMonitor}"
               "${thirdMonitor}"
             ];
-          modules-left = [ "custom/launcher" "custom/l_end" "wlr/workspaces" "hyprland/window" "custom/r_end" "custom/padd" ];
-
-          modules-center = [ "custom/padd" "custom/l_end" "clock" "custom/r_end" "custom/padd" ];
-
+          modules-left = [ "custom/launcher" "wlr/workspaces" "hyprland/window" ];
+          modules-center = [ "custom/l_end" "clock" "custom/r_end" ];
           modules-right =
             if hostName == "Alfhiem-Nix" then
-              [ "custom/padd" "custom/l_end" "cpu" "memory" "custom/r_end" "custom/l_end" "tray" "custom/r_end" "custom/l_end" "network" "bluetooth" "pulseaudio" "pulseaudio#microphone" "custom/r_end" "custom/padd" ]
+              [ "custom/l_end" "cpu" "memory" "custom/r_end" "custom/l_end" "tray" "custom/r_end" "custom/l_end" "network" "bluetooth" "pulseaudio" "pulseaudio#microphone" "custom/r_end" ]
             else
               [ "cpu" "memory" "custom/pad" "battery" "custom/pad" "backlight" "custom/pad" "pulseaudio" "custom/pad" "clock" ];
-
 
         } else { });
       };
