@@ -1,17 +1,21 @@
-{ inputs, ... }:
+{ inputs, pkgs, ... }:
 {
 
   programs.spicetify =
     let
-      spicePkgs = inputs.spicetify-nix.packages.default;
+      spicePkgs = inputs.spicetify.packages.${pkgs.system}.default;
     in
     {
       enable = true;
       theme = spicePkgs.themes.catppuccin-mocha;
-      colorScheme = "flamingo";
+      colorScheme = "lavender";
       enabledExtensions = with spicePkgs.extensions; [
         hidePodcasts
-        fullAppDisplay
+        keyboardShortcut
+        shuffle
+      ];
+      enabledCustomApps = with spicePkgs.apps; [
+        reddit
       ];
     };
 }

@@ -63,7 +63,7 @@
   fonts.fonts = with pkgs; [
     # Fonts
     font-awesome
-    (nerdfonts.override { fonts = [ "FiraCode" "Hack" "JetBrainsMono" ]; })
+    (nerdfonts.override { fonts = [ "FiraCode" "JetBrainsMono" ]; })
   ];
 
   environment = {

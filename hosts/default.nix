@@ -47,7 +47,7 @@ in
       gaming.nixosModules.default
       ./desktop
       ./configuration.nix
-      
+
       # Home-Manager module that is used.
 
       home-manager.nixosModules.home-manager
@@ -55,7 +55,7 @@ in
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
         home-manager.extraSpecialArgs = {
-          inherit user;
+          inherit user inputs;
           host = {
             hostName = "Alfhiem-Nix"; #For Xorg iGPU  | Videocard     | Hyprland iGPU
             mainMonitor = "DP-2"; #HDMIA3         | HDMI-A-1      | HDMI-A-3
@@ -65,6 +65,8 @@ in
         home-manager.users.${user} = {
           imports = [
             inputs.nix-index-db.hmModules.nix-index
+            inputs.anyrun.homeManagerModules.default
+            inputs.spicetify.homeManagerModules.default
             ./home.nix
             ./desktop/home.nix
           ];
