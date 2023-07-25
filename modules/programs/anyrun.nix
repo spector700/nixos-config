@@ -1,36 +1,65 @@
-{ inputs, ... }:
+{ inputs, pkgs, ... }:
 
 {
   programs.anyrun = {
     enable = true;
     config = {
-      plugins = with inputs.anyrun.packages; [
+      plugins = with inputs.anyrun.packages.${pkgs.system}; [
         applications
         rink
+        randr
+        shell
+        symbols
+        stdin
+
       ];
-      width = { fraction = 0.3; };
-      position = "top";
-      verticalOffset = { absolute = 0; };
-      hideIcons = false;
-      ignoreExclusiveZones = false;
-      layer = "overlay";
-      hidePluginInfo = false;
-      closeOnClick = false;
-      showResultsImmediately = false;
-      maxEntries = null;
+      width.fraction = 0.25;
+      y.absolute = 300;
+      hidePluginInfo = true;
+      closeOnClick = true;
+    };
+    extraConfigFiles = {
+      "symbols.ron".text = ''
+        Config(
+          prefix: ":e",
+        )
+      '';
     };
     extraCss = ''
-      .some_class {
-        background: red;
+      * {
+        transition: 200ms ease;
+        font-family: "JetBrainsMono Nerd Font";
+        font-size: 0.875rem;
+      }
+
+      #window,
+      #match,
+      #entry,
+      #plugin,
+      #main {
+        background: transparent;
+      }
+
+      #match:selected {
+        background: rgba(203, 166, 247, 0.7);
+      }
+
+      #match {
+        padding: 3px;
+        border-radius: 5px;
+      }
+
+      #entry, #plugin:hover {
+        border-radius: 16px;
+      }
+
+      box#main {
+        background: rgba(30, 30, 46, 0.7);
+        border: 1px solid #1c272b;
+        border-radius: 24px;
+        padding: 8px;
       }
     '';
 
-    extraConfigFiles."some-plugin.ron".text = ''
-      Config(
-        // for any other plugin
-        // this file will be put in ~/.config/anyrun/some-plugin.ron
-        // refer to docs of xdg.configFile for available options
-      )
-    '';
   };
 }

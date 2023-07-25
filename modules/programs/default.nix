@@ -14,6 +14,8 @@
   ./kitty.nix
   ./eww
   ./rofi
+  ./anyrun.nix
+  ./spicetify.nix
   #./waybar.nix
   #./games.nix
 ]
