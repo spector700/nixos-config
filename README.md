@@ -1,34 +1,56 @@
-* Table of Content
-:PROPERTIES:
-:TOC:      :include all :depth 2 :force (depth) :ignore (this)
-:END:
-:CONTENTS:
-- [[#system-components][System Components]]
-- [[#nixos-installation-guide][NixOS Installation Guide]]
-- [[#nix-installation-guide][Nix Installation Guide]]
-:END:
+<p align="center"><img src="https://i.imgur.com/X5zKxvp.png" width=300px></p>
 
-* System Components
-|                 | *NixOS -Wayland* | *NixOS - Wayland/Xorg* | *NixOS - Xorg*   |
-|-----------------+------------------+------------------------+------------------|
-| *DM*            | greetd           | GDM                    | LightDM          |
-| *WM/DE*         | Hyprland         | Gnome                  | Bspwm            |
-| *Compositor*    | Hyprland         | Mutter                 | Picom (jonaburg) |
-| *Bar*           | Waybar           | Dock-to-Panel          | Polybar          |
-| *Hotkeys*       | Hyprland         | /                      | Sxhkd            |
-| *Launcher*      | Wofi             | Gnome                  | Rofi             |
-| *GTK Theme*     | Dracula          | Dracula / Adwaita      | Dracula          |
-| *Notifications* | Dunst            | Gnome                  | Dunst            |
-| *Terminal*      | Kitty            | Alacritty              | Alacritty        |
-| *Used by host*  | Desktop          | Work                   | Laptop & VM      |
+<p align="center">
+<a href="https://nixos.org/"><img src="https://img.shields.io/badge/NixOS-unstable-informational.svg?style=flat&logo=nixos&logoColor=CAD3F5&colorA=24273A&colorB=8AADF4"></a> 
+
+<p align="center"><img src="https://i.imgur.com/NbxQ8MY.png" width=600px></p>
+
+---
+
+<small align="center" >Intro Stolen from @linuxmobile</small>
+
+---
+
+<pre align="center">
+• <a href="#seedling--setup">SETUP</a> •
+</pre>
+
+---
+
+- **Window Manager** • [Hyprland](https://github.com/hyprwm/Hyprland)🎨 
+- **Shell** • [Zsh](https://www.zsh.org) 🐚 with
+  [starship](https://github.com/starship/starship) Cross Shell Platform!
+- **Terminal** • [Kitty](https://sw.kovidgoyal.net/kitty/) 💻 Meow!
+- **Panel** • [Waybar](https://aur.archlinux.org/packages/waybar-hyprland-git)🍧
+  Patched waybar using experimental!
+- **Notify Daemon** • [Sway Notification Center](https://github.com/ErikReider/SwayNotificationCenter) 🍃
+  Notifications with a Panel!
+- **Launcher** • [AnyRun](https://github.com/Kirottu/anyrun) 🚀 Fast AnyRunner!
+- **File Manager** • [Ranger](https://github.com/ranger/ranger)🔖 custom!
+- **GUI Basic-IDE** • [LazyVim](https://lazyvim.org) Rice
+  IDE!
 
 There are some other desktop environments/window manager (See NixOS - Other). Just link to correct ~default/home.nix~ in ~./hosts/<host>/default and home.nix~.
 There is also a general Nix config with hostname ~pacman~ that can be used on pretty much any disto.
 
-Compontents relevant to all hosts:
-| *Shell*    | Zsh               |
-| *Terminal* | Kitty             |
-| *Editors*  | Nvim              |
+## 🌼 <samp>INSTALLATION (NixOS)</samp>
+
+- Download ISO.
+```bash
+wget -O https://channels.nixos.org/nixos-23.05/latest-nixos-minimal-x86_64-linux.iso
+```
+
+- Enable nixFlakes
+
+```bash
+nix-shell -p nixFlakes
+```
+
+- Install Dotfiles Using Flake
+
+```bash
+nixos-install --flake 'github:spector700/nixos-config#desktop'
+```
 
 * NixOS Installation Guide
 This flake currently has *1* hosts
