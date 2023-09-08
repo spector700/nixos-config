@@ -25,14 +25,15 @@ let
       max-length = 200;
       separate-outputs = true;
       rewrite = {
-        "nick@Alfhiem-Nix(.*)" = " ";
-        "(.*) - Brave" = " 󰈹";
+        "~/(.*)" = "";
+        "(.*) - Brave" = "󰈹";
+        "(.*) — Mozilla Firefox" = "󰈹";
         "(.*) - Visual Studio Code" = " 󰨞";
         "(.*)Visual Studio Code" = "Code 󰨞";
         "(.*) - Thunar" = " 󰉋";
         "(.*)Spotify" = "Spotify 󰓇";
         "(.*)Steam" = "Steam 󰓓";
-        "WebCord - (.*)" = "󰙯";
+        "(.*)WebCord -" = "󰙯";
       };
     };
 

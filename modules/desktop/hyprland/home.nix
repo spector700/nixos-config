@@ -11,7 +11,7 @@
 #               └─ home.nix *
 #
 
-{ inputs, pkgs, host, ... }:
+{ pkgs, host, ... }:
 
 let
   touchpad = with host;
@@ -34,8 +34,8 @@ let
 
   workspaces = with host;
     if hostName == "Alfhiem-Nix" then ''
-      monitor=${toString mainMonitor},3440x1440@100,2076x0,1.25,bitdepth,10
-      monitor=${toString secondMonitor},highres,0x0,1.85,bitdepth,10
+      monitor=${toString mainMonitor},3440x1440@100,1167x420,1.25,bitdepth,10
+      monitor=${toString secondMonitor},highres,0x0,1.85,bitdepth,10,transform,1
     '' else ''
       monitor=${toString mainMonitor},1920x1080@60,0x0,1
     '';
@@ -56,7 +56,6 @@ in
 {
   wayland.windowManager.hyprland = {
     enable = true;
-    #package = pkgs.hyprland;
     enableNvidiaPatches = true;
     systemdIntegration = true;
     extraConfig = ''
@@ -77,17 +76,18 @@ in
       rounding=5
       #active_opacity=0.93
       #inactive_opacity=0.93
-      blur_passes=3
-      blur_xray=true
-      blur_ignore_opacity=true
       shadow_offset=0 5
       shadow_range=50
       shadow_render_power=3
       col.shadow=rgba(00000099)
 
-      blurls = gtk-layer-shell
-      blurls = waybar
-      blurls = lockscreen
+      blur {
+        passes=3
+        ignore_opacity=true
+        blurls = gtk-layer-shell
+        blurls = waybar
+        blurls = lockscreen
+      }
     }
 
      animations {
@@ -108,9 +108,7 @@ in
 
     input {
       kb_layout=us
-      #kb_options=caps:ctrl_modifier
       follow_mouse=1
-      repeat_delay=250
       numlock_by_default=1
       accel_profile=flat
       sensitivity=0
@@ -125,10 +123,12 @@ in
     }
 
     misc {
+      disable_autoreload=true
       disable_hyprland_logo=true
       disable_splash_rendering=true
       key_press_enables_dpms=true
       mouse_move_enables_dpms=true
+      vrr=1
     }
 
     # use this instead of hidpi patches
@@ -139,36 +139,35 @@ in
     bindm=SUPER,mouse:272,movewindow
     bindm=SUPER,mouse:273,resizewindow
 
-    bind=SUPER,B,exec,${pkgs.brave}/bin/brave
-    bind=SUPER,X,exec,${pkgs.kitty}/bin/kitty
-    bind=SUPER,Q,killactive,
+    bind=SUPER,B,exec,${pkgs.firefox}/bin/firefox
+    bind=SUPER,T,exec,${pkgs.kitty}/bin/kitty
     bind=CTRL SHIFT,Escape,exec,${pkgs.kitty}/bin/kitty -e btop
     bind=SUPERSHIFT,L,exec,${pkgs.swaylock-effects}/bin/swaylock
     bind=SUPER,E,exec,${pkgs.xfce.thunar}/bin/thunar
-    bind=SUPER,G,togglefloating,
     #bind=SUPER,Space,exec, pkill rofi || ${pkgs.rofi-wayland}/bin/rofi -show drun
     bind=SUPER,Space,exec, pkill anyrun || anyrun
     bind=SUPER,V,exec, pkill rofi || ${pkgs.cliphist}/bin/cliphist list | rofi -dmenu -display-columns 2 | cliphist decode | wl-copy
+    bind=SUPERSHIFT,R,exec,${pkgs.hyprland}/bin/hyprctl reload && ~/.config/waybar/scripts/restart.sh
     bind=SUPER,P,pseudo,
+    bind=SUPER,G,togglefloating,
+    bind=SUPER,Q,killactive,
     bind=SUPER,F,fullscreen,
     bind=SUPER,R,forcerendererreload
-    bind=SUPERSHIFT,R,exec,${pkgs.hyprland}/bin/hyprctl reload && ~/.config/waybar/scripts/restart.sh
-    bind=SUPER,T,exec,${pkgs.neovim}/bin/nvim
 
-    bind=SUPER,h,movefocus,l
-    bind=SUPER,l,movefocus,r
-    bind=SUPER,k,movefocus,u
-    bind=SUPER,j,movefocus,d
+    bind=SUPER,left,movefocus,l
+    bind=SUPER,right,movefocus,r
+    bind=SUPER,up,movefocus,u
+    bind=SUPER,down,movefocus,d
 
     bind=SUPERSHIFT,left,movewindow,l
     bind=SUPERSHIFT,right,movewindow,r
     bind=SUPERSHIFT,up,movewindow,u
     bind=SUPERSHIFT,down,movewindow,d
 
-    bind=CTRL,right,resizeactive,20 0
-    bind=CTRL,left,resizeactive,-20 0
-    bind=CTRL,up,resizeactive,0 -20
-    bind=CTRL,down,resizeactive,0 20
+  # bind=CTRL,right,resizeactive,20 0
+  # bind=CTRL,left,resizeactive,-20 0
+  # bind=CTRL,up,resizeactive,0 -20
+  # bind=CTRL,down,resizeactive,0 20
 
     bind=SUPER,1,workspace,1
     bind=SUPER,2,workspace,2
@@ -181,11 +180,11 @@ in
     bind=SUPER,9,workspace,9
     bind=SUPER,0,workspace,10
 
-    bind = SUPER, a, togglespecialworkspace
-    #bind = SUPER, a, exec, notify-send 'Toggled Special Workspace' -e
-    bind = SUPER, c, exec, hyprctl dispatch centerwindow
+    bind=SUPER,S,togglespecialworkspace, spotify
+    #bind=SUPER,a,exec,notify-send 'Toggled Special Workspace' -e
+    bind=SUPER,c,exec,hyprctl dispatch centerwindow
 
-    bind=ALTSHIFT,a,movetoworkspace,special
+    bind=ALTSHIFT,S,movetoworkspace,special
     bind=ALTSHIFT,1,movetoworkspace,1
     bind=ALTSHIFT,2,movetoworkspace,2
     bind=ALTSHIFT,3,movetoworkspace,3
@@ -257,7 +256,7 @@ in
     windowrule=size 24% 24% ,title:^(Picture-in-Picture)$
 
     # start spotify tiled in ws5
-    windowrulev2 = workspace 5 silent, title:^(Spotify)$
+    windowrulev2 = workspace special:spotify silent, title:^(Spotify)$
 
     # start Discord/WebCord in ws4
     windowrulev2 = workspace 4 silent, title:^(.*(Disc|WebC)ord.*)$
@@ -266,9 +265,9 @@ in
 
     # idle inhibit while watching videos
     windowrulev2 = idleinhibit focus, class:^(mpv|.+exe)$
-    windowrulev2 = idleinhibit focus, class:^(brave-browser)$, title:^(.*YouTube.*)$
+    windowrulev2 = idleinhibit focus, class:^(firefox)$, title:^(.*YouTube.*)$
 
-    windowrulev2 = idleinhibit fullscreen, class:^(firefox)$
+    windowrulev2 = idleinhibit fullscreen,class:^(firefox)$
     windowrulev2 = idleinhibit fullscreen,class:^(Brave-browser)$
 
     layerrule = blur, ^(gtk-layer-shell|anyrun)$
@@ -278,12 +277,13 @@ in
     # auto start #
     #------------#
     #exec-once = xprop -root -f _XWAYLAND_GLOBAL_OUTPUT_SCALE 32c -set _XWAYLAND_GLOBAL_OUTPUT_SCALE 2
+    exec-once=dbus-update-activation-environment DISPLAY XAUTHORITY WAYLAND_DISPLAY
     exec-once=${pkgs.waybar}/bin/waybar
     exec-once=${pkgs.swaynotificationcenter}/bin/swaync
     exec-once=wl-paste --watch cliphist store
     exec-once=${pkgs.wlsunset}/bin/wlsunset
     exec-once=${pkgs.blueman}/bin/blueman-applet
-    exec-once=${pkgs.spotify}/bin/spotify
+    exec-once=spotify
     exec-once=${pkgs.webcord-vencord}/bin/webcord
     ${execute}
   '';
@@ -322,5 +322,4 @@ in
       show-failed-attempts = true;
     };
   };
-
 }

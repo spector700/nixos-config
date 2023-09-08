@@ -14,6 +14,8 @@
       theme = "Catppuccin-Mocha";
       settings = {
         confirm_os_window_close = 0;
+        placement_strategy = "center";
+
         enable_audio_bell = false;
       };
     };
