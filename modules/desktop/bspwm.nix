@@ -11,8 +11,6 @@
 #               └─ default.nix *
 #
 
-{ pkgs, ... }:
-
 {
 
   xsession.windowManager.bspwm = {

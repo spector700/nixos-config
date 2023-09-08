@@ -12,21 +12,12 @@
 #
 
 { inputs, pkgs, system, user, ... }:
-#let 
-# exec = "exec Hyprland";
-#in 
+
 {
   imports = [ ../../programs/waybar ];
 
   environment = {
-    # start from tty
-    #extraInit = ''
-    # if [ -z $DISPLAY ] && [ "$(tty)" = "/dev/tty1" ]; then
-    #   ${exec}
-    # fi
-    # '';
 
-    variables = { };
     sessionVariables = {
       XDG_CURRENT_DESKTOP = "Hyprland";
       XDG_SESSION_TYPE = "wayland";
@@ -39,6 +30,7 @@
       __GL_GSYNC_ALLOWED = "1";
       __GL_VRR_ALLOWED = "1";
       QT_AUTO_SCREEN_SCALE_FACTOR = "1";
+      ANKI_WAYLAND = "1";
       WLR_NO_HARDWARE_CURSORS = "1";
       NIXOS_OZONE_WL = "1";
       MOZ_ENABLE_WAYLAND = "1";
@@ -58,7 +50,7 @@
     ];
   };
 
-  fonts.enableDefaultFonts = true;
+  fonts.enableDefaultPackages = true;
   programs.dconf.enable = true;
 
   security.pam.services.swaylock = {
