@@ -53,16 +53,38 @@
   '';
 
   console = {
-    font = "JetBrainsMono Nerd Font";
+    font = "ter-v20n";
+    packages = [ pkgs.terminus_font ];
     keyMap = "us";
   };
 
   security.rtkit.enable = true;
   security.polkit.enable = true;
 
-  fonts.fonts = with pkgs; [
+  systemd = {
+    user.services.polkit-kde-authentication-agent-1 = {
+      description = "polkit-kde-authentication-agent-1";
+      wantedBy = [ "graphical-session.target" ];
+      wants = [ "graphical-session.target" ];
+      after = [ "graphical-session.target" ];
+      serviceConfig = {
+        Type = "simple";
+        ExecStart = "${pkgs.libsForQt5.polkit-kde-agent}/libexec/polkit-kde-authentication-agent-1";
+        Restart = "on-failure";
+        RestartSec = 1;
+        TimeoutStopSec = 10;
+      };
+    };
+  };
+
+  programs.partition-manager.enable = true;
+
+  hardware.keyboard.qmk.enable = true;
+
+  fonts.packages = with pkgs; [
     # Fonts
     font-awesome
+    noto-fonts-cjk-sans
     (nerdfonts.override { fonts = [ "FiraCode" "JetBrainsMono" ]; })
   ];
 
@@ -75,9 +97,6 @@
     systemPackages = with pkgs; [
       # Default packages installed system-wide
       wget
-      neofetch
-      xdg-utils
-      networkmanagerapplet
     ];
   };
 
@@ -157,7 +176,21 @@
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
+
+    settings = {
+      builders-use-substitutes = true;
+      substituters = [
+        "https://nix-gaming.cachix.org"
+        "https://anyrun.cachix.org"
+      ];
+
+      trusted-public-keys = [
+        "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="
+        "anyrun.cachix.org-1:pqBobmOjI7nKlsUMV25u9QHa9btJK65/C8vnO3p346s="
+      ];
+    };
   };
+
   nixpkgs.config.allowUnfree = true; # Allow proprietary software.
 
   # Show package changes on rebuild
