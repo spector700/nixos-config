@@ -13,15 +13,12 @@
           "$git_branch"
           "$git_status"
           "[](fg:#4C566A bg:#86BBD8)"
+          "$python"
           "$c"
           "$elixir"
-          "$elm"
           "$golang"
-          "$haskell"
           "$java"
-          "$julia"
           "$nodejs"
-          "$nim"
           "$rust"
           "[](fg:#86BBD8 bg:#06969A)"
           "$docker_context"
@@ -29,7 +26,7 @@
           "$time"
           "[ ](fg:#33658A)"
         ];
-        command_timeout = 5000;
+
         # Disable the blank line at the start of the prompt
         # add_newline = false
 
@@ -54,6 +51,12 @@
         # So either put "Important Documents" before "Documents" or use the substituted version:
         # "Important  " = "  "
 
+        python = {
+          format = "[$symbol(($virtualenv) )]($style)";
+          style = "bg:#86BBD8";
+          symbol = "";
+        };
+
         c = {
           symbol = " ";
           style = "bg:#86BBD8";
@@ -72,16 +75,10 @@
           format = "[ $symbol ($version) ]($style)";
         };
 
-        elm = {
-          symbol = " ";
-          style = "bg:#86BBD8";
-          format = "[ $symbol ($version) ]($style)";
-        };
-
         git_branch = {
           symbol = "";
           style = "bg:#4C566A";
-          format = "[ $symbol $branch ]($style)";
+          format = "[ $symbol $branch (:$remote_branch)]($style)";
         };
 
         git_status = {
@@ -95,32 +92,14 @@
           format = "[ $symbol ($version) ]($style)";
         };
 
-        haskell = {
-          symbol = " ";
-          style = "bg:#86BBD8";
-          format = "[ $symbol ($version) ]($style)";
-        };
-
         java = {
           symbol = " ";
           style = "bg:#86BBD8";
           format = "[ $symbol ($version) ]($style)";
         };
 
-        julia = {
-          symbol = " ";
-          style = "bg:#86BBD8";
-          format = "[ $symbol ($version) ]($style)";
-        };
-
         nodejs = {
           symbol = "";
-          style = "bg:#86BBD8";
-          format = "[ $symbol ($version) ]($style)";
-        };
-
-        nim = {
-          symbol = " ";
           style = "bg:#86BBD8";
           format = "[ $symbol ($version) ]($style)";
         };

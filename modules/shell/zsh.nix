@@ -3,23 +3,17 @@
 #
 
 
-{ pkgs, lib, ... }:
+{ pkgs, ... }:
 
 {
 
   programs = {
     zsh = {
       enable = true;
-      enableAutosuggestions = true; # Auto suggest options and highlights syntax, searches in history for options
+      enableAutosuggestions = true;
       syntaxHighlighting.enable = true;
       enableCompletion = true;
       history.size = 100000;
-
-      oh-my-zsh = {
-        # Extra plugins for zsh
-        enable = true;
-        plugins = [ "git" ];
-      };
 
       initExtra = ''
         # run programs that are not in PATH with comma

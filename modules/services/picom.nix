@@ -151,7 +151,7 @@ focus-exclude = [ "class_g = 'Cairo-clock'" ];
 # inactive-dim-fixed = 1.0
 
 # Specify a list of opacity rules, in the format `PERCENT:PATTERN`,
-# like `50:name *= "Firefox"`. picom-trans is recommended over this.
+# like `50:name *= "firefox"`. picom-trans is recommended over this.
 # Note we don't make any guarantee about possible conflicts with other
 # programs that set '_NET_WM_WINDOW_OPACITY' on frame or client windows.
 # example:
