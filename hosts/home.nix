@@ -33,6 +33,7 @@
     packages = with pkgs; [
       # Terminal Utils
       tldr
+      neofetch
 
       # Video/Audio
       feh
@@ -41,13 +42,19 @@
       gimp
 
       # Apps
-      brave
       webcord-vencord
       signal-desktop
+      networkmanagerapplet
+      nextcloud-client
+      obsidian
+      anki-bin
+      vial
 
       # File Management
       okular
       unzip
+      unrar
+      xdg-utils
 
     ];
 
@@ -73,7 +80,6 @@
       package = pkgs.catppuccin-gtk.override {
         size = "compact";
         accents = [ "blue" ];
-        #tweaks = [ "rimless" ];
         variant = "mocha";
       };
     };
@@ -86,24 +92,13 @@
       size = 12;
     };
     gtk3.extraConfig = {
-      gtk-application-prefer-dark-theme = 1;
+      gtk-application-prefer-dark-theme = true;
     };
 
     gtk4.extraConfig = {
-      gtk-application-prefer-dark-theme = 1;
+      gtk-application-prefer-dark-theme = true;
     };
   };
 
-  nix.settings = {
-    builders-use-substitutes = true;
-    substituters = [
-      "https://nix-gaming.cachix.org"
-      "https://anyrun.cachix.org"
-    ];
 
-    trusted-public-keys = [
-      "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="
-      "anyrun.cachix.org-1:pqBobmOjI7nKlsUMV25u9QHa9btJK65/C8vnO3p346s="
-    ];
-  };
 }

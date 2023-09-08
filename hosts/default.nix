@@ -16,20 +16,14 @@
 let
   system = "x86_64-linux";
 
-  pkgs = import nixpkgs {
-    inherit system;
-    # Allow proprietary software
-    config.allowUnfree = true;
-  };
-
   stable = import nixpkgs-stable {
     inherit system;
     # Allow proprietary software
     config.allowUnfree = true;
   };
-
 in
 {
+
   # Desktop profile
   desktop = nixpkgs.lib.nixosSystem {
     inherit system;
