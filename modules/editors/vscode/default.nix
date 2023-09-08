@@ -2,10 +2,12 @@
 # Neovim
 #
 
-{ pkgs, ... }:
+{ pkgs, user, ... }:
 
 {
-  programs.vscode = {
-    enable = true;
+  programs = {
+    vscode = {
+      enable = true;
+    };
   };
 }

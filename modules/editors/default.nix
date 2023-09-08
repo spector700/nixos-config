@@ -12,5 +12,5 @@
 
 [
   ./neovim
-  #./vscode
+  ./vscode
 ]

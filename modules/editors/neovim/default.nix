@@ -3,7 +3,7 @@
 #
 
 
-{ pkgs, config, inputs, ... }:
+{ pkgs, config,  ... }:
 
 {
 
@@ -28,7 +28,7 @@
     nodePackages_latest.bash-language-server
     sumneko-lua-language-server
     nixd
-    nil
+    # nil
 
     # Format
     nixpkgs-fmt
