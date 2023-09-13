@@ -20,7 +20,7 @@
       '';
 
       shellAliases = {
-        rebuild_desktop = "sudo nixos-rebuild switch --flake ~/.config/nixos-config#desktop";
+        rebuild_desktop = "nh os switch -H desktop";
         ".." = "cd ..";
         "..." = "cd ../..";
         ".3" = "cd ../../..";

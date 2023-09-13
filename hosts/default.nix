@@ -11,7 +11,7 @@
 #            └─ ./home.nix 
 #
 
-{ inputs, nixpkgs, nixpkgs-stable, home-manager, user, location, gaming, nh, ... }:
+{ inputs, nixpkgs, nixpkgs-stable, home-manager, user, location, ... }:
 
 let
   system = "x86_64-linux";
@@ -28,7 +28,7 @@ in
   desktop = nixpkgs.lib.nixosSystem {
     inherit system;
     specialArgs = {
-      inherit inputs stable system user location gaming;
+      inherit inputs stable system user location;
       host = {
         hostName = "Alfhiem-Nix";
         mainMonitor = "DP-2";
@@ -38,8 +38,8 @@ in
     # Pass flake variable
     # Modules that are used
     modules = [
-      gaming.nixosModules.default
-      nh.nixosModules.default
+      inputs.gaming.nixosModules.default
+      inputs.nh.nixosModules.default
       ./desktop
       ./configuration.nix
 
