@@ -28,27 +28,13 @@
     [ (import ../../modules/desktop/hyprland/default.nix) ];
 
   boot = {
-    loader = {
-      systemd-boot = {
-        enable = true;
-        configurationLimit = 5;
-      };
-      efi.canTouchEfiVariables = true;
-      timeout = 1;
-    };
-    # network wait-online always fails
-    initrd.systemd.network.wait-online.enable = false;
-    #kernelPackages = pkgs.linuxPackages_xanmod_latest;
     kernelPackages = pkgs.linuxPackages_latest;
     kernelParams = [
       #"nvidia-drm.modeset=1"
       #For openrgb with gigabyte motherboard
       "acpi_enforce_resources=lax"
     ];
-    # Boot logo
-    plymouth = {
-      enable = true;
-    };
+
   };
 
   services.xserver = {
@@ -76,6 +62,8 @@
     networkmanager.enable = true;
     #enableIPv6 = false;
   };
+  # Network wait fails with networkmanager
+  systemd.network.wait-online.enable = false;
 
   hardware = {
     #sane = {
@@ -87,6 +75,9 @@
       enable = true;
       users = [ "${user}" ];
     };
+
+    # Udev rules for vial
+    keyboard.qmk.enable = true;
 
     nvidia = {
       modesetting.enable = true;
@@ -107,9 +98,6 @@
       ];
     };
   };
-  environment.systemPackages = with pkgs; [
-    razergenie
-  ];
 
   services = {
     blueman.enable = true;

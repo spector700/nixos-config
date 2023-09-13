@@ -276,7 +276,7 @@ in
     #------------#
     # auto start #
     #------------#
-    #exec-once = xprop -root -f _XWAYLAND_GLOBAL_OUTPUT_SCALE 32c -set _XWAYLAND_GLOBAL_OUTPUT_SCALE 2
+    exec-once = xprop -root -f _XWAYLAND_GLOBAL_OUTPUT_SCALE 32c -set _XWAYLAND_GLOBAL_OUTPUT_SCALE 2
     exec-once=dbus-update-activation-environment DISPLAY XAUTHORITY WAYLAND_DISPLAY
     exec-once=${pkgs.waybar}/bin/waybar
     exec-once=${pkgs.swaynotificationcenter}/bin/swaync

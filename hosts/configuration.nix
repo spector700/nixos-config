@@ -7,7 +7,7 @@
 #           └─ default.nix
 #
 
-{ config, lib, pkgs, inputs, user, ... }:
+{ config, lib, pkgs, inputs, user, system, ... }:
 
 {
   # configuration used by all hosts
@@ -31,6 +31,23 @@
   };
 
   environment.pathsToLink = [ "/share/zsh" ];
+
+  # Boot logo
+  boot = {
+    loader = {
+      systemd-boot = {
+        enable = true;
+        configurationLimit = 5;
+      };
+      efi.canTouchEfiVariables = true;
+      timeout = 1;
+    };
+
+    # Boot logo
+    plymouth = {
+      enable = true;
+    };
+  };
 
   programs = {
     zsh = {
@@ -79,8 +96,6 @@
 
   programs.partition-manager.enable = true;
 
-  hardware.keyboard.qmk.enable = true;
-
   fonts.packages = with pkgs; [
     # Fonts
     font-awesome
@@ -93,10 +108,11 @@
       TERMINAL = "kitty";
       EDITOR = "nvim";
       VISUAL = "nvim";
+      # Variable for nh
+      FLAKE = "/home/${user}/.config/nixos-config";
     };
-    systemPackages = with pkgs; [
-      # Default packages installed system-wide
-      wget
+    systemPackages = [
+      inputs.nh.packages.${pkgs.system}.default
     ];
   };
 
@@ -136,8 +152,8 @@
       pulse.enable = true;
       jack.enable = true;
     };
+
     openssh = {
-      # SSH: secure shell (remote connection to shell of server)
       enable = true; # local: $ ssh <user>@<ip>
       # public:
       #   - port forward 22 TCP to server
@@ -160,17 +176,22 @@
     flatpak.enable = true;
   };
 
+  nh = {
+    enable = true;
+    clean.enable = true;
+  };
+
   nix = {
     # Nix Package Manager settings
     settings = {
       auto-optimise-store = true; # Optimise syslinks
     };
-    gc = {
-      # Automatic garbage collection
-      automatic = true;
-      dates = "weekly";
-      options = "--delete-older-than 7d";
-    };
+    # gc = {
+    #   # Automatic garbage collection
+    #   automatic = true;
+    #   dates = "weekly";
+    #   options = "--delete-older-than 7d";
+    # };
     package = pkgs.nixVersions.unstable; # Enable nixFlakes on system
     registry.nixpkgs.flake = inputs.nixpkgs;
     extraOptions = ''

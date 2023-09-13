@@ -11,7 +11,7 @@
 #            └─ ./home.nix 
 #
 
-{ inputs, nixpkgs, nixpkgs-stable, home-manager, user, location, gaming, ... }:
+{ inputs, nixpkgs, nixpkgs-stable, home-manager, user, location, gaming, nh, ... }:
 
 let
   system = "x86_64-linux";
@@ -39,6 +39,7 @@ in
     # Modules that are used
     modules = [
       gaming.nixosModules.default
+      nh.nixosModules.default
       ./desktop
       ./configuration.nix
 

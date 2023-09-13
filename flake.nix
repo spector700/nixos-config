@@ -39,6 +39,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nh = {
+      url = "github:viperML/nh";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     spicetify = {
       url = "github:the-argus/spicetify-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -49,7 +54,7 @@
     };
   };
 
-  outputs = inputs @ { self, nixpkgs, nixpkgs-stable, home-manager, gaming, hyprland-contrib, ... }:
+  outputs = inputs @ { self, nixpkgs, nixpkgs-stable, home-manager, gaming, hyprland-contrib, nh, ... }:
     let
       user = "nick";
       location = "$HOME/.setup";
@@ -61,7 +66,7 @@
         # Imports ./hosts/default.nix
         import ./hosts {
           inherit (nixpkgs) lib;
-          inherit inputs nixpkgs nixpkgs-stable home-manager user location gaming;
+          inherit inputs nixpkgs nixpkgs-stable home-manager user location gaming nh;
         }
       );
 
