@@ -16,10 +16,7 @@
       history.size = 100000;
 
       initExtra = ''
-        # run programs that are not in PATH with comma
-        command_not_found_handler() {
-        ${pkgs.comma}/bin/comma "$@"
-        }
+        source ${pkgs.zsh-vi-mode}/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
       '';
 
       shellAliases = {
@@ -31,7 +28,7 @@
         cleanup = "sudo nix-collect-garbage --delete-older-than 1d";
         listgen = "sudo nix-env -p /nix/var/nix/profiles/system --list-generations";
         cat = "bat";
-        l = "exa -la --git --icons --color=auto --group-directories-first -s extension";
+        l = "eza -la --git --icons --color=auto --group-directories-first -s extension";
 
         lg = "lazygit";
       };
@@ -44,7 +41,7 @@
       };
     };
 
-    exa.enable = true;
+    eza.enable = true;
     btop.enable = true;
 
   };

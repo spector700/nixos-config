@@ -3,7 +3,7 @@
 #
 
 
-{ pkgs, config,  ... }:
+{ pkgs, config, ... }:
 
 {
 
@@ -11,6 +11,9 @@
 
   programs.neovim = {
     enable = true;
+    plugins = with pkgs.vimPlugins; [
+      nvim-treesitter.withAllGrammars
+    ];
 
     vimAlias = true;
     viAlias = true;
@@ -28,7 +31,6 @@
     nodePackages_latest.bash-language-server
     sumneko-lua-language-server
     nixd
-    # nil
 
     # Format
     nixpkgs-fmt
