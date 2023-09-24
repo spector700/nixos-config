@@ -28,9 +28,8 @@
     [ (import ../../modules/desktop/hyprland/default.nix) ];
 
   boot = {
-    kernelPackages = pkgs.linuxPackages_latest;
+    kernelPackages = pkgs.linuxPackages_xanmod_latest;
     kernelParams = [
-      #"nvidia-drm.modeset=1"
       #For openrgb with gigabyte motherboard
       "acpi_enforce_resources=lax"
     ];
@@ -83,6 +82,8 @@
       modesetting.enable = true;
       #Fix suspend/resume
       powerManagement.enable = true;
+
+      # open = true;
     };
     opengl = {
       enable = true;

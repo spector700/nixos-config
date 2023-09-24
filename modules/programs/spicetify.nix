@@ -7,8 +7,10 @@
     in
     {
       enable = true;
-      theme = spicePkgs.themes.catppuccin-mocha;
-      colorScheme = "lavender";
+      theme = spicePkgs.themes.Blossom;
+      injectCss = true;
+      overwriteAssets = true;
+      colorScheme = "dark";
       enabledExtensions = with spicePkgs.extensions; [
         hidePodcasts
         keyboardShortcut
