@@ -38,7 +38,7 @@ in
     # Pass flake variable
     # Modules that are used
     modules = [
-      inputs.gaming.nixosModules.default
+      inputs.gaming.nixosModules.pipewireLowLatency
       inputs.nh.nixosModules.default
       ./desktop
       ./configuration.nix

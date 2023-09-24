@@ -23,7 +23,7 @@ let
     "image/*" = [ "imv.desktop" ];
     "application/json" = browser;
     "application/pdf" = [ "org.pwmt.zathura.desktop.desktop" ];
-    "x-scheme-handler/discord" = [ "discordcanary.desktop" ];
+    "x-scheme-handler/discord" = [ "discord.desktop" ];
     "x-scheme-handler/spotify" = [ "spotify.desktop" ];
     "x-scheme-handler/tg" = [ "telegramdesktop.desktop" ];
   };
@@ -41,6 +41,10 @@ in
     userDirs = {
       enable = true;
       createDirectories = true;
+      documents = "$HOME/Documents";
+      download = "$HOME/Downloads";
+      videos = "$HOME/Videos";
+      pictures = "$HOME/Pictures";
       extraConfig = {
         XDG_SCREENSHOTS_DIR = "${config.xdg.userDirs.pictures}/Screenshots";
       };

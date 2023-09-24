@@ -11,7 +11,7 @@
 #               └─ default.nix *
 #
 
-{ inputs, pkgs, system, user, ... }:
+{ inputs, pkgs, user, ... }:
 
 {
   imports = [ ../../programs/waybar ];
