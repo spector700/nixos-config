@@ -12,11 +12,12 @@
 
 [
   ./kitty.nix
-  ./eww
   ./rofi
   ./anyrun.nix
   ./spicetify.nix
   ./browser.nix
+  ./qt.nix
+  ./gtk.nix
   #./thunar.nix
   #./waybar.nix
   #./games.nix
