@@ -47,7 +47,7 @@
 
   #workspaces button.active {
     color: @main-color;
-    background: @wb-act-bg;
+    background: @wb-bg;
     border-radius: 16px;
     min-width: 25px;
     padding-right: 6px;
@@ -56,7 +56,7 @@
 
   #workspaces button:hover {
     color: @main-color;
-    background: @wb-hvr-bg;
+    background: @wb-bg;
     padding-left: 8px;
     padding-right: 6px;
     transition: all 0.2s ease-in-out;
@@ -90,7 +90,7 @@
     margin-left: 10px;
   }
 
-  #custom-power {
+  #custom-notification {
     color: @main-color;
     background-color: @main-bg;
     border-radius: 0px 0px 0px 24px;
@@ -108,7 +108,6 @@
   #bluetooth,
   #pulseaudio,
   #custom-updates,
-  #custom-notification,
   #custom-wallchange,
   #custom-wbar,
   #custom-l_end,

@@ -2,7 +2,7 @@
 # Bar
 #
 
-{ config, lib, pkgs, host, user, ... }:
+{ user, ... }:
 
 {
 

@@ -2,12 +2,12 @@
 # Bar
 #
 
-{ config, pkgs, host, user, ... }:
+{ pkgs, host, user, ... }:
 
 let
   modules = {
 
-    "wlr/workspaces" = {
+    "hyprland/workspaces" = {
       "disable-scroll" = true;
       "all-outputs" = true;
       "on-click" = "activate";
@@ -76,7 +76,7 @@ let
 
     "custom/launcher" = {
       format = "";
-      on-click = "sleep 0.1 && rofi -show drun";
+      on-click = "anyrun";
     };
 
     pulseaudio = {
@@ -151,13 +151,6 @@ let
       "on-click-right" = "~/.config/swww/swwwallpaper.sh -p 4";
       "interval" = 86400; # once every day
       "tooltip" = true;
-    };
-
-    "custom/power" = {
-      format = "{}";
-      on-click = "sleep 0.1 && ~/.config/rofi/powermenu.sh";
-      interval = 86400; # once every day
-      tooltip = true;
     };
 
     # modules for padding 
@@ -245,11 +238,11 @@ in
             "${mainMonitor}"
           ];
 
-          modules-left = [ "custom/launcher" "wlr/workspaces" "hyprland/window" ];
+          modules-left = [ "custom/launcher" "hyprland/workspaces" "hyprland/window" ];
           modules-center = [ "custom/l_end" "clock" "custom/r_end" ];
           modules-right =
             if hostName == "Alfhiem-Nix" then
-              [ "custom/l_end" "cpu" "memory" "custom/r_end" "custom/l_end" "network" "bluetooth" "pulseaudio" "pulseaudio#microphone" "custom/updates" "custom/r_end" "custom/l_end" "tray" "custom/r_end" "custom/l_end" "custom/notification" "custom/wallchange" "custom/wbar" "custom/r_end" "custom/power" ]
+              [ "custom/l_end" "cpu" "memory" "custom/r_end" "custom/l_end" "network" "bluetooth" "pulseaudio" "pulseaudio#microphone" "custom/updates" "custom/r_end" "custom/l_end" "tray" "custom/r_end" "custom/l_end" "custom/wallchange" "custom/wbar" "custom/r_end" "custom/notification" ]
             else
               [ "cpu" "memory" "custom/pad" "battery" "custom/pad" "backlight" "custom/pad" "pulseaudio" "custom/pad" "clock" "tray" ];
         };
@@ -265,11 +258,11 @@ in
               "${secondMonitor}"
               "${thirdMonitor}"
             ];
-          modules-left = [ "custom/launcher" "wlr/workspaces" "hyprland/window" ];
+          modules-left = [ "custom/launcher" "hyprland/workspaces" "hyprland/window" ];
           modules-center = [ "custom/l_end" "clock" "custom/r_end" ];
           modules-right =
             if hostName == "Alfhiem-Nix" then
-              [ "custom/l_end" "cpu" "memory" "custom/r_end" "custom/l_end" "tray" "custom/r_end" "custom/l_end" "network" "bluetooth" "pulseaudio" "pulseaudio#microphone" "custom/r_end" ]
+              [ "custom/l_end" "cpu" "memory" "custom/r_end" "custom/l_end" "tray" "custom/r_end" "custom/l_end" "network" "bluetooth" "pulseaudio" "pulseaudio#microphone" "custom/r_end" "custom/notification" ]
             else
               [ "cpu" "memory" "custom/pad" "battery" "custom/pad" "backlight" "custom/pad" "pulseaudio" "custom/pad" "clock" ];
 
