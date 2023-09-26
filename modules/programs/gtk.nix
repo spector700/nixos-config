@@ -1,5 +1,5 @@
 # GTK config
-{ pkgs, ... }: {
+{ pkgs, config, ... }: {
 
 
   home.pointerCursor = {
@@ -21,14 +21,19 @@
         variant = "mocha";
       };
     };
+
+    gtk2.configLocation = "${config.xdg.configHome}/gtk-2.0/gtkrc";
+
     iconTheme = {
       name = "Papirus-Dark";
       package = pkgs.papirus-icon-theme;
     };
+
     font = {
       name = "JetBrains Mono Regular";
       size = 12;
     };
+
     gtk3.extraConfig = {
       gtk-application-prefer-dark-theme = true;
     };

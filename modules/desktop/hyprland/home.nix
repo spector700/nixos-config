@@ -74,19 +74,15 @@ in
 
     decoration {
       rounding=5
-      #active_opacity=0.93
-      #inactive_opacity=0.93
       shadow_offset=0 5
       shadow_range=50
       shadow_render_power=3
       col.shadow=rgba(00000099)
+      blurls = ["gtk-layer-shell" "waybar" "lockscreen"];
 
       blur {
         passes=3
         ignore_opacity=true
-        blurls = gtk-layer-shell
-        blurls = waybar
-        blurls = lockscreen
       }
     }
 
@@ -142,7 +138,7 @@ in
     bind=SUPER,B,exec,${pkgs.firefox}/bin/firefox
     bind=SUPER,T,exec,${pkgs.kitty}/bin/kitty
     bind=CTRL SHIFT,Escape,exec,${pkgs.kitty}/bin/kitty -e btop
-    bind=SUPERSHIFT,L,exec,${pkgs.swaylock-effects}/bin/swaylock
+    bind=SUPER,L,exec,${pkgs.swaylock-effects}/bin/swaylock
     bind=SUPER,E,exec,${pkgs.xfce.thunar}/bin/thunar
     #bind=SUPER,Space,exec, pkill rofi || ${pkgs.rofi-wayland}/bin/rofi -show drun
     bind=SUPER,Space,exec, pkill anyrun || anyrun
@@ -259,7 +255,7 @@ in
     windowrulev2 = workspace special:spotify silent, title:^(Spotify)$
 
     # start Discord/WebCord in ws4
-    windowrulev2 = workspace 4 silent, title:^(.*(Disc|WebC)ord.*)$
+    windowrulev2 = workspace 4 silent, title:^(.*(Disc|ArmC)ord.*)$
 
     windowrule=workspace 8 silent,steam$
 
@@ -284,7 +280,7 @@ in
     exec-once=${pkgs.wlsunset}/bin/wlsunset
     exec-once=${pkgs.blueman}/bin/blueman-applet
     exec-once=spotify
-    exec-once=${pkgs.webcord-vencord}/bin/webcord
+    exec-once=${pkgs.armcord}/bin/armcord
     ${execute}
   '';
   };
@@ -295,30 +291,37 @@ in
     package = pkgs.swaylock-effects;
     settings = {
       image = "$HOME/.config/wallpaper";
-      color = "1f1d2e80";
       effect-blur = "10x2";
+      fade-in = 0.2;
       clock = true;
       font-size = "24";
-      indicator-idle-visible = false;
+      indicator-idle-visible = true;
       indicator-radius = 200;
       indicator-thickness = 20;
-      inside-color = "1f1d2e";
-      inside-clear-color = "1f1d2e";
-      inside-ver-color = "00000000";
-      inside-wrong-color = "1f1d2e";
+
       key-hl-color = "eb6f92";
-      line-color = "1f1d2e";
-      line-clear-color = "1f1d2e";
-      line-ver-color = "eb6f92";
-      line-wrong-color = "000000f0";
-      ring-color = "191724";
-      ring-clear-color = "9ccfd8";
-      ring-ver-color = "eb6f92";
-      ring-wrong-color = "1f1d2e";
-      text-color = "e0def4";
+      separator-color = "00000000";
+
+      inside-color = "00000033";
+      inside-clear-color = "ffffff00";
+      inside-ver-color = "ffffff00";
+      inside-wrong-color = "1f1d2e";
+
+      line-color = "00000000";
+      line-clear-color = "ffffffFF";
+      line-ver-color = "ffffffFF";
+      line-wrong-color = "ffffffFF";
+
+      ring-color = "ffffff";
+      ring-clear-color = "ffffff";
+      ring-caps-lock-color = "ffffff";
+      ring-ver-color = "ffffff";
+      ring-wrong-color = "ffffff";
+
+      text-color = "ffffff";
       text-ver-color = "ffffff";
       text-wrong-color = "ffffff";
-      text-caps-lock-color = "";
+      text-caps-lock-color = "ffffff";
       show-failed-attempts = true;
     };
   };

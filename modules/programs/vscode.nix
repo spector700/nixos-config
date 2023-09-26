@@ -2,12 +2,12 @@
 # Neovim
 #
 
-{ pkgs, user, ... }:
-
 {
   programs = {
     vscode = {
       enable = true;
+      enableExtensionUpdateCheck = true;
+      enableUpdateCheck = true;
     };
   };
 }

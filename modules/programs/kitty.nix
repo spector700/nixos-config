@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-
+# kitty terminal
 {
   programs = {
     kitty = {
@@ -17,6 +16,10 @@
         placement_strategy = "center";
 
         enable_audio_bell = false;
+      };
+      keybindings = {
+        "ctrl+tab" = ''send_text all \x1b[9;5u''; # <C-Tab>
+        "ctrl+shift+tab" = ''send_text all \x1b[9;6u''; # <C-S-Tab>
       };
     };
   };

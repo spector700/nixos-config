@@ -13,7 +13,7 @@
         stdin
 
       ];
-      width.fraction = 0.25;
+      width.fraction = 0.3;
       y.absolute = 300;
       hidePluginInfo = true;
       closeOnClick = true;

@@ -11,7 +11,7 @@
 
   environment.systemPackages = with pkgs; [
     #config.nur.repos.c0deaddict.oversteer      # Steering Wheel Configuration
-    heroic # Game launchers
+    # heroic # Game launchers
     lutris
     prismlauncher
   ];

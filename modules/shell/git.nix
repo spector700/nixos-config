@@ -2,7 +2,6 @@
 # Git
 #
 
-
 {
   programs = {
     git = {

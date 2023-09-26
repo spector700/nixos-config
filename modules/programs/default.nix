@@ -18,6 +18,7 @@
   ./browser.nix
   ./qt.nix
   ./gtk.nix
+  ./vscode.nix
   #./thunar.nix
   #./waybar.nix
   #./games.nix
