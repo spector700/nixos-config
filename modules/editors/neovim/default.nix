@@ -25,23 +25,26 @@
   };
   home.packages = with pkgs; [
     # LSP
-    nodePackages.vscode-langservers-extracted
     nodePackages_latest.typescript-language-server
     nodePackages_latest."@tailwindcss/language-server"
     nodePackages_latest.bash-language-server
+    nodePackages_latest.pyright
     sumneko-lua-language-server
     nixd
+    ruff-lsp
 
     # Format
     nixpkgs-fmt
     stylua
     beautysh
     nodePackages.prettier
+    black
 
     gcc
     cargo
     ripgrep
     fd
     lazygit
+    wget
   ];
 }
