@@ -24,7 +24,7 @@
   imports =
     [ (import ./hardware-configuration.nix) ] ++
     [ (import ../../modules/programs/games.nix) ] ++
-    [ (import ../../modules/programs/thunar.nix) ] ++
+    # [ (import ../../modules/programs/thunar.nix) ] ++
     [ (import ../../modules/desktop/hyprland/default.nix) ];
 
   boot = {
@@ -59,10 +59,10 @@
   networking = {
     hostName = "Alfhiem-Nix";
     networkmanager.enable = true;
-    #enableIPv6 = false;
   };
+
   # Network wait fails with networkmanager
-  systemd.network.wait-online.enable = false;
+  systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;
 
   hardware = {
     #sane = {
@@ -83,7 +83,6 @@
       #Fix suspend/resume
       powerManagement.enable = true;
 
-      # open = true;
     };
     opengl = {
       enable = true;
