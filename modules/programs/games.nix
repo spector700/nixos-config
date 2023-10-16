@@ -17,7 +17,6 @@
   ];
 
   programs = {
-    # Needed to succesfully start Steam
     steam = {
       enable = true;
       # gamescopeSession.enable = true;

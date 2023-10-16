@@ -19,9 +19,8 @@
   ./qt.nix
   ./gtk.nix
   ./vscode.nix
-  #./thunar.nix
-  #./waybar.nix
-  #./games.nix
+  ./zathura.nix
+  ./lf.nix
 ]
 # Waybar.nix is pulled from modules/desktop/..
 # Games.nix is pulled from desktop/default.nix
