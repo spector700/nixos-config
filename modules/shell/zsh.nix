@@ -34,6 +34,11 @@
       };
     };
 
+    fzf = {
+      enable = true;
+      enableZshIntegration = true;
+    };
+
     bat = {
       enable = true;
       config = {
