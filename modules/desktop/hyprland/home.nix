@@ -56,12 +56,15 @@ in
 {
   wayland.windowManager.hyprland = {
     enable = true;
-    enableNvidiaPatches = true;
-    systemdIntegration = true;
+    # enableNvidiaPatches = true;
+    systemd.enable = true;
     extraConfig = ''
 
     ${workspaces}
     ${monitors}
+
+    env = WLR_DRM_NO_ATOMIC,1
+    env = QT_WAYLAND_DISABLE_WINDOWDECORATION,1
 
     general {
       border_size=2
@@ -70,6 +73,7 @@ in
       col.active_border=rgba(bb9af7ff) rgba(b4f9f8ff) 45deg
       col.inactive_border=rgba(565f89cc) rgba(9aa5cecc) 45deg
       layout=dwindle
+      allow_tearing = true
     }
 
     decoration {
@@ -140,7 +144,6 @@ in
     bind=CTRL SHIFT,Escape,exec,${pkgs.kitty}/bin/kitty -e btop
     bind=SUPER,L,exec,${pkgs.swaylock-effects}/bin/swaylock
     bind=SUPER,E,exec,${pkgs.xfce.thunar}/bin/thunar
-    #bind=SUPER,Space,exec, pkill rofi || ${pkgs.rofi-wayland}/bin/rofi -show drun
     bind=SUPER,Space,exec, pkill anyrun || anyrun
     bind=SUPER,V,exec, pkill rofi || ${pkgs.cliphist}/bin/cliphist list | rofi -dmenu -display-columns 2 | cliphist decode | wl-copy
     bind=SUPERSHIFT,R,exec,${pkgs.hyprland}/bin/hyprctl reload && ~/.config/waybar/scripts/restart.sh
@@ -206,6 +209,9 @@ in
 
     # only allow shadows for floating windows
     windowrulev2 = noshadow, floating:0
+
+    # Force Screen tearing
+    windowrulev2 = immediate, class:^(Minecraft*)$
 
     # Opacity 
     windowrulev2 = opacity 0.80 0.80,class:^(Steam)$
@@ -280,7 +286,6 @@ in
     exec-once=${pkgs.wlsunset}/bin/wlsunset
     exec-once=${pkgs.blueman}/bin/blueman-applet
     exec-once=spotify
-    exec-once=${pkgs.armcord}/bin/armcord
     ${execute}
   '';
   };
