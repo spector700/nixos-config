@@ -42,7 +42,7 @@
       gimp
 
       # Apps
-      webcord-vencord
+      # armcord
       signal-desktop
       networkmanagerapplet
       nextcloud-client
@@ -51,54 +51,17 @@
       vial
 
       # File Management
-      okular
       unzip
       unrar
       xdg-utils
-
     ];
-
 
 
     file.".config/wallpaper".source = ../modules/themes/wallpaper;
 
     stateVersion = "23.05";
-
-    pointerCursor = {
-      gtk.enable = true;
-      x11.enable = true;
-      name = "macOS-BigSur";
-      package = pkgs.apple-cursor;
-      size = 20;
-    };
   };
 
-  gtk = {
-    enable = true;
-    theme = {
-      name = "Catppuccin-Mocha-Compact-Blue-dark";
-      package = pkgs.catppuccin-gtk.override {
-        size = "compact";
-        accents = [ "blue" ];
-        variant = "mocha";
-      };
-    };
-    iconTheme = {
-      name = "Papirus-Dark";
-      package = pkgs.papirus-icon-theme;
-    };
-    font = {
-      name = "JetBrains Mono Regular";
-      size = 12;
-    };
-    gtk3.extraConfig = {
-      gtk-application-prefer-dark-theme = true;
-    };
-
-    gtk4.extraConfig = {
-      gtk-application-prefer-dark-theme = true;
-    };
-  };
 
 
 }
