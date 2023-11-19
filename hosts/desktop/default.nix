@@ -18,13 +18,13 @@
 #           └─ default.nix
 #
 
-{ pkgs, lib, user, ... }:
+{ pkgs, lib, user, config, ... }:
 
 {
   imports =
     [ (import ./hardware-configuration.nix) ] ++
     [ (import ../../modules/programs/games.nix) ] ++
-    # [ (import ../../modules/programs/thunar.nix) ] ++
+    [ (import ../../modules/programs/thunar.nix) ] ++
     [ (import ../../modules/desktop/hyprland/default.nix) ];
 
   boot = {
@@ -72,6 +72,7 @@
     bluetooth.enable = true;
     openrazer = {
       enable = true;
+      mouseBatteryNotifier = false;
       users = [ "${user}" ];
     };
 
@@ -79,7 +80,9 @@
     keyboard.qmk.enable = true;
 
     nvidia = {
+      open = true;
       modesetting.enable = true;
+      package = config.boot.kernelPackages.nvidiaPackages.production;
       #Fix suspend/resume
       powerManagement.enable = true;
 
