@@ -82,7 +82,7 @@
     nvidia = {
       open = true;
       modesetting.enable = true;
-      package = config.boot.kernelPackages.nvidiaPackages.production;
+      # package = config.boot.kernelPackages.nvidiaPackages.production;
       #Fix suspend/resume
       powerManagement.enable = true;
 
