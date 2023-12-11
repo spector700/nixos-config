@@ -186,7 +186,7 @@
     #   dates = "weekly";
     #   options = "--delete-older-than 7d";
     # };
-    package = pkgs.nixVersions.unstable; # Enable nixFlakes on system
+    # package = pkgs.nixVersions.unstable; # Enable nixFlakes on system
     registry.nixpkgs.flake = inputs.nixpkgs;
     extraOptions = ''
       experimental-features = nix-command flakes
@@ -207,6 +207,7 @@
   };
 
   nixpkgs.config.allowUnfree = true; # Allow proprietary software.
+  nixpkgs.config.permittedInsecurePackages = [ "electron-25.9.0" ];
 
 
   system = {
