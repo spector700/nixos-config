@@ -1,6 +1,6 @@
 #
 # Gaming
-# Steam + MC + Emulation
+# Steam + MC
 #
 # Do not forget to enable Steam play for all title in the settings menu
 #
@@ -11,9 +11,11 @@
 
   environment.systemPackages = with pkgs; [
     #config.nur.repos.c0deaddict.oversteer      # Steering Wheel Configuration
-    # heroic # Game launchers
     lutris
     prismlauncher
+    protontricks
+    protonup-qt
+    wineWowPackages.waylandFull
   ];
 
   programs = {
@@ -30,10 +32,4 @@
     # Lutris: General Preferences - Enable Feral GameMode
     #                             - Global options - Add Environment Variables: LD_PRELOAD=/nix/store/*-gamemode-*-lib/lib/libgamemodeauto.so
   };
-
-  # nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-  # "steam"
-  # "steam-original"
-  # "steam-runtime"
-  # ];                                            # Use Steam for Linux libraries
 }
