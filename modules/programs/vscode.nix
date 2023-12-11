@@ -1,5 +1,5 @@
 #
-# Neovim
+# Vscode
 #
 
 {
@@ -7,7 +7,6 @@
     vscode = {
       enable = true;
       enableExtensionUpdateCheck = true;
-      enableUpdateCheck = true;
     };
   };
 }

@@ -30,6 +30,7 @@
     username = "${user}";
     homeDirectory = "/home/${user}";
 
+
     packages = with pkgs; [
       # Terminal Utils
       tldr
@@ -42,7 +43,7 @@
       gimp
 
       # Apps
-      # armcord
+      armcord
       signal-desktop
       networkmanagerapplet
       nextcloud-client
