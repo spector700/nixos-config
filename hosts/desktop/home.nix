@@ -68,7 +68,6 @@ in
         layer = "top";
         position = "top";
         height = 16;
-        # Anything except the main monitor
         output = [ "${secondMonitor}" ];
 
         modules-left = [ "custom/launcher" "hyprland/workspaces" "hyprland/window" ];
@@ -77,4 +76,24 @@ in
       };
     };
   };
+
+  # screen idle
+  services.swayidle = {
+    enable = true;
+
+    events = [
+      {
+        event = "before-sleep";
+        command = "${pkgs.systemd}/bin/loginctl lock-session";
+      }
+      {
+        event = "lock";
+        command = "${pkgs.swaylock-effects}/bin/swaylock";
+      }
+    ];
+    timeouts = [
+      { timeout = 400; command = "${pkgs.hyprland}/bin/hyprctl dispatch dpms off"; }
+    ];
+  };
+
 }
