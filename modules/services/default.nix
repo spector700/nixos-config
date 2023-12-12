@@ -11,7 +11,6 @@
 #
 
 [
-  #./dunst
   ./swaync
-  ./swayidle.nix
+  ./xdg.nix
 ]
