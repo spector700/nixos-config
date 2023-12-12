@@ -18,6 +18,15 @@ in
 {
   imports = [ ../../modules/hyprland/home.nix ];
 
+  # Wallpaper
+  xdg.configFile."wallpaper.png".source = ../../modules/themes/wallpaper;
+
+  # Hyprpaper
+  xdg.configFile."hypr/hyprpaper.conf".text = ''
+    preload = ~/.config/wallpaper.png
+    wallpaper = ,~/.config/wallpaper.png
+  '';
+
   # Hyprland
   wayland.windowManager.hyprland = {
     extraConfig = ''
@@ -36,7 +45,6 @@ in
       #------------#
       # auto start #
       #------------#
-        exec-once=${pkgs.swaybg}/bin/swaybg -m fill -i $HOME/.config/wallpaper
         exec-once=${pkgs.openrgb}/bin/openrgb --profile iceie
     '';
   };
@@ -61,7 +69,7 @@ in
         position = "top";
         height = 16;
         # Anything except the main monitor
-        output = [ "!${mainMonitor}" ];
+        output = [ "${secondMonitor}" ];
 
         modules-left = [ "custom/launcher" "hyprland/workspaces" "hyprland/window" ];
         modules-center = [ "custom/l_end" "clock" "custom/r_end" ];
