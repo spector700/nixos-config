@@ -1,4 +1,4 @@
-{ pkgs, host, lib, ... }:
+{ pkgs, ... }:
 
 let
   suspendScript = pkgs.writeShellScript "suspend-script" ''
@@ -9,24 +9,28 @@ let
     fi
   '';
 in
+
 {
-
-  systemd.user.services.swayidle.Install.WantedBy = lib.mkForce [ "hyprland-session.target" ];
-
-  services.swayidle = with host; if hostName == "laptop" then {
+  # screen idle
+  services.swayidle = {
     enable = true;
     events = [
-      { event = "before-sleep"; command = "${pkgs.swaylock}/bin/swaylock -f"; }
-      { event = "lock"; command = "lock"; }
+      {
+        event = "before-sleep";
+        command = "${pkgs.systemd}/bin/loginctl lock-session";
+      }
+      {
+        event = "lock";
+        # command = "${pkgs.swaylock-effects}/bin/swaylock";
+        command = "${pkgs.hyprland}/bin/hyprctl dispatch dpms off";
+      }
+
     ];
     timeouts = [
-      { timeout = 300; command = "${pkgs.swaylock}/bin/swaylock -f"; }
-    ];
-    systemdTarget = "xdg-desktop-portal-hyprland.service";
-  } else {
-    enable = true;
-    timeouts = [
-      { timeout = 400; command = "${pkgs.hyprland}/bin/hyprctl dispatch dpms off"; }
+      {
+        timeout = 400;
+        command = suspendScript.outPath;
+      }
     ];
   };
 }
