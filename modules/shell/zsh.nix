@@ -21,6 +21,7 @@
 
       shellAliases = {
         rebuild_desktop = "nh os switch -H desktop";
+        create = "sh ~/Projects/create/dev-assistant.sh";
         ".." = "cd ..";
         "..." = "cd ../..";
         ".3" = "cd ../../..";
