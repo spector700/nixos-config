@@ -30,7 +30,7 @@
 
     systemPackages = with pkgs; [
       inputs.hyprland-contrib.packages.${pkgs.system}.grimblast
-      swaybg
+      hyprpaper
       wl-clipboard
       cliphist
       hyprpicker

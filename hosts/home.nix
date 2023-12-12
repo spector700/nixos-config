@@ -57,9 +57,6 @@
       xdg-utils
     ];
 
-
-    file.".config/wallpaper".source = ../modules/themes/wallpaper;
-
     stateVersion = "23.05";
   };
 

@@ -204,7 +204,7 @@
     # Application in workspaces
     windowrulev2 = workspace 8 silent, title:^(Steam)$, title:^(Lutris)$
     windowrulev2 = workspace special:spotify silent, initialtitle:^(Spotify.*)$
-    windowrulev2 = workspace 4 silent, title:^(.*((d|D)isc|Armc)ord.*)$
+    windowrulev2 = workspace 4 silent, title:^(.*((d|D)isc|ArmC)ord.*)$
 
     # idle inhibit while watching videos
     windowrulev2 = idleinhibit focus, class:^(mpv|.+exe)$
@@ -226,6 +226,7 @@
     exec-once = xprop -root -f _XWAYLAND_GLOBAL_OUTPUT_SCALE 32c -set _XWAYLAND_GLOBAL_OUTPUT_SCALE 2
     exec-once=dbus-update-activation-environment DISPLAY XAUTHORITY WAYLAND_DISPLAY
     exec-once=${pkgs.waybar}/bin/waybar
+    exec-once=${pkgs.hyprpaper}/bin/hyprpaper
     exec-once=${pkgs.swaynotificationcenter}/bin/swaync
     exec-once=wl-paste --watch cliphist store
     exec-once=${pkgs.wlsunset}/bin/wlsunset -l 32.7 -L -96.9
