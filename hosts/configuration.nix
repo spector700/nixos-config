@@ -96,6 +96,9 @@
 
   programs.partition-manager.enable = true;
 
+  programs.dconf.enable = true;
+  fonts.enableDefaultPackages = true;
+
   fonts.packages = with pkgs; [
     # Fonts
     font-awesome

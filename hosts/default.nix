@@ -29,11 +29,6 @@ in
     inherit system;
     specialArgs = {
       inherit inputs stable system user location;
-      host = {
-        hostName = "Alfhiem-Nix";
-        mainMonitor = "DP-2";
-        secondMonitor = "DP-3";
-      };
     };
     # Pass flake variable
     # Modules that are used
@@ -51,11 +46,6 @@ in
         home-manager.useUserPackages = true;
         home-manager.extraSpecialArgs = {
           inherit user inputs;
-          host = {
-            hostName = "Alfhiem-Nix"; #For Xorg iGPU  | Videocard     | Hyprland iGPU
-            mainMonitor = "DP-2"; #HDMIA3         | HDMI-A-1      | HDMI-A-3
-            secondMonitor = "DP-3"; #DP1            | DisplayPort-1 | DP-1
-          };
         }; # Pass flake variable
         home-manager.users.${user} = {
           imports = [

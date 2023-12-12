@@ -11,59 +11,13 @@
 #               └─ home.nix *
 #
 
-{ pkgs, host, ... }:
+{ pkgs, ... }:
 
-let
-  touchpad = with host;
-    if hostName == "laptop" then ''
-        touchpad {
-          natural_scroll=true
-          middle_button_emulation=true
-          tap-to-click=true
-        }
-      }
-    '' else "";
-  gestures = with host;
-    if hostName == "laptop" then ''
-      gestures {
-        workspace_swipe=true
-        workspace_swipe_fingers=3
-        workspace_swipe_distance=100
-      }
-    '' else "";
-
-  workspaces = with host;
-    if hostName == "Alfhiem-Nix" then ''
-      monitor=${toString mainMonitor},3440x1440@100,1167x420,1.25,bitdepth,10
-      monitor=${toString secondMonitor},highres,0x0,1.85,bitdepth,10,transform,1
-    '' else ''
-      monitor=${toString mainMonitor},1920x1080@60,0x0,1
-    '';
-  monitors = with host;
-    if hostName == "Alfhiem-Nix" then ''
-      workspace=${toString mainMonitor},1
-      workspace=${toString mainMonitor},2
-      workspace=${toString mainMonitor},3
-      workspace=${toString secondMonitor},4
-      workspace=${toString secondMonitor},5
-      workspace=${toString secondMonitor},6
-    '' else "";
-  execute = with host;
-    if hostName == "Alfhiem-Nix" then ''
-      exec-once=${pkgs.swaybg}/bin/swaybg -m fill -i $HOME/.config/wallpaper
-    '' else "";
-in
 {
   wayland.windowManager.hyprland = {
     enable = true;
     systemd.enable = true;
     extraConfig = ''
-
-    ${workspaces}
-    ${monitors}
-
-    env = WLR_DRM_NO_ATOMIC,1
-    env = QT_WAYLAND_DISABLE_WINDOWDECORATION,1
 
     general {
       border_size=2
@@ -111,10 +65,7 @@ in
       numlock_by_default=1
       accel_profile=flat
       sensitivity=0
-      ${touchpad}
     }
-
-    ${gestures}
 
     dwindle {
       force_split=2
@@ -127,7 +78,7 @@ in
       disable_splash_rendering=true
       key_press_enables_dpms=true
       mouse_move_enables_dpms=true
-      vrr=1
+      # vrr=1
     }
 
     # use this instead of hidpi patches
@@ -210,23 +161,17 @@ in
     windowrulev2 = noshadow, floating:0
 
     # Force Screen tearing
-    windowrulev2 = immediate, class:^(Minecraft*)$
+    windowrulev2 = immediate, class:^(gamescope)$
 
     # Opacity 
-    windowrulev2 = opacity 0.80 0.80,class:^(Steam)$
-    windowrulev2 = opacity 0.80 0.80,class:^(steam)$
-    windowrulev2 = opacity 0.80 0.80,class:^(steamwebhelper)$
-    windowrulev2 = opacity 0.80 0.80,class:^(Spotify)$
-    windowrulev2 = opacity 0.80 0.80,class:^(Code)$
+    # windowrulev2 = opacity 0.80 0.80,class:^(Code)$
     windowrulev2 = opacity 0.88 0.88,class:^(kitty)$
     windowrulev2 = opacity 0.88 0.88,class:^(thunar)$
     windowrulev2 = opacity 0.80 0.80,class:^(file-roller)$
     windowrulev2 = opacity 0.80 0.80,class:^(qt5ct)$
-    windowrulev2 = opacity 0.80 0.80,class:^(discord)$ #Discord-Electron
-    windowrulev2 = opacity 0.88 0.88,class:^(WebCord)$ #WebCord-Electron
+    windowrulev2 = opacity 0.80 0.80,class:^(discord | (.*)Armcord)$ #Discord-Electron
     windowrulev2 = opacity 0.85 0.80,class:^(pavucontrol)$
     windowrulev2 = opacity 0.80 0.70,class:^(org.kde.polkit-kde-authentication-agent-1)$
-    windowrulev2 = opacity 0.80 0.80,class:^(org.telegram.desktop)$
 
     # Position
     windowrulev2 = float,class:^(org.kde.polkit-kde-authentication-agent-1)$
@@ -256,20 +201,21 @@ in
     windowrule=move 75% 75% ,title:^(Picture-in-Picture)$
     windowrule=size 24% 24% ,title:^(Picture-in-Picture)$
 
-    # start spotify tiled in ws5
-    windowrulev2 = workspace special:spotify silent, title:^(Spotify)$
-
-    # start Discord/WebCord in ws4
-    windowrulev2 = workspace 4 silent, title:^(.*(Disc|ArmC)ord.*)$
-
-    windowrule=workspace 8 silent,steam$
+    # Application in workspaces
+    windowrulev2 = workspace 8 silent, title:^(Steam)$, title:^(Lutris)$
+    windowrulev2 = workspace special:spotify silent, initialtitle:^(Spotify.*)$
+    windowrulev2 = workspace 4 silent, title:^(.*((d|D)isc|Armc)ord.*)$
 
     # idle inhibit while watching videos
     windowrulev2 = idleinhibit focus, class:^(mpv|.+exe)$
-    windowrulev2 = idleinhibit focus, class:^(firefox)$, title:^(.*YouTube.*)$
+    windowrulev2 = idleinhibit focus, class:^(firefox)$, title:^(.*youtube.*)$
+
+    # fix steam menus
+    windowrulev2 = stayfocused, title:^()$,class:^(steam)$
+    windowrulev2 = minsize 1 1, title:^()$,class:^(steam)$
 
     windowrulev2 = idleinhibit fullscreen,class:^(firefox)$
-    windowrulev2 = idleinhibit fullscreen,class:^(Brave-browser)$
+    windowrulev2 = idleinhibit fullscreen,class:^(brave-browser)$
 
     layerrule = blur, ^(gtk-layer-shell|anyrun)$
     layerrule = ignorezero, ^(gtk-layer-shell|anyrun)$
@@ -282,51 +228,10 @@ in
     exec-once=${pkgs.waybar}/bin/waybar
     exec-once=${pkgs.swaynotificationcenter}/bin/swaync
     exec-once=wl-paste --watch cliphist store
-    exec-once=${pkgs.wlsunset}/bin/wlsunset
+    exec-once=${pkgs.wlsunset}/bin/wlsunset -l 32.7 -L -96.9
     exec-once=${pkgs.blueman}/bin/blueman-applet
     exec-once=spotify
-    ${execute}
+    exec-once=armcord --enable-features=UseOzonePlatform,WaylandWindowDecorations,WebRTCPipeWireCapturer --ozone-platform=wayland
   '';
-  };
-
-
-  programs.swaylock = {
-    enable = true;
-    package = pkgs.swaylock-effects;
-    settings = {
-      image = "$HOME/.config/wallpaper";
-      effect-blur = "10x2";
-      fade-in = 0.2;
-      clock = true;
-      font-size = "24";
-      indicator-idle-visible = true;
-      indicator-radius = 200;
-      indicator-thickness = 20;
-
-      key-hl-color = "eb6f92";
-      separator-color = "00000000";
-
-      inside-color = "00000033";
-      inside-clear-color = "ffffff00";
-      inside-ver-color = "ffffff00";
-      inside-wrong-color = "1f1d2e";
-
-      line-color = "00000000";
-      line-clear-color = "ffffffFF";
-      line-ver-color = "ffffffFF";
-      line-wrong-color = "ffffffFF";
-
-      ring-color = "ffffff";
-      ring-clear-color = "ffffff";
-      ring-caps-lock-color = "ffffff";
-      ring-ver-color = "ffffff";
-      ring-wrong-color = "ffffff";
-
-      text-color = "ffffff";
-      text-ver-color = "ffffff";
-      text-wrong-color = "ffffff";
-      text-caps-lock-color = "ffffff";
-      show-failed-attempts = true;
-    };
   };
 }

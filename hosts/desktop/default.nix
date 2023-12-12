@@ -25,15 +25,28 @@
     [ (import ./hardware-configuration.nix) ] ++
     [ (import ../../modules/programs/games.nix) ] ++
     [ (import ../../modules/programs/thunar.nix) ] ++
-    [ (import ../../modules/desktop/hyprland/default.nix) ];
+    [ (import ../../modules/hyprland/default.nix) ];
 
   boot = {
     kernelPackages = pkgs.linuxPackages_xanmod_latest;
     kernelParams = [
       #For openrgb with gigabyte motherboard
       "acpi_enforce_resources=lax"
+      #Nvidia Power Management
+      "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
     ];
 
+  };
+  # Variables for hyprland nvidia
+  environment = {
+    sessionVariables = {
+      LIBVA_DRIVER_NAME = "nvidia";
+      XDG_SESSION_TYPE = "wayland";
+      GBM_BACKEND = "nvidia-drm";
+      __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+      WLR_NO_HARDWARE_CURSORS = "1";
+      __GL_GSYNC_ALLOWED = "1";
+    };
   };
 
   services.xserver = {
@@ -80,7 +93,6 @@
     keyboard.qmk.enable = true;
 
     nvidia = {
-      open = true;
       modesetting.enable = true;
       # package = config.boot.kernelPackages.nvidiaPackages.production;
       #Fix suspend/resume
