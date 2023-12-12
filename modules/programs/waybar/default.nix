@@ -180,24 +180,6 @@ let
       tooltip = false;
     };
 
-    "backlight" = {
-      device = "intel_backlight";
-      format = "{percent}% <span font='11'>{icon}</span>";
-      format-icons = [ "" "" ];
-      on-scroll-down = "${pkgs.light}/bin/light -U 5";
-      on-scroll-up = "${pkgs.light}/bin/light -A 5";
-    };
-    "battery" = {
-      interval = 60;
-      states = {
-        warning = 30;
-        critical = 15;
-      };
-      format = "{capacity}% <span font='11'>{icon}</span>";
-      format-charging = "{capacity}% <span font='11'></span>";
-      format-icons = [ "" "" "" "" "" ];
-      max-length = 25;
-    };
     "custom/hid" = {
       format = "{}";
       exec = "$HOME/.config/waybar/scripts/hid.sh";

@@ -113,6 +113,9 @@
     bind=SUPERSHIFT,up,movewindow,u
     bind=SUPERSHIFT,down,movewindow,d
 
+    bind=SUPER,Tab,cyclenext
+    bind=SUPER,Tab,bringactivetotop
+
   # bind=CTRL,right,resizeactive,20 0
   # bind=CTRL,left,resizeactive,-20 0
   # bind=CTRL,up,resizeactive,0 -20
@@ -130,7 +133,6 @@
     bind=SUPER,0,workspace,10
 
     bind=SUPER,S,togglespecialworkspace, spotify
-    #bind=SUPER,a,exec,notify-send 'Toggled Special Workspace' -e
     bind=SUPER,c,exec,hyprctl dispatch centerwindow
 
     bind=ALTSHIFT,S,movetoworkspace,special
@@ -154,8 +156,6 @@
     bind=,XF86AudioRaiseVolume,exec,${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 10%+
     bind=,XF86AudioMute,exec,${pkgs.pamixer}/bin/wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
     bind=,XF86AudioMicMute,exec,${pkgs.pamixer}/bin/wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
-    bind=,XF86MonBrightnessDown,exec,${pkgs.light}/bin/light -U 10
-    bind=,XF86MonBrightnessUP,exec,${pkgs.light}/bin/light -A 10
 
     # only allow shadows for floating windows
     windowrulev2 = noshadow, floating:0
@@ -169,7 +169,7 @@
     windowrulev2 = opacity 0.88 0.88,class:^(thunar)$
     windowrulev2 = opacity 0.80 0.80,class:^(file-roller)$
     windowrulev2 = opacity 0.80 0.80,class:^(qt5ct)$
-    windowrulev2 = opacity 0.80 0.80,class:^(discord | (.*)Armcord)$ #Discord-Electron
+    windowrulev2 = opacity 0.92 0.92,title:^(.*((d|D)isc|ArmC)ord.*)$
     windowrulev2 = opacity 0.85 0.80,class:^(pavucontrol)$
     windowrulev2 = opacity 0.80 0.70,class:^(org.kde.polkit-kde-authentication-agent-1)$
 
