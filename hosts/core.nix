@@ -1,7 +1,7 @@
 #
 #  flake.nix
 #   ├─ ./hosts
-#   │   └─ configuration.nix *
+#   │   └─ core.nix *
 #   └─ ./modules
 #       └─ ./shell
 #           └─ default.nix
