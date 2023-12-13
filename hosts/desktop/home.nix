@@ -30,8 +30,8 @@ in
   # Hyprland
   wayland.windowManager.hyprland = {
     extraConfig = ''
-          monitor=${mainMonitor}, 3440x1440@100, 1167x420, 1.25, bitdepth,10
-          monitor=${secondMonitor}, highres,0x0, 1.85, bitdepth,10 ,transform,1
+        monitor=${mainMonitor}, 3440x1440@100, 1167x420, 1.25, bitdepth,10
+        monitor=${secondMonitor}, highres,0x0, 1.85, bitdepth,10 ,transform,1
 
         workspaces {
             workspace=${toString mainMonitor},1, default:true
@@ -92,7 +92,7 @@ in
       }
     ];
     timeouts = [
-      { timeout = 400; command = "${pkgs.hyprland}/bin/hyprctl dispatch dpms off"; }
+      { timeout = 500; command = "${pkgs.hyprland}/bin/hyprctl dispatch dpms off"; }
     ];
   };
 
