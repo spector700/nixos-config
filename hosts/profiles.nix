@@ -3,8 +3,8 @@
 #
 #  flake.nix 
 #   └─ ./hosts  
-#       ├─ default.nix *
-#       ├─ configuration.nix
+#       ├─ profiles.nix *
+#       ├─ core.nix
 #       ├─ home.nix
 #       └─ ./desktop OR ./laptop
 #            ├─ ./default.nix
@@ -36,7 +36,7 @@ in
       inputs.gaming.nixosModules.pipewireLowLatency
       inputs.nh.nixosModules.default
       ./desktop
-      ./configuration.nix
+      ./core.nix
 
       # Home-Manager module that is used.
 

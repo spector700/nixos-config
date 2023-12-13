@@ -64,7 +64,7 @@
       # NixOS configurations
       nixosConfigurations = (
         # Imports ./hosts/default.nix
-        import ./hosts {
+        import ./hosts/profiles.nix {
           inherit (nixpkgs) lib;
           inherit inputs nixpkgs nixpkgs-stable home-manager user location gaming nh;
         }
