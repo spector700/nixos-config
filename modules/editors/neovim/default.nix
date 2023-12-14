@@ -3,11 +3,11 @@
 #
 
 
-{ pkgs, config, ... }:
+{ pkgs, config, location, ... }:
 
 {
 
-  home.file.".config/nvim".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/nixos-config/modules/editors/neovim/nvim";
+  home.file.".config/nvim".source = config.lib.file.mkOutOfStoreSymlink "${location}/modules/editors/neovim/nvim";
 
   programs.neovim = {
     enable = true;
@@ -19,8 +19,8 @@
     viAlias = true;
     vimdiffAlias = true;
 
-    withNodeJs = true;
-    withPython3 = true;
+    # withNodeJs = true;
+    # withPython3 = true;
 
   };
   home.packages = with pkgs; [
@@ -40,11 +40,10 @@
     nodePackages.prettier
     black
 
-    gcc
-    cargo
+    # gcc
+    # cargo
     ripgrep
     fd
     lazygit
-    wget
   ];
 }

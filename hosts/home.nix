@@ -35,6 +35,7 @@
       # Terminal Utils
       tldr
       neofetch
+      wget
 
       # Video/Audio
       feh
