@@ -3,7 +3,7 @@
 #
 
 
-{ pkgs, ... }:
+{ pkgs, location, ... }:
 
 {
 
@@ -25,7 +25,7 @@
         ".." = "cd ..";
         "..." = "cd ../..";
         ".3" = "cd ../../..";
-        nn = "cd && cd .config/nixos-config && nvim";
+        nn = "cd && cd ${location} && nvim";
         cleanup = "sudo nix-collect-garbage --delete-older-than 1d";
         listgen = "sudo nix-env -p /nix/var/nix/profiles/system --list-generations";
         cat = "bat";

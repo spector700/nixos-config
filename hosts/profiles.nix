@@ -45,7 +45,7 @@ in
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
         home-manager.extraSpecialArgs = {
-          inherit user inputs;
+          inherit user inputs location;
         }; # Pass flake variable
         home-manager.users.${user} = {
           imports = [

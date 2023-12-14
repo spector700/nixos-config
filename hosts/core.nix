@@ -7,7 +7,7 @@
 #           └─ default.nix
 #
 
-{ config, lib, pkgs, inputs, user, system, ... }:
+{ config, lib, pkgs, inputs, user, location, system, ... }:
 
 {
   # configuration used by all hosts
@@ -112,7 +112,7 @@
       EDITOR = "nvim";
       VISUAL = "nvim";
       # Variable for nh
-      FLAKE = "/home/${user}/.config/nixos-config";
+      FLAKE = "${location}";
     };
     systemPackages = [
       inputs.nh.packages.${pkgs.system}.default

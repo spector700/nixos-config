@@ -57,7 +57,8 @@
   outputs = inputs @ { self, nixpkgs, nixpkgs-stable, home-manager, gaming, hyprland-contrib, nh, ... }:
     let
       user = "nick";
-      location = "$HOME/.setup";
+      # Location of the nixos config
+      location = "/home/${user}/.config/nixos-config";
     in
     {
 

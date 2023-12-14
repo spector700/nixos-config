@@ -193,7 +193,10 @@ let
   };
 in
 {
-  imports = [ ./scripts ];
+  imports =
+    [ ./scripts ] ++
+    [ ./style.nix ];
+
 
   nixpkgs.overlays = [
     (final: prev: {
@@ -206,8 +209,6 @@ in
   home-manager.users.${user} = {
     programs.waybar = {
       enable = true;
-
-      style = import ./style.nix;
 
       settings = {
         Main = modules // { };
