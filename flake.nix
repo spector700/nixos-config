@@ -29,13 +29,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    anyrun = {
-      url = "github:Kirottu/anyrun";
-      inputs.nixpkgs.follows = "nixpkgs";
+    dev-assistant = {
+      url = "github:spector700/DevAssistant";
+      # url = "/home/nick/Projects/create/";
     };
 
-    nix-index-db = {
-      url = "github:Mic92/nix-index-database";
+    anyrun = {
+      url = "github:Kirottu/anyrun";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -54,7 +54,7 @@
     };
   };
 
-  outputs = inputs @ { self, nixpkgs, nixpkgs-stable, home-manager, gaming, hyprland-contrib, nh, ... }:
+  outputs = inputs @ { self, nixpkgs, nixpkgs-stable, home-manager, hyprland-contrib, ... }:
     let
       user = "nick";
       # Location of the nixos config
@@ -64,10 +64,9 @@
 
       # NixOS configurations
       nixosConfigurations = (
-        # Imports ./hosts/default.nix
         import ./hosts/profiles.nix {
           inherit (nixpkgs) lib;
-          inherit inputs nixpkgs nixpkgs-stable home-manager user location gaming nh;
+          inherit inputs nixpkgs nixpkgs-stable home-manager user location;
         }
       );
 
