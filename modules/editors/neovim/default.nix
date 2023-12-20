@@ -19,7 +19,7 @@
     viAlias = true;
     vimdiffAlias = true;
 
-    # withNodeJs = true;
+    withNodeJs = true;
     # withPython3 = true;
 
   };
@@ -40,7 +40,7 @@
     nodePackages.prettier
     black
 
-    # gcc
+    gcc
     # cargo
     ripgrep
     fd
