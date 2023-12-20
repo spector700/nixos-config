@@ -31,6 +31,12 @@ map("v", "<A-Up>", ":m '<-2<cr>gv=gv", { desc = "Move up" })
 -- Keep register if pasting over word
 map("v", "p", '"_dP')
 
+-- Move windows
+map("n", "<C-Up>", "<C-w>k", { desc = "Move Window Up" })
+map("n", "<C-Down>", "<C-w>j", { desc = "Move Window Down" })
+map("n", "<C-Right>", "<C-w>l", { desc = "Move Window Right" })
+map("n", "<C-Left>", "<C-w>h", { desc = "Move Window Left" })
+
 -- buffers
 if Util.has("bufferline.nvim") then
 	map("n", "<C-S-Tab>", "<cmd>BufferLineCyclePrev<cr>", { desc = "Prev buffer" })
