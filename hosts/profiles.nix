@@ -49,9 +49,9 @@ in
         }; # Pass flake variable
         home-manager.users.${user} = {
           imports = [
-            inputs.nix-index-db.hmModules.nix-index
             inputs.anyrun.homeManagerModules.default
             inputs.spicetify.homeManagerModules.default
+            inputs.dev-assistant.homeManagerModules.default
             ./home.nix
             ./desktop/home.nix
           ];

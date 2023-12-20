@@ -12,16 +12,32 @@
       enable = true;
       enableAutosuggestions = true;
       syntaxHighlighting.enable = true;
-      enableCompletion = true;
-      history.size = 100000;
+      autocd = true;
+      # enableCompletion = true;
+      history = {
+        expireDuplicatesFirst = true;
+      };
 
       initExtra = ''
         source ${pkgs.zsh-vi-mode}/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
+
+        # C-Backspace / C-Delete for word deletions
+        bindkey "^H" backward-kill-word
+
+        # case insensitive tab completion
+        zstyle ':completion:*' completer _complete _ignored _approximate
+        zstyle ':completion:*' list-colors '\'
+        zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
+        zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+        zstyle ':completion:*' menu select
+        zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
+        zstyle ':completion:*' verbose true
+        _comp_options+=(globdots)
       '';
 
       shellAliases = {
         rebuild_desktop = "nh os switch -H desktop";
-        create = "sh ~/Projects/create/dev-assistant.sh";
+        create = "DevAssistant";
         ".." = "cd ..";
         "..." = "cd ../..";
         ".3" = "cd ../../..";
@@ -34,6 +50,8 @@
         lg = "lazygit";
       };
     };
+
+    dev-assistant.enable = true;
 
     fzf = {
       enable = true;
