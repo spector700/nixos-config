@@ -38,8 +38,9 @@
       wget
 
       # Video/Audio
-      feh
       mpv
+      loupe
+      celluloid
       pavucontrol
       gimp
 
