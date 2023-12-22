@@ -31,7 +31,6 @@
 
     dev-assistant = {
       url = "github:spector700/DevAssistant";
-      # url = "/home/nick/Projects/create/";
     };
 
     anyrun = {

@@ -5,9 +5,7 @@
 { pkgs, user, ... }:
 
 let
-
   modules = {
-
     "hyprland/workspaces" = {
       "disable-scroll" = true;
       "all-outputs" = true;
@@ -206,14 +204,12 @@ in
     })
   ];
 
-  home-manager.users.${user} = {
-    programs.waybar = {
-      enable = true;
+  programs.waybar = {
+    enable = true;
 
-      settings = {
-        Main = modules // { };
-        Sec = modules // { };
-      };
+    settings = {
+      Main = modules // { };
+      Sec = modules // { };
     };
   };
 }

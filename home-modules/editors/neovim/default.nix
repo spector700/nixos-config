@@ -7,7 +7,7 @@
 
 {
 
-  home.file.".config/nvim".source = config.lib.file.mkOutOfStoreSymlink "${location}/modules/editors/neovim/nvim";
+  home.file.".config/nvim".source = config.lib.file.mkOutOfStoreSymlink "${location}/home-modules/editors/neovim/nvim";
 
   programs.neovim = {
     enable = true;

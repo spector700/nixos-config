@@ -11,6 +11,5 @@
 #
 
 [
-  ./swaync
   ./xdg.nix
 ]

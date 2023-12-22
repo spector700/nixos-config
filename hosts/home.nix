@@ -17,7 +17,7 @@
 
 {
   imports =
-    (import ../modules/editors) ++
+    (import ../home-modules/editors/neovim) ++
     (import ../modules/programs) ++
     (import ../modules/shell) ++
     (import ../modules/services);
@@ -56,7 +56,6 @@
       # File Management
       unzip
       unrar
-      xdg-utils
     ];
 
     stateVersion = "23.05";

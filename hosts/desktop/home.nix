@@ -16,7 +16,7 @@ let
   secondMonitor = "DP-3";
 in
 {
-  imports = [ ../../modules/hyprland/home.nix ];
+  imports = [ ../../home-modules/wayland ];
 
   # Wallpaper
   xdg.configFile."wallpaper.png".source = ../../modules/themes/wallpaper;

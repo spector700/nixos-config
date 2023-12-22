@@ -21,15 +21,11 @@
   programs = {
     steam = {
       enable = true;
-      # gamescopeSession.enable = true;
-      #remotePlay.openFirewall = true;          # Ports for Stream Remote Play
+      package = pkgs.steam.override {
+        extraProfile = "export GDK_SCALE=2";
+      };
     };
     gamescope.enable = true;
-
-
-    gamemode.enable = true; # Better gaming performance
-    # Steam: Right-click game - Properties - Launch options: gamemoderun %command%
-    # Lutris: General Preferences - Enable Feral GameMode
-    #                             - Global options - Add Environment Variables: LD_PRELOAD=/nix/store/*-gamemode-*-lib/lib/libgamemodeauto.so
+    gamemode.enable = true;
   };
 }
