@@ -2,7 +2,7 @@
   fonts = {
     packages = with pkgs; [
       # icon fonts
-      material-symbols
+      # material-symbols
 
       # normal fonts
       noto-fonts
@@ -32,12 +32,6 @@
   programs = {
     partition-manager.enable = true;
     seahorse.enable = true;
-  };
-
-  qt = {
-    enable = true;
-    platformTheme = "gtk2";
-    style = "gtk2";
   };
 
 

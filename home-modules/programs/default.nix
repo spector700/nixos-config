@@ -4,6 +4,7 @@
     ./rofi
     ./spicetify.nix
     ./packages.nix
+    ./qt.nix
     ./gtk.nix
     ./zathura.nix
     ./lf.nix
