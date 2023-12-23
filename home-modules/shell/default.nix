@@ -1,4 +1,3 @@
-#
 #  Shell
 #
 #  flake.nix
@@ -10,9 +9,5 @@
 #               └─ ...
 #
 {
-  imports = [
-    ./git.nix
-    ./zsh.nix
-    ./starship.nix
-  ];
+  imports = [ ./git.nix ./zsh.nix ./starship.nix ];
 }

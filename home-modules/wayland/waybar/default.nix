@@ -1,9 +1,6 @@
-#
 # Bar
 #
-
 { pkgs, user, ... }:
-
 let
   modules = {
     "hyprland/workspaces" = {
@@ -38,7 +35,9 @@ let
 
     clock = {
       format = "{: %H:%M  󰃭 %a %d}";
-      tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
+      tooltip-format = ''
+        <big>{:%Y %B}</big>
+        <tt><small>{calendar}</small></tt>'';
     };
 
     cpu = {
@@ -128,7 +127,8 @@ let
         dnd-none = "";
         inhibited-notification = "<span foreground='red'><sup></sup></span>";
         inhibited-none = "";
-        dnd-inhibited-notification = "<span foreground='red'><sup></sup></span>";
+        dnd-inhibited-notification =
+          "<span foreground='red'><sup></sup></span>";
         dnd-inhibited-none = "";
       };
       return-type = "json";
@@ -152,7 +152,7 @@ let
       "tooltip" = true;
     };
 
-    # modules for padding 
+    # modules for padding
 
     "custom/l_end" = {
       format = " ";
@@ -189,12 +189,8 @@ let
       interval = 60;
     };
   };
-in
-{
-  imports =
-    [ ./scripts ] ++
-    [ ./style.nix ];
-
+in {
+  imports = [ ./scripts ] ++ [ ./style.nix ];
 
   nixpkgs.overlays = [
     (final: prev: {

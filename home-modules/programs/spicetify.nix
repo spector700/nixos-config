@@ -1,11 +1,7 @@
-{ inputs, pkgs, ... }:
-{
-
+{ inputs, pkgs, ... }: {
   programs.spicetify =
-    let
-      spicePkgs = inputs.spicetify.legacyPackages.${pkgs.system};
-    in
-    {
+    let spicePkgs = inputs.spicetify.legacyPackages.${pkgs.system};
+    in {
       enable = true;
       theme = spicePkgs.themes.blossom;
       injectCss = true;
@@ -16,8 +12,6 @@
         keyboardShortcut
         shuffle
       ];
-      enabledCustomApps = with spicePkgs.apps; [
-        reddit
-      ];
+      enabledCustomApps = with spicePkgs.apps; [ reddit ];
     };
 }

@@ -1,23 +1,9 @@
-#
-#  Home-manager configuration for desktop
-#
-#  flake.nix
-#   ├─ ./hosts
-#   │   └─ ./desktop
-#   │       └─ ./home.nix
-#   └─ ./modules
-#         └─ ./hyprland
-#             └─ home.nix
-#
-
 { pkgs, lib, ... }:
 let
   mainMonitor = "DP-2";
   secondMonitor = "DP-3";
 in
 {
-  imports = [ ../../home-modules/wayland ];
-
   # Wallpaper
   xdg.configFile."wallpaper.png".source = ../../modules/themes/wallpaper;
 
@@ -59,9 +45,30 @@ in
         gtk-layer-shell = true;
         output = [ "${mainMonitor}" ];
 
-        modules-left = [ "custom/launcher" "hyprland/workspaces" "hyprland/window" ];
+        modules-left =
+          [ "custom/launcher" "hyprland/workspaces" "hyprland/window" ];
         modules-center = [ "custom/l_end" "clock" "custom/r_end" ];
-        modules-right = [ "custom/l_end" "cpu" "memory" "custom/r_end" "custom/l_end" "network" "bluetooth" "pulseaudio" "pulseaudio#microphone" "custom/updates" "custom/r_end" "custom/l_end" "tray" "custom/r_end" "custom/l_end" "custom/wallchange" "custom/wbar" "custom/r_end" "custom/notification" ];
+        modules-right = [
+          "custom/l_end"
+          "cpu"
+          "memory"
+          "custom/r_end"
+          "custom/l_end"
+          "network"
+          "bluetooth"
+          "pulseaudio"
+          "pulseaudio#microphone"
+          "custom/updates"
+          "custom/r_end"
+          "custom/l_end"
+          "tray"
+          "custom/r_end"
+          "custom/l_end"
+          "custom/wallchange"
+          "custom/wbar"
+          "custom/r_end"
+          "custom/notification"
+        ];
       };
 
       Sec = {
@@ -70,9 +77,25 @@ in
         height = 16;
         output = [ "${secondMonitor}" ];
 
-        modules-left = [ "custom/launcher" "hyprland/workspaces" "hyprland/window" ];
+        modules-left =
+          [ "custom/launcher" "hyprland/workspaces" "hyprland/window" ];
         modules-center = [ "custom/l_end" "clock" "custom/r_end" ];
-        modules-right = [ "custom/l_end" "cpu" "memory" "custom/r_end" "custom/l_end" "tray" "custom/r_end" "custom/l_end" "network" "bluetooth" "pulseaudio" "pulseaudio#microphone" "custom/r_end" "custom/notification" ];
+        modules-right = [
+          "custom/l_end"
+          "cpu"
+          "memory"
+          "custom/r_end"
+          "custom/l_end"
+          "tray"
+          "custom/r_end"
+          "custom/l_end"
+          "network"
+          "bluetooth"
+          "pulseaudio"
+          "pulseaudio#microphone"
+          "custom/r_end"
+          "custom/notification"
+        ];
       };
     };
   };
@@ -91,9 +114,9 @@ in
         command = "${pkgs.swaylock-effects}/bin/swaylock";
       }
     ];
-    timeouts = [
-      { timeout = 500; command = "${pkgs.hyprland}/bin/hyprctl dispatch dpms off"; }
-    ];
+    timeouts = [{
+      timeout = 500;
+      command = "${pkgs.hyprland}/bin/hyprctl dispatch dpms off";
+    }];
   };
-
 }

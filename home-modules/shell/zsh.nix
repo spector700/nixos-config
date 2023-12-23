@@ -1,12 +1,6 @@
-#
 # Shell
 #
-
-
-{ pkgs, location, ... }:
-
-{
-
+{ pkgs, location, ... }: {
   programs = {
     zsh = {
       enable = true;
@@ -14,9 +8,7 @@
       syntaxHighlighting.enable = true;
       autocd = true;
       # enableCompletion = true;
-      history = {
-        expireDuplicatesFirst = true;
-      };
+      history = { expireDuplicatesFirst = true; };
 
       initExtra = ''
         source ${pkgs.zsh-vi-mode}/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
@@ -43,9 +35,11 @@
         ".3" = "cd ../../..";
         nn = "cd && cd ${location} && nvim";
         cleanup = "sudo nix-collect-garbage --delete-older-than 1d";
-        listgen = "sudo nix-env -p /nix/var/nix/profiles/system --list-generations";
+        listgen =
+          "sudo nix-env -p /nix/var/nix/profiles/system --list-generations";
         cat = "bat";
-        l = "eza -la --git --icons --color=auto --group-directories-first -s extension";
+        l =
+          "eza -la --git --icons --color=auto --group-directories-first -s extension";
 
         lg = "lazygit";
       };
@@ -60,13 +54,10 @@
 
     bat = {
       enable = true;
-      config = {
-        pager = "less -FR";
-      };
+      config = { pager = "less -FR"; };
     };
 
     eza.enable = true;
     btop.enable = true;
-
   };
 }

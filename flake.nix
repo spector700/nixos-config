@@ -1,16 +1,13 @@
-#
-#  flake.nix *             
+#  flake.nix *
 #   ├─ ./hosts
 #   │   └─ default.nix
 #   └─ ./nix
 #       └─ default.nix
 #
-
 {
   description = "Nixos System Configuration";
 
   inputs = {
-
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-23.05";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
@@ -29,9 +26,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    dev-assistant = {
-      url = "github:spector700/DevAssistant";
-    };
+    dev-assistant = { url = "github:spector700/DevAssistant"; };
 
     anyrun = {
       url = "github:Kirottu/anyrun";
@@ -53,26 +48,22 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    gaming = {
-      url = "github:fufexan/nix-gaming";
-    };
+    gaming = { url = "github:fufexan/nix-gaming"; };
   };
 
-  outputs = inputs @ { self, nixpkgs, nixpkgs-stable, home-manager, hyprland-contrib, ... }:
+  outputs = inputs@{ self, nixpkgs, home-manager, ... }:
     let
       user = "nick";
       # Location of the nixos config
       location = "/home/${user}/.config/nixos-config";
+      system = "x86_64-linux";
     in
     {
 
       # NixOS configurations
-      nixosConfigurations = (
-        import ./hosts/profiles.nix {
-          inherit (nixpkgs) lib;
-          inherit inputs nixpkgs nixpkgs-stable home-manager user location;
-        }
-      );
+      nixosConfigurations = (import ./hosts/profiles.nix {
+        inherit inputs nixpkgs system home-manager user location;
+      });
 
       # Non-NixOS configurations
       #homeConfigurations = (
@@ -81,6 +72,5 @@
       #inherit inputs nixpkgs nixpkgs-stable home-manager user;
       #}
       #);
-
     };
 }

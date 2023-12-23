@@ -1,19 +1,12 @@
-#
 # Neovim
 #
-
-
-{ pkgs, config, location, ... }:
-
-{
-
-  home.file.".config/nvim".source = config.lib.file.mkOutOfStoreSymlink "${location}/home-modules/editors/neovim/nvim";
+{ pkgs, config, location, ... }: {
+  home.file.".config/nvim".source = config.lib.file.mkOutOfStoreSymlink
+    "${location}/home-modules/editors/neovim/nvim";
 
   programs.neovim = {
     enable = true;
-    plugins = with pkgs.vimPlugins; [
-      nvim-treesitter.withAllGrammars
-    ];
+    plugins = with pkgs.vimPlugins; [ nvim-treesitter.withAllGrammars ];
 
     vimAlias = true;
     viAlias = true;
@@ -21,7 +14,6 @@
 
     withNodeJs = true;
     # withPython3 = true;
-
   };
   home.packages = with pkgs; [
     # LSP

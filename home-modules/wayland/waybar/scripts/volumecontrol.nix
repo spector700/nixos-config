@@ -1,6 +1,4 @@
-{ pkgs, user, ... }:
-
-{
+{ pkgs, user, ... }: {
   home.file = {
     ".config/waybar/scripts/volumecontrol.sh" = {
       # Custom script: Toggle speaker/headset

@@ -3,9 +3,7 @@
   programs = {
     kitty = {
       enable = true;
-      font = {
-        name = "JetBrainsMono Nerd Font";
-      };
+      font = { name = "JetBrainsMono Nerd Font"; };
       shellIntegration.enableZshIntegration = true;
 
       theme = "Catppuccin-Mocha";
@@ -16,8 +14,8 @@
         enable_audio_bell = false;
       };
       keybindings = {
-        "ctrl+tab" = ''send_text all \x1b[9;5u''; # <C-Tab>
-        "ctrl+shift+tab" = ''send_text all \x1b[9;6u''; # <C-S-Tab>
+        "ctrl+tab" = "send_text all \\x1b[9;5u"; # <C-Tab>
+        "ctrl+shift+tab" = "send_text all \\x1b[9;6u"; # <C-S-Tab>
       };
     };
   };

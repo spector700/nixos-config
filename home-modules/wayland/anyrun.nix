@@ -1,6 +1,4 @@
-{ inputs, pkgs, ... }:
-
-{
+{ inputs, pkgs, ... }: {
   programs.anyrun = {
     enable = true;
     config = {
@@ -11,7 +9,6 @@
         shell
         symbols
         stdin
-
       ];
       width.fraction = 0.3;
       y.absolute = 300;
@@ -60,6 +57,5 @@
         padding: 8px;
       }
     '';
-
   };
 }

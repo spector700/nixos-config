@@ -1,8 +1,5 @@
 # lf file manager
-
-{ inputs, pkgs, ... }:
-
-{
+{ inputs, pkgs, ... }: {
   home.packages = [ pkgs.ctpv ];
 
   programs.lf = {
@@ -85,15 +82,16 @@
         }}
       '';
 
-      zip = ''''${{
-        set -f
-        mkdir $1
-        cp -r $fx $1
-        zip -r $1.zip $1
-        rm -rf $1
-      }}'';
+      zip = ''
+        ''${{
+                set -f
+                mkdir $1
+                cp -r $fx $1
+                zip -r $1.zip $1
+                rm -rf $1
+              }}'';
 
-      trash = ''%${pkgs.trash-cli}/bin/trash-put $fx'';
+      trash = "%${pkgs.trash-cli}/bin/trash-put $fx";
 
       trash-restore = ''
           ''${{
@@ -103,15 +101,14 @@
               ${pkgs.fzf}/bin/fzf --multi --reverse | \
               awk '{print $1}' | \
               sed -z 's/\n/,/g;s/,$/\n/')"
-            echo $ids | ${pkgs.trash-cli}/bin/trash-restore 
+            echo $ids | ${pkgs.trash-cli}/bin/trash-restore
             clear
         }}
       '';
     };
 
     keybindings = {
-
-      # Disable 
+      # Disable
       d = "";
 
       "/" = "fzf_jump";
@@ -129,16 +126,14 @@
       gd = "cd ~/Downloads";
       gD = "cd ~/Documents";
       gc = "cd ~/.config";
-
     };
 
-    extraConfig =
-      ''
-        set previewer ctpv
-        set cleaner ctpvclear
-        &ctpv -s $id
-        &ctpvquit $id
-      '';
+    extraConfig = ''
+      set previewer ctpv
+      set cleaner ctpvclear
+      &ctpv -s $id
+      &ctpvquit $id
+    '';
   };
 
   # Icons
@@ -146,5 +141,4 @@
 
   # Colors
   xdg.configFile."lf/colors".source = "${inputs.lf-icons}/etc/colors.example";
-
 }

@@ -1,20 +1,9 @@
-{ pkgs, ... }:
-
-{
-  home.packages = with pkgs; [
-    swaynotificationcenter
-    libnotify
-  ];
+{ pkgs, ... }: {
+  home.packages = with pkgs; [ swaynotificationcenter libnotify ];
   home.file = {
-    ".config/swaync/style.css" = {
-      source = ./style.css;
-    };
-    ".config/swaync/configSchema.json" = {
-      source = ./configSchema.json;
-    };
-    ".config/swaync/icons" = {
-      source = ./icons;
-    };
+    ".config/swaync/style.css" = { source = ./style.css; };
+    ".config/swaync/configSchema.json" = { source = ./configSchema.json; };
+    ".config/swaync/icons" = { source = ./icons; };
     ".config/swaync/config.json" = {
       text = ''
         {
@@ -130,5 +119,4 @@
       '';
     };
   };
-
 }

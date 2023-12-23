@@ -1,7 +1,5 @@
 # GTK config
 { pkgs, config, ... }: {
-
-
   home.pointerCursor = {
     gtk.enable = true;
     x11.enable = true;
@@ -9,7 +7,6 @@
     package = pkgs.bibata-cursors;
     size = 20;
   };
-
 
   gtk = {
     enable = true;
@@ -34,12 +31,8 @@
       size = 12;
     };
 
-    gtk3.extraConfig = {
-      gtk-application-prefer-dark-theme = true;
-    };
+    gtk3.extraConfig = { gtk-application-prefer-dark-theme = true; };
 
-    gtk4.extraConfig = {
-      gtk-application-prefer-dark-theme = true;
-    };
+    gtk4.extraConfig = { gtk-application-prefer-dark-theme = true; };
   };
 }

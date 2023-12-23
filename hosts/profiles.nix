@@ -1,34 +1,10 @@
-#
-#  These are the different profiles that can be used when building NixOS.
-#
-#  flake.nix 
-#   └─ ./hosts  
-#       ├─ profiles.nix *
-#       ├─ core.nix
-#       ├─ home.nix
-#       └─ ./desktop OR ./laptop
-#            ├─ ./default.nix
-#            └─ ./home.nix 
-#
+{ inputs, nixpkgs, system, home-manager, user, location, ... }:
 
-{ inputs, nixpkgs, nixpkgs-stable, home-manager, user, location, ... }:
-
-let
-  system = "x86_64-linux";
-
-  stable = import nixpkgs-stable {
-    inherit system;
-    # Allow proprietary software
-    config.allowUnfree = true;
-  };
-in
 {
-
   # Desktop profile
   desktop = nixpkgs.lib.nixosSystem {
-    inherit system;
     specialArgs = {
-      inherit inputs stable system user location;
+      inherit inputs system user location;
     };
     # Pass flake variable
     # Modules that are used
@@ -36,7 +12,13 @@ in
       inputs.gaming.nixosModules.pipewireLowLatency
       inputs.nh.nixosModules.default
       ./desktop
-      ./core.nix
+      ../modules/core
+      ../modules/desktop.nix
+      ../modules/greetd.nix
+      ../modules/hardware.nix
+      ../modules/printing.nix
+      ../modules/programs/games.nix
+      ../modules/programs/thunar.nix
 
       # Home-Manager module that is used.
 
@@ -52,8 +34,12 @@ in
             inputs.anyrun.homeManagerModules.default
             inputs.spicetify.homeManagerModules.default
             inputs.dev-assistant.homeManagerModules.default
-            ./home.nix
             ./desktop/home.nix
+            ../home-modules
+            ../home-modules/wayland
+            ../home-modules/programs
+            ../home-modules/editors/neovim
+            ../home-modules/shell
           ];
         };
       }

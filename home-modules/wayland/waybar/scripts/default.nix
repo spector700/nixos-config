@@ -1,6 +1,4 @@
-{ pkgs, user, ... }:
-
-{
+{ pkgs, user, ... }: {
   imports = [ ./volumecontrol.nix ];
 
   home.file = {

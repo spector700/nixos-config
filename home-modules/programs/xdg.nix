@@ -27,8 +27,7 @@ let
     "x-scheme-handler/spotify" = [ "spotify" ];
     "x-scheme-handler/tg" = [ "telegramdesktop" ];
   };
-in
-{
+in {
   xdg = {
     enable = true;
     cacheHome = config.home.homeDirectory + "/.local/cache";

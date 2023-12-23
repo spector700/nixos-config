@@ -1,5 +1,4 @@
 { pkgs, ... }:
-
 # Lockscreen
 {
   programs.swaylock = {

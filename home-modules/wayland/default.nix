@@ -1,12 +1,5 @@
-{ inputs, pkgs, ...}:
-{
-  imports = [
-    ./hyprland
-    ./swaync
-    ./waybar
-    ./anyrun.nix
-    ./swaylock.nix
-  ];
+{ inputs, pkgs, ... }: {
+  imports = [ ./hyprland ./swaync ./waybar ./anyrun.nix ./swaylock.nix ];
 
   home.packages = with pkgs; [
     inputs.hyprland-contrib.packages.${pkgs.system}.grimblast
@@ -26,4 +19,4 @@
     NIXOS_OZONE_WL = "1";
     # MOZ_ENABLE_WAYLAND = "1";
   };
-  }
+}
