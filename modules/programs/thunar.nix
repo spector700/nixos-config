@@ -1,7 +1,4 @@
-{ pkgs, ... }:
-
-{
-
+{ pkgs, ... }: {
   programs.thunar = {
     enable = true;
     plugins = with pkgs.xfce; [
@@ -13,5 +10,4 @@
 
   services.tumbler.enable = true;
   services.gvfs.enable = true;
-
 }
