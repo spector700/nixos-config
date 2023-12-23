@@ -1,31 +1,27 @@
 { pkgs, lib, ... }: {
   fonts = {
     packages = with pkgs; [
-      # icon fonts
-      # material-symbols
-
       # normal fonts
       noto-fonts
       noto-fonts-cjk
       noto-fonts-emoji
       roboto
       (google-fonts.override { fonts = [ "Inter" ]; })
-
       # nerdfonts
       (nerdfonts.override { fonts = [ "FiraCode" "JetBrainsMono" ]; })
     ];
-
     # causes more issues than it solves
     enableDefaultPackages = false;
 
-    # user defined fonts
-    # the reason there's Noto Color Emoji everywhere is to override DejaVu's
-    # B&W emojis that would sometimes show instead of some Color emojis
-    fontconfig.defaultFonts = {
-      serif = [ "Noto Serif" "Noto Color Emoji" ];
-      sansSerif = [ "Inter" "Noto Color Emoji" ];
-      monospace = [ "JetBrainsMono Nerd Font" "Noto Color Emoji" ];
-      emoji = [ "Noto Color Emoji" ];
+    fontconfig = {
+      enable = true;
+      defaultFonts = {
+        serif = [ "Noto Serif" ];
+        sansSerif = [ "Inter" ];
+        monospace = [ "JetBrainsMono Nerd Font" ];
+      };
+      hinting.enable = true;
+      antialias = true;
     };
   };
 
@@ -33,7 +29,6 @@
     partition-manager.enable = true;
     seahorse.enable = true;
   };
-
 
   systemd = {
     user.services.polkit-kde-authentication-agent-1 = {
@@ -52,9 +47,7 @@
     };
   };
 
-
   services.gnome.gnome-keyring.enable = true;
-
 
   security = {
     polkit.enable = true;
@@ -74,5 +67,4 @@
       pkgs.xdg-desktop-portal-gtk
     ];
   };
-
 }
