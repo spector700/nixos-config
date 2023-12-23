@@ -1,39 +1,28 @@
-#  Hyprland Home-manager configuration
-#
-#  flake.nix
-#   ├─ ./hosts
-#   │   └─ ./<host>
-#   │       └─ home.nix
-#   └─ ./modules
-#       └─ ./desktop
-#           └─ ./hyprland
-#               └─ home.nix *
-#
 { pkgs, ... }:
 let
   screenshotarea =
     "hyprctl keyword animation 'fadeOut,0,0,default'; grimblast --notify copysave area; hyprctl keyword animation 'fadeOut,1,4,default'";
 
   # binds $mod + [alt +] {1..10} to [move to] workspace {1..10}
-  workspaces = builtins.concatLists (builtins.genList (x:
-    let ws = let c = (x + 1) / 10; in builtins.toString (x + 1 - (c * 10));
-    in [
-      "$mod, ${ws}, workspace, ${toString (x + 1)}"
-      "ALT SHIFT, ${ws}, movetoworkspace, ${toString (x + 1)}"
-    ]) 10);
-in {
+  workspaces = builtins.concatLists (builtins.genList
+    (x:
+      let ws = let c = (x + 1) / 10; in builtins.toString (x + 1 - (c * 10));
+      in [
+        "$mod, ${ws}, workspace, ${toString (x + 1)}"
+        "ALT SHIFT, ${ws}, movetoworkspace, ${toString (x + 1)}"
+      ]) 10);
+in
+{
   wayland.windowManager.hyprland = {
     enable = true;
     settings = {
       "$mod" = "SUPER";
 
-      env = [ "WLR_DRM_NO_ATOMIC,1" "QT_WAYLAND_DISABLE_WINDOWDECORATION,1" ];
-
       layerrule = [
-        "blur, ^(eww-.+|bar|system-menu|anyrun|gtk-layer-shell|osd)$"
-        "xray 1, ^(bar|gtk-layer-shell)$"
-        "ignorealpha 0.2, ^(eww-.+|bar|system-menu|anyrun|gtk-layer-shell|osd)$"
-        "ignorealpha 0.5, ^((eww-)?music|calendar|system-menu|anyrun)$"
+        "blur, ^(waybar|swaync-.+|system-menu|anyrun|gtk-layer-shell|osd)$"
+        "xray 1, ^(waybar|gtk-layer-shell)$"
+        "ignorealpha 0.2, ^(waybar|system-menu|anyrun|gtk-layer-shell|osd)$"
+        "ignorealpha 0.5, ^(music|calendar|system-menu|anyrun)$"
       ];
 
       windowrulev2 = [
@@ -64,6 +53,10 @@ in {
         # Fix steam menus
         "stayfocused, title:^()$,class:^(steam)$"
         "minsize 1 1, title:^()$,class:^(steam)$"
+
+        # Opacity
+        "opacity 0.94 0.94,class:^(kitty|thunar|code(.*))$"
+        "opacity 0.94 0.94,title:^(.*((d|D)isc|ArmC)ord.*)$"
       ];
 
       # Mouse Moveements
@@ -198,7 +191,6 @@ in {
       misc = {
         disable_autoreload = true;
         disable_hyprland_logo = true;
-        # disable_splash_rendering = true;
         key_press_enables_dpms = true;
         mouse_move_enables_dpms = true;
         vrr = 1;
@@ -206,20 +198,5 @@ in {
 
       xwayland.force_zero_scaling = true;
     };
-    extraConfig = ''
-
-      # Opacity
-      # windowrulev2 = opacity 0.88 0.88,class:^(kitty)$
-      # windowrulev2 = opacity 0.88 0.88,class:^(thunar)$
-      # windowrulev2 = opacity 0.80 0.80,class:^(file-roller)$
-      # windowrulev2 = opacity 0.80 0.80,class:^(qt5ct)$
-      # windowrulev2 = opacity 0.92 0.92,title:^(.*((d|D)isc|ArmC)ord.*)$
-      # windowrulev2 = opacity 0.85 0.80,class:^(pavucontrol)$
-      # windowrulev2 = opacity 0.80 0.70,class:^(org.kde.polkit-kde-authentication-agent-1)$
-
-
-
-      # exec-once = xprop -root -f _XWAYLAND_GLOBAL_OUTPUT_SCALE 32c -set _XWAYLAND_GLOBAL_OUTPUT_SCALE 2
-    '';
   };
 }

@@ -15,24 +15,24 @@ in
 
   # Hyprland
   wayland.windowManager.hyprland = {
-    extraConfig = ''
-        monitor=${mainMonitor}, 3440x1440@100, 1167x420, 1.25, bitdepth,10
-        monitor=${secondMonitor}, highres,0x0, 1.85, bitdepth,10 ,transform,1
+    settings = {
+      monitor = [
+        "${mainMonitor}, 3440x1440@100, 1167x420, 1.25, bitdepth,10"
+        "${secondMonitor}, highres,0x0, 1.85, bitdepth,10 ,transform,1"
+      ];
 
-        workspaces {
-            workspace=${toString mainMonitor},1, default:true
-            workspace=${toString mainMonitor},2
-            workspace=${toString mainMonitor},3
-            workspace=${toString secondMonitor},4
-            workspace=${toString secondMonitor},5
-            workspace=${toString secondMonitor},6
-        }
-
-      #------------#
-      # auto start #
-      #------------#
-        exec-once=${pkgs.openrgb}/bin/openrgb --profile iceie
-    '';
+      workspace = [
+        "${toString mainMonitor},1, default:true"
+        "${toString mainMonitor},2"
+        "${toString mainMonitor},3"
+        "${toString secondMonitor},4"
+        "${toString secondMonitor},5"
+        "${toString secondMonitor},6"
+      ];
+      exec-once = [
+        "${pkgs.openrgb}/bin/openrgb --profile iceie"
+      ];
+    };
   };
 
   # Waybar
