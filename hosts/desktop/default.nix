@@ -3,7 +3,7 @@
   imports = [ ./hardware-configuration.nix ];
 
   boot = {
-    kernelPackages = pkgs.linuxPackages_xanmod_latest;
+    kernelPackages = pkgs.linuxPackages_latest;
     kernelParams = [
       #For openrgb with gigabyte motherboard
       "acpi_enforce_resources=lax"
@@ -47,7 +47,4 @@
       users = [ "${user}" ];
     };
   };
-
-
-
 }
