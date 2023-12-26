@@ -14,7 +14,7 @@
       gimp
 
       # Apps
-      armcord
+      webcord
       signal-desktop
       networkmanagerapplet
       nextcloud-client

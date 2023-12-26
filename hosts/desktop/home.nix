@@ -30,7 +30,7 @@ in
         "${toString secondMonitor},6"
       ];
       exec-once = [
-        "${pkgs.openrgb}/bin/openrgb --profile iceie"
+        "sleep 3 && ${pkgs.openrgb}/bin/openrgb --profile iceie"
       ];
     };
   };

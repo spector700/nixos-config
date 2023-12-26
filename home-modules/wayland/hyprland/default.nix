@@ -35,7 +35,7 @@ in
 
         # Application in workspaces
         "workspace 8 silent, title:^(Steam)$, title:^(Lutris)$"
-        "workspace 4 silent, title:^(.*((d|D)isc|ArmC)ord.*)$"
+        "workspace 4 silent, title:^(.*((d|D)isc|ArmC|WebC)ord.*)$"
         "workspace special:spotify silent, title:^(Spotify.*)$"
 
         # idle inhibit while watching videos
@@ -56,7 +56,7 @@ in
 
         # Opacity
         "opacity 0.94 0.94,class:^(kitty|thunar|code(.*))$"
-        "opacity 0.94 0.94,title:^(.*((d|D)isc|ArmC)ord.*)$"
+        "opacity 0.94 0.94,title:^(.*((d|D)isc|ArmC|WebC)ord.*)$"
       ];
 
       # Mouse Moveements
@@ -131,7 +131,7 @@ in
         "${pkgs.wlsunset}/bin/wlsunset -l 32.7 -L -96.9"
         "${pkgs.blueman}/bin/blueman-applet"
         "spotify"
-        "armcord --enable-features=UseOzonePlatform,WaylandWindowDecorations,WebRTCPipeWireCapturer --ozone-platform=wayland"
+        "webcord"
       ];
 
       general = {

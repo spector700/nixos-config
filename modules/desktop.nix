@@ -6,7 +6,6 @@
       noto-fonts-cjk
       noto-fonts-emoji
       roboto
-      (google-fonts.override { fonts = [ "Inter" ]; })
       # nerdfonts
       (nerdfonts.override { fonts = [ "FiraCode" "JetBrainsMono" ]; })
     ];
@@ -17,7 +16,7 @@
       enable = true;
       defaultFonts = {
         serif = [ "Noto Serif" ];
-        sansSerif = [ "Inter" ];
+        sansSerif = [ "JetBrainsMono Nerd Font" ];
         monospace = [ "JetBrainsMono Nerd Font" ];
       };
       hinting.enable = true;
