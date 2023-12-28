@@ -13,6 +13,15 @@ in
     wallpaper = ,~/.config/wallpaper.png
   '';
 
+
+  # For virt-manager
+  dconf.settings = {
+    "org/virt-manager/virt-manager/connections" = {
+      autoconnect = [ "qemu:///system" ];
+      uris = [ "qemu:///system" ];
+    };
+  };
+
   # Hyprland
   wayland.windowManager.hyprland = {
     settings = {
