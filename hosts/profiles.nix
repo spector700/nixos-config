@@ -56,11 +56,6 @@
       inputs.nh.nixosModules.default
       ./vm
       ../modules/core
-      ../modules/desktop.nix
-      ../modules/greetd.nix
-      ../modules/hardware.nix
-      ../modules/programs/games.nix
-      ../modules/programs/thunar.nix
 
       # Home-Manager module that is used.
 
@@ -73,13 +68,10 @@
         };
         home-manager.users.${user} = {
           imports = [
-            inputs.anyrun.homeManagerModules.default
-            inputs.spicetify.homeManagerModules.default
             inputs.dev-assistant.homeManagerModules.default
-            ./vm/home.nix
             ../home-modules
-            ../home-modules/wayland
-            ../home-modules/programs
+            ../home-modules/programs/lf.nix
+            ../home-modules/programs/kitty.nix
             ../home-modules/editors/neovim
             ../home-modules/shell
           ];
