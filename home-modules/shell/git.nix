@@ -17,6 +17,9 @@
         key = "${config.home.homeDirectory}/.ssh/gitkey";
         signByDefault = true;
       };
+
+      userEmail = "72362399+spector700@users.noreply.github.com";
+      userName = "spector700";
     };
   };
 }
