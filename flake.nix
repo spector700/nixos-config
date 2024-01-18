@@ -26,7 +26,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    dev-assistant = { url = "github:spector700/DevAssistant"; };
+    dev-assistant = {
+      url = "github:spector700/DevAssistant";
+    };
 
     anyrun = {
       url = "github:Kirottu/anyrun";
@@ -48,7 +50,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    gaming = { url = "github:fufexan/nix-gaming"; };
+    gaming = {
+      url = "github:fufexan/nix-gaming";
+    };
+
+    ags = {
+      url = "github:Aylur/ags";
+    };
   };
 
   outputs = inputs@{ self, nixpkgs, home-manager, ... }:

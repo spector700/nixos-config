@@ -26,8 +26,8 @@ in
   wayland.windowManager.hyprland = {
     settings = {
       monitor = [
-        "${mainMonitor}, 3440x1440@100, 1167x420, 1.25, bitdepth,10"
-        "${secondMonitor}, highres,0x0, 1.85, bitdepth,10 ,transform,1"
+        "${mainMonitor}, 3440x1440@100, 1152x420, 1.25, bitdepth,10"
+        "${secondMonitor}, highres,0x0, 1.875, bitdepth,10 ,transform,1"
       ];
 
       workspace = [
@@ -39,7 +39,7 @@ in
         "${toString secondMonitor},6"
       ];
       exec-once = [
-        "sleep 3 && ${pkgs.openrgb}/bin/openrgb --profile iceie"
+        "sleep 5 && ${pkgs.openrgb}/bin/openrgb --profile iceie"
       ];
     };
   };
