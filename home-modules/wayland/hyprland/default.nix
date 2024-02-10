@@ -18,12 +18,16 @@ in
     settings = {
       "$mod" = "SUPER";
 
-      layerrule = [
-        "blur, ^(waybar|swaync-.+|system-menu|anyrun|gtk-layer-shell|osd)$"
-        "xray 1, ^(waybar|gtk-layer-shell)$"
-        "ignorealpha 0.2, ^(waybar|system-menu|anyrun|gtk-layer-shell|osd)$"
-        "ignorealpha 0.5, ^(music|calendar|system-menu|anyrun)$"
-      ];
+      layerrule =
+        let
+          layers = "^(bar|system-menu|anyrun|gtk-layer-shell|osd)$";
+        in
+        [
+          "blur, ${layers}"
+          "xray 1, ^(bar|gtk-layer-shell)$"
+          "ignorealpha 0.2, ${layers}"
+          "ignorealpha 0.5, ^(music|calendar|system-menu|anyrun)$"
+        ];
 
       windowrulev2 = [
         # make Firefox PiP window floating and sticky
@@ -65,7 +69,8 @@ in
       # Binds
       bind = [
         # Compositor
-        "$mod SHIFT, R, exec, ${pkgs.hyprland}/bin/hyprctl reload && ~/.config/waybar/scripts/restart.sh"
+        # "$mod SHIFT, R, exec, ${pkgs.hyprland}/bin/hyprctl reload && ~/.config/waybar/scripts/restart.sh"
+        "$mod SHIFT, R, exec, ${pkgs.hyprland}/bin/hyprctl reload && ags -b hypr quit; ags -b hypr"
         "$mod, Q, killactive,"
         "$mod, F, fullscreen,"
         "$mod, G, togglefloating"
@@ -89,7 +94,7 @@ in
 
         # terminal
         "$mod, T, exec, ${pkgs.kitty}/bin/kitty"
-        "$mod, E, exec, ${pkgs.kitty}/bin/kitty -e lf"
+        "$mod, E, exec, ${pkgs.kitty}/bin/kitty -e yazi"
         "CTRL SHIFT, Escape, exec, ${pkgs.kitty}/bin/kitty -e btop"
 
         # Programs
@@ -102,6 +107,9 @@ in
 
         # lock screen
         "$mod, L, exec, ${pkgs.swaylock-effects}/bin/swaylock"
+
+        # Power menu
+        ", XF86PowerOff, exec, ags -t powermenu"
 
         # Screenshot
         ", Print, exec, ${screenshotarea}"
@@ -119,14 +127,18 @@ in
 
       bindle = [
         # Volume
-        ", XF86AudioRaiseVolume, exec, ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 10%+"
-        ", XF86AudioLowerVolume, exec, ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 10%-"
+        # ", XF86AudioRaiseVolume, exec, ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 10%+"
+        # ", XF86AudioLowerVolume, exec, ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 10%-"
+        ", XF86AudioRaiseVolume, exec, ags -r 'audio.speaker.volume += 0.05; indicator.speaker()'"
+        ", XF86AudioLowerVolume, exec, ags -r 'audio.speaker.volume -= 0.05; indicator.speaker()'"
+
       ];
 
       exec-once = [
-        "${pkgs.waybar}/bin/waybar"
+        # "${pkgs.waybar}/bin/waybar"
+        "ags -b hypr"
         "${pkgs.hyprpaper}/bin/hyprpaper"
-        "${pkgs.swaynotificationcenter}/bin/swaync"
+        # "${pkgs.swaynotificationcenter}/bin/swaync"
         "wl-paste --watch cliphist store"
         "${pkgs.wlsunset}/bin/wlsunset -l 32.7 -L -96.9"
         "${pkgs.blueman}/bin/blueman-applet"
