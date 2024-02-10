@@ -37,8 +37,9 @@ let
   associations = builtins.mapAttrs (_: v: (map (e: "${e}.desktop") v)) ({
     "application/pdf" = [ "org.pwmt.zathura-pdf-mupdf" ];
     "text/html" = browser;
-    "text/plain" = [ "Neovim" ];
-    "x-scheme-handler/chrome" = [ "chromium-browser" ];
+    "inode/directory" = [ "yazi" ];
+    # "text/plain" = [ "Neovim" ];
+    # "x-scheme-handler/chrome" = [ "chromium-browser" ];
   }
   // image
   // video

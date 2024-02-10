@@ -30,6 +30,10 @@
       url = "github:spector700/DevAssistant";
     };
 
+    Akari = {
+      url = "github:spector700/Akari";
+    };
+
     anyrun = {
       url = "github:Kirottu/anyrun";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -69,9 +73,9 @@
     {
 
       # NixOS configurations
-      nixosConfigurations = (import ./hosts/profiles.nix {
+      nixosConfigurations = import ./hosts/profiles.nix {
         inherit inputs nixpkgs system home-manager user location;
-      });
+      };
 
       # Non-NixOS configurations
       #homeConfigurations = (

@@ -70,7 +70,6 @@
           imports = [
             inputs.dev-assistant.homeManagerModules.default
             ../home-modules
-            ../home-modules/programs/lf.nix
             ../home-modules/programs/kitty.nix
             ../home-modules/editors/neovim
             ../home-modules/shell
