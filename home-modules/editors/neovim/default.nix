@@ -5,6 +5,6 @@
   home.packages = with pkgs; [
     inputs.Akari.packages.${system}.default
     lazygit
-    repgrep
+    ripgrep
   ];
 }
