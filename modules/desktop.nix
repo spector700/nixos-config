@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }: {
+{ pkgs, ... }: {
   fonts = {
     packages = with pkgs; [
       # normal fonts

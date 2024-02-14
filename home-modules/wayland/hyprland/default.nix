@@ -47,7 +47,9 @@ in
         "idleinhibit focus, class:^(firefox)$, title:^(.*YouTube.*)$"
         "idleinhibit fullscreen, class:^(firefox)$"
 
-        "dimaround, class:^(org.kde.polkit-kde-authentication-agent-1)"
+        "dimaround, class:^(gcr-prompter)$"
+        "dimaround, class:^(xdg-desktop-portal-gtk)$"
+        "dimaround, class:^(polkit-gnome-authentication-agent-1)$"
 
         # Fix xwayland apps
         "rounding 0, xwayland:1"
@@ -203,9 +205,12 @@ in
       misc = {
         disable_autoreload = true;
         disable_hyprland_logo = true;
+
+        # Turn on screen when sleeping
         key_press_enables_dpms = true;
         mouse_move_enables_dpms = true;
         vrr = 1;
+        no_direct_scanout = false;
       };
 
       xwayland.force_zero_scaling = true;
