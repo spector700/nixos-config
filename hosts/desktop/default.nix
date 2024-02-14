@@ -11,6 +11,12 @@
   };
   networking.hostName = "Alfhiem-Nix";
 
+  qt = {
+    enable = true;
+    platformTheme = "gtk2";
+    style = "gtk2";
+  };
+
   # Variables for hyprland nvidia
   environment = {
     sessionVariables = {
