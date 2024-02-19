@@ -1,5 +1,7 @@
-{ inputs, pkgs, location, lib, config, ... }: {
+{ inputs, location, lib, config, ... }: {
   environment.variables.FLAKE = "${location}";
+
+  imports = [ inputs.nh.nixosModules.default ];
 
   nh = {
     enable = true;
@@ -27,15 +29,11 @@
       ];
     };
 
-    # package = pkgs.nixVersions.unstable;
-    # registry.nixpkgs.flake = inputs.nixpkgs;
-
     # pin the registry to avoid downloading and evaling a new nixpkgs version every time
     registry = lib.mapAttrs (_: v: { flake = v; }) inputs;
 
     # set the path for channels compat
-    nixPath =
-      lib.mapAttrsToList (key: _: "${key}=flake:${key}") config.nix.registry;
+    nixPath = lib.mapAttrsToList (key: _: "${key}=flake:${key}") config.nix.registry;
   };
 
   nixpkgs.config.allowUnfree = true;

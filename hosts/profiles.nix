@@ -1,15 +1,13 @@
-{ inputs, nixpkgs, system, home-manager, user, location, ... }:
+{ inputs, lib, home-manager, user, location, ... }:
 
 {
   # Desktop profile
-  desktop = nixpkgs.lib.nixosSystem {
+  desktop = lib.nixosSystem {
     specialArgs = {
-      inherit inputs system user location;
+      inherit inputs user location;
     };
     # Modules that are used
     modules = [
-      inputs.gaming.nixosModules.pipewireLowLatency
-      inputs.nh.nixosModules.default
       ./desktop
       ../modules/core
       ../modules/desktop.nix
@@ -24,36 +22,36 @@
 
       home-manager.nixosModules.home-manager
       {
-        home-manager.useGlobalPkgs = true;
-        home-manager.useUserPackages = true;
-        home-manager.extraSpecialArgs = {
-          inherit user inputs location;
-        };
-        home-manager.users.${user} = {
-          imports = [
-            inputs.anyrun.homeManagerModules.default
-            inputs.spicetify.homeManagerModules.default
-            inputs.dev-assistant.homeManagerModules.default
-            ./desktop/home.nix
-            ../home-modules
-            ../home-modules/wayland
-            ../home-modules/programs
-            ../home-modules/editors/neovim
-            ../home-modules/shell
-          ];
+        home-manager = {
+          useGlobalPkgs = true;
+          useUserPackages = true;
+          extraSpecialArgs = {
+            inherit user inputs location;
+          };
+          users.${user} = {
+            imports = [
+              inputs.anyrun.homeManagerModules.default
+              inputs.spicetify.homeManagerModules.default
+              inputs.dev-assistant.homeManagerModules.default
+              ./desktop/home.nix
+              ../home-modules
+              ../home-modules/wayland
+              ../home-modules/programs
+              ../home-modules/editors/neovim
+              ../home-modules/shell
+            ];
+          };
         };
       }
     ];
   };
   # vm profile
-  vm = nixpkgs.lib.nixosSystem {
+  vm = lib.nixosSystem {
     specialArgs = {
-      inherit inputs system user location;
+      inherit inputs user location;
     };
     # Modules that are used
     modules = [
-      inputs.gaming.nixosModules.pipewireLowLatency
-      inputs.nh.nixosModules.default
       ./vm
       ../modules/core
 
@@ -61,19 +59,21 @@
 
       home-manager.nixosModules.home-manager
       {
-        home-manager.useGlobalPkgs = true;
-        home-manager.useUserPackages = true;
-        home-manager.extraSpecialArgs = {
-          inherit user inputs location;
-        };
-        home-manager.users.${user} = {
-          imports = [
-            inputs.dev-assistant.homeManagerModules.default
-            ../home-modules
-            ../home-modules/programs/kitty.nix
-            ../home-modules/editors/neovim
-            ../home-modules/shell
-          ];
+        home-manager = {
+          useGlobalPkgs = true;
+          useUserPackages = true;
+          extraSpecialArgs = {
+            inherit user inputs location;
+          };
+          users.${user} = {
+            imports = [
+              inputs.dev-assistant.homeManagerModules.default
+              ../home-modules
+              ../home-modules/programs/kitty.nix
+              ../home-modules/editors/neovim
+              ../home-modules/shell
+            ];
+          };
         };
       }
     ];

@@ -1,4 +1,4 @@
-{ config, lib, pkgs, inputs, user, location, system, ... }: {
+{ lib, pkgs, user, ... }: {
   # configuration used by all hosts
 
   imports = [

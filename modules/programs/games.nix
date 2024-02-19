@@ -3,7 +3,10 @@
 #
 # Do not forget to enable Steam play for all title in the settings menu
 #
-{ pkgs, ... }: {
+{ inputs, pkgs, ... }: {
+
+  imports = [ inputs.gaming.nixosModules.pipewireLowLatency ];
+
   environment.systemPackages = with pkgs; [
     #config.nur.repos.c0deaddict.oversteer      # Steering Wheel Configuration
     lutris
