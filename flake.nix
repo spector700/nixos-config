@@ -1,9 +1,3 @@
-#  flake.nix *
-#   ├─ ./hosts
-#   │   └─ default.nix
-#   └─ ./nix
-#       └─ default.nix
-#
 {
   description = "Nixos System Configuration";
 
@@ -60,17 +54,26 @@
 
   outputs = inputs@{ self, nixpkgs, home-manager, ... }:
     let
+      lib = nixpkgs.lib // home-manager.lib;
       user = "nick";
       # Location of the nixos config
       location = "/home/${user}/.config/nixos-config";
-      system = "x86_64-linux";
+      systems = [ "x86_64-linux" "aarch64-linux" ];
+      # This is a function that generates an attribute by calling a function you
+      # pass to it, with each system as an argument
+      forEachSystem = f: lib.genAttrs systems (system: f pkgsFor.${system});
+      pkgsFor = lib.genAttrs systems (system: import nixpkgs {
+        inherit system;
+      });
     in
     {
 
       # NixOS configurations
       nixosConfigurations = import ./hosts/profiles.nix {
-        inherit inputs nixpkgs system home-manager user location;
+        inherit inputs lib home-manager user location;
+
       };
+      packages = forEachSystem (pkgs: import ./pkgs { inherit pkgs; inherit inputs; });
 
       # Non-NixOS configurations
       #homeConfigurations = (

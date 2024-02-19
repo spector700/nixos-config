@@ -4,7 +4,7 @@
     ./hyprland
     # ./swaync
     # ./waybar
-    ./ags
+    ./ags.nix
     ./anyrun.nix
     ./swaylock.nix
   ];

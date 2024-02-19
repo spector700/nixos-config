@@ -6,5 +6,6 @@
     inputs.Akari.packages.${system}.default
     lazygit
     ripgrep
+    bun
   ];
 }
