@@ -1,13 +1,13 @@
 import { type WindowProps } from "types/widgets/window"
 import { type RevealerProps } from "types/widgets/revealer"
 import { type EventBoxProps } from "types/widgets/eventbox"
-import type Gtk from "gi://Gtk?version=3.0"
+import Gtk from "gi://Gtk?version=3.0"
 import options from "options"
 
 type Transition = RevealerProps["transition"]
 type Child = WindowProps["child"]
 
-type PopupWindowProps = WindowProps & {
+type PopupWindowProps = Omit<WindowProps, "name"> & {
     name: string
     layout?: keyof ReturnType<typeof Layout>
     transition?: Transition,
@@ -142,10 +142,10 @@ export default ({
     transition,
     exclusivity = "ignore",
     ...props
-}: PopupWindowProps) => Widget.Window({
+}: PopupWindowProps) => Widget.Window<Gtk.Widget>({
     name,
     class_names: [name, "popup-window"],
-    popup: true,
+    setup: w => w.keybind("Escape", () => App.closeWindow(name)),
     visible: false,
     keymode: "on-demand",
     exclusivity,

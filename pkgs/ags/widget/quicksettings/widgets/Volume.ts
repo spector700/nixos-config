@@ -1,6 +1,6 @@
 import type Gtk from "gi://Gtk?version=3.0"
 import { type Stream } from "types/service/audio"
-import { Arrow, Menu } from "../ToggleButton"
+import { IconToggleButton, Menu } from "../ToggleButton"
 import { dependencies, icon, sh } from "lib/utils"
 import icons from "lib/icons.js"
 const audio = await Service.import("audio")
@@ -32,11 +32,11 @@ export const Volume = () => Widget.Box({
         VolumeSlider("speaker"),
         Widget.Box({
             vpack: "center",
-            child: Arrow("sink-selector"),
+            child: IconToggleButton("sink-selector", icons.audio.type.headset),
         }),
         Widget.Box({
             vpack: "center",
-            child: Arrow("app-mixer"),
+            child: IconToggleButton("app-mixer", icons.audio.mixer),
             visible: audio.bind("apps").as(a => a.length > 0),
         }),
     ],

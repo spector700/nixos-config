@@ -1,6 +1,10 @@
 import { type BarWidget } from "widget/bar/Bar"
 import { opt, mkOptions } from "lib/option"
 
+const battery = await Service.import("battery")
+const bat: BarWidget[] = battery.available ? ["battery"] : []
+
+
 const options = mkOptions(OPTIONS, {
     autotheme: opt(false),
 
@@ -10,11 +14,11 @@ const options = mkOptions(OPTIONS, {
         dark: {
             primary: {
                 bg: opt("#51a4e7"),
-                fg: opt("#141414"),
+                fg: opt("#241F31"),
             },
             error: {
                 bg: opt("#e55f86"),
-                fg: opt("#141414"),
+                fg: opt("#241F31"),
             },
             bg: opt("#171717"),
             fg: opt("#eeeeee"),
@@ -36,6 +40,7 @@ const options = mkOptions(OPTIONS, {
             border: opt("#080808"),
         },
 
+        blur: opt(35),
         scheme: opt<"dark" | "light">("dark"),
         widget: { opacity: opt(94) },
         border: {
@@ -45,7 +50,7 @@ const options = mkOptions(OPTIONS, {
 
         shadows: opt(true),
         padding: opt(7),
-        spacing: opt(12),
+        spacing: opt(5),
         radius: opt(11),
     },
 
@@ -64,7 +69,6 @@ const options = mkOptions(OPTIONS, {
             start: opt<BarWidget[]>([
                 "launcher",
                 "workspaces",
-                "taskbar",
                 "expander",
                 "messages",
             ]),
@@ -75,21 +79,18 @@ const options = mkOptions(OPTIONS, {
                 "media",
                 "expander",
                 "systray",
+                "ai",
                 "colorpicker",
                 "screenrecord",
                 "system",
-                "battery",
+                ...bat,
                 "powermenu",
             ]),
         },
         launcher: {
             icon: {
                 colored: opt(true),
-                icon: opt("system-search-symbolic"),
-            },
-            label: {
-                colored: opt(false),
-                label: opt(" Applications"),
+                icon: opt("nixos"),
             },
             action: opt(() => App.toggleWindow("applauncher")),
         },
@@ -98,18 +99,14 @@ const options = mkOptions(OPTIONS, {
             action: opt(() => App.toggleWindow("datemenu")),
         },
         battery: {
-            bar: opt<"hidden" | "regular" | "whole">("regular"),
+            bar: opt<"hidden" | "regular" | "whole">("hidden"),
             percentage: opt(true),
             blocks: opt(10),
             width: opt(70),
             low: opt(30),
         },
         workspaces: {
-            workspaces: opt(7),
-        },
-        taskbar: {
-            monochrome: opt(true),
-            exclusive: opt(false),
+            workspaces: opt(0),
         },
         messages: {
             action: opt(() => App.toggleWindow("datemenu")),
@@ -121,7 +118,6 @@ const options = mkOptions(OPTIONS, {
             ]),
         },
         media: {
-            monochrome: opt(true),
             preferred: opt("spotify"),
             direction: opt<"left" | "right">("right"),
             length: opt(40),
@@ -138,12 +134,7 @@ const options = mkOptions(OPTIONS, {
         margin: opt(80),
         maxItem: opt(6),
         favorites: opt([
-            "firefox",
-            "blackbox",
-            "org.gnome.Calendar",
-            "obsidian",
-            "discord",
-            "spotify",
+        // name of apps
         ]),
     },
 
@@ -180,6 +171,10 @@ const options = mkOptions(OPTIONS, {
         position: opt<"left" | "center" | "right">("center"),
     },
 
+    aiwindow: {
+        position: opt<"left" | "center" | "right">("right"),
+    },
+
     osd: {
         progress: {
             vertical: opt(true),
@@ -203,11 +198,6 @@ const options = mkOptions(OPTIONS, {
     },
 
     hyprland: {
-        blur: opt<"*" | Array<string>>([
-            "powermenu",
-            "verification",
-        ]),
-        alpha: opt(.3),
         gaps: opt(2.4),
         inactiveBorder: opt("333333ff"),
     },

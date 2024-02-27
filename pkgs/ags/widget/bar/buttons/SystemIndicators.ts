@@ -63,7 +63,7 @@ const AudioIndicator = () => Widget.Icon({
 })
 
 export default () => PanelButton({
-    class_name: "quicksettings panel-button",
+    window: "quicksettings",
     on_clicked: () => App.toggleWindow("quicksettings"),
     on_scroll_up: () => {if (audio.speaker.volume < 1.0)
         audio.speaker.volume = Math.min(audio.speaker.volume + 0.02, 1.0)},

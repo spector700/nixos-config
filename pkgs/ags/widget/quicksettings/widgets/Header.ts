@@ -36,10 +36,14 @@ export const Header = () => Widget.Box<Gtk.Widget>(
         vertical: true,
         vpack: "center",
         children: [
-            Widget.Box([
-                Widget.Icon({ icon: battery.bind("icon_name") }),
-                Widget.Label({ label: battery.bind("percent").as(p => `${p}%`) }),
-            ]),
+            // Only add widget if the battery is available
+            ...(battery.available ? [
+                Widget.Box([
+                    Widget.Icon({ icon: battery.bind("icon_name") }),
+                    Widget.Label({ label: battery.bind("percent").as(p => `${p}%`) }),
+                ]),
+            ] : []),
+            Widget.Label({ label: "Uptime" }),
             Widget.Box([
                 Widget.Icon({ icon: icons.ui.time }),
                 Widget.Label({ label: uptime.bind().as(up) }),

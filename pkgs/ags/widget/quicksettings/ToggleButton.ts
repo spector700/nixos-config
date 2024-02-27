@@ -4,30 +4,22 @@ import type GObject from "gi://GObject?version=2.0"
 import type Gtk from "gi://Gtk?version=3.0"
 import icons from "lib/icons"
 
-export const opened = Variable("")
+const opened = Variable("")
 App.connect("window-toggled", (_, name: string, visible: boolean) => {
     if (name === "quicksettings" && !visible)
         Utils.timeout(500, () => opened.value = "")
 })
 
-export const Arrow = (name: string, activate?: false | (() => void)) => {
-    let deg = 0
+export const IconToggleButton = (name: string, icon: IconProps["icon"], activate?: false | (
+  () => void)) => {
     let iconOpened = false
-    const icon = Widget.Icon(icons.ui.arrow.right).hook(opened, () => {
-        if (opened.value === name && !iconOpened || opened.value !== name && iconOpened) {
-            const step = opened.value === name ? 10 : -10
+    const iconInstance = Widget.Icon({ icon }).hook(opened, () => {
+        if (opened.value === name && !iconOpened || opened.value !== name && iconOpened)
             iconOpened = !iconOpened
-            for (let i = 0; i < 9; ++i) {
-                Utils.timeout(15 * i, () => {
-                    deg += step
-                    icon.setCss(`-gtk-icon-transform: rotate(${deg}deg);`)
-                })
-            }
-        }
     })
     return Widget.Button({
-        child: icon,
-        class_name: "arrow",
+        child: iconInstance,
+        class_name: "icon-toggle-button",
         on_clicked: () => {
             opened.value = opened.value === name ? "" : name
             if (typeof activate === "function")
@@ -35,6 +27,7 @@ export const Arrow = (name: string, activate?: false | (() => void)) => {
         },
     })
 }
+
 
 type ArrowToggleButtonProps = {
     name: string
@@ -85,9 +78,35 @@ export const ArrowToggleButton = ({
                 }
             },
         }),
-        Arrow(name, activateOnArrow && activate),
+        RotateArrow(name, activateOnArrow && activate),
     ],
 })
+
+const RotateArrow = (name: string, activate?: false | (() => void)) => {
+    let deg = 0
+    let iconOpened = false
+    const icon = Widget.Icon(icons.ui.arrow.right).hook(opened, () => {
+        if (opened.value === name && !iconOpened || opened.value !== name && iconOpened) {
+            const step = opened.value === name ? 10 : -10
+            iconOpened = !iconOpened
+            for (let i = 0; i < 9; ++i) {
+                Utils.timeout(15 * i, () => {
+                    deg += step
+                    icon.setCss(`-gtk-icon-transform: rotate(${deg}deg);`)
+                })
+            }
+        }
+    })
+    return Widget.Button({
+        child: icon,
+        class_name: "arrow",
+        on_clicked: () => {
+            opened.value = opened.value === name ? "" : name
+            if (typeof activate === "function")
+                activate()
+        },
+    })
+}
 
 type MenuProps = {
     name: string

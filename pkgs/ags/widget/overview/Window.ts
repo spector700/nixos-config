@@ -5,7 +5,6 @@ import Gtk from "gi://Gtk?version=3.0"
 import options from "options"
 import icons from "lib/icons"
 
-const monochrome = options.overview.monochromeIcon
 const TARGET = [Gtk.TargetEntry.new("text/plain", Gtk.TargetFlags.SAME_APP, 0)]
 const scale = (size: number) => (options.overview.scale.value / 100) * size
 const hyprland = await Service.import("hyprland")
@@ -21,16 +20,10 @@ export default ({ address, size: [w, h], class: c, title }: Client) => Widget.Bu
             min-width: ${scale(w)}px;
             min-height: ${scale(h)}px;
         `,
-        icon: monochrome.bind().as(m => {
+        icon: (() => {
             const app = apps.list.find(app => app.match(c))
-            if (!app)
-                return icons.fallback.executable
-
-            return icon(
-                app.icon_name + (m ? "-symbolic" : ""),
-                icons.fallback.executable,
-            )
-        }),
+            return icon((app?.icon_name || c), icons.fallback.executable)
+        })(),
     }),
     on_secondary_click: () => dispatch(`closewindow address:${address}`),
     on_clicked: () => {

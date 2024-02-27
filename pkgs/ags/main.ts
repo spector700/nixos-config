@@ -7,19 +7,20 @@ import Overview from "widget/overview/Overview"
 import PowerMenu from "widget/powermenu/PowerMenu"
 import Verification from "widget/powermenu/Verification"
 import NotificationPopups from "widget/notifications/NotificationPopups"
-import ScreenCorners from "widget/bar/ScreenCorners"
 import OSD from "widget/osd/OSD"
 import SettingsDialog from "widget/settings/SettingsDialog"
 import { config, forMonitors } from "lib/utils"
 import { setupQuickSettings } from "widget/quicksettings/QuickSettings"
 import { setupDateMenu } from "widget/datemenu/DateMenu"
 import { init } from "lib/init"
+import { setupAiWindowSettings } from "widget/aiwindow/AiWindow"
 
 export default config({
     icons: "./assets",
     onConfigParsed: () => {
         setupQuickSettings()
         setupDateMenu()
+        setupAiWindowSettings()
         init()
     },
     closeWindowDelay: {
@@ -31,7 +32,6 @@ export default config({
     windows: [
         ...forMonitors(Bar),
         ...forMonitors(NotificationPopups),
-        ...forMonitors(ScreenCorners),
         ...forMonitors(OSD),
         Applauncher(),
         Overview(),

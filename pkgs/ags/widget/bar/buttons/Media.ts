@@ -5,7 +5,7 @@ import icons from "lib/icons"
 import { icon } from "lib/utils"
 
 const mpris = await Service.import("mpris")
-const { length, direction, preferred, monochrome } = options.bar.media
+const { length, direction, preferred } = options.bar.media
 
 const getPlayer = (name = preferred.value) =>
     mpris.getPlayer(name) || mpris.players[0] || null
@@ -18,10 +18,11 @@ const Content = (player: MprisPlayer) => {
         setup: self => {
             let current = ""
             self.hook(player, () => {
-                if (current === player.track_title)
+                // Show the song if play or pause
+                if (current === player.play_back_status)
                     return
 
-                current = player.track_title
+                current = player.play_back_status
                 self.reveal_child = true
                 Utils.timeout(3000, () => {
                     !self.is_destroyed && (self.reveal_child = false)
@@ -37,10 +38,9 @@ const Content = (player: MprisPlayer) => {
     })
 
     const playericon = Widget.Icon({
-        icon: player.bind("entry").as(entry => {
-            const name = `${entry}${monochrome.value ? "-symbolic" : ""}`
-            return icon(name, icons.fallback.audio)
-        }),
+        icon: Utils.merge([player.bind("entry")], (entry => {
+            return icon(entry, icons.fallback.audio)
+        })),
     })
 
     return Widget.Box({
@@ -69,11 +69,10 @@ export default () => {
         const { revealer } = content.attribute
         btn.child = content
         btn.on_primary_click = () => { player.playPause() }
-        btn.on_secondary_click = () => { player.playPause() }
-        btn.on_scroll_up = () => { player.next() }
-        btn.on_scroll_down = () => { player.previous() }
         btn.on_hover = () => { revealer.reveal_child = true }
-        btn.on_hover_lost = () => { revealer.reveal_child = false }
+        btn.on("leave-notify-event", () => {
+            revealer.reveal_child = false
+        })
     }
 
     return btn

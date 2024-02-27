@@ -6,11 +6,11 @@ import Media from "./buttons/Media"
 import PowerMenu from "./buttons/PowerMenu"
 import SysTray from "./buttons/SysTray"
 import SystemIndicators from "./buttons/SystemIndicators"
-import Taskbar from "./buttons/Taskbar"
 import Workspaces from "./buttons/Workspaces"
 import ScreenRecord from "./buttons/ScreenRecord"
 import Messages from "./buttons/Messages"
 import options from "options"
+import AiWindowButton from "./buttons/AiWindowButton"
 
 const { start, center, end } = options.bar.layout
 const pos = options.bar.position.bind()
@@ -21,12 +21,12 @@ const widget = {
     battery: BatteryBar,
     colorpicker: ColorPicker,
     date: Date,
+    ai: AiWindowButton,
     launcher: Launcher,
     media: Media,
     powermenu: PowerMenu,
     systray: SysTray,
     system: SystemIndicators,
-    taskbar: Taskbar,
     workspaces: Workspaces,
     screenrecord: ScreenRecord,
     messages: Messages,
