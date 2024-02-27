@@ -1,6 +1,7 @@
 { inputs
 , system
 , stdenv
+, buildNpmPackage
 , writeShellScriptBin
 , swww
 , bun
@@ -8,18 +9,36 @@
 , fd
 , brightnessctl
 , accountsservice
+, webkitgtk_4_1
 , ...
 }:
 let
   ags = inputs.ags.packages.${system}.default.override {
-    extraPackages = [ accountsservice ];
+    extraPackages = [
+      accountsservice
+      webkitgtk_4_1
+    ];
+
   };
 
   pname = "koshi";
   config = stdenv.mkDerivation {
     inherit pname;
     version = "1.7.6";
-    src = ./.;
+    src = buildNpmPackage {
+      name = pname;
+      src = ./.;
+      dontBuild = true;
+      npmDepsHash = "sha256-98C/eJ/Z8BO54TfBdklWpdffbrd0trvFG/TZB8si0Sk=";
+      installPhase = ''
+        mkdir $out
+        cp -r * $out
+      '';
+    };
+
+    patchPhase = ''
+      cp -r node_modules $out
+    '';
 
     buildPhase = ''
       ${bun}/bin/bun build ./main.ts \
@@ -34,7 +53,6 @@ let
     '';
 
     installPhase = ''
-      mkdir $out
       cp -r assets $out
       cp -r style $out
       cp -r greeter $out

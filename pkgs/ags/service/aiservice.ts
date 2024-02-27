@@ -16,12 +16,6 @@ export class AiMessage extends Service {
     _content = ""
     _thinking = false
 
-    /**
-   * @param {string} role
-   * @param {string} content
-   * @param {boolean} [thinking=false]
-   * @constructor
-   */
     constructor(role: string, content: string, thinking: boolean = false) {
         super()
         this._role = role
@@ -58,10 +52,7 @@ export class AiMessage extends Service {
         this.emit("changed")
     }
 
-    /**
-   * @param {string} delta
-  */
-    addDelta(delta) {
+    addDelta(delta: string) {
         if (this.thinking) {
             this.thinking = false
             this.content = delta
@@ -84,13 +75,11 @@ class AiService extends Service {
         content: "",
     }
 
-    /** @type {AiMessage[]} */
     _messages: AiMessage[] = []
     _decoder = new TextDecoder()
     model = "mistral"
     url = GLib.Uri.parse("http://192.168.1.129:11434/api/chat", GLib.UriFlags.NONE)
 
-    /** @param {string} msg */
     setSystemMessage(msg: string) {
         this._systemMessage.content = msg
     }
@@ -108,37 +97,33 @@ class AiService extends Service {
         this.emit("clear")
     }
 
-    /**
-   * @param {Gio.DataInputStream} stream
-   * @param {AiMessage} aiResponse
-  */
     readResponse(stream: Gio.DataInputStream, aiResponse: AiMessage) {
-        stream.read_line_async(
-            0, null,
-            (stream, res) => {
+        stream.read_line_async(0, null, (stream, res) => {
+            try {
                 if (!stream)
                     return
 
                 const [bytes] = stream.read_line_finish(res)
                 const line = this._decoder.decode(bytes ?? undefined)
                 if (line && line !== "") {
-                    const data = line.substring(6)
-                    if (data === "[DONE]")
-                        return
                     try {
-                        const result = JSON.parse(data)
-                        if (result.choices[0].finish_reason === "stop")
+                        const result = JSON.parse(line)
+                        if (result.done)
                             return
-                        aiResponse.addDelta(result.choices[0].delta.content)
-                    } catch {
+                        aiResponse.addDelta(result.message.content)
+                    }
+                    catch {
                         aiResponse.addDelta(line + "\n")
                     }
                 }
+
                 this.readResponse(stream, aiResponse)
-            })
+            } catch (error) {
+                console.log("Error reading response:", error)
+            }
+        })
     }
 
-    /** @param {string} msg } */
     send(msg: string) {
         this.messages.push(new AiMessage("user", msg))
         this.emit("newMsg", this.messages.length - 1)
@@ -151,15 +136,6 @@ class AiService extends Service {
         const aiResponse = new AiMessage("assistant", "thinking...", true)
         this.messages.push(aiResponse)
         this.emit("newMsg", this.messages.length - 1)
-
-        //    aiResponse.content = `<html><head>
-        // <title>Test HTML File</title>
-        // <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
-        // </head>
-        // <body>
-        // <p>This is a very simple HTML file.</p>
-        // </body></html>`
-        //    return;
 
         const body = {
             model: this.model,
@@ -174,16 +150,20 @@ class AiService extends Service {
             uri: this.url,
         })
         // message.request_headers.append("Authorization", "Bearer ")
-        // @ts-ignore
+        const requstBody = new TextEncoder().encode(JSON.stringify(body))
         message.set_request_body_from_bytes("application/json",
-            new GLib.Bytes(JSON.stringify(body)))
+            new GLib.Bytes(requstBody))
 
-        session.send_async(message, 0, null, /** @type Gio.AsyncReadyCallback*/(_, result) => {
-            const stream = session.send_finish(result)
-            this.readResponse(new Gio.DataInputStream({
-                close_base_stream: true,
-                base_stream: stream,
-            }), aiResponse)
+        session.send_async(message, 0, null, (_, result) => {
+            try {
+                const stream = session.send_finish(result)
+                this.readResponse(new Gio.DataInputStream({
+                    close_base_stream: true,
+                    base_stream: stream,
+                }), aiResponse)
+            } catch (error) {
+                console.error("Error sending message:", error)
+            }
         })
     }
 }

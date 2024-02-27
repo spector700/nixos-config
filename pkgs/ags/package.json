@@ -1,19 +1,24 @@
 {
-    "name": "ags-dotfiles",
-    "author": "Aylur",
-    "kofi": "https://ko-fi.com/aylur",
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/Aylur/dotfiles.git"
-    },
-    "devDependencies": {
-        "@girs/accountsservice-1.0": "^1.0.0-3.2.7",
-        "@typescript-eslint/eslint-plugin": "^6.20.0",
-        "eslint": "^8.56.0",
-        "eslint-config-standard-with-typescript": "^43.0.1",
-        "eslint-plugin-import": "^2.29.1",
-        "eslint-plugin-n": "^16.6.2",
-        "eslint-plugin-promise": "^6.1.1",
-        "typescript": "^5.3.3"
-    }
+  "name": "koshi",
+  "author": "Spector",
+  "main": "config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/spector700/nixos-config.git"
+  },
+  "devDependencies": {
+    "@girs/accountsservice-1.0": "^1.0.0-3.2.7",
+    "@girs/gobject-2.0": "^2.76.1-3.2.3",
+    "@girs/gtk-3.0": "^3.24.39-3.2.2",
+    "@girs/gvc-1.0": "^1.0.0-3.1.0",
+    "@girs/pango-1.0": "1.51.0-3.2.7",
+    "@girs/webkit2-4.1": "^2.41.90-3.2.8",
+    "@typescript-eslint/eslint-plugin": "^6.20.0",
+    "eslint": "^8.56.0"
+  },
+  "dependencies": {
+    "highlight.js": "^11.9.0",
+    "marked": "^12.0.0",
+    "marked-highlight": "^2.1.1"
+  }
 }

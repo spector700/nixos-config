@@ -1,16 +1,25 @@
-@import "colors";
+$mauve: #cba6f7;
+$red: #f38ba8;
+$yellow: #f9e2af;
+$orange: #fab387;
+$teal: #94e2d5;
+$lightteal: #bac2de;
+$pink: #f5c2e7;
+$green: #a6e3a1;
+$grey: #585b70;
+$blue: #89b4fa;
+$lightgrey: #a6adc8;
+$lightblue: #74c7ec;
+
 
 * {
-  color: $default_fg;
-  font-family: "CaskaydiaCove Nerd Font";
-  font-size: 0.9rem;
+  color: $fg;
 }
 
 html,
 body {
   padding: 0;
   margin: 0;
-  background-color: $secondary_bg;
 }
 
 ::-webkit-scrollbar {
@@ -18,18 +27,18 @@ body {
 }
 
 .code {
-  background: $dark-background;
+  background: $bg;
   border-radius: 0.5rem;
 
   .code-header {
-    background: $dark-background;
+    background: $bg;
     border-top-left-radius: 0.5rem;
     border-top-right-radius: 0.5rem;
-    border-bottom: 1px solid $primary_fg;
+    border-bottom: 1px solid $primary-bg;
     padding: 5px;
 
     >button {
-      color: $default_fg;
+      color: $fg;
       background: transparent;
       float: right;
       border: none;
@@ -87,7 +96,7 @@ $languages-map: (
   [data-language="#{$lang}"]:before {
     content: $content;
     font-size: 1.1rem;
-    color: $primary_fg;
+    color: $primary-bg;
     padding-right: 0.5rem;
   }
 }
@@ -96,10 +105,9 @@ pre {
   padding: 5px;
   overflow-x: scroll;
 
-  code.hljs {
-    color: $default_fg;
-    background: transparent;
-  }
+  // code.hljs {
+  //   background: transparent;
+  // }
 }
 
 code {
@@ -171,7 +179,7 @@ code {
   & .hljs-params,
   & .hljs-selector-class,
   & .hljs-template-variable {
-    color: $default_fg;
+    color: $fg;
   }
 
   & .hljs-selector-tag {
