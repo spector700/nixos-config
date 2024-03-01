@@ -20,13 +20,19 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    dev-assistant = {
-      url = "github:spector700/DevAssistant";
+    hypridle = {
+      url = "github:hyprwm/hypridle";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    Akari = {
-      url = "github:spector700/Akari";
+    hyprlock = {
+      url = "github:hyprwm/hyprlock";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    matugen.url = "github:InioX/matugen";
+    dev-assistant.url = "github:spector700/DevAssistant";
+    Akari.url = "github:spector700/Akari";
 
     anyrun = {
       url = "github:Kirottu/anyrun";
@@ -43,13 +49,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    gaming = {
-      url = "github:fufexan/nix-gaming";
-    };
-
-    ags = {
-      url = "github:Aylur/ags";
-    };
+    gaming.url = "github:fufexan/nix-gaming";
+    ags.url = "github:Aylur/ags";
   };
 
   outputs = inputs@{ self, nixpkgs, home-manager, ... }:
@@ -67,13 +68,16 @@
       });
     in
     {
+      homeManagerModules.theme = import ./modules/theme.nix;
 
       # NixOS configurations
       nixosConfigurations = import ./hosts/profiles.nix {
         inherit inputs lib home-manager user location;
-
+        imports = ./lib;
       };
+
       packages = forEachSystem (pkgs: import ./pkgs { inherit pkgs; inherit inputs; });
+
 
       # Non-NixOS configurations
       #homeConfigurations = (

@@ -2,11 +2,11 @@
 
   imports = [
     ./hyprland
-    # ./swaync
-    # ./waybar
     ./ags.nix
     ./anyrun.nix
-    ./swaylock.nix
+    ./hypridle.nix
+    ./hyprlock.nix
+    ./hyprpaper.nix
   ];
 
   home.packages = with pkgs; [
@@ -15,7 +15,5 @@
     wlsunset
     wlr-randr
     cliphist
-    hyprpaper
-    hyprpicker
   ];
 }

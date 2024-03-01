@@ -1,5 +1,4 @@
 { inputs, lib, home-manager, user, location, ... }:
-
 {
   # Desktop profile
   desktop = lib.nixosSystem {
@@ -12,11 +11,9 @@
       ../modules/core
       ../modules/desktop.nix
       ../modules/greetd.nix
-      ../modules/hardware.nix
-      ../modules/printing.nix
+      ../modules/modules.nix
       ../modules/programs/games.nix
       ../modules/programs/thunar.nix
-      ../modules/virtualisation.nix
 
       # Home-Manager module that is used.
 
@@ -30,9 +27,6 @@
           };
           users.${user} = {
             imports = [
-              inputs.anyrun.homeManagerModules.default
-              inputs.spicetify.homeManagerModules.default
-              inputs.dev-assistant.homeManagerModules.default
               ./desktop/home.nix
               ../home-modules
               ../home-modules/wayland
@@ -54,6 +48,7 @@
     modules = [
       ./vm
       ../modules/core
+      ../modules/modules.nix
 
       # Home-Manager module that is used.
 
@@ -67,7 +62,6 @@
           };
           users.${user} = {
             imports = [
-              inputs.dev-assistant.homeManagerModules.default
               ../home-modules
               ../home-modules/programs/kitty.nix
               ../home-modules/editors/neovim

@@ -1,21 +1,23 @@
 { config, lib, ... }:
-let cfg = config.local.hardware;
-in {
+let
+  cfg = config.local.hardware;
+in
+{
   options.local.hardware = {
-    gpuAcceleration.disable = lib.mkEnableOption "";
-    sound.disable = lib.mkEnableOption "";
+    gpuAcceleration.enable = lib.mkEnableOption "";
+    sound.enable = lib.mkEnableOption "";
     nvidia.enable = lib.mkEnableOption "";
-    bluetooth.disable = lib.mkEnableOption "";
+    bluetooth.enable = lib.mkEnableOption "";
   };
   config = lib.mkMerge [
-    (lib.mkIf (!cfg.gpuAcceleration.disable) {
+    (lib.mkIf cfg.gpuAcceleration.enable {
       hardware.opengl = {
         enable = true;
         driSupport = true;
         driSupport32Bit = true;
       };
     })
-    (lib.mkIf (!cfg.sound.disable) {
+    (lib.mkIf cfg.sound.enable {
       security.rtkit.enable = true;
       sound.enable = lib.mkForce false; # disable alsa
       hardware.pulseaudio.enable = lib.mkForce false; # disable pulseAudio
@@ -27,10 +29,10 @@ in {
         };
         pulse.enable = true;
         jack.enable = false;
-        lowLatency.enable = true;
+        # lowLatency.enable = true;
       };
     })
-    (lib.mkIf (cfg.nvidia.enable) {
+    (lib.mkIf cfg.nvidia.enable {
       hardware = {
         nvidia = {
           modesetting.enable = true;
@@ -43,7 +45,7 @@ in {
       # Nvidia Power Management
       boot.kernelParams = [ "nvidia.NVreg_PreserveVideoMemoryAllocations=1" ];
     })
-    (lib.mkIf (!cfg.bluetooth.disable) {
+    (lib.mkIf cfg.bluetooth.enable {
       hardware.bluetooth.enable = true;
       services.blueman.enable = true;
     })

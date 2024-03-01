@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 let
   screenshotarea =
     "hyprctl keyword animation 'fadeOut,0,0,default'; grimblast --notify copysave area; hyprctl keyword animation 'fadeOut,1,4,default'";
@@ -71,8 +71,7 @@ in
       # Binds
       bind = [
         # Compositor
-        # "$mod SHIFT, R, exec, ${pkgs.hyprland}/bin/hyprctl reload && ~/.config/waybar/scripts/restart.sh"
-        "$mod SHIFT, R, exec, ${pkgs.hyprland}/bin/hyprctl reload && ags -b hypr quit; ags -b hypr"
+        "$mod SHIFT, R, exec, ${pkgs.hyprland}/bin/hyprctl reload && koshi quit; koshi"
         "$mod, Q, killactive,"
         "$mod, F, fullscreen,"
         "$mod, G, togglefloating"
@@ -108,10 +107,10 @@ in
         "$mod, V, exec, pkill rofi || ${pkgs.cliphist}/bin/cliphist list | rofi -dmenu -display-columns 2 | cliphist decode | wl-copy"
 
         # lock screen
-        "$mod, L, exec, ${pkgs.swaylock-effects}/bin/swaylock"
+        "$mod, L, exec, ${config.programs.hyprlock.package}/bin/hyprlock"
 
         # Power menu
-        ", XF86PowerOff, exec, ags -t powermenu"
+        ", XF86PowerOff, exec, koshi -t powermenu"
 
         # Screenshot
         ", Print, exec, ${screenshotarea}"
@@ -129,18 +128,14 @@ in
 
       bindle = [
         # Volume
-        # ", XF86AudioRaiseVolume, exec, ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 10%+"
-        # ", XF86AudioLowerVolume, exec, ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 10%-"
-        ", XF86AudioRaiseVolume, exec, ags -r 'audio.speaker.volume += 0.05; indicator.speaker()'"
-        ", XF86AudioLowerVolume, exec, ags -r 'audio.speaker.volume -= 0.05; indicator.speaker()'"
+        ", XF86AudioRaiseVolume, exec, koshi -r 'audio.speaker.volume += 0.05; indicator.speaker()'"
+        ", XF86AudioLowerVolume, exec, koshi -r 'audio.speaker.volume -= 0.05; indicator.speaker()'"
 
       ];
 
       exec-once = [
-        # "${pkgs.waybar}/bin/waybar"
-        "ags -b hypr"
+        "koshi"
         "${pkgs.hyprpaper}/bin/hyprpaper"
-        # "${pkgs.swaynotificationcenter}/bin/swaync"
         "wl-paste --watch cliphist store"
         "${pkgs.wlsunset}/bin/wlsunset -l 32.7 -L -96.9"
         "${pkgs.blueman}/bin/blueman-applet"

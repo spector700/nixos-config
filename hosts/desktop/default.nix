@@ -1,4 +1,4 @@
-{ pkgs, lib, user, config, ... }:
+{ pkgs, user, ... }:
 {
   imports = [ ./hardware-configuration.nix ];
 
@@ -11,11 +11,11 @@
   };
   networking.hostName = "Alfhiem-Nix";
 
-  qt = {
-    enable = true;
-    platformTheme = "gtk2";
-    style = "gtk2";
-  };
+  # qt = {
+  #   enable = true;
+  #   platformTheme = "gtk2";
+  #   style = "gtk2";
+  # };
 
   # Variables for hyprland nvidia
   environment = {
@@ -34,7 +34,15 @@
     };
   };
 
-  local.hardware.nvidia.enable = true;
+  local = {
+    hardware = {
+      gpuAcceleration.enable = true;
+      nvidia.enable = true;
+      sound.enable = true;
+      bluetooth.enable = true;
+    };
+    printing.enable = true;
+  };
 
   services = {
     hardware.openrgb = {
