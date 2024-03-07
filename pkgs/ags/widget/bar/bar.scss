@@ -1,6 +1,6 @@
 @use 'sass:color';
 
-$bar-spacing: $spacing * .3;
+$bar-spacing: $spacing * .4;
 $button-radius: $radius;
 
 @mixin panel-button($flat: true, $reactive: true) {
@@ -28,7 +28,6 @@ $button-radius: $radius;
     @include panel-button;
 
     &:not(.flat) {
-
       @include accs-button($flat: false);
     }
   }
@@ -108,11 +107,16 @@ $button-radius: $radius;
     }
   }
 
-  .quicksettings>box>box {
-    @include spacing($spacing: if($bar-spacing==0, $padding / 2, $bar-spacing));
+  .quicksettings>box {
+    @include button-background;
+
+    box {
+      @include spacing($multiplier: 7, $spacing: if($bar-spacing==0, $padding / 2, $bar-spacing));
+    }
   }
 
   .quicksettings:not(.active):not(:active) {
+
     .bluetooth {
       color: $primary-bg;
 

@@ -3,9 +3,9 @@ import options from "options"
 import AiService from "service/aiservice"
 import Gtk from "gi://Gtk"
 import Gdk from "gi://Gdk"
-import hljs from "../../node_modules/highlight.js/lib/index.js"
-import { Marked } from "../../node_modules/marked/lib/marked.esm.js"
-import { markedHighlight } from "../../node_modules/marked-highlight/src/index.js"
+import hljs from "highlight.js"
+import { Marked } from "marked"
+import { markedHighlight } from "marked-highlight"
 
 const { bar, aiwindow  } = options
 const layout = Utils.derive([bar.position, aiwindow.position], (bar, ai) =>

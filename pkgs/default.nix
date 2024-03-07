@@ -5,8 +5,5 @@ let
   koshi = pkgs.callPackage ./ags { inherit inputs; };
 in
 {
-  # inherit (koshi.desktop) config;
-  config = koshi.desktop.config;
-  default = koshi.desktop.script;
-  greeter = koshi.greeter.script;
+  default = koshi;
 }

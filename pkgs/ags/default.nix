@@ -2,15 +2,19 @@
 , system
 , stdenv
 , buildNpmPackage
-, writeShellScriptBin
+, writeShellScript
+, cage
 , swww
 , bun
 , dart-sass
 , fd
+, hyprpicker
+, pavucontrol
+, networkmanager
+, gtk3
 , brightnessctl
 , accountsservice
 , webkitgtk_4_1
-, ...
 }:
 let
   ags = inputs.ags.packages.${system}.default.override {
@@ -18,27 +22,45 @@ let
       accountsservice
       webkitgtk_4_1
     ];
-
   };
 
-  pname = "koshi";
-  config = stdenv.mkDerivation {
-    inherit pname;
-    version = "1.7.6";
-    src = buildNpmPackage {
-      name = pname;
-      src = ./.;
-      dontBuild = true;
-      npmDepsHash = "sha256-98C/eJ/Z8BO54TfBdklWpdffbrd0trvFG/TZB8si0Sk=";
-      installPhase = ''
-        mkdir $out
-        cp -r * $out
-      '';
-    };
+  name = "koshi";
+  version = "1.7.9";
 
-    patchPhase = ''
-      cp -r node_modules $out
-    '';
+  dependencies = [
+    dart-sass
+    fd
+    brightnessctl
+    # swww
+    inputs.matugen.packages.${system}.default
+    # slurp
+    # wf-recorder
+    # wl-clipboard
+    # wayshot
+    # swappy
+    hyprpicker
+    pavucontrol
+    networkmanager
+    gtk3
+  ];
+
+  addBins = list: builtins.concatStringsSep ":" (builtins.map (p: "${p}/bin") list);
+
+  greeter = writeShellScript "greeter" ''
+    export PATH=$PATH:${addBins dependencies}
+    ${cage}/bin/cage -ds -m last ${ags}/bin/ags -- -c ${config}/greeter.js
+  '';
+
+  desktop = writeShellScript name ''
+    export PATH=$PATH:${addBins dependencies}
+    ${ags}/bin/ags -b ${name} -c ${config}/config.js $@
+  '';
+
+  config = buildNpmPackage {
+    inherit name version;
+    src = ./.;
+    npmDepsHash = "sha256-06Lb6hmCPsJt1MIkTYg+pJbAIgnKzftf9e2Iygipr6c=";
+    dontNpmBuild = true;
 
     buildPhase = ''
       ${bun}/bin/bun build ./main.ts \
@@ -53,33 +75,22 @@ let
     '';
 
     installPhase = ''
-      cp -r assets $out
-      cp -r style $out
-      cp -r greeter $out
-      cp -r widget $out
+      mkdir $out
+      cp -r * $out
       cp -f main.js $out/config.js
       cp -f greeter.js $out/greeter.js
     '';
   };
 in
-{
-  desktop = {
-    inherit config;
-    script = writeShellScriptBin pname ''
-      export PATH=$PATH:${dart-sass}/bin
-      export PATH=$PATH:${fd}/bin
-      export PATH=$PATH:${brightnessctl}/bin
-      export PATH=$PATH:${swww}/bin
-      ${ags}/bin/ags -b ${pname} -c ${config}/config.js $@
-    '';
-  };
-  greeter = {
-    inherit config;
-    script = writeShellScriptBin "greeter" ''
-      export PATH=$PATH:${dart-sass}/bin
-      export PATH=$PATH:${fd}/bin
-      ${ags}/bin/ags -b ${pname} -c ${config}/greeter.js $@
-    '';
-  };
+stdenv.mkDerivation {
+  inherit name;
+  src = config;
+
+  installPhase = ''
+    mkdir -p $out/bin
+    cp -r . $out
+    cp ${desktop} $out/bin/${name}
+    cp ${greeter}  $out/bin/greeter
+  '';
 }
 

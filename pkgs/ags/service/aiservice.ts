@@ -62,6 +62,9 @@ export class AiMessage extends Service {
     }
 }
 
+
+const session = new Soup.Session()
+
 class AiService extends Service {
     static {
         Service.register(this, {
@@ -78,7 +81,8 @@ class AiService extends Service {
     _messages: AiMessage[] = []
     _decoder = new TextDecoder()
     model = "mistral"
-    url = GLib.Uri.parse("http://192.168.1.129:11434/api/chat", GLib.UriFlags.NONE)
+    // url = GLib.Uri.parse("http://192.168.1.129:11434/api/chat", GLib.UriFlags.NONE)
+    url = "http://192.168.1.129:11434/api/chat"
 
     setSystemMessage(msg: string) {
         this._systemMessage.content = msg
@@ -124,6 +128,7 @@ class AiService extends Service {
         })
     }
 
+
     send(msg: string) {
         this.messages.push(new AiMessage("user", msg))
         this.emit("newMsg", this.messages.length - 1)
@@ -144,11 +149,7 @@ class AiService extends Service {
             stream: true,
         }
 
-        const session = new Soup.Session()
-        const message = new Soup.Message({
-            method: "POST",
-            uri: this.url,
-        })
+        const message = Soup.Message.new("POST", this.url)
         // message.request_headers.append("Authorization", "Bearer ")
         const requstBody = new TextEncoder().encode(JSON.stringify(body))
         message.set_request_body_from_bytes("application/json",
@@ -158,8 +159,8 @@ class AiService extends Service {
             try {
                 const stream = session.send_finish(result)
                 this.readResponse(new Gio.DataInputStream({
-                    close_base_stream: true,
-                    base_stream: stream,
+                    closeBaseStream: true,
+                    baseStream: stream,
                 }), aiResponse)
             } catch (error) {
                 console.error("Error sending message:", error)
