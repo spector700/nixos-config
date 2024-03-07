@@ -1,8 +1,11 @@
-{ config, lib, ... }:
+{ config, lib, inputs, ... }:
 let
   cfg = config.local.hardware;
 in
 {
+
+  imports = [ inputs.gaming.nixosModules.pipewireLowLatency ];
+
   options.local.hardware = {
     gpuAcceleration.enable = lib.mkEnableOption "";
     sound.enable = lib.mkEnableOption "";
@@ -29,10 +32,20 @@ in
         };
         pulse.enable = true;
         jack.enable = false;
-        # lowLatency.enable = true;
+        lowLatency.enable = true;
       };
     })
     (lib.mkIf cfg.nvidia.enable {
+
+      environment.variables = {
+        GBM_BACKEND = "nvidia-drm";
+        WLR_NO_HARDWARE_CURSORS = "1";
+        LIBVA_DRIVER_NAME = "nvidia";
+        __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+        __GL_VRR_ALLOWED = "1";
+        __GL_GSYNC_ALLOWED = "1";
+      };
+
       hardware = {
         nvidia = {
           modesetting.enable = true;
@@ -43,7 +56,8 @@ in
       };
       services.xserver.videoDrivers = [ "nvidia" ];
       # Nvidia Power Management
-      boot.kernelParams = [ "nvidia.NVreg_PreserveVideoMemoryAllocations=1" ];
+      # boot.kernelParams = [ "nvidia.NVreg_PreserveVideoMemoryAllocations=1" ];
+      boot.kernelParams = [ "nvidia.NVreg_EnableS0ixPowerManagement=1" ];
     })
     (lib.mkIf cfg.bluetooth.enable {
       hardware.bluetooth.enable = true;

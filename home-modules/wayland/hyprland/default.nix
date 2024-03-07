@@ -35,10 +35,10 @@ in
         "pin, title:^(Picture-in-Picture)$"
 
         # Force Screen tearing
-        "immediate, class:^(gamescope)$"
+        "immediate, class:^(steam_app.*)$"
 
         # Application in workspaces
-        "workspace 8 silent, title:^(Steam)$, title:^(Lutris)$"
+        "workspace 8 silent, title:^(Steam)|(Lutris)$"
         "workspace 4 silent, title:^(.*((d|D)isc|ArmC|WebC)ord.*)$"
         "workspace special:spotify silent, title:^(Spotify.*)$"
 
@@ -57,8 +57,8 @@ in
         "size 640 400, title:^(splash)$"
 
         # Fix steam menus
-        "stayfocused, title:^()$,class:^(steam)$"
-        "minsize 1 1, title:^()$,class:^(steam)$"
+        # "stayfocused, title:^()$,class:^(steam)$"
+        # "minsize 1 1, title:^()$,class:^(steam)$"
 
         # Opacity
         "opacity 0.94 0.94,class:^(kitty|thunar|code(.*))$"
