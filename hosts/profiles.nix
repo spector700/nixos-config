@@ -1,7 +1,7 @@
 { inputs, lib, home-manager, user, location, ... }:
 {
   # Desktop profile
-  desktop = lib.nixosSystem {
+  alfhiem = lib.nixosSystem {
     specialArgs = {
       inherit inputs user location;
     };
@@ -16,7 +16,6 @@
       ../modules/programs/thunar.nix
 
       # Home-Manager module that is used.
-
       home-manager.nixosModules.home-manager
       {
         home-manager = {
@@ -51,7 +50,6 @@
       ../modules/modules.nix
 
       # Home-Manager module that is used.
-
       home-manager.nixosModules.home-manager
       {
         home-manager = {

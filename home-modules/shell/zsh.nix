@@ -1,6 +1,7 @@
-# Shell
-#
-{ pkgs, location, ... }: {
+{ pkgs, location, inputs, ... }: {
+
+  imports = [ inputs.dev-assistant.homeManagerModules.default ];
+
   programs = {
     zsh = {
       enable = true;
@@ -28,19 +29,15 @@
       '';
 
       shellAliases = {
-        rebuild_desktop = "nh os switch -H desktop";
+        rebuild = "nh os switch";
         create = "DevAssistant";
         ".." = "cd ..";
         "..." = "cd ../..";
-        ".3" = "cd ../../..";
         nn = "cd && cd ${location} && nvim";
         cleanup = "sudo nix-collect-garbage --delete-older-than 1d";
-        listgen =
-          "sudo nix-env -p /nix/var/nix/profiles/system --list-generations";
+        listgen = "sudo nix-env -p /nix/var/nix/profiles/system --list-generations";
         cat = "bat";
-        l =
-          "eza -la --git --icons --color=auto --group-directories-first -s extension";
-
+        l = "eza -la --git --icons --color=auto --group-directories-first -s extension";
         lg = "lazygit";
       };
     };

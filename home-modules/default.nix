@@ -3,7 +3,6 @@
   imports = [
     inputs.anyrun.homeManagerModules.default
     inputs.spicetify.homeManagerModules.default
-    inputs.dev-assistant.homeManagerModules.default
     inputs.hyprlock.homeManagerModules.default
     inputs.hypridle.homeManagerModules.default
     ./colorscheme.nix

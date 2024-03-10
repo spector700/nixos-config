@@ -9,7 +9,7 @@
       "acpi_enforce_resources=lax"
     ];
   };
-  networking.hostName = "Alfhiem-Nix";
+  networking.hostName = "alfhiem";
 
   # qt = {
   #   enable = true;
