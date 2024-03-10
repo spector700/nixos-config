@@ -39,7 +39,7 @@ in
 
         # Application in workspaces
         "workspace 8 silent, title:^(Steam)|(Lutris)$"
-        "workspace 4 silent, title:^(.*((d|D)isc|ArmC|WebC)ord.*)$"
+        "workspace 4 silent, title:^(.*((d|D)isc|ArmC|WebC)ord.*|vesktop)$"
         "workspace special:spotify silent, title:^(Spotify.*)$"
 
         # idle inhibit while watching videos
@@ -140,7 +140,7 @@ in
         "${pkgs.wlsunset}/bin/wlsunset -l 32.7 -L -96.9"
         "${pkgs.blueman}/bin/blueman-applet"
         "spotify"
-        "webcord"
+        "${pkgs.vesktop}/bin/vesktop"
       ];
 
       general = {

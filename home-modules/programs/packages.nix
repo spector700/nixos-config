@@ -13,8 +13,7 @@
       pavucontrol
       gimp
 
-      # Apps
-      webcord
+      vesktop
       signal-desktop
       networkmanagerapplet
       nextcloud-client
