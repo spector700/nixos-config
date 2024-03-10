@@ -1,4 +1,4 @@
-{ inputs, pkgs, ... }: {
+{ pkgs, ... }: {
 
   imports = [
     ./hyprland
@@ -10,7 +10,7 @@
   ];
 
   home.packages = with pkgs; [
-    inputs.hyprland-contrib.packages.${pkgs.system}.grimblast
+    grimblast
     wl-clipboard
     wlsunset
     wlr-randr
