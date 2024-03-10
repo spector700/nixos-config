@@ -10,8 +10,8 @@ in
   wayland.windowManager.hyprland = {
     settings = {
       monitor = [
-        "${mainMonitor}, 3440x1440@100, 1152x420, 1.25, bitdepth,10"
-        "${secondMonitor}, highres,0x0, 1.875, bitdepth,10 ,transform,1"
+        "${mainMonitor}, 3440x1440@100, 1152x420, 1.25"
+        "${secondMonitor}, highres,0x0, 1.875, transform,1"
       ];
 
       workspace = [

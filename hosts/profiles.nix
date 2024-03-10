@@ -7,7 +7,7 @@
     };
     # Modules that are used
     modules = [
-      ./desktop
+      ./alfhiem
       ../modules/core
       ../modules/desktop.nix
       ../modules/greetd.nix
@@ -26,7 +26,7 @@
           };
           users.${user} = {
             imports = [
-              ./desktop/home.nix
+              ./alfhiem/home.nix
               ../home-modules
               ../home-modules/wayland
               ../home-modules/programs
