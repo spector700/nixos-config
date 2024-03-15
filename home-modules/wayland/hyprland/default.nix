@@ -62,7 +62,6 @@ in
 
         # Opacity
         "opacity 0.94 0.94,class:^(kitty|thunar|code(.*))$"
-        "opacity 0.94 0.94,title:^(.*((d|D)isc|ArmC|WebC)ord.*)$"
       ];
 
       # Mouse Moveements
@@ -140,7 +139,7 @@ in
         "${pkgs.wlsunset}/bin/wlsunset -l 32.7 -L -96.9"
         "${pkgs.blueman}/bin/blueman-applet"
         "spotify"
-        "${pkgs.vesktop}/bin/vesktop"
+        "sleep 5 && ${pkgs.vesktop}/bin/vesktop"
       ];
 
       general = {

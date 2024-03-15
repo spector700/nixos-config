@@ -11,7 +11,7 @@
 
   programs = {
     firefox.enable = true;
-    brave.enable = true;
+    # brave.enable = true;
     vscode = {
       enable = true;
       enableExtensionUpdateCheck = true;

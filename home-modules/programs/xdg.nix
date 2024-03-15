@@ -38,8 +38,8 @@ let
     "application/pdf" = [ "org.pwmt.zathura-pdf-mupdf" ];
     "text/html" = browser;
     "inode/directory" = [ "yazi" ];
-    # "text/plain" = [ "Neovim" ];
-    # "x-scheme-handler/chrome" = [ "chromium-browser" ];
+    "text/plain" = [ "nvim" ];
+    "x-scheme-handler/chrome" = [ "chromium-browser" ];
   }
   // image
   // video

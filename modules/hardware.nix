@@ -44,20 +44,23 @@ in
         __GLX_VENDOR_LIBRARY_NAME = "nvidia";
         __GL_VRR_ALLOWED = "1";
         __GL_GSYNC_ALLOWED = "1";
+      }
+      // lib.optionalAttrs (config.networking.hostName == "vm") {
+        WLR_RENDERER_ALLOW_SOFTWARE = "1";
       };
 
       hardware = {
         nvidia = {
           modesetting.enable = true;
-          # package = config.boot.kernelPackages.nvidiaPackages.production;
+          package = config.boot.kernelPackages.nvidiaPackages.latest;
           #Fix suspend/resume
           powerManagement.enable = true;
+          nvidiaSettings = false;
         };
       };
       services.xserver.videoDrivers = [ "nvidia" ];
       # Nvidia Power Management
-      # boot.kernelParams = [ "nvidia.NVreg_PreserveVideoMemoryAllocations=1" ];
-      boot.kernelParams = [ "nvidia.NVreg_EnableS0ixPowerManagement=1" ];
+      boot.kernelParams = [ "nvidia.NVreg_PreserveVideoMemoryAllocations=1" ];
     })
     (lib.mkIf cfg.bluetooth.enable {
       hardware.bluetooth.enable = true;
