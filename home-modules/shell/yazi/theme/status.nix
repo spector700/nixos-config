@@ -3,43 +3,46 @@
     separator_open = "";
     separator_close = "";
     separator_style = {
-      fg = "darkgray";
-      bg = "darkgray";
+      fg = "#45475a";
+      bg = "#45475a";
     };
 
     # Mode;
     mode_normal = {
-      fg = "black";
-      bg = "lightblue";
+      fg = "#1e1e2e";
+      bg = "#89b4fa";
       bold = true;
     };
     mode_select = {
-      fg = "black";
-      bg = "lightgreen";
+      fg = "#1e1e2e";
+      bg = "#a6e3a1";
       bold = true;
     };
     mode_unset = {
-      fg = "black";
-      bg = "lightmagenta";
+      fg = "#1e1e2e";
+      bg = "#f2cdcd";
       bold = true;
     };
 
     # Progress;
-    progress_label = { bold = true; };
+    progress_label = {
+      fg = "#ffffff";
+      bold = true;
+    };
     progress_normal = {
-      fg = "blue";
-      bg = "black";
+      fg = "#89b4fa";
+      bg = "#45475a";
     };
     progress_error = {
-      fg = "red";
-      bg = "black";
+      fg = "#f38ba8";
+      bg = "#45475a";
     };
 
     # Permissions;
-    permissions_t = { fg = "blue"; };
-    permissions_r = { fg = "lightyellow"; };
-    permissions_w = { fg = "lightred"; };
-    permissions_x = { fg = "lightgreen"; };
-    permissions_s = { fg = "darkgray"; };
+    permissions_t = { fg = "#89b4fa"; };
+    permissions_r = { fg = "#f9e2af"; };
+    permissions_w = { fg = "#f38ba8"; };
+    permissions_x = { fg = "#a6e3a1"; };
+    permissions_s = { fg = "#7f849c"; };
   };
 }

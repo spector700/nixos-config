@@ -3,6 +3,7 @@
   imports = [
     ./theme/icons.nix
     ./theme/manager.nix
+    ./theme/misc.nix
     ./theme/status.nix
   ];
 

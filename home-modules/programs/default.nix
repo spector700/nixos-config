@@ -1,12 +1,13 @@
 {
   imports = [
-    ./kitty.nix
     ./rofi
-    ./spicetify.nix
-    ./packages.nix
+    ./vesktop
+    ./kitty.nix
     ./gtk.nix
-    ./zathura.nix
+    ./packages.nix
+    ./spicetify.nix
     ./xdg.nix
+    ./zathura.nix
   ];
 
   programs = {

@@ -12,7 +12,6 @@
       pavucontrol
       gimp
 
-      vesktop
       signal-desktop
       networkmanagerapplet
       nextcloud-client
