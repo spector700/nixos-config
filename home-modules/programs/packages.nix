@@ -2,7 +2,6 @@
   home = {
     packages = with pkgs; [
       # Terminal Utils
-      tldr
       neofetch
       wget
 

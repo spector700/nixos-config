@@ -54,11 +54,6 @@
       };
     };
 
-    direnv = {
-      enable = true;
-      silent = true;
-    };
-
     dconf.enable = true;
   };
 

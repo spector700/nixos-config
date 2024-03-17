@@ -42,6 +42,27 @@
       };
     };
 
+    tealdeer = {
+      enable = true;
+      settings = {
+        display = {
+          compact = false;
+          use_pager = true;
+        };
+        updates.auto_update = true;
+      };
+    };
+
+    dircolors = {
+      enable = true;
+      enableZshIntegration = true;
+    };
+
+    direnv = {
+      enable = true;
+      nix-direnv.enable = true;
+    };
+
     dev-assistant.enable = true;
 
     fzf = {
