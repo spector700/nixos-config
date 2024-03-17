@@ -5,11 +5,14 @@ import Soup from "gi://Soup?version=3.0"
 
 export class AiMessage extends Service {
     static {
-        Service.register(this, {},
+        Service.register(
+            this,
+            {},
             {
-                "content": ["string"],
-                "thinking": ["boolean"],
-            })
+                content: ["string"],
+                thinking: ["boolean"],
+            },
+        )
     }
 
     _role = ""
@@ -62,14 +65,13 @@ export class AiMessage extends Service {
     }
 }
 
-
 const session = new Soup.Session()
 
 class AiService extends Service {
     static {
         Service.register(this, {
-            "newMsg": ["int"],
-            "clear": [],
+            newMsg: ["int"],
+            clear: [],
         })
     }
 
@@ -115,8 +117,7 @@ class AiService extends Service {
                         if (result.done)
                             return
                         aiResponse.addDelta(result.message.content)
-                    }
-                    catch {
+                    } catch {
                         aiResponse.addDelta(line + "\n")
                     }
                 }
@@ -127,7 +128,6 @@ class AiService extends Service {
             }
         })
     }
-
 
     send(msg: string) {
         this.messages.push(new AiMessage("user", msg))
@@ -144,24 +144,31 @@ class AiService extends Service {
 
         const body = {
             model: this.model,
-            messages: this._systemMessage.content !== ""
-                ? [this._systemMessage, ...messages] : messages,
+            messages:
+        this._systemMessage.content !== ""
+            ? [this._systemMessage, ...messages]
+            : messages,
             stream: true,
         }
 
         const message = Soup.Message.new("POST", this.url)
         // message.request_headers.append("Authorization", "Bearer ")
         const requstBody = new TextEncoder().encode(JSON.stringify(body))
-        message.set_request_body_from_bytes("application/json",
-            new GLib.Bytes(requstBody))
+        message.set_request_body_from_bytes(
+            "application/json",
+            new GLib.Bytes(requstBody),
+        )
 
         session.send_async(message, 0, null, (_, result) => {
             try {
                 const stream = session.send_finish(result)
-                this.readResponse(new Gio.DataInputStream({
-                    closeBaseStream: true,
-                    baseStream: stream,
-                }), aiResponse)
+                this.readResponse(
+                    new Gio.DataInputStream({
+                        closeBaseStream: true,
+                        baseStream: stream,
+                    }),
+                    aiResponse,
+                )
             } catch (error) {
                 console.error("Error sending message:", error)
             }

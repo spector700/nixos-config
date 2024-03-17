@@ -58,8 +58,8 @@ window#aiwindow .ai-window-container {
     }
 
     .ai-send-button {
-      min-width: 2rem;
-      border-radius: $radius;
+      @include button;
+      min-width: 4rem;
       color: $primary-bg;
       background-color: $bg;
     }
