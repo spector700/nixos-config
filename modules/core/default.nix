@@ -74,13 +74,4 @@
 
     pathsToLink = [ "/share/zsh" ];
   };
-
-
-  # For `info` command.
-  documentation.info.enable = false;
-  # NixOS manual and such.
-  documentation.nixos.enable = false;
-  # Useless with flakes (without configuring)
-  programs.command-not-found.enable = false;
-
 }
