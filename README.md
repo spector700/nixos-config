@@ -7,16 +7,6 @@
 
 ---
 
-<small align="center" >Intro Stolen from @linuxmobile</small>
-
----
-
-<pre align="center">
-• <a href="#seedling--setup">SETUP</a> •
-</pre>
-
----
-
 - **Window Manager** • [Hyprland](https://github.com/hyprwm/Hyprland)🎨 
 - **Shell** • [Zsh](https://www.zsh.org) 🐚 with
   [starship](https://github.com/starship/starship)
@@ -24,7 +14,7 @@
 - **Panel** • [AGS](https://github.com/Aylur/ags)🍧
 - **Launcher** • [AnyRun](https://github.com/Kirottu/anyrun) 🚀
 - **File Manager** • [yazi](https://yazi-rs.github.io)🔖
-- **GUI Basic-IDE** • [LazyVim](https://lazyvim.org)
+- **Neovim** • [Akari](https://github.com/spector700/Akari)
 
 
 ## 🌼 <samp>INSTALLATION (NixOS)</samp>
@@ -110,3 +100,5 @@ nixos-install --flake .#desktop
 - [linuxmobile/kaku](https://github.com/linuxmobile/kaku)
 - [Gerg-L/nixos](https://github.com/Gerg-L/nixos)
 
+---
+<small align="center" >Intro Stolen from @linuxmobile</small>
