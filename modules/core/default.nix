@@ -1,10 +1,10 @@
-{ lib, pkgs, user, ... }: {
+{ pkgs, user, ... }: {
   # configuration used by all hosts
 
   imports = [
     ./nix.nix
     ./network.nix
-    ./security.nix
+    ./system
   ];
 
   users.users.${user} = {
@@ -24,22 +24,10 @@
     };
   };
 
-  boot = {
-    loader = {
-      systemd-boot = {
-        enable = lib.mkDefault true;
-        configurationLimit = 10;
-        consoleMode = "max";
-      };
-      efi.canTouchEfiVariables = true;
-      timeout = 1;
-    };
-
-    # Boot logo
-    plymouth = {
-      enable = true;
-      theme = "breeze";
-    };
+  # Boot logo
+  boot.plymouth = {
+    enable = true;
+    theme = "breeze";
   };
 
   programs = {
@@ -62,9 +50,6 @@
     packages = [ pkgs.terminus_font ];
     keyMap = "us";
   };
-
-  security.sudo.wheelNeedsPassword = lib.mkDefault false; # User does not need to give password when using sudo.
-
 
   environment = {
     variables = {
