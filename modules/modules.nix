@@ -2,6 +2,7 @@
   imports = [
     ./hardware.nix
     ./printing.nix
+    ./programs
     # ./theme.nix
   ];
   # theme = import ./theme.nix;

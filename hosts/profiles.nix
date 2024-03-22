@@ -12,7 +12,6 @@
       ../modules/desktop.nix
       ../modules/greetd.nix
       ../modules/modules.nix
-      ../modules/programs/games.nix
       ../modules/programs/thunar.nix
 
       # Home-Manager module that is used.
