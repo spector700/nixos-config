@@ -138,16 +138,14 @@ in
         "wl-paste --watch cliphist store"
         "${pkgs.wlsunset}/bin/wlsunset -l 32.7 -L -96.9"
         "${pkgs.blueman}/bin/blueman-applet"
+        "sleep 7 && ${pkgs.vesktop}/bin/vesktop"
         "spotify"
-        "sleep 5 && ${pkgs.vesktop}/bin/vesktop"
       ];
 
       general = {
         gaps_in = 5;
         gaps_out = 5;
         border_size = 1;
-        # "col.active_border" = "rgba(88888888)";
-        # "col.inactive_border" = "rgba(00000088)";
         "col.active_border" = "rgba(bb9af7ff) rgba(b4f9f8ff) 45deg";
         "col.inactive_border" = "rgba(565f89cc) rgba(9aa5cecc) 45deg";
         allow_tearing = true;
