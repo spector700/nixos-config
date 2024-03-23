@@ -46,8 +46,8 @@
   };
 
   console = {
-    font = "ter-v20n";
-    packages = [ pkgs.terminus_font ];
+    font = "ter-powerline-v18n";
+    packages = with pkgs;[ terminus_font powerline-fonts ];
     keyMap = "us";
   };
 
@@ -55,6 +55,8 @@
     variables = {
       EDITOR = "nvim";
       VISUAL = "nvim";
+      SUDO_EDITOR = "nvim";
+      MANPAGER = "nvim +Man!";
     };
 
     pathsToLink = [ "/share/zsh" ];

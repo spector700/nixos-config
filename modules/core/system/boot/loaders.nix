@@ -1,10 +1,18 @@
 { config, lib, ... }:
 let
-  inherit (lib) mkDefault mkIf optionalAttrs;
+  inherit (lib) mkDefault mkIf types mkOption;
 
   cfg = config.modules.system;
 in
 {
+  options.modules.system.boot = {
+    loader = mkOption {
+      type = types.enum [ "systemd-boot" ];
+      default = "systemd-boot";
+      description = "The bootloader that should be used for the device.";
+    };
+  };
+
   config = mkIf (cfg.boot.loader == "systemd-boot") {
     boot.loader = {
       systemd-boot =
@@ -16,14 +24,6 @@ in
           # Fix a security hole in place for backwards compatibility. See desc in
           # nixpkgs/nixos/modules/system/boot/loader/systemd-boot/systemd-boot.nix
           editor = false;
-        }
-        // optionalAttrs cfg.boot.memtest.enable {
-          # https://matrix.to/#/!sgkZKRutwatDMkYBHU:nixos.org/$iKnJUt1L_7E5bq7hStDPwv6_2HTBvNjwfcWxlKlF-k8?via=nixos.org&via=matrix.org&via=nixos.dev
-          extraFiles."efi/memtest86plus/memtest.efi" = "${cfg.boot.memtest.package}/memtest.efi";
-          extraEntries."memtest86plus.conf" = ''
-            title MemTest86+
-            efi   /efi/memtest86plus/memtest.efi
-          '';
         };
     };
   };

@@ -4,11 +4,10 @@
 
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
-    kernelParams = [
-      #For openrgb with gigabyte motherboard
-      "acpi_enforce_resources=lax"
-    ];
+    #For openrgb with gigabyte motherboard
+    kernelParams = [ "acpi_enforce_resources=lax" ];
   };
+
   networking.hostName = "alfhiem";
 
   # qt = {
@@ -21,12 +20,17 @@
   environment = {
     sessionVariables = {
       QT_QPA_PLATFORM = "wayland";
-      SDL_VIDEODRIVER = "wayland";
+      # SDL_VIDEODRIVER = "wayland";
       ANKI_WAYLAND = "1";
       NIXOS_OZONE_WL = "1";
       WLR_DRM_NO_ATOMIC = "1";
       QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
     };
+  };
+
+  modules = {
+    programs.gaming.enable = true;
+    system.boot.enableKernelTweaks = true;
   };
 
   local = {
