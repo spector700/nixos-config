@@ -2,5 +2,6 @@
   imports = [
     ./boot
     ./security
+    ./services
   ];
 }
