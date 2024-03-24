@@ -1,9 +1,9 @@
-{ inputs, lib, home-manager, user, location, ... }:
+{ inputs, lib, home-manager, user, location, lib', ... }:
 {
   # Desktop profile
   alfhiem = lib.nixosSystem {
     specialArgs = {
-      inherit inputs user location;
+      inherit inputs user location lib';
     };
     # Modules that are used
     modules = [

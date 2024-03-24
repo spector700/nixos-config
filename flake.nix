@@ -49,6 +49,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nix-citizen = {
+      url = "github:LovingMelody/nix-citizen";
+      inputs.nix-gaming.follows = "gaming";
+    };
+
     gaming.url = "github:fufexan/nix-gaming";
     ags.url = "github:Aylur/ags";
   };
@@ -56,6 +61,7 @@
   outputs = inputs@{ self, nixpkgs, home-manager, ... }:
     let
       lib = nixpkgs.lib // home-manager.lib;
+      lib' = import ./lib;
       user = "nick";
       # Location of the nixos config
       location = "/home/${user}/.config/nixos-config";
@@ -68,12 +74,11 @@
       });
     in
     {
-      homeManagerModules.theme = import ./modules/theme.nix;
+      homeManagerModules.theme = ./modules/theme.nix;
 
       # NixOS configurations
       nixosConfigurations = import ./hosts/profiles.nix {
-        inherit inputs lib home-manager user location;
-        imports = ./lib;
+        inherit inputs lib lib' home-manager user location;
       };
 
       packages = forEachSystem (pkgs: import ./pkgs { inherit pkgs; inherit inputs; });
