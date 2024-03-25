@@ -16,21 +16,13 @@
   #   style = "gtk2";
   # };
 
-  # Variables for hyprland nvidia
-  environment = {
-    sessionVariables = {
-      QT_QPA_PLATFORM = "wayland";
-      # SDL_VIDEODRIVER = "wayland";
-      ANKI_WAYLAND = "1";
-      NIXOS_OZONE_WL = "1";
-      WLR_DRM_NO_ATOMIC = "1";
-      QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
-    };
-  };
-
   modules = {
     programs.gaming.enable = true;
-    system.boot.enableKernelTweaks = true;
+    env.desktop = "Hyprland";
+    system = {
+      mainUser = "spector";
+      boot.enableKernelTweaks = true;
+    };
   };
 
   local = {

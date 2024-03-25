@@ -18,7 +18,7 @@ in
 
     environment.systemPackages = with pkgs; [
       lutris
-      inputs.gaming.packages.${pkgs.system}.star-citizen
+      inputs.nix-citizen.packages.${pkgs.system}.star-citizen
       # Minecraft
       prismlauncher
       protontricks

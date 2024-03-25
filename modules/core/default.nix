@@ -1,4 +1,4 @@
-{ pkgs, user, ... }: {
+{ pkgs, ... }: {
   # configuration used by all hosts
 
   imports = [
@@ -6,13 +6,6 @@
     ./network.nix
     ./system
   ];
-
-  users.users.${user} = {
-    # System User
-    isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" ];
-    shell = pkgs.zsh; # Default shell
-  };
 
   time.timeZone = "America/Chicago"; # Time zone and internationalisation
   i18n = {
