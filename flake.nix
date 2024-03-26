@@ -78,7 +78,7 @@
 
       # NixOS configurations
       nixosConfigurations = import ./hosts/profiles.nix {
-        inherit inputs lib lib' home-manager user location;
+        inherit inputs lib lib' home-manager location;
       };
 
       packages = forEachSystem (pkgs: import ./pkgs { inherit pkgs; inherit inputs; });

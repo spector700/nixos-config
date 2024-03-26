@@ -32,7 +32,7 @@ in
 
     users = mkOption {
       type = with types; listOf str;
-      default = [ "spector" ];
+      default = [ "nick" ];
       description = "A list of home-manager users on the system.";
     };
 

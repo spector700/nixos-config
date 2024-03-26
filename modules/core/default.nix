@@ -5,6 +5,7 @@
     ./nix.nix
     ./network.nix
     ./system
+    ./user.nix
   ];
 
   time.timeZone = "America/Chicago"; # Time zone and internationalisation

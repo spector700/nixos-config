@@ -1,9 +1,14 @@
-{ inputs, lib, home-manager, user, location, lib', ... }:
+{ inputs, lib, location, lib', ... }:
+let
+  hm = inputs.home-manager.nixosModules.home-manager;
+  homesDir = ../home-modules; # home-manager configurations for hosts that need home-manager
+  homeManager = [ hm homesDir ]; # combine hm flake input and the home module to be imported together
+in
 {
   # Desktop profile
   alfhiem = lib.nixosSystem {
     specialArgs = {
-      inherit inputs user location lib';
+      inherit inputs location lib';
     };
     # Modules that are used
     modules = [
@@ -14,59 +19,18 @@
       ../modules/modules.nix
       ../modules/programs/thunar.nix
 
-      # Home-Manager module that is used.
-      home-manager.nixosModules.home-manager
-      {
-        home-manager = {
-          useGlobalPkgs = true;
-          useUserPackages = true;
-          extraSpecialArgs = {
-            inherit user inputs location;
-          };
-          users.${user} = {
-            imports = [
-              ./alfhiem/home.nix
-              ../home-modules
-              ../home-modules/wayland
-              ../home-modules/programs
-              ../home-modules/editors/neovim
-              ../home-modules/shell
-            ];
-          };
-        };
-      }
-    ];
+    ] ++ lib.concatLists [ homeManager ];
   };
   # vm profile
   vm = lib.nixosSystem {
     specialArgs = {
-      inherit inputs user location;
+      inherit inputs location;
     };
     # Modules that are used
     modules = [
       ./vm
       ../modules/core
       ../modules/modules.nix
-
-      # Home-Manager module that is used.
-      home-manager.nixosModules.home-manager
-      {
-        home-manager = {
-          useGlobalPkgs = true;
-          useUserPackages = true;
-          extraSpecialArgs = {
-            inherit user inputs location;
-          };
-          users.${user} = {
-            imports = [
-              ../home-modules
-              ../home-modules/programs/kitty.nix
-              ../home-modules/editors/neovim
-              ../home-modules/shell
-            ];
-          };
-        };
-      }
     ];
   };
 }

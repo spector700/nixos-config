@@ -1,6 +1,8 @@
-{ pkgs, user, ... }:
+{ pkgs, config, ... }:
 {
   imports = [ ./hardware-configuration.nix ];
+
+  home-manager.users.${config.modules.system.mainUser} = import ./home.nix;
 
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
@@ -10,17 +12,11 @@
 
   networking.hostName = "alfhiem";
 
-  # qt = {
-  #   enable = true;
-  #   platformTheme = "gtk2";
-  #   style = "gtk2";
-  # };
-
   modules = {
     programs.gaming.enable = true;
     env.desktop = "Hyprland";
     system = {
-      mainUser = "spector";
+      mainUser = "nick";
       boot.enableKernelTweaks = true;
     };
   };
@@ -49,7 +45,7 @@
     openrazer = {
       enable = true;
       mouseBatteryNotifier = false;
-      users = [ "${user}" ];
+      users = [ "${config.modules.system.mainUser}" ];
     };
   };
 }
