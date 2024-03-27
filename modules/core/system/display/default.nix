@@ -5,7 +5,8 @@ let
 in
 {
   imports = [
-    ./environment.nix
+    ./login
+    ./wayland.nix
   ];
 
   options.modules.env = {

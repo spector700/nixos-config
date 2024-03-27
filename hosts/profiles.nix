@@ -15,7 +15,6 @@ in
       ./alfhiem
       ../modules/core
       ../modules/desktop.nix
-      ../modules/greetd.nix
       ../modules/modules.nix
       ../modules/programs/thunar.nix
 
@@ -31,6 +30,7 @@ in
       ./vm
       ../modules/core
       ../modules/modules.nix
-    ];
+
+    ] ++ lib.concatLists [ homeManager ];
   };
 }

@@ -22,6 +22,7 @@ in
       };
     })
 
+    # Session for greetd
     (mkIf (env.desktop == "Hyprland") {
       services.xserver.displayManager.sessionPackages = [ pkgs.hyprland ];
     })
