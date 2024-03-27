@@ -2,7 +2,7 @@
 #
 # Do not forget to enable Steam capatability for all title in the settings menu
 #
-{ pkgs, lib, config, inputs, ... }:
+{ pkgs, lib, config, ... }:
 # {
 let
   inherit (lib) mkIf mkEnableOption;
@@ -18,19 +18,12 @@ in
 
     environment.systemPackages = with pkgs; [
       lutris
-      inputs.nix-citizen.packages.${pkgs.system}.star-citizen
       # Minecraft
       prismlauncher
       protontricks
       # Steam theme
       adwsteamgtk
     ];
-
-    # NixOS configuration for Star Citizen requirements
-    boot.kernel.sysctl = {
-      "vm.max_map_count" = 16777216;
-      "fs.file-max" = 524288;
-    };
 
     nixpkgs.overlays = [
       (_: prev: {

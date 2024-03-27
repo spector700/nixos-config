@@ -49,11 +49,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nix-citizen = {
-      url = "github:LovingMelody/nix-citizen";
-      inputs.nix-gaming.follows = "gaming";
-    };
-
     gaming.url = "github:fufexan/nix-gaming";
     ags.url = "github:Aylur/ags";
   };
