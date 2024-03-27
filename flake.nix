@@ -74,8 +74,6 @@
       });
     in
     {
-      homeManagerModules.theme = ./modules/theme.nix;
-
       # NixOS configurations
       nixosConfigurations = import ./hosts/profiles.nix {
         inherit inputs lib lib' home-manager location;

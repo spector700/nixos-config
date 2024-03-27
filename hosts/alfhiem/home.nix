@@ -4,7 +4,7 @@ let
   secondMonitor = "DP-3";
 in
 {
-  theme.wallpaper = ../../modules/themes/wallpaper;
+  theme.wallpaper = ../../home-modules/nick/themes/wallpaper;
 
   # Hyprland
   wayland.windowManager.hyprland = {

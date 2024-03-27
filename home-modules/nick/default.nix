@@ -8,9 +8,9 @@ in
     inputs.spicetify.homeManagerModules.default
     inputs.hyprlock.homeManagerModules.default
     inputs.hypridle.homeManagerModules.default
-    ./colorscheme.nix
     ./programs
     ./shell
+    ./themes
     ./editors/neovim
     ./wayland
   ];

@@ -1,4 +1,9 @@
-{ lib, ... }: {
+{ lib, ... }:
+{
+  imports = [
+    ./colorscheme.nix
+  ];
+
   options.theme = {
     name = lib.mkOption {
       description = ''
@@ -18,6 +23,7 @@
         Location of the wallpaper to use throughout the system.
       '';
       type = lib.types.path;
+      default = ./wallpaper;
       example = lib.literalExample "./wallpaper.png";
     };
   };

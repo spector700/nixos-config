@@ -2,7 +2,6 @@
 {
 
   imports = [
-    inputs.self.homeManagerModules.theme
     inputs.matugen.nixosModules.default
   ];
 
