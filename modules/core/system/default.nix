@@ -6,6 +6,7 @@ in
   imports = [
     ./boot
     ./display
+    ./hardware
     ./security
     ./services
   ];

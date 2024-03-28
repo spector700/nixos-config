@@ -2,8 +2,6 @@
 {
   imports = [ ./hardware-configuration.nix ];
 
-  home-manager.users.${config.modules.system.mainUser} = import ./home.nix;
-
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
     #For openrgb with gigabyte motherboard
@@ -13,10 +11,15 @@
   networking.hostName = "alfhiem";
 
   modules = {
+    hardware.gpu.type = "nvidia";
+
     programs.gaming.enable = true;
+
     env.desktop = "Hyprland";
+
     system = {
       mainUser = "nick";
+      autoLogin = false;
       boot.enableKernelTweaks = true;
     };
   };
@@ -24,7 +27,6 @@
   local = {
     hardware = {
       gpuAcceleration.enable = true;
-      nvidia.enable = true;
       sound.enable = true;
       bluetooth.enable = true;
     };
@@ -48,4 +50,7 @@
       users = [ "${config.modules.system.mainUser}" ];
     };
   };
+
+  # import home.nix for this host
+  home-manager.users.${config.modules.system.mainUser} = import ./home.nix;
 }
