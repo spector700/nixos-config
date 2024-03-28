@@ -11,7 +11,10 @@
   networking.hostName = "alfhiem";
 
   modules = {
-    hardware.gpu.type = "nvidia";
+    hardware = {
+      gpu.type = "nvidia";
+      cpu.type = "amd";
+    };
 
     programs.gaming.enable = true;
 
