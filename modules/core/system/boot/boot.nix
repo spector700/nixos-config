@@ -50,9 +50,6 @@ in
       # allows systemd to set and save the backlight state
       "acpi_backlight=native" # none | vendor | video | native
 
-      # prevent the kernel from blanking plymouth out of the fb
-      "fbcon=nodefer"
-
       # disable the cursor in vt to get a black screen during intermissions
       "vt.global_cursor_default=0"
 

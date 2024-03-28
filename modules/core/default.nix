@@ -3,7 +3,6 @@
 
   imports = [
     ./nix.nix
-    ./network.nix
     ./system
     ./user.nix
   ];

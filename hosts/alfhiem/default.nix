@@ -16,6 +16,7 @@
       cpu.type = "amd";
     };
 
+
     programs.gaming.enable = true;
 
     env.desktop = "Hyprland";
@@ -23,6 +24,9 @@
     system = {
       mainUser = "nick";
       autoLogin = false;
+
+      networking.optomizeTcp = true;
+
       boot.enableKernelTweaks = true;
     };
   };

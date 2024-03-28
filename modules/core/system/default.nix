@@ -7,6 +7,7 @@ in
     ./boot
     ./display
     ./hardware
+    ./networking
     ./security
     ./services
   ];
