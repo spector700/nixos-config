@@ -71,7 +71,7 @@ in
         remotePlay.openFirewall = false;
 
         # Compatibility tools to install
-        extraCompatPackages = with pkgs; [ proton-ge-bin.steamcompattool ];
+        extraCompatPackages = with pkgs; [ proton-ge-bin ];
       };
 
       gamemode = {

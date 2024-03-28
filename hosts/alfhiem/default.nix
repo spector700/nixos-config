@@ -16,7 +16,6 @@
       cpu.type = "amd";
     };
 
-
     programs.gaming.enable = true;
 
     env.desktop = "Hyprland";
