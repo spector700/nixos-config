@@ -81,28 +81,27 @@ const variables = () => [
 async function resetCss() {
     if (!dependencies("dart-sass", "fd"))
         return
+    try {
+        const vars = `${TMP}/variables.scss`
+        await Utils.writeFile(variables().join("\n"), vars)
 
-    const vars = `${TMP}/variables.scss`
-    await Utils.writeFile(variables().join("\n"), vars)
+        const fd = await sh(`fd ".scss" ${App.configDir} --exclude ./node_modules --exclude highlight.js --exclude widget/aiwindow/highlight.scss`)
+        const files = fd.split(/\s+/).map(f => `@import '${f}';`)
+        const scss = [`@import '${vars}';`, ...files].join("\n")
+        const css = await bash`echo "${scss}" | sass --stdin`
 
-    const fd = await sh(`fd ".scss" ${App.configDir} --exclude ./node_modules --exclude highlight.js --exclude widget/aiwindow/highlight.scss`)
-    const files = fd.split(/\s+/).map(f => `@import '${f}';`)
-    const scss = [`@import '${vars}';`, ...files].join("\n")
-    const css = await bash`echo "${scss}" | sass --stdin`
-    const file = `${TMP}/style.css`
-
-    await Utils.writeFile(css, file)
-
-    // Seperate css file for the WebView highlight
-    const highlightfile = `${App.configDir}/widget/aiwindow/highlight.scss`
-    // Combine vars and highlightcss file
-    const highlightcss = await bash`cat ${vars} ${highlightfile} | sass --stdin`
-
-    await Utils.writeFile(highlightcss, `${TMP}/highlight.css`)
+        App.applyCss(css, true)
 
 
-    App.resetCss()
-    App.applyCss(file)
+        // Seperate css file for the WebView highlight
+        const highlightfile = `${App.configDir}/widget/aiwindow/highlight.scss`
+        // Combine vars and highlightcss file
+        const highlightcss = await bash`cat ${vars} ${highlightfile} | sass --stdin`
+
+        await Utils.writeFile(highlightcss, `${TMP}/highlight.css`)
+    } catch (error) {
+        logError(error)
+    }
 }
 
 export default function init() {

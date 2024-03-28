@@ -9,14 +9,13 @@ import Verification from "widget/powermenu/Verification"
 import NotificationPopups from "widget/notifications/NotificationPopups"
 import OSD from "widget/osd/OSD"
 import SettingsDialog from "widget/settings/SettingsDialog"
-import { config, forMonitors } from "lib/utils"
+import { forMonitors } from "lib/utils"
 import { setupQuickSettings } from "widget/quicksettings/QuickSettings"
 import { setupDateMenu } from "widget/datemenu/DateMenu"
 import { init } from "lib/init"
 import { setupAiWindowSettings } from "widget/aiwindow/AiWindow"
 
-export default config({
-    icons: "./assets",
+App.config({
     onConfigParsed: () => {
         setupQuickSettings()
         setupDateMenu()
