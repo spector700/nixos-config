@@ -12,8 +12,8 @@
 
   modules = {
     hardware = {
-      gpu.type = "nvidia";
       cpu.type = "amd";
+      gpu.type = "nvidia";
     };
 
     programs.gaming.enable = true;

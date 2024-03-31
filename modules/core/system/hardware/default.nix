@@ -6,7 +6,6 @@ in
   imports = [
     ./cpu
     ./gpu
-    ./genaric.nix
   ];
 
   options.modules.hardware = {
