@@ -1,6 +1,7 @@
-{ lib, ... }:
+{ lib, config, ... }:
 let
-  inherit (lib) mkOption mkEnableOption types;
+  inherit (lib) mkOption mkEnableOption types length filter;
+  cfg = config.modules.hardware;
 in
 {
   imports = [
@@ -58,30 +59,80 @@ in
         type = with types; nullOr (enum [ "pi" "amd" "intel" "nvidia" "hybrid-nv" "hybrid-amd" ]);
         default = null;
         description = ''
-          The manifaturer/type of the primary system GPU. Allows the correct GPU
-          drivers to be loaded, potentially optimizing video output performance
+          The manifaturer/type of the primary system GPU. 
         '';
       };
     };
 
     monitors = mkOption {
-      type = with types; listOf str;
+      type = types.listOf (types.submodule {
+        options = {
+          name = mkOption {
+            type = types.str;
+            example = "DP-1";
+          };
+
+          primary = mkOption {
+            type = types.bool;
+            default = false;
+          };
+
+          position = mkOption {
+            type = types.str;
+            default = "0x0";
+          };
+
+          resolution = mkOption {
+            type = types.str;
+            default = "preferred";
+          };
+
+          refreshRate = mkOption {
+            type = types.int;
+            default = 60;
+          };
+
+          scale = mkOption {
+            type = types.str;
+            default = "1";
+          };
+
+          rotation = mkOption {
+            type = types.str;
+            default = "";
+            description = ''
+              normal (no transforms) -> 0
+              90 degrees -> 1
+              180 degrees -> 2
+              270 degrees -> 3
+              flipped -> 4
+              flipped + 90 degrees -> 5
+              flipped + 180 degrees -> 6
+              flipped + 270 degrees -> 7
+            '';
+          };
+
+          workspaces = mkOption {
+            type = with types; listOf int;
+            description = ''
+              [1 2 3]
+            '';
+          };
+
+        };
+      });
+
       default = [ ];
       description = ''
         A list of monitors connected to the system.
-
-        This does not affect any drivers and such, it is only necessary for
-        declaring things like monitors in window manager configurations.
-        It is not necessary to declare this, but wallpaper and workspace
-        configurations will be affected by the monitors list
-
-        ::: {.tip}
-          Monitors should be listed from left to right in the order they are placed
-          assuming the leftmost (first element) is the primary one. This is not a
-          solution to the possibility of a monitor being placed above or below another
-          but it currently works.
-        :::
       '';
     };
+  };
+  config = {
+    assertions = [{
+      assertion = ((length cfg.monitors) != 0) ->
+        ((length (filter (m: m.primary) cfg.monitors)) == 1);
+      message = "Exactly one monitor must be set to primary.";
+    }];
   };
 }
