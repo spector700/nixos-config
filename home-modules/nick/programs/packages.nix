@@ -2,7 +2,7 @@
   home = {
     packages = with pkgs; [
       # Terminal Utils
-      neofetch
+      fastfetch
       wget
 
       # Video/Audio

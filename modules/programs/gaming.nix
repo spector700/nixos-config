@@ -63,13 +63,17 @@ in
       })
     ];
 
+    boot.kernel.sysctl = {
+      # default on some gaming (SteamOS) and desktop (Fedora) distributions
+      # might help with gaming performance
+      "vm.max_map_count" = 2147483642;
+    };
+
     programs = {
       steam = {
         enable = true;
-
         # Open ports in the firewall for Steam Remote Play
         remotePlay.openFirewall = false;
-
         # Compatibility tools to install
         extraCompatPackages = with pkgs; [ proton-ge-bin ];
       };
