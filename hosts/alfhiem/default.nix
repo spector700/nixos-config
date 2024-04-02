@@ -29,6 +29,7 @@
           name = "DP-3";
           resolution = "3840x2160";
           scale = "1.875";
+          rotation = "transform,1";
           workspaces = [ 4 5 6 ];
         }
       ];

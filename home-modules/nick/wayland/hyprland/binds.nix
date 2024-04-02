@@ -1,7 +1,7 @@
 { pkgs, config, ... }:
 let
   screenshotarea =
-    "hyprctl keyword animation 'fadeOut,0,0,default'; grimblast --notify copysave area; hyprctl keyword animation 'fadeOut,1,4,default'";
+    "hyprctl keyword animation 'fadeOut,0,8,slow'; grimblast --notify copysave area; hyprctl keyword animation 'fadeOut,1,8,slow'";
 
   # binds $mod + [alt +] {1..10} to [move to] workspace {1..10}
   workspaces = builtins.concatLists (builtins.genList

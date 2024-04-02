@@ -60,6 +60,7 @@ in
       "size 640 400, title:^(splash)$"
 
       # Fix steam menus
+      "float, title:^(Steam Settings)$"
       # "stayfocused, title:^()$,class:^(steam)$"
       # "minsize 1 1, title:^()$,class:^(steam)$"
 
@@ -128,11 +129,15 @@ in
       # keep floating dimentions while tiling
       pseudotile = true;
       preserve_split = true;
+      special_scale_factor = 0.9; # restore old special workspace behaviour
     };
 
     misc = {
-      disable_autoreload = true;
+      disable_autoreload = true; # autoreload is unnecessary on nixos, because the config is readonly anyway
       disable_hyprland_logo = true;
+
+      enable_swallow = true; # hide windows that spawn other windows
+      swallow_regex = "kitty|thunar|wezterm"; # windows for which swallow is applied
 
       # Turn on screen when sleeping
       key_press_enables_dpms = true;
