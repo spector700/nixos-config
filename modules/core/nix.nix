@@ -3,6 +3,7 @@
 
   imports = [ inputs.nh.nixosModules.default ];
 
+  # TODO change to the nixos module when it releases
   nh = {
     enable = true;
     # weekly clean
