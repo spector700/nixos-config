@@ -17,6 +17,7 @@ in
       ../modules/desktop.nix
       ../modules/modules.nix
       ../modules/programs/thunar.nix
+      inputs.disko.nixosModules.disko
 
     ] ++ lib.concatLists [ homeManager ];
   };

@@ -1,6 +1,9 @@
 { pkgs, config, ... }:
 {
-  imports = [ ./hardware-configuration.nix ];
+  imports = [
+    ./hardware-configuration.nix
+    ./disks.nix
+  ];
 
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
