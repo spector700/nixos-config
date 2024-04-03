@@ -2,6 +2,7 @@
   imports = [
     ./yazi
     ./git.nix
+    ./ssh.nix
     ./starship.nix
     ./zoxide.nix
     ./zsh.nix
