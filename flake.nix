@@ -4,6 +4,7 @@
   inputs = {
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-23.05";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-staging-next.url = "github:nixos/nixpkgs/staging-next";
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -76,7 +77,7 @@
     {
       # NixOS configurations
       nixosConfigurations = import ./hosts/profiles.nix {
-        inherit inputs lib lib' home-manager location;
+        inherit inputs self lib lib' home-manager location;
       };
 
       packages = forEachSystem (pkgs: import ./pkgs { inherit pkgs; inherit inputs; });

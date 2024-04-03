@@ -1,4 +1,4 @@
-{ inputs, config, lib, location, ... }:
+{ inputs, self, config, lib, location, ... }:
 let
   inherit (lib) genAttrs;
 in
@@ -19,7 +19,7 @@ in
     # for reference, the config argument in nixos can be accessed
     # in home-manager through osConfig without us passing it
     # extraSpecialArgs = lib.nixosSystem.specialArgs;
-    extraSpecialArgs = { inherit inputs location; };
+    extraSpecialArgs = { inherit inputs self location; };
 
     # per-user Home Manager configuration
     # the genAttrs function generates an attribute set of users

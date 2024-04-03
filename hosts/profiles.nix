@@ -1,4 +1,4 @@
-{ inputs, lib, location, lib', ... }:
+{ inputs, self, lib, location, lib', ... }:
 let
   hm = inputs.home-manager.nixosModules.home-manager;
   homesDir = ../home-modules; # home-manager configurations for hosts that need home-manager
@@ -8,7 +8,7 @@ in
   # Desktop profile
   alfhiem = lib.nixosSystem {
     specialArgs = {
-      inherit inputs location lib';
+      inherit inputs self location lib';
     };
     # Modules that are used
     modules = [
