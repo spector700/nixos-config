@@ -62,9 +62,9 @@
     let
       lib = nixpkgs.lib // home-manager.lib;
       lib' = import ./lib;
-      user = "nick";
+      user = "spector";
       # Location of the nixos config
-      location = "/home/${user}/.config/nixos-config";
+      location = "/home/${user}/nixos-config";
       systems = [ "x86_64-linux" "aarch64-linux" ];
       # This is a function that generates an attribute by calling a function you
       # pass to it, with each system as an argument

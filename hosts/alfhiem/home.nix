@@ -1,6 +1,6 @@
 { pkgs, ... }:
 {
-  theme.wallpaper = ../../home-modules/nick/themes/wallpaper;
+  theme.wallpaper = ../../home-modules/spector/themes/wallpaper;
 
   # Hyprland
   wayland.windowManager.hyprland = {

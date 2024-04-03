@@ -43,7 +43,7 @@
     env.desktop = "Hyprland";
 
     system = {
-      mainUser = "nick";
+      mainUser = "spector";
       autoLogin = false;
 
       networking.optomizeTcp = true;
