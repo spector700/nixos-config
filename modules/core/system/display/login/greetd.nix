@@ -5,7 +5,7 @@ let
   inherit (lib.meta) getExe;
 
   inherit (config.modules) system;
-  inherit (config.modules) env;
+  inherit (config.modules) display;
 
   # make desktop session paths available to greetd
   sessionData = config.services.xserver.displayManager.sessionData.desktops;
@@ -17,7 +17,7 @@ let
 
   initialSession = {
     user = "${system.mainUser}";
-    command = "${env.desktop}";
+    command = "${display.desktop}";
   };
 
   defaultSession = {

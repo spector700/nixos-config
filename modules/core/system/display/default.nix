@@ -1,15 +1,16 @@
 { lib, config, ... }:
 let
   inherit (lib) mkOption types;
-  cfg = config.modules.env;
+  cfg = config.modules.display;
 in
 {
   imports = [
     ./login
+    ./monitors.nix
     ./wayland.nix
   ];
 
-  options.modules.env = {
+  options.modules.display = {
     desktop = mkOption {
       type = types.enum [ "none" "Hyprland" ];
       default = "none";

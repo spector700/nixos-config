@@ -2,13 +2,13 @@
 let
   inherit (lib) mkMerge mkIf optionalString;
 
-  inherit (config.modules) env;
+  cfg = config.modules.display;
 in
 {
   config = mkMerge [
-    (mkIf env.isWayland {
+    (mkIf cfg.isWayland {
       environment.etc."greetd/environments".text = ''
-        ${optionalString (env.desktop == "Hyprland") "Hyprland"}
+        ${optionalString (cfg.desktop == "Hyprland") "Hyprland"}
         zsh
       '';
 
@@ -23,8 +23,19 @@ in
     })
 
     # Session for greetd
-    (mkIf (env.desktop == "Hyprland") {
+    (mkIf (cfg.desktop == "Hyprland") {
       services.xserver.displayManager.sessionPackages = [ pkgs.hyprland ];
+
+      xdg.portal = {
+        enable = true;
+        config = {
+          common.default = [ "hyprland" "gtk" ];
+        };
+
+        extraPortals = [
+          pkgs.xdg-desktop-portal-hyprland
+        ];
+      };
     })
   ];
 }

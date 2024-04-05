@@ -18,7 +18,7 @@ in
       };
 
       # Autostart for hyprland
-      wayland.windowManager.hyprland.settings = mkIf (config.modules.env.desktop == "Hyprland") {
+      wayland.windowManager.hyprland.settings = mkIf (config.modules.display.desktop == "Hyprland") {
         exec-once = mkAfter [
           "sleep 5 && ${pkgs.openrgb}/bin/openrgb --profile iceie"
         ];

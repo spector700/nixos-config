@@ -2,7 +2,7 @@
 let
   inherit (lib) mkIf mkDefault mkMerge;
 
-  inherit (config.modules) env;
+  inherit (config.modules) display;
   cfg = config.modules.hardware;
 
   nvidiaPackage = config.boot.kernelPackages.nvidiaPackages.latest;
@@ -15,7 +15,7 @@ in
       }
 
       # xorg settings
-      (mkIf (!env.isWayland) {
+      (mkIf (!display.isWayland) {
         # disable DPMS
         monitorSection = ''
           Option "DPMS" "false"
@@ -35,7 +35,7 @@ in
       sessionVariables = mkMerge [
         { LIBVA_DRIVER_NAME = "nvidia"; }
 
-        (mkIf env.isWayland {
+        (mkIf display.isWayland {
           WLR_NO_HARDWARE_CURSORS = "1";
           __GL_VRR_ALLOWED = "1";
           __GL_GSYNC_ALLOWED = "1";
@@ -43,12 +43,12 @@ in
           # GBM_BACKEND = "nvidia-drm";
         })
 
-        (mkIf (env.isWayland && (cfg.gpu == "hybrid-nv")) {
+        (mkIf (display.isWayland && (cfg.gpu == "hybrid-nv")) {
           #__NV_PRIME_RENDER_OFFLOAD = "1";
           #WLR_DRM_DEVICES = mkDefault "/dev/dri/card1:/dev/dri/card0";
         })
 
-        (mkIf (env.isWayland && (cfg == "vm")) {
+        (mkIf (display.isWayland && (cfg == "vm")) {
           WLR_RENDERER_ALLOW_SOFTWARE = "1";
         })
       ];

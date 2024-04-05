@@ -3,7 +3,7 @@ let
   inherit (lib) mkIf;
   inherit (osConfig) modules;
 
-  cfg = modules.env;
+  cfg = modules.display;
 in
 {
   imports = [

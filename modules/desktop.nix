@@ -53,17 +53,4 @@
     # allow wayland lockers to unlock the screen
     pam.services.hyprlock.text = "auth include login";
   };
-
-  xdg.portal = {
-    enable = true;
-    # xdgOpenUsePortal = true;
-    config = {
-      common.default = [ "hyprland" "gtk" ];
-      # hyprland.default = [ "gtk" "hyprland" ];
-    };
-
-    extraPortals = [
-      pkgs.xdg-desktop-portal-hyprland
-    ];
-  };
 }

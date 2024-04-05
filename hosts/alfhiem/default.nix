@@ -18,7 +18,10 @@
       cpu.type = "amd";
       gpu.type = "nvidia";
       openrgb.enable = true;
+    };
 
+    display = {
+      desktop = "Hyprland";
       monitors = [
         {
           name = "DP-2";
@@ -38,10 +41,7 @@
         }
       ];
     };
-
     programs.gaming.enable = true;
-
-    env.desktop = "Hyprland";
 
     system = {
       mainUser = "spector";

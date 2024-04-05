@@ -1,6 +1,6 @@
 { pkgs, osConfig, ... }:
 let
-  cfg = osConfig.modules.hardware.monitors;
+  cfg = osConfig.modules.display.monitors;
 
 in
 {
@@ -116,6 +116,7 @@ in
     input = {
       # focus change on cursor move
       follow_mouse = 1;
+      sensitivity = -0.6;
       accel_profile = "flat";
     };
 
