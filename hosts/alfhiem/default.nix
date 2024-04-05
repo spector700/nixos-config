@@ -17,6 +17,7 @@
     hardware = {
       cpu.type = "amd";
       gpu.type = "nvidia";
+      openrgb.enable = true;
 
       monitors = [
         {
@@ -44,7 +45,7 @@
 
     system = {
       mainUser = "spector";
-      autoLogin = false;
+      autoLogin = true;
 
       networking.optomizeTcp = true;
 
@@ -61,12 +62,6 @@
     printing.enable = true;
   };
 
-  services = {
-    hardware.openrgb = {
-      enable = true;
-      motherboard = "amd";
-    };
-  };
 
   hardware = {
     # Udev rules for vial

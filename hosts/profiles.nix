@@ -24,7 +24,7 @@ in
   # vm profile
   vm = lib.nixosSystem {
     specialArgs = {
-      inherit inputs location;
+      inherit inputs self location;
     };
     # Modules that are used
     modules = [

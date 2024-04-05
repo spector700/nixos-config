@@ -6,7 +6,6 @@
       theme = spicePkgs.themes.blossom;
       injectCss = true;
       overwriteAssets = true;
-      # colorScheme = "dark";
       enabledExtensions = with spicePkgs.extensions; [
         hidePodcasts
         keyboardShortcut

@@ -15,7 +15,7 @@ in
     ./hyprpaper.nix
   ];
 
-  config = mkIf cfg.desktops.hyprland.enable {
+  config = mkIf (cfg.desktop == "Hyprland") {
     home.packages = with pkgs; [
       grimblast
       wl-clipboard

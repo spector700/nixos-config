@@ -7,6 +7,7 @@ in
   imports = [
     ./cpu
     ./gpu
+    ./rgb
   ];
 
   options.modules.hardware = {
