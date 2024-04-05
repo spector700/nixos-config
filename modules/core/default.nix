@@ -28,12 +28,6 @@
     zsh = {
       enable = true;
       autosuggestions.enable = true;
-      syntaxHighlighting = {
-        enable = true;
-        patterns = { "rm -rf *" = "fg=black,bg=red"; };
-        styles = { "alias" = "fg=blue"; };
-        highlighters = [ "main" "brackets" "pattern" ];
-      };
     };
 
     dconf.enable = true;
@@ -46,6 +40,13 @@
   };
 
   environment = {
+    # packages that will be shared across all users and and all systems
+    systemPackages = with pkgs; [
+      git
+      curl
+      wget
+    ];
+
     variables = {
       EDITOR = "nvim";
       VISUAL = "nvim";

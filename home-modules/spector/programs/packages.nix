@@ -3,7 +3,6 @@
     packages = with pkgs; [
       # Terminal Utils
       fastfetch
-      wget
 
       # Video/Audio
       mpv

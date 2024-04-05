@@ -6,7 +6,12 @@
     zsh = {
       enable = true;
       autosuggestion.enable = true;
-      syntaxHighlighting.enable = true;
+      syntaxHighlighting = {
+        enable = true;
+        patterns = { "rm -rf *" = "fg=black,bg=red"; };
+        styles = { "alias" = "fg=blue"; };
+        highlighters = [ "main" "brackets" "pattern" ];
+      };
       autocd = true;
       # enableCompletion = true;
       history = { expireDuplicatesFirst = true; };
