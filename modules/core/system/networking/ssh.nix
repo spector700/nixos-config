@@ -1,17 +1,7 @@
-{ lib, pkgs, inputs, ... }:
 {
-  # downgrade xz
-  system.replaceRuntimeDependencies = [
-    {
-      original = pkgs.xz;
-      replacement = inputs.nixpkgs-staging-next.legacyPackages.${pkgs.system}.xz;
-    }
-  ];
-
   services = {
     openssh = {
-      # disable for xz trojan
-      enable = lib.mkForce false; # local: $ ssh <user>@<ip>
+      enable = true; # local: $ ssh <user>@<ip>
       # generating a key:
       #   - $ ssh-keygen   |  ssh-copy-id <ip/domain>  |  ssh-add
       #   - if ssh-add does not work: $ eval `ssh-agent -s` or eval $(ssh-agent)
