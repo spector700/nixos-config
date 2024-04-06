@@ -8,7 +8,7 @@ in
     ./ssh.nix
   ];
 
-  options.modules.system.networking = {
+  options.modules.networking = {
     optomizeTcp = mkEnableOption "TCP Optimizations";
   };
 

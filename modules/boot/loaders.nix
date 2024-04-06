@@ -2,10 +2,10 @@
 let
   inherit (lib) mkDefault mkIf types mkOption;
 
-  cfg = config.modules.system;
+  cfg = config.modules.boot;
 in
 {
-  options.modules.system.boot = {
+  options.modules.boot = {
     loader = mkOption {
       type = types.enum [ "systemd-boot" ];
       default = "systemd-boot";
@@ -13,7 +13,7 @@ in
     };
   };
 
-  config = mkIf (cfg.boot.loader == "systemd-boot") {
+  config = mkIf (cfg.loader == "systemd-boot") {
     boot.loader = {
       systemd-boot =
         {

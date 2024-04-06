@@ -12,7 +12,7 @@ in
     services.hardware.openrgb.enable = true;
 
     # Link profile
-    home-manager.users.${config.modules.system.mainUser} = {
+    home-manager.users.${config.modules.os.mainUser} = {
       xdg.configFile = {
         "OpenRGB/iceie.orp".source = ./iceie.orp;
       };

@@ -43,14 +43,14 @@
     };
     programs.gaming.enable = true;
 
-    system = {
+    os = {
       mainUser = "spector";
       autoLogin = true;
-
-      networking.optomizeTcp = true;
-
-      boot.enableKernelTweaks = true;
     };
+
+    networking.optomizeTcp = true;
+
+    boot.enableKernelTweaks = true;
   };
 
   local = {
@@ -70,10 +70,10 @@
     openrazer = {
       enable = true;
       mouseBatteryNotifier = false;
-      users = [ "${config.modules.system.mainUser}" ];
+      users = [ "${config.modules.os.mainUser}" ];
     };
   };
 
   # import home.nix for this host
-  home-manager.users.${config.modules.system.mainUser} = import ./home.nix;
+  home-manager.users.${config.modules.os.mainUser} = import ./home.nix;
 }

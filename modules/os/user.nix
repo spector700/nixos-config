@@ -1,19 +1,21 @@
-{ config, lib, ... }:
+{ pkgs, config, lib, ... }:
 let
   inherit (lib) mkOption types optionals;
+  user = config.modules.os.mainUser;
 in
 {
-  imports = [
-    ./boot
-    ./display
-    ./hardware
-    ./networking
-    ./security
-    ./services
-  ];
+  config = {
+    users.users.${user} = {
+      # System User
+      isNormalUser = true;
+      extraGroups = [ "wheel" ] ++ optionals config.networking.networkmanager.enable [ "networkmanager" ];
+      initialPassword = "changeme";
+      shell = pkgs.zsh; # Default shell
+    };
+  };
 
   config.warnings =
-    optionals (config.modules.system.users == [ ]) [
+    optionals (config.modules.os.users == [ ]) [
       ''
         You have not added any users to be supported by your system. You may end up with an unbootable system!
 
@@ -21,10 +23,10 @@ in
       ''
     ];
 
-  options.modules.system = {
+  options.modules.os = {
     mainUser = mkOption {
-      type = types.enum config.modules.system.users;
-      default = builtins.elemAt config.modules.system.users 0;
+      type = types.enum config.modules.os.users;
+      default = builtins.elemAt config.modules.os.users 0;
       description = ''
         The username of the main user for your system.
 

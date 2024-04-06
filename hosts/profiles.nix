@@ -13,8 +13,7 @@ in
     # Modules that are used
     modules = [
       ./alfhiem
-      ../modules/core
-      ../modules/modules.nix
+      ../modules
       ../modules/programs/thunar.nix
       inputs.disko.nixosModules.disko
 
@@ -28,8 +27,7 @@ in
     # Modules that are used
     modules = [
       ./vm
-      ../modules/core
-      ../modules/modules.nix
+      ../modules
 
     ] ++ lib.concatLists [ homeManager ];
   };

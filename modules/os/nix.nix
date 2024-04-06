@@ -1,4 +1,5 @@
 { inputs, location, lib, config, ... }: {
+
   environment.variables.FLAKE = "${location}";
 
   imports = [ inputs.nh.nixosModules.default ];

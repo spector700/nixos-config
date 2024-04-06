@@ -1,10 +1,10 @@
 { config, lib, ... }:
 let
   inherit (lib) mkDefault mkForce optionals mkEnableOption;
-  cfg = config.modules.system;
+  cfg = config.modules.boot;
 in
 {
-  options.modules.system.boot = {
+  options.modules.boot = {
     enableKernelTweaks = mkEnableOption "security and performance related kernel parameters";
   };
 
@@ -26,7 +26,7 @@ in
       efi.canTouchEfiVariables = true;
     };
 
-    kernelParams = optionals cfg.boot.enableKernelTweaks [
+    kernelParams = optionals cfg.enableKernelTweaks [
       # https://en.wikipedia.org/wiki/Kernel_page-table_isolation
       # auto means kernel will automatically decide the pti state
       "pti=auto" # on | off

@@ -24,9 +24,9 @@ in
     # per-user Home Manager configuration
     # the genAttrs function generates an attribute set of users
     # as `user = ./user` where user is picked from a list of
-    # users in modules.system.users
+    # users in modules.os.users
     # the system expects user directories to be found in the present
     # directory, or will exit with directory not found errors
-    users = genAttrs config.modules.system.users (name: ./${name});
+    users = genAttrs config.modules.os.users (name: ./${name});
   };
 }

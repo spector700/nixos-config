@@ -1,7 +1,7 @@
 { config, lib, ... }:
 let
   inherit (lib) mkIf;
-  cfg = config.modules.system.networking;
+  cfg = config.modules.networking;
 in
 {
   config = mkIf cfg.optomizeTcp {

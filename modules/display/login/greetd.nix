@@ -4,7 +4,7 @@ let
   inherit (lib.strings) concatStringsSep;
   inherit (lib.meta) getExe;
 
-  inherit (config.modules) system;
+  inherit (config.modules) os;
   inherit (config.modules) display;
 
   # make desktop session paths available to greetd
@@ -16,7 +16,7 @@ let
 
 
   initialSession = {
-    user = "${system.mainUser}";
+    user = "${os.mainUser}";
     command = "${display.desktop}";
   };
 
@@ -37,7 +37,7 @@ in
   services.greetd = {
     enable = true;
     vt = 2;
-    restart = !system.autoLogin;
+    restart = !os.autoLogin;
 
     # <https://man.sr.ht/~kennylevinsen/greetd/>
     settings = {
@@ -46,7 +46,7 @@ in
       default_session = defaultSession;
 
       # initial session
-      initial_session = mkIf system.autoLogin initialSession;
+      initial_session = mkIf os.autoLogin initialSession;
     };
   };
 
