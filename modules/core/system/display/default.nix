@@ -6,6 +6,7 @@ in
 {
   imports = [
     ./login
+    ./graphical.nix
     ./monitors.nix
     ./wayland.nix
   ];

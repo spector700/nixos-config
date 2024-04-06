@@ -14,7 +14,6 @@ in
     modules = [
       ./alfhiem
       ../modules/core
-      ../modules/desktop.nix
       ../modules/modules.nix
       ../modules/programs/thunar.nix
       inputs.disko.nixosModules.disko

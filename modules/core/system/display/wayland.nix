@@ -36,6 +36,11 @@ in
           pkgs.xdg-desktop-portal-hyprland
         ];
       };
+
+      security = {
+        # allow wayland lockers to unlock the screen
+        pam.services.hyprlock.text = "auth include login";
+      };
     })
   ];
 }
