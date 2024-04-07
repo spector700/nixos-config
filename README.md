@@ -29,7 +29,7 @@ wget -O https://channels.nixos.org/nixos-23.05/latest-nixos-minimal-x86_64-linux
 - Format Partitions with Disko:
 
 ```bash
-sudo nix --experimental-features "nix-command flakes" run github:nix-community/disko -- --mode disko --flake github:spector700/nixos-config
+sudo nix --experimental-features "nix-command flakes" run github:nix-community/disko -- --mode disko --flake github:spector700/nixos-config#alfhiem
 ```
 
 - Install Dotfiles Using Flake
