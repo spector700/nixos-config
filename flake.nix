@@ -25,37 +25,49 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    matugen.url = "github:InioX/matugen";
-    dev-assistant.url = "github:spector700/DevAssistant";
-    Akari.url = "github:spector700/Akari";
-
+    # app launcher
     anyrun = {
       url = "github:Kirottu/anyrun";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # declareable filesystem
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # pretty nixos rebuild
     nh = {
       url = "github:viperML/nh";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # database for comma
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # custom spotify
     spicetify = {
       url = "github:/Gerg-L/spicetify-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # persist files on boot
+    impermanence.url = "github:nix-community/impermanence";
+    # get colors from wallpaper
+    matugen.url = "github:InioX/matugen";
+    # create nix project automaticly
+    dev-assistant.url = "github:spector700/DevAssistant";
+    # my neovim flake
+    Akari.url = "github:spector700/Akari";
+    # gaming tweaks and addons
     gaming.url = "github:fufexan/nix-gaming";
+    # bar
     ags.url = "github:Aylur/ags";
+
   };
 
   outputs = inputs@{ self, nixpkgs, home-manager, ... }:
