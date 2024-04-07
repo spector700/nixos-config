@@ -15,7 +15,6 @@ in
       ./alfhiem
       ../modules
       ../modules/programs/thunar.nix
-      inputs.disko.nixosModules.disko
 
     ] ++ lib.concatLists [ homeManager ];
   };

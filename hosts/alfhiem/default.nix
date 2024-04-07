@@ -1,9 +1,11 @@
-{ pkgs, config, ... }:
+{ pkgs, config, inputs, ... }:
 {
   imports = [
     ./hardware-configuration.nix
-    ./disks.nix
+    inputs.disko.nixosModules.disko
+    (import ../disks/lvm-btrfs.nix { disks = [ "dev/sda" ]; })
   ];
+
 
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
@@ -50,7 +52,10 @@
 
     networking.optomizeTcp = true;
 
-    boot.enableKernelTweaks = true;
+    boot = {
+      enableKernelTweaks = true;
+      impermanence.enable = true;
+    };
   };
 
   local = {
