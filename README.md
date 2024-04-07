@@ -17,7 +17,7 @@
 - **Neovim** • [Akari](https://github.com/spector700/Akari)
 
 
-## 🌼 <samp>INSTALLATION (NixOS)</samp>
+## <samp>INSTALLATION (NixOS)</samp>
 
 - Download ISO.
 ```bash
@@ -26,73 +26,20 @@ wget -O https://channels.nixos.org/nixos-23.05/latest-nixos-minimal-x86_64-linux
 
 - Boot Into the Installer.
 
-- Switch to Root: `sudo -i`
-
-- Partitions:
-
-*I prefer to use 1GB on the EFI partition. Specifically because the 'generations' list may become very long, and to avoid overloading the partition.*
+- Format Partitions with Disko:
 
 ```bash
-# Replace nvme with your disk partition
-gdisk /dev/nvme0n1
-```
-	- `o` (create new partition table)
-	- `n` (add partition, 512M, type ef00 EFI)
-	- `n` (add partition, remaining space, type 8300 Linux)
-	`w` (write partition table and exit)
-
-- Format Partitions:
-
-```bash
-mkfs.fat -F 32 -n EFI /dev/nvme0n1p1
-mkfs.xfs -L NIXOS /dev/nvme0n1p2
-```
-
-- Mount Partitions:
-
-```bash
-mount /dev/disk/by-label/NIXOS /mnt
-mkdir -p /mnt/boot
-mount /dev/disk/by-label/EFI /mnt/boot
-```
-
-- Enable nixFlakes
-
-```bash
-nix-shell -p nixFlakes git
-```
-
-- Clone my Dotfiles 
-
-```bash 
-git clone --depth 1 https://github.com/spector700/nixos-config /mnt/etc/nixos
-```
-
-- Generate your Own Nix Hardware Settings:
-### ⚠ <sup><sub><samp>DON'T FORGET IT</samp></sub></sup>
-
-```bash
-sudo nixos-generate-config --dir --force /mnt/etc/nixos/hosts/desktop
-
-# Remove configuration.nix 
-rm -rf /mnt/etc/nixos/hosts/desktop/configuration.nix
+sudo nix --experimental-features "nix-command flakes" run github:nix-community/disko -- --mode disko --flake github:spector700/nixos-config
 ```
 
 - Install Dotfiles Using Flake
 
 ```bash
-# Move to folder
-cd mnt/etc/nixos/
-
-# Install
-nixos-install --flake .#desktop
+nixos-install --flake github:spector700/nixos-config.#alfhiem
 ```
 
 - Reboot
 
-### 🐙  <sup><sub><samp>Remember <strong>Default</strong> User & password are: nixos</samp></sub></sup>
-
-- Change Default password for User.
 
 # 💾 Inspiration
 
