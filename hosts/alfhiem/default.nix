@@ -3,7 +3,7 @@
   imports = [
     ./hardware-configuration.nix
     inputs.disko.nixosModules.disko
-    (import ../disks/lvm-btrfs.nix { disks = [ "dev/sda" ]; })
+    (import ../disks/lvm-btrfs.nix { disks = [ "/dev/sda" ]; })
   ];
 
 
