@@ -35,7 +35,7 @@ sudo nix --experimental-features "nix-command flakes" run github:nix-community/d
 - Install Dotfiles Using Flake
 
 ```bash
-nixos-install --flake github:spector700/nixos-config.#alfhiem
+sudo nixos-install --flake github:spector700/nixos-config#alfhiem --no-write-lock-file
 ```
 
 - Reboot
