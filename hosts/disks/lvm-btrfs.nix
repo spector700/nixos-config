@@ -3,7 +3,7 @@
   disko.devices = {
     disk.main = {
       type = "disk";
-      device = builtins.head disks;
+      device = builtins.elemAt disks 0;
       content = {
         type = "gpt";
         partitions = {
