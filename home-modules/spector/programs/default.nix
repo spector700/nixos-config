@@ -1,5 +1,6 @@
 {
   imports = [
+    ./browsers
     ./rofi
     ./vesktop
     ./kitty.nix
@@ -11,8 +12,6 @@
   ];
 
   programs = {
-    firefox.enable = true;
-    # brave.enable = true;
     vscode = {
       enable = true;
       enableExtensionUpdateCheck = true;

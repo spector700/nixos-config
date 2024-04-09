@@ -14,7 +14,7 @@
         engines = {
           "Home Manager NixOs" = {
             urls = [{
-              template = "https://mipmip.github.io/home-manager-option-search/";
+              template = "https://home-manager-options.extranix.com";
               params = [
                 { name = "query"; value = "{searchTerms}"; }
               ];
@@ -39,6 +39,11 @@
             iconUpdateURL = "https://nixos.wiki/favicon.png";
             updateInterval = 24 * 60 * 60 * 1000; # every day
             definedAliases = [ "@nw" ];
+          };
+          "Brave" = {
+            urls = [{ template = "https://search.brave.com/search?q={searchTerms}"; }];
+            iconUpdateURL = "https://upload.wikimedia.org/wikipedia/commons/5/51/Brave_icon_lionface.png";
+            updateInterval = 24 * 60 * 60 * 1000; # every day
           };
         };
       };
