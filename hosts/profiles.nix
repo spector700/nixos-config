@@ -14,7 +14,6 @@ in
     modules = [
       ./alfhiem
       ../modules
-      ../modules/programs/thunar.nix
 
     ] ++ lib.concatLists [ homeManager ];
   };

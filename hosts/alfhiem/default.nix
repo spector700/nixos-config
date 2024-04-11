@@ -48,7 +48,11 @@
         }
       ];
     };
-    programs.gaming.enable = true;
+
+    programs = {
+      gaming.enable = true;
+      thunar.enable = true;
+    };
 
     os = {
       mainUser = "spector";
