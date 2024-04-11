@@ -6,7 +6,6 @@
     (import ../disks/lvm-btrfs.nix { disks = [ "/dev/sda" ]; })
   ];
 
-
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
     #For openrgb with gigabyte motherboard
@@ -14,11 +13,6 @@
   };
 
   networking.hostName = "alfhiem";
-
-  services.xserver.libinput = {
-    enable = true;
-    mouse.accelProfile = "flat";
-  };
 
   modules = {
     hardware = {
