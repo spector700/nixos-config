@@ -53,6 +53,7 @@ const NotificationList = () => {
 
                 const n = notifications.getNotification(id)!
                 const w = Notification(n)
+
                 map.set(id, w)
                 box.children = [w, ...box.children]
             }

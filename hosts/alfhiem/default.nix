@@ -26,6 +26,8 @@
     };
 
     display = {
+      gpuAcceleration.enable = true;
+
       desktop = "Hyprland";
       monitors = [
         {
@@ -60,13 +62,6 @@
       impermanence.enable = true;
     };
   };
-
-  local = {
-    hardware = {
-      gpuAcceleration.enable = true;
-    };
-  };
-
 
   hardware = {
     # Udev rules for vial

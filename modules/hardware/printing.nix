@@ -5,8 +5,9 @@ let
 in
 {
   options.modules.hardware.printing = {
-    enable = mkEnableOption "";
+    enable = mkEnableOption "Enable Printing";
   };
+
   config = mkIf cfg.enable {
     services = {
       printing = {

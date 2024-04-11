@@ -8,7 +8,6 @@
     ./programs
     ./security
     ./services
-    ./hardware.nix
   ];
 
 }
