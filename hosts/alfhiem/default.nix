@@ -15,11 +15,18 @@
 
   networking.hostName = "alfhiem";
 
+  services.xserver.libinput = {
+    enable = true;
+    mouse.accelProfile = "flat";
+  };
+
   modules = {
     hardware = {
       cpu.type = "amd";
       gpu.type = "nvidia";
       openrgb.enable = true;
+
+      printing.enable = true;
     };
 
     display = {
@@ -64,7 +71,6 @@
       sound.enable = true;
       bluetooth.enable = true;
     };
-    printing.enable = true;
   };
 
 

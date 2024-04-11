@@ -7,6 +7,7 @@ in
     ./cpu
     ./gpu
     ./rgb
+    ./printing.nix
   ];
 
   options.modules.hardware = {

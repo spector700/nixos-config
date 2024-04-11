@@ -9,7 +9,6 @@
     ./security
     ./services
     ./hardware.nix
-    ./printing.nix
   ];
 
 }
