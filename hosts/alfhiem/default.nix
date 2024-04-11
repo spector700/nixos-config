@@ -24,6 +24,7 @@
     hardware = {
       cpu.type = "amd";
       gpu.type = "nvidia";
+      sound.enable = true;
       openrgb.enable = true;
 
       bluetooth.enable = true;
@@ -69,7 +70,6 @@
   local = {
     hardware = {
       gpuAcceleration.enable = true;
-      sound.enable = true;
     };
   };
 

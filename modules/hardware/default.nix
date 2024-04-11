@@ -9,6 +9,7 @@ in
     ./rgb
     ./bluetooth.nix
     ./printing.nix
+    ./sound.nix
   ];
 
   options.modules.hardware = {

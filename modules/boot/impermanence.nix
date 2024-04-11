@@ -111,7 +111,6 @@ in
           "/var/lib/flatpak"
           "/var/lib/libvirt"
           "/var/lib/nixos"
-          "/var/lib/pipewire"
           "/var/lib/systemd/coredump"
           "/var/cache/tailscale"
           "/var/lib/tailscale"
