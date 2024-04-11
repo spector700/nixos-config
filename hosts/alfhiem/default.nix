@@ -26,6 +26,7 @@
       gpu.type = "nvidia";
       openrgb.enable = true;
 
+      bluetooth.enable = true;
       printing.enable = true;
     };
 
@@ -69,7 +70,6 @@
     hardware = {
       gpuAcceleration.enable = true;
       sound.enable = true;
-      bluetooth.enable = true;
     };
   };
 

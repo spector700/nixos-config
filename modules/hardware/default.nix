@@ -7,6 +7,7 @@ in
     ./cpu
     ./gpu
     ./rgb
+    ./bluetooth.nix
     ./printing.nix
   ];
 

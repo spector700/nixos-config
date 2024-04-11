@@ -9,7 +9,6 @@ in
   options.local.hardware = {
     gpuAcceleration.enable = lib.mkEnableOption "";
     sound.enable = lib.mkEnableOption "";
-    bluetooth.enable = lib.mkEnableOption "";
   };
   config = lib.mkMerge [
     (lib.mkIf cfg.gpuAcceleration.enable {
@@ -38,10 +37,6 @@ in
         jack.enable = false;
         lowLatency.enable = true;
       };
-    })
-    (lib.mkIf cfg.bluetooth.enable {
-      hardware.bluetooth.enable = true;
-      services.blueman.enable = true;
     })
   ];
 }

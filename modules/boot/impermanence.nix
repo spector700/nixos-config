@@ -110,7 +110,6 @@ in
           "/var/db/sudo"
           "/var/lib/flatpak"
           "/var/lib/libvirt"
-          "/var/lib/bluetooth"
           "/var/lib/nixos"
           "/var/lib/pipewire"
           "/var/lib/systemd/coredump"
