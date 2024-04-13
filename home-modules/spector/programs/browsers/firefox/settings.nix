@@ -1,6 +1,8 @@
 {
   # GENERAL
   "content.notify.interval" = 100000;
+  # RESTORE SESSION
+  "browser.startup.page" = 3;
   # GFX
   "gfx.canvas.accelerated.cache-items" = 4096;
   "gfx.canvas.accelerated.cache-size" = 512;
@@ -191,6 +193,7 @@
   "security.ssl.require_safe_negotiation" = true;
 
   # Smooth Scroll
+  "general.autoScroll" = true;
   "general.smoothScroll" = true;
   "general.smoothScroll.lines.durationMaxMS" = 125;
   "general.smoothScroll.lines.durationMinMS" = 125;
