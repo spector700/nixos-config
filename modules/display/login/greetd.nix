@@ -8,11 +8,11 @@ let
   inherit (config.modules) display;
 
   # make desktop session paths available to greetd
-  sessionData = config.services.xserver.displayManager.sessionData.desktops;
-  sessionPaths = concatStringsSep ":" [
-    "${sessionData}/share/xsessions"
-    "${sessionData}/share/wayland-sessions"
-  ];
+  # sessionData = config.services.displayManager.sessionData.desktops;
+  # sessionPaths = concatStringsSep ":" [
+  #   "${sessionData}/share/xsessions"
+  #   "${sessionData}/share/wayland-sessions"
+  # ];
 
 
   initialSession = {
@@ -28,7 +28,7 @@ let
       "--remember"
       "--remember-user-session"
       "--asterisks"
-      "--sessions '${sessionPaths}'"
+      "--sessions '${display.desktop}'"
     ];
   };
 in

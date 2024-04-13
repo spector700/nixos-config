@@ -24,7 +24,7 @@ in
 
     # Session for greetd
     (mkIf (cfg.desktop == "Hyprland") {
-      services.xserver.displayManager.sessionPackages = [ pkgs.hyprland ];
+      services.displayManager.sessionPackages = [ pkgs.hyprland ];
 
       xdg.portal = {
         enable = true;
@@ -32,15 +32,11 @@ in
           common.default = [ "hyprland" "gtk" ];
         };
 
-        extraPortals = [
-          pkgs.xdg-desktop-portal-hyprland
-        ];
+        extraPortals = [ pkgs.xdg-desktop-portal-hyprland ];
       };
 
-      security = {
-        # allow wayland lockers to unlock the screen
-        pam.services.hyprlock.text = "auth include login";
-      };
+      # allow wayland lockers to unlock the screen
+      security.pam.services.hyprlock.text = "auth include login";
     })
   ];
 }
