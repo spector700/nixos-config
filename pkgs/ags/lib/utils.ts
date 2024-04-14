@@ -65,15 +65,6 @@ export function range(length: number, start = 1) {
 }
 
 /**
- * promisified timeout
- */
-export function wait<T>(ms: number, callback: () => T): Promise<T> {
-    return new Promise(resolve => Utils.timeout(ms, () => {
-        resolve(callback())
-    }))
-}
-
-/**
  * @returns true if all of the `bins` are found
  */
 export function dependencies(...bins: string[]) {
@@ -104,7 +95,6 @@ export function launchApp(app: Application) {
  * to use with drag and drop
  */
 export function createSurfaceFromWidget(widget: Gtk.Widget) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const cairo = imports.gi.cairo as any
     const alloc = widget.get_allocation()
     const surface = new cairo.ImageSurface(

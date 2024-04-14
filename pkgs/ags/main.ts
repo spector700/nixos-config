@@ -1,5 +1,5 @@
 import "lib/session"
-import "lib/init"
+import init from "lib/init"
 import options from "options"
 import Bar from "widget/bar/Bar"
 import Applauncher from "widget/applauncher/Applauncher"
@@ -12,7 +12,6 @@ import SettingsDialog from "widget/settings/SettingsDialog"
 import { forMonitors } from "lib/utils"
 import { setupQuickSettings } from "widget/quicksettings/QuickSettings"
 import { setupDateMenu } from "widget/datemenu/DateMenu"
-import { init } from "lib/init"
 import { setupAiWindowSettings } from "widget/aiwindow/AiWindow"
 
 App.config({

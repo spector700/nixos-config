@@ -6,7 +6,7 @@ import gtk from "./gtk"
 import lowBattery from "./battery"
 import swww from "./swww"
 
-export async function init() {
+export default function init() {
     try {
         gtk()
         css()

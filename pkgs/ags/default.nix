@@ -5,6 +5,8 @@
 , writeShellScript
 , cage
 , swww
+, wf-recorder
+, wl-clipboard
 , bun
 , dart-sass
 , fd
@@ -34,8 +36,8 @@ let
     # swww
     inputs.matugen.packages.${system}.default
     # slurp
-    # wf-recorder
-    # wl-clipboard
+    wf-recorder
+    wl-clipboard
     # wayshot
     # swappy
     hyprpicker

@@ -15,18 +15,13 @@ ignorePatterns:
 plugins:
   - "@typescript-eslint"
 rules:
-  "@typescript-eslint/ban-ts-comment":
-    - "off"
   "@typescript-eslint/no-non-null-assertion":
     - "off"
-  # "@typescript-eslint/no-explicit-any":
-  #   - "off"
   "@typescript-eslint/no-unused-vars":
     - error
     - varsIgnorePattern: (^unused|_$)
       argsIgnorePattern: ^(unused|_)
-  "@typescript-eslint/no-empty-interface":
-    - "off"
+  "@typescript-eslint/no-empty-interface": "off"
 
   arrow-parens:
     - error
@@ -87,14 +82,15 @@ rules:
   max-len:
     - error
     - code: 100
-
   func-call-spacing:
     - error
   array-bracket-spacing:
     - error
   space-before-function-paren:
     - error
-    - never
+    - anonymous: never
+      named: never
+      asyncArrow: ignore
   space-before-blocks:
     - error
   key-spacing:
@@ -102,3 +98,28 @@ rules:
   object-curly-spacing:
     - error
     - always
+globals:
+  Widget: readonly
+  Utils: readonly
+  App: readonly
+  Variable: readonly
+  Service: readonly
+  pkg: readonly
+  ARGV: readonly
+  Debugger: readonly
+  GIRepositoryGType: readonly
+  globalThis: readonly
+  imports: readonly
+  Intl: readonly
+  log: readonly
+  logError: readonly
+  print: readonly
+  printerr: readonly
+  window: readonly
+  TextEncoder: readonly
+  TextDecoder: readonly
+  console: readonly
+  setTimeout: readonly
+  setInterval: readonly
+  clearTimeout: readonly
+  clearInterval: readonly
