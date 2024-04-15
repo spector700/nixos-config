@@ -19,7 +19,7 @@ in
         "${m.name},${resolution},${m.position},${m.scale},${m.rotation}")
       cfg;
 
-    workspace = builtins.concatMap (m: map (x: "${m.name},${toString x}") m.workspaces) cfg;
+    workspace = builtins.concatMap (m: map (x: "${toString x},monitor:${m.name}") m.workspaces) cfg;
 
     layerrule =
       let
@@ -75,7 +75,7 @@ in
       "wl-paste --watch cliphist store"
       "${pkgs.wlsunset}/bin/wlsunset -l 32.7 -L -96.9"
       "${pkgs.blueman}/bin/blueman-applet"
-      "sleep 7 && ${pkgs.vesktop}/bin/vesktop"
+      "sleep 8 && ${pkgs.vesktop}/bin/vesktop"
       "spotify"
     ];
 
