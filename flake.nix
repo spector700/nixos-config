@@ -31,15 +31,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # declareable filesystem
-    disko = {
-      url = "github:nix-community/disko";
+    sops-nix = {
+      url = "github:mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # pretty nixos rebuild
-    nh = {
-      url = "github:viperML/nh";
+    # declareable filesystem
+    disko = {
+      url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
