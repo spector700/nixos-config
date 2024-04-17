@@ -92,7 +92,7 @@ const options = mkOptions(OPTIONS, {
                 colored: opt(true),
                 icon: opt("nixos"),
             },
-            action: opt(() => App.toggleWindow("applauncher")),
+            action: opt(() => App.toggleWindow("launcher")),
         },
         date: {
             format: opt("%H:%M • %A %e"),
@@ -128,7 +128,7 @@ const options = mkOptions(OPTIONS, {
         },
     },
 
-    applauncher: {
+    launcher: {
         iconSize: opt(62),
         width: opt(400),
         margin: opt(80),

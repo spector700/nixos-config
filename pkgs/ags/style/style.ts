@@ -92,7 +92,6 @@ async function resetCss() {
 
         App.applyCss(css, true)
 
-
         // Seperate css file for the WebView highlight
         const highlightfile = `${App.configDir}/widget/aiwindow/highlight.scss`
         // Combine vars and highlightcss file
