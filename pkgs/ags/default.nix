@@ -1,22 +1,22 @@
-{ inputs
-, system
-, stdenv
-, buildNpmPackage
-, writeShellScript
-, cage
-, swww
-, wf-recorder
-, wl-clipboard
-, bun
-, dart-sass
-, fd
-, hyprpicker
-, pavucontrol
-, networkmanager
-, gtk3
-, brightnessctl
-, accountsservice
-, webkitgtk_4_1
+{
+  inputs,
+  system,
+  stdenv,
+  buildNpmPackage,
+  writeShellScript,
+  cage,
+  wf-recorder,
+  wl-clipboard,
+  bun,
+  dart-sass,
+  fd,
+  hyprpicker,
+  pavucontrol,
+  networkmanager,
+  gtk3,
+  brightnessctl,
+  accountsservice,
+  webkitgtk_4_1,
 }:
 let
   ags = inputs.ags.packages.${system}.default.override {
@@ -33,7 +33,6 @@ let
     dart-sass
     fd
     brightnessctl
-    # swww
     inputs.matugen.packages.${system}.default
     # slurp
     wf-recorder
@@ -95,4 +94,3 @@ stdenv.mkDerivation {
     cp ${greeter}  $out/bin/greeter
   '';
 }
-

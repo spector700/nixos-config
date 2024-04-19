@@ -1,6 +1,17 @@
-{ lib, config, inputs, pkgs, ... }:
+{
+  lib,
+  config,
+  inputs,
+  pkgs,
+  ...
+}:
 let
-  inherit (lib) mkOption types mkIf mkAfter;
+  inherit (lib)
+    mkOption
+    types
+    mkIf
+    mkAfter
+    ;
   cfg = config.modules.boot.impermanence;
 in
 {
@@ -115,11 +126,8 @@ in
           "/var/cache/tailscale"
           "/var/lib/tailscale"
         ];
-        files = [
-          "/etc/machine-id"
-        ];
+        files = [ "/etc/machine-id" ];
       };
     };
   };
 }
-

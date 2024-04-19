@@ -13,7 +13,10 @@ in
 
   options.modules.display = {
     desktop = mkOption {
-      type = types.enum [ "none" "Hyprland" ];
+      type = types.enum [
+        "none"
+        "Hyprland"
+      ];
       default = "none";
       description = ''
         The desktop environment to be used.

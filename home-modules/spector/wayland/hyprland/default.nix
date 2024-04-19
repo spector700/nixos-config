@@ -1,23 +1,20 @@
 { pkgs, osConfig, ... }:
 let
   cfg = osConfig.modules.display.monitors;
-
 in
 {
-  imports = [
-    ./binds.nix
-  ];
+  imports = [ ./binds.nix ];
 
   wayland.windowManager.hyprland.settings = {
     "$mod" = "SUPER";
 
-    monitor = map
-      (m:
-        let
-          resolution = "${m.resolution}@${toString m.refreshRate}";
-        in
-        "${m.name},${resolution},${m.position},${m.scale},${m.rotation}")
-      cfg;
+    monitor = map (
+      m:
+      let
+        resolution = "${m.resolution}@${toString m.refreshRate}";
+      in
+      "${m.name},${resolution},${m.position},${m.scale},${m.rotation}"
+    ) cfg;
 
     workspace = builtins.concatMap (m: map (x: "${toString x},monitor:${m.name}") m.workspaces) cfg;
 
@@ -67,7 +64,6 @@ in
       # Opacity
       "opacity 0.94 0.94,class:^(kitty|thunar|code(.*))$"
     ];
-
 
     exec-once = [
       "koshi"

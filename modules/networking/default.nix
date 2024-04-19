@@ -12,7 +12,6 @@ in
     optomizeTcp = mkEnableOption "TCP Optimizations";
   };
 
-
   config = {
     networking = {
       networkmanager.enable = true;

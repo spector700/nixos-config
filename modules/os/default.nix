@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   # configuration used by all hosts
 
   imports = [
@@ -27,7 +28,10 @@
 
   console = {
     font = "ter-powerline-v18n";
-    packages = with pkgs;[ terminus_font powerline-fonts ];
+    packages = with pkgs; [
+      terminus_font
+      powerline-fonts
+    ];
     keyMap = "us";
   };
 

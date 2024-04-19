@@ -3,7 +3,9 @@
   programs = {
     kitty = {
       enable = true;
-      font = { name = "JetBrainsMono Nerd Font"; };
+      font = {
+        name = "JetBrainsMono Nerd Font";
+      };
       shellIntegration.enableZshIntegration = true;
 
       theme = "Catppuccin-Mocha";

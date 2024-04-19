@@ -1,6 +1,11 @@
 { config, lib, ... }:
 let
-  inherit (lib) mkDefault mkIf types mkOption;
+  inherit (lib)
+    mkDefault
+    mkIf
+    types
+    mkOption
+    ;
 
   cfg = config.modules.boot;
 in
@@ -15,16 +20,15 @@ in
 
   config = mkIf (cfg.loader == "systemd-boot") {
     boot.loader = {
-      systemd-boot =
-        {
-          enable = mkDefault true;
-          configurationLimit = 20;
-          consoleMode = mkDefault "max"; # the default is "keep", can be overriden per host if need be
+      systemd-boot = {
+        enable = mkDefault true;
+        configurationLimit = 20;
+        consoleMode = mkDefault "max"; # the default is "keep", can be overriden per host if need be
 
-          # Fix a security hole in place for backwards compatibility. See desc in
-          # nixpkgs/nixos/modules/system/boot/loader/systemd-boot/systemd-boot.nix
-          editor = false;
-        };
+        # Fix a security hole in place for backwards compatibility. See desc in
+        # nixpkgs/nixos/modules/system/boot/loader/systemd-boot/systemd-boot.nix
+        editor = false;
+      };
     };
   };
 }

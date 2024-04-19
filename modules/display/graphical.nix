@@ -1,4 +1,10 @@
-{ pkgs, lib, lib', config, ... }:
+{
+  pkgs,
+  lib,
+  lib',
+  config,
+  ...
+}:
 let
   inherit (lib) mkEnableOption mkIf mkMerge;
   cfg = config.modules.display;
@@ -28,7 +34,10 @@ in
           roboto
           # nerdfonts
           (nerdfonts.override {
-            fonts = [ "FiraCode" "JetBrainsMono" ];
+            fonts = [
+              "FiraCode"
+              "JetBrainsMono"
+            ];
           })
         ];
         # causes more issues than it solves
@@ -65,8 +74,7 @@ in
         after = [ "graphical-session.target" ];
         serviceConfig = {
           Type = "simple";
-          ExecStart =
-            "${pkgs.libsForQt5.polkit-kde-agent}/libexec/polkit-kde-authentication-agent-1";
+          ExecStart = "${pkgs.libsForQt5.polkit-kde-agent}/libexec/polkit-kde-authentication-agent-1";
           Restart = "on-failure";
           RestartSec = 1;
           TimeoutStopSec = 10;

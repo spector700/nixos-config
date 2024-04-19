@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   inherit (lib.modules) mkIf;
   inherit (lib.strings) concatStringsSep;
@@ -13,7 +18,6 @@ let
   #   "${sessionData}/share/xsessions"
   #   "${sessionData}/share/wayland-sessions"
   # ];
-
 
   initialSession = {
     user = "${os.mainUser}";

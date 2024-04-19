@@ -1,3 +1,1 @@
-{
-  theme.wallpaper = ../../home-modules/spector/themes/wallpaper;
-}
+{ theme.wallpaper = ../../home-modules/spector/themes/wallpaper; }

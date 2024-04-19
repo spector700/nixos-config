@@ -1,8 +1,6 @@
 { lib, ... }:
 {
-  imports = [
-    ./colorscheme.nix
-  ];
+  imports = [ ./colorscheme.nix ];
 
   options.theme = {
     name = lib.mkOption {

@@ -5,7 +5,14 @@ in
 {
   options.modules = {
     host = mkOption {
-      type = types.enum [ "laptop" "desktop" "server" "hybrid" "lite" "vm" ];
+      type = types.enum [
+        "laptop"
+        "desktop"
+        "server"
+        "hybrid"
+        "lite"
+        "vm"
+      ];
       default = "";
       description = ''
         The type/purpose of the device that will be used within the rest of the configuration.

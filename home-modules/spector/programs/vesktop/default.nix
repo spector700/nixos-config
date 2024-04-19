@@ -1,8 +1,7 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
 
-  home.packages = with pkgs; [
-    vesktop
-  ];
+  home.packages = with pkgs; [ vesktop ];
 
   xdg.configFile = {
     "vesktop/themes/Catppuccin.theme.css".source = ./theme.css;

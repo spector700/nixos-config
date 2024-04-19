@@ -1,8 +1,7 @@
 # Neovim
 #
-{ inputs, pkgs, ... }: {
+{ inputs, pkgs, ... }:
+{
 
-  home.packages = with pkgs; [
-    inputs.Akari.packages.${system}.default
-  ];
+  home.packages = with pkgs; [ inputs.Akari.packages.${system}.default ];
 }

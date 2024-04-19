@@ -1,4 +1,5 @@
-{ pkgs, lib, ... }: {
+{ pkgs, lib, ... }:
+{
 
   # Rename and delete to old/big log files
   services.logrotate.settings.header = {

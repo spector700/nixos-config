@@ -1,6 +1,11 @@
 { config, lib, ... }:
 let
-  inherit (lib) mkDefault mkForce optionals mkEnableOption;
+  inherit (lib)
+    mkDefault
+    mkForce
+    optionals
+    mkEnableOption
+    ;
   cfg = config.modules.boot;
 in
 {

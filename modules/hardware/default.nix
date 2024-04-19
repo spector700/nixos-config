@@ -16,7 +16,15 @@ in
     # the type of cpu your system has - vm and regular cpus currently do not differ
     cpu = {
       type = mkOption {
-        type = with types; nullOr (enum [ "pi" "intel" "vm-intel" "amd" "vm-amd" ]);
+        type =
+          with types;
+          nullOr (enum [
+            "pi"
+            "intel"
+            "vm-intel"
+            "amd"
+            "vm-amd"
+          ]);
         default = null;
         description = ''
           The manifaturer/type of the primary system CPU.
@@ -45,7 +53,16 @@ in
 
     gpu = {
       type = mkOption {
-        type = with types; nullOr (enum [ "pi" "amd" "intel" "nvidia" "hybrid-nv" "hybrid-amd" ]);
+        type =
+          with types;
+          nullOr (enum [
+            "pi"
+            "amd"
+            "intel"
+            "nvidia"
+            "hybrid-nv"
+            "hybrid-amd"
+          ]);
         default = null;
         description = ''
           The manifaturer/type of the primary system GPU. 

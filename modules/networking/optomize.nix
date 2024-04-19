@@ -6,7 +6,10 @@ in
 {
   config = mkIf cfg.optomizeTcp {
     boot = {
-      kernelModules = [ "tls" "tcp_bbr" ];
+      kernelModules = [
+        "tls"
+        "tcp_bbr"
+      ];
       kernel.sysctl = {
         ## TCP hardening
         # Prevent bogus ICMP errors from filling up logs.

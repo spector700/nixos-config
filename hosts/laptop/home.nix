@@ -39,9 +39,16 @@ in
         height = 37;
         gtk-layer-shell = true;
 
-        modules-left =
-          [ "custom/launcher" "hyprland/workspaces" "hyprland/window" ];
-        modules-center = [ "custom/l_end" "clock" "custom/r_end" ];
+        modules-left = [
+          "custom/launcher"
+          "hyprland/workspaces"
+          "hyprland/window"
+        ];
+        modules-center = [
+          "custom/l_end"
+          "clock"
+          "custom/r_end"
+        ];
         modules-right = [
           "cpu"
           "memory"
@@ -59,7 +66,10 @@ in
         "backlight" = {
           device = "intel_backlight";
           format = "{percent}% <span font='11'>{icon}</span>";
-          format-icons = [ "" "" ];
+          format-icons = [
+            ""
+            ""
+          ];
           on-scroll-down = "${pkgs.light}/bin/light -U 5";
           on-scroll-up = "${pkgs.light}/bin/light -A 5";
         };
@@ -71,7 +81,13 @@ in
           };
           format = "{capacity}% <span font='11'>{icon}</span>";
           format-charging = "{capacity}% <span font='11'></span>";
-          format-icons = [ "" "" "" "" "" ];
+          format-icons = [
+            ""
+            ""
+            ""
+            ""
+            ""
+          ];
           max-length = 25;
         };
       };
@@ -91,9 +107,11 @@ in
         command = "${pkgs.swaylock-effects}/bin/swaylock";
       }
     ];
-    timeouts = [{
-      timeout = 400;
-      command = suspendScript.outPath;
-    }];
+    timeouts = [
+      {
+        timeout = 400;
+        command = suspendScript.outPath;
+      }
+    ];
   };
 }

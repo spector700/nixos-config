@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   inherit (lib) mkMerge mkIf optionalString;
 
@@ -29,7 +34,10 @@ in
       xdg.portal = {
         enable = true;
         config = {
-          common.default = [ "hyprland" "gtk" ];
+          common.default = [
+            "hyprland"
+            "gtk"
+          ];
         };
 
         extraPortals = [ pkgs.xdg-desktop-portal-hyprland ];

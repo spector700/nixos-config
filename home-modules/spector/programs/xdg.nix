@@ -5,17 +5,32 @@ let
   videoPlayer = [ "io.github.celluloid_player.Celluloid" ];
   audioPlayer = [ "io.bassi.Amberol" ];
 
-  xdgAssociations = type: program: list:
-    builtins.listToAttrs (map
-      (e: {
+  xdgAssociations =
+    type: program: list:
+    builtins.listToAttrs (
+      map (e: {
         name = "${type}/${e}";
         value = program;
-      })
-      list);
+      }) list
+    );
 
-  image = xdgAssociations "image" imageViewer [ "png" "svg" "jpeg" "gif" ];
-  video = xdgAssociations "video" videoPlayer [ "mp4" "avi" "mkv" ];
-  audio = xdgAssociations "audio" audioPlayer [ "mp3" "flac" "wav" "aac" ];
+  image = xdgAssociations "image" imageViewer [
+    "png"
+    "svg"
+    "jpeg"
+    "gif"
+  ];
+  video = xdgAssociations "video" videoPlayer [
+    "mp4"
+    "avi"
+    "mkv"
+  ];
+  audio = xdgAssociations "audio" audioPlayer [
+    "mp3"
+    "flac"
+    "wav"
+    "aac"
+  ];
   browserTypes =
     (xdgAssociations "application" browser [
       "json"
@@ -34,17 +49,19 @@ let
     ]);
 
   # XDG MIME types
-  associations = builtins.mapAttrs (_: v: (map (e: "${e}.desktop") v)) ({
-    "application/pdf" = [ "org.pwmt.zathura-pdf-mupdf" ];
-    "text/html" = browser;
-    "inode/directory" = [ "yazi" ];
-    "text/plain" = [ "nvim" ];
-    "x-scheme-handler/chrome" = [ "chromium-browser" ];
-  }
-  // image
-  // video
-  // audio
-  // browserTypes);
+  associations = builtins.mapAttrs (_: v: (map (e: "${e}.desktop") v)) (
+    {
+      "application/pdf" = [ "org.pwmt.zathura-pdf-mupdf" ];
+      "text/html" = browser;
+      "inode/directory" = [ "yazi" ];
+      "text/plain" = [ "nvim" ];
+      "x-scheme-handler/chrome" = [ "chromium-browser" ];
+    }
+    // image
+    // video
+    // audio
+    // browserTypes
+  );
 in
 {
   xdg = {

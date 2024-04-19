@@ -1,9 +1,13 @@
-{ inputs, config, pkgs, lib, ... }:
+{
+  inputs,
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 {
 
-  imports = [
-    inputs.matugen.nixosModules.default
-  ];
+  imports = [ inputs.matugen.nixosModules.default ];
 
   # light/dark specialisations
   specialisation =
@@ -21,11 +25,15 @@
     {
       light.configuration = {
         theme.name = "light";
-        home.activation = { inherit dconfLight; };
+        home.activation = {
+          inherit dconfLight;
+        };
       };
       dark.configuration = {
         theme.name = "dark";
-        home.activation = { inherit dconfDark; };
+        home.activation = {
+          inherit dconfDark;
+        };
       };
     };
 

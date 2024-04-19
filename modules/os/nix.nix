@@ -1,4 +1,11 @@
-{ inputs, location, lib, config, ... }: {
+{
+  inputs,
+  location,
+  lib,
+  config,
+  ...
+}:
+{
 
   environment.variables.FLAKE = "${location}";
 
@@ -23,7 +30,10 @@
     settings = {
       auto-optimise-store = true;
       builders-use-substitutes = true;
-      experimental-features = [ "nix-command" "flakes" ];
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
       flake-registry = "/etc/nix/registry.json";
       warn-dirty = false;
 

@@ -1,13 +1,16 @@
 # Git
 #
-{ config, pkgs, ... }: {
+{ config, pkgs, ... }:
+{
   programs = {
     git = {
       enable = true;
       lfs.enable = true;
 
       extraConfig = {
-        init = { defaultBranch = "main"; };
+        init = {
+          defaultBranch = "main";
+        };
         credential.helper = "${pkgs.gitAndTools.gitFull}/bin/git-credential-libsecret";
 
         core.askPass = "";
@@ -22,7 +25,13 @@
         };
       };
 
-      ignores = [ "*~" "*.swp" "*result*" ".direnv" "node_modules" ];
+      ignores = [
+        "*~"
+        "*.swp"
+        "*result*"
+        ".direnv"
+        "node_modules"
+      ];
 
       signing = {
         key = "${config.home.homeDirectory}/.ssh/gitkey";

@@ -6,6 +6,5 @@
 
   networking = {
     hostName = "vm-nix";
-
   };
 }

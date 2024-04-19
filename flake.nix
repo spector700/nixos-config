@@ -42,6 +42,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # A tree-wide formatter
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # database for comma
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
@@ -66,32 +72,46 @@
     gaming.url = "github:fufexan/nix-gaming";
     # bar
     ags.url = "github:Aylur/ags";
-
   };
 
-  outputs = inputs@{ self, nixpkgs, home-manager, ... }:
+  outputs =
+    inputs@{ self
+    , nixpkgs
+    , home-manager
+    , ...
+    }:
     let
       lib = nixpkgs.lib // home-manager.lib;
       lib' = import ./lib;
       user = "spector";
       # Location of the nixos config
       location = "/home/${user}/nixos-config";
-      systems = [ "x86_64-linux" "aarch64-linux" ];
+      systems = [
+        "x86_64-linux"
+        "aarch64-linux"
+      ];
+
       # This is a function that generates an attribute by calling a function you
       # pass to it, with each system as an argument
       forEachSystem = f: lib.genAttrs systems (system: f pkgsFor.${system});
-      pkgsFor = lib.genAttrs systems (system: import nixpkgs {
-        inherit system;
-      });
+      pkgsFor = lib.genAttrs systems (system: import nixpkgs { inherit system; });
     in
     {
+      packages = forEachSystem (pkgs: import ./pkgs { inherit pkgs inputs; });
+      devShells = forEachSystem (pkgs: import ./shell.nix { inherit pkgs inputs; });
+      formatter = forEachSystem (pkgs: import ./fmt.nix { inherit pkgs inputs; });
+
       # NixOS configurations
       nixosConfigurations = import ./hosts/profiles.nix {
-        inherit inputs self lib lib' home-manager location;
+        inherit
+          inputs
+          self
+          lib
+          lib'
+          home-manager
+          location
+          ;
       };
-
-      packages = forEachSystem (pkgs: import ./pkgs { inherit pkgs; inherit inputs; });
-
 
       # Non-NixOS configurations
       #homeConfigurations = (

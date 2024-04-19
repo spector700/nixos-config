@@ -1,4 +1,9 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 let
   inherit (lib) mkEnableOption mkIf mkAfter;
   cfg = config.modules.hardware;
@@ -19,9 +24,7 @@ in
 
       # Autostart for hyprland
       wayland.windowManager.hyprland.settings = mkIf (config.modules.display.desktop == "Hyprland") {
-        exec-once = mkAfter [
-          "sleep 5 && ${pkgs.openrgb}/bin/openrgb --profile iceie"
-        ];
+        exec-once = mkAfter [ "sleep 5 && ${pkgs.openrgb}/bin/openrgb --profile iceie" ];
       };
     };
   };

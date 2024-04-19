@@ -1,4 +1,10 @@
-{ pkgs, location, inputs, ... }: {
+{
+  pkgs,
+  location,
+  inputs,
+  ...
+}:
+{
 
   imports = [ inputs.dev-assistant.homeManagerModules.default ];
 
@@ -8,13 +14,23 @@
       autosuggestion.enable = true;
       syntaxHighlighting = {
         enable = true;
-        patterns = { "rm -rf *" = "fg=black,bg=red"; };
-        styles = { "alias" = "fg=blue"; };
-        highlighters = [ "main" "brackets" "pattern" ];
+        patterns = {
+          "rm -rf *" = "fg=black,bg=red";
+        };
+        styles = {
+          "alias" = "fg=blue";
+        };
+        highlighters = [
+          "main"
+          "brackets"
+          "pattern"
+        ];
       };
       autocd = true;
       # enableCompletion = true;
-      history = { expireDuplicatesFirst = true; };
+      history = {
+        expireDuplicatesFirst = true;
+      };
 
       initExtra = ''
         source ${pkgs.zsh-vi-mode}/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
@@ -77,7 +93,9 @@
 
     bat = {
       enable = true;
-      config = { pager = "less -FR"; };
+      config = {
+        pager = "less -FR";
+      };
     };
 
     eza.enable = true;

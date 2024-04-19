@@ -1,4 +1,11 @@
-{ config, lib, pkgs, lib', inputs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  lib',
+  inputs,
+  ...
+}:
 let
   inherit (lib) mkIf mkEnableOption mkForce;
   cfg = config.modules.hardware.sound;

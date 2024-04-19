@@ -1,23 +1,34 @@
 { pkgs, config, ... }:
 let
-  screenshotarea =
-    "hyprctl keyword animation 'fadeOut,0,8,slow'; grimblast --notify copysave area; hyprctl keyword animation 'fadeOut,1,8,slow'";
+  screenshotarea = "hyprctl keyword animation 'fadeOut,0,8,slow'; grimblast --notify copysave area; hyprctl keyword animation 'fadeOut,1,8,slow'";
 
   # binds $mod + [alt +] {1..10} to [move to] workspace {1..10}
-  workspaces = builtins.concatLists (builtins.genList
-    (x:
-      let ws = let c = (x + 1) / 10; in builtins.toString (x + 1 - (c * 10));
-      in [
+  workspaces = builtins.concatLists (
+    builtins.genList (
+      x:
+      let
+        ws =
+          let
+            c = (x + 1) / 10;
+          in
+          builtins.toString (x + 1 - (c * 10));
+      in
+      [
         "$mod, ${ws}, workspace, ${toString (x + 1)}"
         "ALT SHIFT, ${ws}, movetoworkspace, ${toString (x + 1)}"
-      ]) 10);
+      ]
+    ) 10
+  );
 in
 {
   wayland.windowManager.hyprland.settings = {
     "$mod" = "SUPER";
 
     # Mouse Moveements
-    bindm = [ "$mod, mouse:272, movewindow" "$mod, mouse:273, resizewindow" ];
+    bindm = [
+      "$mod, mouse:272, movewindow"
+      "$mod, mouse:273, resizewindow"
+    ];
 
     # Binds
     bind = [
@@ -81,7 +92,6 @@ in
       # Volume
       ", XF86AudioRaiseVolume, exec, koshi -r 'audio.speaker.volume += 0.05; indicator.speaker()'"
       ", XF86AudioLowerVolume, exec, koshi -r 'audio.speaker.volume -= 0.05; indicator.speaker()'"
-
     ];
   };
 }

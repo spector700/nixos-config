@@ -1,20 +1,34 @@
-{ inputs, self, lib, location, lib', ... }:
+{
+  inputs,
+  self,
+  lib,
+  location,
+  lib',
+  ...
+}:
 let
   hm = inputs.home-manager.nixosModules.home-manager;
   homesDir = ../home-modules; # home-manager configurations for hosts that need home-manager
-  homeManager = [ hm homesDir ]; # combine hm flake input and the home module to be imported together
+  homeManager = [
+    hm
+    homesDir
+  ]; # combine hm flake input and the home module to be imported together
 in
 {
   # Desktop profile
   alfhiem = lib.nixosSystem {
     specialArgs = {
-      inherit inputs self location lib';
+      inherit
+        inputs
+        self
+        location
+        lib'
+        ;
     };
     # Modules that are used
     modules = [
       ./alfhiem
       ../modules
-
     ] ++ lib.concatLists [ homeManager ];
   };
   # vm profile
@@ -26,7 +40,6 @@ in
     modules = [
       ./vm
       ../modules
-
     ] ++ lib.concatLists [ homeManager ];
   };
 }

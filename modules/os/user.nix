@@ -1,27 +1,37 @@
-{ pkgs, config, lib, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
 let
   inherit (lib) mkOption types optionals;
   user = config.modules.os.mainUser;
 in
 {
   config = {
-    users.users.${user} = {
-      # System User
-      isNormalUser = true;
-      extraGroups = [ "wheel" ] ++ optionals config.networking.networkmanager.enable [ "networkmanager" ];
-      initialPassword = "changeme";
-      shell = pkgs.zsh; # Default shell
+    users = {
+      # allow password to be set by sops-nix
+      mutableUsers = false;
+
+      users.${user} = {
+        # System User
+        isNormalUser = true;
+        extraGroups = [ "wheel" ] ++ optionals config.networking.networkmanager.enable [ "networkmanager" ];
+        # initialPassword = "changeme";
+        hashedPasswordFile = config.sops.secrets.spector-password.path;
+        shell = pkgs.zsh; # Default shell
+      };
     };
   };
 
-  config.warnings =
-    optionals (config.modules.os.users == [ ]) [
-      ''
-        You have not added any users to be supported by your system. You may end up with an unbootable system!
+  config.warnings = optionals (config.modules.os.users == [ ]) [
+    ''
+      You have not added any users to be supported by your system. You may end up with an unbootable system!
 
-        Consider setting {option}`config.modules.system.users` in your configuration
-      ''
-    ];
+      Consider setting {option}`config.modules.system.users` in your configuration
+    ''
+  ];
 
   options.modules.os = {
     mainUser = mkOption {
