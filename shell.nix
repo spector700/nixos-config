@@ -1,15 +1,24 @@
-{ pkgs, inputs, ... }:
 {
-  default = pkgs.mkShell {
+  perSystem =
+    { pkgs, config, ... }:
+    {
+      devShells.default = pkgs.mkShell {
+        name = "nixos-config";
+        meta.description = "The default development shell for my NixOS configuration";
 
-    imports = [ inputs.treefmt-nix.flakeModule ];
-    NIX_CONFIG = "extra-experimental-features = nix-command flakes repl-flake";
+        NIX_CONFIG = "extra-experimental-features = nix-command flakes repl-flake";
 
-    nativeBuildInputs = with pkgs; [
-      # sops stuff
-      sops
-      ssh-to-age
-      age
-    ];
-  };
+        # packages available in the dev shell
+        inputsFrom = [ config.treefmt.build.devShell ];
+
+        packages = with pkgs; [
+          # sops stuff
+          sops
+          ssh-to-age
+          age
+
+          config.treefmt.build.wrapper
+        ];
+      };
+    };
 }

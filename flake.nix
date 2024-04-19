@@ -104,6 +104,16 @@
         "aarch64-linux"
       ];
 
+      imports = [
+        inputs.treefmt-nix.flakeModule
+
+        # devShell
+        ./shell.nix
+        # nix fmt
+        ./fmt.nix
+        # checks that run on 'nix flake check'
+      ];
+
       flake = {
         # entry-point for nixosConfigurations
         nixosConfigurations = import ./hosts/profiles.nix {

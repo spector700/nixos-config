@@ -1,19 +1,27 @@
-{ pkgs, inputs, ... }:
-let
-  fmt = {
-    projectRootFile = "flake.nix";
+{
+  perSystem =
+    {
+      inputs',
+      config,
+      pkgs,
+      ...
+    }:
+    {
+      # provide the formatter for `nix fmt`
+      formatter = config.treefmt.build.wrapper;
 
-    programs = {
-      # formats .nix files
-      nixfmt-rfc-style.enable = true;
-      statix.enable = true;
+      treefmt = {
+        projectRootFile = "flake.nix";
 
-      shellcheck.enable = true;
+        programs = {
+          # formats .nix files
+          nixfmt-rfc-style.enable = true;
+          statix.enable = true;
 
-      shfmt = {
-        enable = true;
+          shellcheck.enable = true;
+
+          shfmt.enable = true;
+        };
       };
     };
-  };
-in
-(inputs.treefmt-nix.lib.evalModule pkgs fmt).config.build.wrapper
+}
