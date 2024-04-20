@@ -5,6 +5,11 @@
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-23.05";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
+    flake-parts = {
+      url = "github:hercules-ci/flake-parts";
+      inputs.nixpkgs-lib.follows = "nixpkgs";
+    };
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -48,6 +53,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    pre-commit-hooks = {
+      url = "github:cachix/pre-commit-hooks.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # database for comma
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
@@ -75,50 +85,47 @@
   };
 
   outputs =
-    inputs@{ self
-    , nixpkgs
-    , home-manager
-    , ...
-    }:
+    inputs@{ self, flake-parts, ... }:
     let
-      lib = nixpkgs.lib // home-manager.lib;
+      # custom lib functions
       lib' = import ./lib;
+      # main user
       user = "spector";
       # Location of the nixos config
       location = "/home/${user}/nixos-config";
+    in
+    # This is a function that generates an attribute by calling a function you
+    # pass to it, with each system as an argument
+    # forEachSystem = f: lib.genAttrs systems (system: f pkgsFor.${system});
+    # pkgsFor = lib.genAttrs systems (system: import nixpkgs { inherit system; });
+    # packages = forEachSystem (pkgs: import ./pkgs { inherit pkgs inputs; });
+    # devShells = forEachSystem (pkgs: import ./shell.nix { inherit pkgs inputs; });
+    # formatter = forEachSystem (pkgs: import ./fmt.nix { inherit pkgs inputs; });
+
+    flake-parts.lib.mkFlake { inherit inputs; } {
+      # systems for which the `perSystem` attributes will be built
       systems = [
         "x86_64-linux"
         "aarch64-linux"
       ];
 
-      # This is a function that generates an attribute by calling a function you
-      # pass to it, with each system as an argument
-      forEachSystem = f: lib.genAttrs systems (system: f pkgsFor.${system});
-      pkgsFor = lib.genAttrs systems (system: import nixpkgs { inherit system; });
-    in
-    {
-      packages = forEachSystem (pkgs: import ./pkgs { inherit pkgs inputs; });
-      devShells = forEachSystem (pkgs: import ./shell.nix { inherit pkgs inputs; });
-      formatter = forEachSystem (pkgs: import ./fmt.nix { inherit pkgs inputs; });
+      imports = [
+        inputs.treefmt-nix.flakeModule
 
-      # NixOS configurations
-      nixosConfigurations = import ./hosts/profiles.nix {
-        inherit
-          inputs
-          self
-          lib
-          lib'
-          home-manager
-          location
-          ;
+        # the flake utilities
+        ./flake
+      ];
+
+      flake = {
+        # entry-point for nixosConfigurations
+        nixosConfigurations = import ./hosts/profiles.nix {
+          inherit
+            inputs
+            self
+            lib'
+            location
+            ;
+        };
       };
-
-      # Non-NixOS configurations
-      #homeConfigurations = (
-      #import ./nix {
-      #inherit (nixpkgs) lib;
-      #inherit inputs nixpkgs nixpkgs-stable home-manager user;
-      #}
-      #);
     };
 }
