@@ -53,6 +53,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    pre-commit-hooks = {
+      url = "github:cachix/pre-commit-hooks.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # database for comma
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
@@ -111,7 +116,8 @@
         ./shell.nix
         # nix fmt
         ./fmt.nix
-        # checks that run on 'nix flake check'
+        # pre-commit checks that run on 'nix flake check'
+        ./pre-commit-hooks.nix
       ];
 
       flake = {
