@@ -94,14 +94,6 @@
       # Location of the nixos config
       location = "/home/${user}/nixos-config";
     in
-    # This is a function that generates an attribute by calling a function you
-    # pass to it, with each system as an argument
-    # forEachSystem = f: lib.genAttrs systems (system: f pkgsFor.${system});
-    # pkgsFor = lib.genAttrs systems (system: import nixpkgs { inherit system; });
-    # packages = forEachSystem (pkgs: import ./pkgs { inherit pkgs inputs; });
-    # devShells = forEachSystem (pkgs: import ./shell.nix { inherit pkgs inputs; });
-    # formatter = forEachSystem (pkgs: import ./fmt.nix { inherit pkgs inputs; });
-
     flake-parts.lib.mkFlake { inherit inputs; } {
       # systems for which the `perSystem` attributes will be built
       systems = [

@@ -63,6 +63,8 @@
       };
     };
 
+    command-not-found.enable = false;
+
     tealdeer = {
       enable = true;
       settings = {

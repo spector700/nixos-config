@@ -6,15 +6,13 @@
   ...
 }:
 {
-
-  environment.variables.FLAKE = "${location}";
-
   programs.nh = {
     enable = true;
+    flake = "${location}";
     # weekly clean
     clean = {
       enable = true;
-      extraArgs = "--keep-since 30d";
+      dates = "weekly";
     };
   };
 
