@@ -30,8 +30,17 @@ in
           # normal fonts
           noto-fonts
           noto-fonts-cjk
-          noto-fonts-emoji
           roboto
+          material-icons
+          material-design-icons
+          inter
+
+          # emojis
+          noto-fonts-color-emoji
+          twemoji-color-font
+          openmoji-color
+          openmoji-black
+
           # nerdfonts
           (nerdfonts.override {
             fonts = [
@@ -49,6 +58,7 @@ in
             serif = [ "Noto Serif" ];
             sansSerif = [ "JetBrainsMono Nerd Font" ];
             monospace = [ "JetBrainsMono Nerd Font" ];
+            emoji = [ "Noto Color Emoji" ];
           };
           hinting.enable = true;
           antialias = true;
