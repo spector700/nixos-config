@@ -2,6 +2,7 @@
   inputs,
   config,
   lib,
+  pkgs,
   ...
 }:
 let
@@ -16,6 +17,12 @@ let
 in
 {
   imports = [ inputs.sops-nix.nixosModules.sops ];
+
+  environment.systemPackages = with pkgs; [
+    age
+    ssh-to-age
+    sops
+  ];
 
   sops = {
     defaultSopsFile = "${secretsPath}/secrets.yaml";

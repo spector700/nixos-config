@@ -12,11 +12,6 @@
         inputsFrom = [ config.treefmt.build.devShell ];
 
         packages = with pkgs; [
-          # sops stuff
-          sops
-          ssh-to-age
-          age
-
           # the treefmt command
           config.treefmt.build.wrapper
         ];
