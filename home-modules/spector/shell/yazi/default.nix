@@ -1,11 +1,19 @@
-{ config, ... }:
+{ config, pkgs, ... }:
+let
+  flavors = pkgs.fetchFromGitHub {
+    owner = "yazi-rs";
+    repo = "flavors";
+    rev = "";
+    hash = "sha256-QpQnOmEeIdUd8OeY3u2BpnfJXz/7v0GbspV475p1gBE=";
+  };
+in
 {
-  imports = [
-    ./theme/icons.nix
-    ./theme/manager.nix
-    ./theme/misc.nix
-    ./theme/status.nix
-  ];
+  home.file.".config/yazi/flavors/catppuccin-mocha.yazi" = {
+    source = "${flavors}/catppuccin-mocha.yazi";
+    recursive = true;
+  };
+
+  imports = [ ./plugins/starship.nix ];
 
   # yazi file manager
   programs.yazi = {
@@ -14,6 +22,8 @@
     enableBashIntegration = config.programs.bash.enable;
     enableZshIntegration = config.programs.zsh.enable;
 
+    theme.flavor.use = "catppuccin-mocha";
+
     settings = {
       manager = {
         layout = [
@@ -21,19 +31,19 @@
           4
           3
         ];
-        sort_by = "alphabetical";
+        sort_by = "natural";
         sort_sensitive = true;
         sort_reverse = false;
         sort_dir_first = true;
-        linemode = "none";
+        linemode = "size";
         show_hidden = true;
         show_symlink = true;
       };
 
       preview = {
         tab_size = 2;
-        max_width = 600;
-        max_height = 900;
+        max_width = 1024;
+        max_height = 1920;
         cache_dir = "${config.xdg.cacheHome}";
       };
     };
