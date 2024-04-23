@@ -1,7 +1,6 @@
 {
   imports = [
-    ./kernel.nix
     ./sops.nix
-    ./sudo.nix
+    ./xdg.nix
   ];
 }

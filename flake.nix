@@ -41,6 +41,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # my sops-nix private repo
+    nix-secrets = {
+      url = "git+ssh://git@github.com/spector700/nix-secrets.git?ref=main&shallow=1";
+      flake = false;
+    };
+
     # declareable filesystem
     disko = {
       url = "github:nix-community/disko";

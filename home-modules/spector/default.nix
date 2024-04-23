@@ -14,6 +14,7 @@ in
     inputs.hyprlock.homeManagerModules.default
     inputs.hypridle.homeManagerModules.default
     ./programs
+    ./services
     ./shell
     ./themes
     ./editors/neovim
