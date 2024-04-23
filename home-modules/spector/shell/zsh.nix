@@ -81,11 +81,6 @@
       enableZshIntegration = true;
     };
 
-    direnv = {
-      enable = true;
-      nix-direnv.enable = true;
-    };
-
     dev-assistant.enable = true;
 
     fzf = {
