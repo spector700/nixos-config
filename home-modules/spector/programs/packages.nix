@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   home.packages = with pkgs; [
     # Terminal Utils
     fastfetch
@@ -11,10 +12,9 @@
     gimp
 
     signal-desktop
-    networkmanagerapplet
     nextcloud-client
     obsidian
-    anki-bin
+    anki
     vial
 
     # File Management

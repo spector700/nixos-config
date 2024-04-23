@@ -17,6 +17,7 @@
           ssh-to-age
           age
 
+          # the treefmt command
           config.treefmt.build.wrapper
         ];
       };
