@@ -112,6 +112,7 @@
 
         # the flake utilities
         ./flake
+        ./pkgs
       ];
 
       flake = {
