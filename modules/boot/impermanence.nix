@@ -32,24 +32,6 @@ in
   };
 
   config = mkIf cfg.enable {
-    # users = {
-    #   # This option requires you to define a password file for your users
-    #   # mkpasswd -m sha-512 > /persist/passwords/spector after you confirm /persist/passwords exists
-    #   mutableUsers = false;
-    #
-    #   # each existing user needs to have a passwordFile defined here
-    #   # otherwise, they will not be available for a login
-    #   # passwordFile needs to be in a volume marked with `neededForBoot = true`
-    #   users = {
-    #     root = {
-    #       hashedPasswordFile = "/persist/passwords/root";
-    #     };
-    #     ${config.modules.os.mainUser} = {
-    #       hashedPasswordFile = "/persist/passwords/${config.modules.os.mainUser}";
-    #     };
-    #   };
-    # };
-
     boot.initrd.postDeviceCommands = mkAfter ''
       mkdir /btrfs_tmp
       mount /dev/root_vg/root /btrfs_tmp

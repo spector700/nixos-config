@@ -5,7 +5,6 @@
   ...
 }:
 {
-
   imports = [ inputs.dev-assistant.homeManagerModules.default ];
 
   programs = {
@@ -26,11 +25,7 @@
           "pattern"
         ];
       };
-      autocd = true;
-      # enableCompletion = true;
-      history = {
-        expireDuplicatesFirst = true;
-      };
+      history.expireDuplicatesFirst = true;
 
       initExtra = ''
         source ${pkgs.zsh-vi-mode}/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
@@ -62,6 +57,13 @@
         lg = "lazygit";
       };
     };
+
+    zoxide = {
+      enable = true;
+      options = [ "--cmd cd" ];
+    };
+
+    lazygit.enable = true;
 
     command-not-found.enable = false;
 
