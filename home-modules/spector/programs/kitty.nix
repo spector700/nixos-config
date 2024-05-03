@@ -1,4 +1,3 @@
-# kitty terminal
 {
   programs = {
     kitty = {
