@@ -1,4 +1,9 @@
-{ pkgs, osConfig, ... }:
+{
+  pkgs,
+  osConfig,
+  config,
+  ...
+}:
 let
   cfg = osConfig.modules.display.monitors;
 in
@@ -28,6 +33,13 @@ in
         "ignorealpha 0.2, ${layers}"
         "ignorealpha 0.5, ^(anyrun)$"
       ];
+
+    env = [
+      "XCURSOR_SIZE,${builtins.toString config.home.pointerCursor.size}"
+      "XCURSOR_THEME,${config.gtk.theme.name}"
+      "HYPRCURSOR_THEME,${config.gtk.theme.name}"
+      "HYPRCURSOR_SIZE,${builtins.toString config.home.pointerCursor.size}"
+    ];
 
     windowrulev2 = [
       # make Firefox PiP window floating and sticky
