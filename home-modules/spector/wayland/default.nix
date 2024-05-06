@@ -2,6 +2,7 @@
   pkgs,
   lib,
   osConfig,
+  inputs,
   ...
 }:
 let
@@ -12,6 +13,8 @@ let
 in
 {
   imports = [
+    inputs.hyprlock.homeManagerModules.default
+    inputs.hyprland.homeManagerModules.default
     ./hyprland
     ./ags.nix
     ./anyrun.nix

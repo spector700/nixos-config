@@ -101,10 +101,15 @@ in
       blur = {
         brightness = 1.0;
         contrast = 1.0;
-        noise = 2.0e-2;
+        noise = 1.0e-2;
 
-        passes = 3;
-        size = 10;
+        vibrancy = 0.2;
+        vibrancy_darkness = 0.5;
+
+        passes = 4;
+        size = 7;
+
+        popups = true;
       };
 
       shadow_offset = "0 2";

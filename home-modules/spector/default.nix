@@ -9,10 +9,7 @@ let
 in
 {
   imports = [
-    inputs.anyrun.homeManagerModules.default
     inputs.spicetify.homeManagerModules.default
-    inputs.hyprlock.homeManagerModules.default
-    inputs.hypridle.homeManagerModules.default
     ./programs
     ./services
     ./shell

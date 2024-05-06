@@ -25,14 +25,16 @@ in
   # screen idle
   services.hypridle = {
     enable = true;
-    beforeSleepCmd = "${pkgs.systemd}/bin/loginctl lock-session";
-    lockCmd = lib.getExe config.programs.hyprlock.package;
+    settings = {
+      beforeSleepCmd = "${pkgs.systemd}/bin/loginctl lock-session";
+      lockCmd = lib.getExe config.programs.hyprlock.package;
 
-    listeners = [
-      {
-        timeout = 500;
-        onTimeout = "${pkgs.hyprland}/bin/hyprctl dispatch dpms off";
-      }
-    ];
+      listeners = [
+        {
+          timeout = 500;
+          onTimeout = suspendScriptDesktop.outPath;
+        }
+      ];
+    };
   };
 }
