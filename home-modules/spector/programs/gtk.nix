@@ -1,4 +1,4 @@
-{ pkgs, config, ... }:
+{ pkgs, ... }:
 {
   home.pointerCursor = {
     gtk.enable = true;
@@ -17,7 +17,7 @@
       #   accents = [ "blue" ];
       #   variant = "mocha";
       # };
-      name = if config.theme.name == "light" then "adw-gtk3" else "adw-gtk3-dark";
+      name = "adw-gtk3-dark";
       package = pkgs.adw-gtk3;
       # name = "Colloid-Dark";
       # package = pkgs.colloid-gtk-theme.override {
