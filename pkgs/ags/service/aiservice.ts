@@ -65,7 +65,6 @@ export class AiMessage extends Service {
     }
 }
 
-const session = new Soup.Session()
 
 class AiService extends Service {
     static {
@@ -151,6 +150,7 @@ class AiService extends Service {
             stream: true,
         }
 
+        const session = new Soup.Session()
         const message = Soup.Message.new("POST", this.url)
         // message.request_headers.append("Authorization", "Bearer ")
         const requstBody = new TextEncoder().encode(JSON.stringify(body))

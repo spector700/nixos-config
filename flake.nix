@@ -15,19 +15,18 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    hyprland = {
-      url = "github:hyprwm/Hyprland";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
 
     hypridle = {
       url = "github:hyprwm/hypridle";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.hyprlang.follows = "hyprland/hyprlang";
+      inputs.nixpkgs.follows = "hyprland/nixpkgs";
     };
 
     hyprlock = {
       url = "github:hyprwm/hyprlock";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.hyprlang.follows = "hyprland/hyprlang";
+      inputs.nixpkgs.follows = "hyprland/nixpkgs";
     };
 
     # app launcher
@@ -76,18 +75,26 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # get colors from wallpaper
+    matugen = {
+      url = "github:InioX/matugen";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # bar
+    ags = {
+      url = "github:Aylur/ags";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # persist files on boot
     impermanence.url = "github:nix-community/impermanence";
-    # get colors from wallpaper
-    matugen.url = "github:InioX/matugen";
     # create nix project automaticly
     dev-assistant.url = "github:spector700/DevAssistant";
     # my neovim flake
     Akari.url = "github:spector700/Akari";
     # gaming tweaks and addons
     gaming.url = "github:fufexan/nix-gaming";
-    # bar
-    ags.url = "github:Aylur/ags";
   };
 
   outputs =
