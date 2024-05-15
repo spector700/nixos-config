@@ -13,7 +13,6 @@ let
 in
 {
   imports = [
-    inputs.hyprlock.homeManagerModules.default
     inputs.hyprland.homeManagerModules.default
     ./hyprland
     ./ags.nix
