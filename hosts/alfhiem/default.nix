@@ -89,7 +89,7 @@
 
     openrazer = {
       enable = true;
-      mouseBatteryNotifier = false;
+      batteryNotifier.enable = false;
       users = [ "${config.modules.os.mainUser}" ];
     };
   };
