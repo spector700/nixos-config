@@ -7,12 +7,26 @@ const audio = await Service.import("audio")
 
 type Type = "microphone" | "speaker"
 
+const getAudioIcon = (type: Type = "speaker") => {
+    const icon = audio[type].is_muted ? "muted" : [
+        [101, "overamplified"],
+        [67, "high"],
+        [34, "medium"],
+        [1, "low"],
+        [0, "muted"],
+    ].find(([threshold]) => Number(threshold) <= audio[type].volume * 100)?.[1]
+
+    return type === "speaker"
+        ? `audio-volume-${icon}-symbolic`
+        : `microphone-sensitivity-${icon}-symbolic`
+}
+
 const VolumeIndicator = (type: Type = "speaker") => Widget.Button({
     vpack: "center",
     on_clicked: () => audio[type].is_muted = !audio[type].is_muted,
     child: Widget.Icon({
         icon: audio[type].bind("icon_name")
-            .as(i => icon(i || "", icons.audio.mic.high)),
+            .as(_ => icon(getAudioIcon(type) || "", icons.audio.mic.high)),
         tooltipText: audio[type].bind("volume")
             .as(vol => `Volume: ${Math.floor(vol * 100)}%`),
     }),
@@ -21,8 +35,14 @@ const VolumeIndicator = (type: Type = "speaker") => Widget.Button({
 const VolumeSlider = (type: Type = "speaker") => Widget.Slider({
     hexpand: true,
     draw_value: false,
-    on_change: ({ value, dragging }) => dragging && (audio[type].volume = value),
+    on_change: ({ value, dragging }) => {
+        if (dragging) {
+            audio[type].volume = value
+            audio[type].is_muted = false
+        }
+    },
     value: audio[type].bind("volume"),
+    class_name: audio[type].bind("is_muted").as(m => m ? "muted" : ""),
 })
 
 export const Volume = () => Widget.Box({

@@ -44,6 +44,10 @@ window#quicksettings .quicksettings {
     scale {
       @include slider;
       margin: 0 ($spacing * .5);
+
+      &.muted highlight {
+        background: transparentize($bg, $amount: .2)
+      }
     }
   }
 

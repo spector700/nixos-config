@@ -35,9 +35,9 @@ const DNDIndicator = () => Widget.Icon({
 const BluetoothIndicator = () => Widget.Overlay({
     class_name: "bluetooth",
     passThrough: true,
+    visible: bluetooth.bind("enabled"),
     child: Widget.Icon({
         icon: icons.bluetooth.enabled,
-        visible: bluetooth.bind("enabled"),
     }),
     overlay: Widget.Label({
         hpack: "end",
