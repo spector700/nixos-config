@@ -2,7 +2,6 @@ import "lib/session"
 import init from "lib/init"
 import options from "options"
 import Bar from "widget/bar/Bar"
-import Launcher from "widget/applauncher/Launcher"
 import Overview from "widget/overview/Overview"
 import PowerMenu from "widget/powermenu/PowerMenu"
 import Verification from "widget/powermenu/Verification"
@@ -22,7 +21,6 @@ App.config({
         init()
     },
     closeWindowDelay: {
-        "launcher": options.transition.value,
         "overview": options.transition.value,
         "quicksettings": options.transition.value,
         "datemenu": options.transition.value,
@@ -31,7 +29,6 @@ App.config({
         ...forMonitors(Bar),
         ...forMonitors(NotificationPopups),
         ...forMonitors(OSD),
-        Launcher(),
         Overview(),
         PowerMenu(),
         Verification(),

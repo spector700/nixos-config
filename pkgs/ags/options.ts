@@ -1,5 +1,6 @@
 import { type BarWidget } from "widget/bar/Bar"
 import { opt, mkOptions } from "lib/option"
+import { sh } from "lib/utils"
 
 const battery = await Service.import("battery")
 const bat: BarWidget[] = battery.available ? ["battery"] : []
@@ -92,7 +93,7 @@ const options = mkOptions(OPTIONS, {
                 colored: opt(true),
                 icon: opt("nixos"),
             },
-            action: opt(() => App.toggleWindow("launcher")),
+            action: opt(() => sh("lumastart")),
         },
         date: {
             format: opt("%H:%M • %A %e"),
@@ -126,16 +127,6 @@ const options = mkOptions(OPTIONS, {
             monochrome: opt(false),
             action: opt(() => App.toggleWindow("powermenu")),
         },
-    },
-
-    launcher: {
-        iconSize: opt(62),
-        width: opt(400),
-        margin: opt(80),
-        maxItem: opt(6),
-        favorites: opt([
-        // name of apps
-        ]),
     },
 
     overview: {
