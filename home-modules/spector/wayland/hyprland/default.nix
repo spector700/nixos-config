@@ -36,8 +36,8 @@ in
 
     env = [
       "XCURSOR_SIZE,${builtins.toString config.home.pointerCursor.size}"
-      "XCURSOR_THEME,${config.gtk.theme.name}"
-      "HYPRCURSOR_THEME,${config.gtk.theme.name}"
+      "XCURSOR_THEME,${config.home.pointerCursor.name}"
+      "HYPRCURSOR_THEME,${config.home.pointerCursor.name}"
       "HYPRCURSOR_SIZE,${builtins.toString config.home.pointerCursor.size}"
     ];
 

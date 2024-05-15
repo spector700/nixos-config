@@ -8,10 +8,8 @@
       plugins = with inputs.anyrun.packages.${pkgs.system}; [
         applications
         rink
-        randr
         shell
         symbols
-        stdin
       ];
       width.fraction = 0.3;
       y.absolute = 300;
