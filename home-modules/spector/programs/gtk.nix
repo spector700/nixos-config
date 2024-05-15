@@ -19,14 +19,6 @@
       # };
       name = "adw-gtk3-dark";
       package = pkgs.adw-gtk3;
-      # name = "Colloid-Dark";
-      # package = pkgs.colloid-gtk-theme.override {
-      #   tweaks = [
-      #     "rimless"
-      #     "black"
-      #     "float"
-      #   ];
-      # };
     };
 
     iconTheme = {
