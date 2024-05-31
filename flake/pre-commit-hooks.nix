@@ -19,6 +19,7 @@ in
   imports = [ inputs.pre-commit-hooks.flakeModule ];
 
   perSystem.pre-commit = {
+    check.enable = true;
     settings = {
       inherit excludes;
 
@@ -27,6 +28,8 @@ in
         actionlint = mkHook "actionlint" { enable = true; };
 
         luacheck = mkHook "luacheck" { enable = true; };
+
+        detect-private-keys = mkHook "detect-private-keys" { enable = true; };
 
         treefmt = mkHook "treefmt" { enable = true; };
       };
