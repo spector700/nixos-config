@@ -1,6 +1,13 @@
-{ pkgs, config, ... }:
+{
+  pkgs,
+  config,
+  inputs,
+  ...
+}:
 let
   screenshotarea = "hyprctl keyword animation 'fadeOut,0,8,slow'; grimblast --notify copysave area; hyprctl keyword animation 'fadeOut,1,8,slow'";
+
+  lumastart = "${inputs.lumastart.packages.${pkgs.system}.default}/bin/lumastart";
 
   # binds $mod + [alt +] {1..10} to [move to] workspace {1..10}
   workspaces = builtins.concatLists (
@@ -65,7 +72,7 @@ in
       "$mod SHIFT, E, exec, ${pkgs.xfce.thunar}/bin/thunar"
 
       # Launcher
-      "$mod, Space, exec, pkill anyrun || anyrun"
+      "$mod, Space, exec, pkill lumastart || ${lumastart}"
       "$mod, V, exec, pkill rofi || ${pkgs.cliphist}/bin/cliphist list | rofi -dmenu -display-columns 2 | cliphist decode | wl-copy"
 
       # lock screen

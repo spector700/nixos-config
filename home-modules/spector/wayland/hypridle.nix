@@ -32,7 +32,7 @@ in
       listeners = [
         {
           timeout = 500;
-          onTimeout = suspendScriptDesktop.outPath;
+          onTimeout = "${pkgs.hyprland}/bin/hyprctl dispatch dpms off";
         }
       ];
     };

@@ -77,6 +77,8 @@
     impermanence.url = "github:nix-community/impermanence";
     # create nix project automaticly
     dev-assistant.url = "github:spector700/DevAssistant";
+    # My app launcher
+    lumastart.url = "github:spector700/lumastart";
     # my neovim flake
     Akari.url = "github:spector700/Akari";
     # gaming tweaks and addons

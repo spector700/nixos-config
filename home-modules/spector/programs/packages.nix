@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ inputs, pkgs, ... }:
 {
   home.packages = with pkgs; [
     # Terminal Utils
@@ -16,6 +16,9 @@
     obsidian
     anki
     vial
+    bottles
+    orca-slicer
+    inputs.lumastart.packages.${pkgs.system}.default
 
     # File Management
     unzip
