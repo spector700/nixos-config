@@ -1,6 +1,7 @@
 { inputs, ... }:
 {
   imports = [
+    ./tools
     ./yazi
     ./git.nix
     ./ssh.nix
