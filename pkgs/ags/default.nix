@@ -11,7 +11,7 @@
   dart-sass,
   fd,
   hyprpicker,
-  pavucontrol,
+  pwvucontrol,
   networkmanager,
   gtk3,
   brightnessctl,
@@ -40,7 +40,7 @@ let
     # wayshot
     # swappy
     hyprpicker
-    pavucontrol
+    pwvucontrol
     networkmanager
     gtk3
   ];

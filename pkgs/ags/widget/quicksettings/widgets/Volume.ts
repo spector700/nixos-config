@@ -123,8 +123,8 @@ const SinkItem = (stream: Stream) => Widget.Button({
 
 const SettingsButton = () => Widget.Button({
     on_clicked: () => {
-        if (dependencies("pavucontrol"))
-            sh("pavucontrol")
+        if (dependencies("pwvucontrol"))
+            sh("pwvucontrol")
     },
     hexpand: true,
     child: Widget.Box({

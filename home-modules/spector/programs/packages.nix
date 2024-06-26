@@ -8,7 +8,7 @@
     mpv
     loupe
     celluloid
-    pavucontrol
+    pwvucontrol
     gimp
 
     signal-desktop
