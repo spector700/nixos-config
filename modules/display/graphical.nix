@@ -17,10 +17,9 @@ in
   # Enabled if there is a desktop selected
   config = mkMerge [
     (mkIf cfg.gpuAcceleration.enable {
-      hardware.opengl = {
+      hardware.graphics = {
         enable = true;
-        driSupport = true;
-        driSupport32Bit = lib'.isx86Linux pkgs; # if we're on x86 linux, we can support 32 bit
+        enable32Bit = lib'.isx86Linux pkgs; # if we're on x86 linux, we can support 32 bit
       };
     })
 
