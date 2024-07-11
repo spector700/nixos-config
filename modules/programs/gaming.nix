@@ -28,6 +28,7 @@ in
       protontricks
       # Steam theme
       adwsteamgtk
+      bottles
     ];
 
     nixpkgs.overlays = [

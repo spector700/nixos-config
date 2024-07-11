@@ -59,6 +59,8 @@
       git
       curl
       wget
+      unzip
+      unrar
     ];
 
     variables = {

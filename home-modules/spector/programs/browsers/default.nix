@@ -1,1 +1,4 @@
-{ imports = [ ./firefox ]; }
+{
+  imports = [ ./firefox ];
+  programs.brave.enable = true;
+}
