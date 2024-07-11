@@ -5,6 +5,7 @@ let
     "r'.+\.age$'"
     "r'.+\.sh$'"
   ];
+
   mkHook =
     name: prev:
     {

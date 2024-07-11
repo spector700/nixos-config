@@ -15,10 +15,8 @@
 
         programs = {
           # formats .nix files
-          nixfmt-rfc-style.enable = true;
+          nixfmt.enable = true;
           statix.enable = true;
-
-          shellcheck.enable = true;
 
           shfmt.enable = true;
         };
