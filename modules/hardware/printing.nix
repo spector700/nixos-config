@@ -18,7 +18,7 @@ in
       printing = {
         # Go to the CUPS settings and add: socket://HPC85ACF1BB858.local
         enable = true;
-        drivers = with pkgs; [ hplip ];
+        # drivers = with pkgs; [ hplip ];
         browsedConf = ''
           BrowseDNSSDSubTypes _cups,_print
           BrowseLocalProtocols all

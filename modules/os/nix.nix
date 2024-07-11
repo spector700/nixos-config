@@ -62,5 +62,15 @@
     permittedInsecurePackages = [ "electron-25.9.0" ];
   };
 
+  # By default nix-gc makes no effort to respect battery life by avoding
+  # GC runs on battery and fully commits a few cores to collecting garbage.
+  # This will drain the battery faster than you can say "Nix, what the hell?"
+  # and contribute heavily to you wanting to get a new desktop.
+  # For those curious (such as myself) desktops are always seen as "AC powered"
+  # so the system will not fail to fire if you are on a desktop system.
+  systemd.services.nix-gc = {
+    unitConfig.ConditionACPower = true;
+  };
+
   system.stateVersion = "23.05";
 }
