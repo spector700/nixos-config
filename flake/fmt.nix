@@ -17,7 +17,6 @@
           # formats .nix files
           nixfmt.enable = true;
           statix.enable = true;
-
           shfmt.enable = true;
         };
       };
