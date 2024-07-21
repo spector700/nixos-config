@@ -8,7 +8,6 @@
   config,
   ...
 }:
-# {
 let
   inherit (lib) mkIf mkEnableOption;
 
@@ -23,57 +22,10 @@ in
 
     environment.systemPackages = with pkgs; [
       lutris
-      # Minecraft
-      prismlauncher
+      prismlauncher # Minecraft
       protontricks
-      # Steam theme
-      adwsteamgtk
+      adwsteamgtk # Steam theme
       bottles
-    ];
-
-    nixpkgs.overlays = [
-      (_: prev: {
-        steam = prev.steam.override (
-          {
-            extraPkgs ? _: [ ],
-            ...
-          }:
-          {
-            extraPkgs =
-              pkgs':
-              (extraPkgs pkgs')
-              # Add missing dependencies for unsteam games
-              ++ (with pkgs'; [
-                # Generic dependencies
-                libgdiplus
-                keyutils
-                libkrb5
-                libpng
-                libpulseaudio
-                libvorbis
-                stdenv.cc.cc.lib
-                xorg.libXcursor
-                xorg.libXi
-                xorg.libXinerama
-                xorg.libXScrnSaver
-                at-spi2-atk
-                fmodex
-                gtk3
-                gtk3-x11
-                harfbuzz
-                icu
-                glxinfo
-                inetutils
-                libthai
-                mono5
-                pango
-                stdenv.cc.cc.lib
-                strace
-                zlib
-              ]);
-          }
-        );
-      })
     ];
 
     boot.kernel.sysctl = {
