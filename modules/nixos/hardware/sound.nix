@@ -22,7 +22,6 @@ in
     # sounds server use RealtimeKit (rtkti) to acquire
     # realtime priority
     security.rtkit.enable = true;
-    sound.enable = mkForce false; # disable alsa
 
     hardware.pulseaudio.enable = mkForce false; # disable pulseAudio
 

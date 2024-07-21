@@ -24,6 +24,19 @@ in
 
     theme.flavor.use = "catppuccin-mocha";
 
+    keymap = {
+      manager.prepend_keymap = [
+        {
+          on = [
+            "g"
+            "n"
+          ];
+          run = "cd ~/Nextcloud/Nextual";
+          desc = "Go to Nextcloud";
+        }
+      ];
+    };
+
     settings = {
       manager = {
         layout = [

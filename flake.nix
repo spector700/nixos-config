@@ -90,7 +90,7 @@
     let
       # custom lib functions
       lib' = import ./lib;
-      # main user
+      # main user for location
       user = "spector";
       # Location of the nixos config
       location = "/home/${user}/nixos-config";

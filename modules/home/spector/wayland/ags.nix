@@ -1,6 +1,6 @@
 { inputs, pkgs, ... }:
 let
-  koshi = pkgs.callPackage ../../../pkgs/ags { inherit inputs; };
+  koshi = pkgs.callPackage ../../../../pkgs/ags { inherit inputs; };
 in
 {
   imports = [ inputs.ags.homeManagerModules.default ];

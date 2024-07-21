@@ -25,13 +25,14 @@ in
 
     layerrule =
       let
-        layers = "^(anyrun|gtk-layer-shell)$";
+        layers = "^(lumastart)$";
       in
       [
         "blur, ${layers}"
-        "xray 1, ^(bar|gtk-layer-shell)$"
-        "ignorealpha 0.2, ${layers}"
-        "ignorealpha 0.5, ^(anyrun)$"
+        "xray 1, ^(bar)$"
+        # "ignorealpha 0.2, ${layers}"
+        "ignorezero, ^(layers)$"
+        # "ignorealpha 0.5, ^(lumastart)$"
       ];
 
     env = [
@@ -82,9 +83,10 @@ in
       "${pkgs.hyprpaper}/bin/hyprpaper"
       "wl-paste --watch cliphist store"
       "${pkgs.wlsunset}/bin/wlsunset -l 32.7 -L -96.9"
-      "${pkgs.blueman}/bin/blueman-applet"
+      # "${pkgs.blueman}/bin/blueman-applet"
       "sleep 8 && ${pkgs.vesktop}/bin/vesktop"
       "spotify"
+      "nextcloud --background"
     ];
 
     general = {

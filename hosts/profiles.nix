@@ -8,12 +8,11 @@
 let
   inherit (inputs.nixpkgs.lib) concatLists nixosSystem;
 
-  hm = inputs.home-manager.nixosModules.home-manager;
-  homesDir = ../home-modules; # home-manager configurations for hosts that need home-manager
+  # combine hm flake input and the home module to be imported together
   homeManager = [
-    hm
-    homesDir
-  ]; # combine hm flake input and the home module to be imported together
+    inputs.home-manager.nixosModules.home-manager
+    ../modules/home # home-manager configurations for hosts that need home-manager
+  ];
 
   specialArgs = {
     inherit
@@ -25,23 +24,23 @@ let
   };
 in
 {
-  # Desktop profile
+  # Desktop
   alfhiem = nixosSystem {
     inherit specialArgs;
     # Modules that are used
     modules = [
       ./alfhiem
-      ../modules
+      ../modules/nixos
     ] ++ concatLists [ homeManager ];
   };
 
-  # vm profile
+  # VM
   vm = nixosSystem {
     inherit specialArgs;
     # Modules that are used
     modules = [
       ./vm
-      ../modules
+      ../modules/nixos
     ] ++ concatLists [ homeManager ];
   };
 }
