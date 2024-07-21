@@ -11,12 +11,6 @@
   gtk = {
     enable = true;
     theme = {
-      # name = "Catppuccin-Mocha-Compact-Blue-Dark";
-      # package = pkgs.catppuccin-gtk.override {
-      #   size = "compact";
-      #   accents = [ "blue" ];
-      #   variant = "mocha";
-      # };
       name = "adw-gtk3-dark";
       package = pkgs.adw-gtk3;
     };

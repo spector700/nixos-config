@@ -6,6 +6,7 @@
 }:
 let
   cfg = osConfig.modules.display.monitors;
+  pointer = config.home.pointerCursor;
 in
 {
   imports = [ ./binds.nix ];
@@ -36,10 +37,8 @@ in
       ];
 
     env = [
-      "XCURSOR_SIZE,${builtins.toString config.home.pointerCursor.size}"
-      "XCURSOR_THEME,${config.home.pointerCursor.name}"
-      "HYPRCURSOR_THEME,${config.home.pointerCursor.name}"
-      "HYPRCURSOR_SIZE,${builtins.toString config.home.pointerCursor.size}"
+      "HYPRCURSOR_THEME,${pointer.name}"
+      "HYPRCURSOR_SIZE,${toString pointer.size}"
     ];
 
     windowrulev2 = [
@@ -79,11 +78,11 @@ in
     ];
 
     exec-once = [
+      "hyprctl setcursor ${pointer.name} ${toString pointer.size}"
       "koshi"
       "${pkgs.hyprpaper}/bin/hyprpaper"
       "wl-paste --watch cliphist store"
       "${pkgs.wlsunset}/bin/wlsunset -l 32.7 -L -96.9"
-      # "${pkgs.blueman}/bin/blueman-applet"
       "sleep 8 && ${pkgs.vesktop}/bin/vesktop"
       "spotify"
       "nextcloud --background"
