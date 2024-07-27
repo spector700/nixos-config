@@ -17,6 +17,11 @@
 
   # also have to enable the nixos zsh if using the home-manager one
   programs = {
+    git = {
+      enable = true;
+      package = pkgs.gitMinimal;
+    };
+
     zsh = {
       enable = true;
       autosuggestions.enable = true;
@@ -56,7 +61,6 @@
   environment = {
     # packages that will be shared across all users and and all systems
     systemPackages = with pkgs; [
-      git
       curl
       wget
       unzip
