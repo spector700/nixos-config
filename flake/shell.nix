@@ -11,7 +11,7 @@
         # packages available in the dev shell
         inputsFrom = [ config.treefmt.build.devShell ];
 
-        packages = with pkgs; [
+        packages = [
           # the treefmt command
           config.treefmt.build.wrapper
         ];
