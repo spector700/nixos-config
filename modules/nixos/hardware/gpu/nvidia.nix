@@ -45,7 +45,6 @@ in
             { LIBVA_DRIVER_NAME = "nvidia"; }
 
             (mkIf display.isWayland {
-              WLR_NO_HARDWARE_CURSORS = "1";
               __GL_VRR_ALLOWED = "1";
               __GL_GSYNC_ALLOWED = "1";
               # Perhaps breaks firefox

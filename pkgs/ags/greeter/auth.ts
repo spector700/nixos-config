@@ -9,7 +9,6 @@ const loggingin = Variable(false)
 async function login(password: string) {
     const greetd = await Service.import("greetd")
     return greetd.login(userName, password, "Hyprland", [
-        "WLR_NO_HARDWARE_CURSORS=1",
         "_JAVA_AWT_WM_NONREPARENTING=1",
     ])
 }

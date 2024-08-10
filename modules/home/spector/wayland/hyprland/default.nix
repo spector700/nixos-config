@@ -36,11 +36,6 @@ in
         # "ignorealpha 0.5, ^(lumastart)$"
       ];
 
-    env = [
-      "HYPRCURSOR_THEME,${pointer.name}"
-      "HYPRCURSOR_SIZE,${toString pointer.size}"
-    ];
-
     windowrulev2 = [
       # make Firefox PiP window floating and sticky
       "float, title:^(Picture-in-Picture)$"
@@ -83,6 +78,7 @@ in
       "${pkgs.hyprpaper}/bin/hyprpaper"
       "wl-paste --watch cliphist store"
       "${pkgs.wlsunset}/bin/wlsunset -l 32.7 -L -96.9"
+      "${pkgs.blueman}/bin/blueman-applet"
       "sleep 8 && ${pkgs.vesktop}/bin/vesktop"
       "spotify"
       "nextcloud --background"
@@ -92,9 +88,14 @@ in
       gaps_in = 5;
       gaps_out = 5;
       border_size = 1;
-      "col.active_border" = "rgba(bb9af7ff) rgba(b4f9f8ff) 45deg";
-      "col.inactive_border" = "rgba(565f89cc) rgba(9aa5cecc) 45deg";
+      "col.active_border" = "rgba(48A0E6ff)";
+      "col.inactive_border" = "rgba(565f89cc)";
       allow_tearing = true;
+    };
+
+    # Fix the cursor lagging on nvidia
+    cursor = {
+      no_hardware_cursors = true;
     };
 
     decoration = {
@@ -130,7 +131,7 @@ in
     input = {
       # focus change on cursor move
       follow_mouse = 1;
-      sensitivity = -0.6;
+      sensitivity = -0.44;
       accel_profile = "flat";
     };
 
@@ -161,6 +162,6 @@ in
       no_direct_scanout = false;
     };
 
-    xwayland.force_zero_scaling = true;
+    xwayland.force_zero_scaling = false;
   };
 }
