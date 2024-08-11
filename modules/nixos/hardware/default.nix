@@ -27,7 +27,7 @@ in
           ]);
         default = null;
         description = ''
-          The manifaturer/type of the primary system CPU.
+          The manufacturer/type of the primary system CPU.
 
           Determines which ucode services will be enabled and provides additional kernel packages
         '';
@@ -65,7 +65,7 @@ in
           ]);
         default = null;
         description = ''
-          The manifaturer/type of the primary system GPU. 
+          The manufacturer/type of the primary system GPU.
         '';
       };
     };

@@ -1,5 +1,5 @@
 # custom functions or variables usable with
-# {lib', ...}: 
+# {lib', ...}:
 # lib'.<thing> or inherit (lib') <thing>;
 {
   # check if the host platform is linux and x86

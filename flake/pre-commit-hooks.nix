@@ -31,6 +31,10 @@ in
         luacheck = mkHook "luacheck" { enable = true; };
 
         detect-private-keys = mkHook "detect-private-keys" { enable = true; };
+        trim-trailing-whitespace = mkHook "trim-trailing-whitespace" { enable = true; };
+        check-case-conflicts = mkHook "check-case-conflict" { enable = true; };
+        check-symlinks = mkHook "check-symlinks" { enable = true; };
+        end-of-file-fixer = mkHook "end-of-file-fixer" { enable = true; };
 
         treefmt = mkHook "treefmt" { enable = true; };
       };

@@ -9,8 +9,8 @@
         NIX_CONFIG = "extra-experimental-features = nix-command flakes repl-flake";
 
         # packages available in the dev shell
-        inputsFrom = [ config.treefmt.build.devShell ];
-
+        # inputsFrom = [ config.treefmt.build.devShell ];
+        #
         packages = [
           # the treefmt command
           config.treefmt.build.wrapper
