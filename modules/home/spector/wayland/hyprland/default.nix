@@ -159,7 +159,10 @@ in
       key_press_enables_dpms = true;
       mouse_move_enables_dpms = true;
       vrr = 1;
-      no_direct_scanout = false;
+    };
+
+    render = {
+      direct_scanout = true;
     };
 
     xwayland.force_zero_scaling = false;
