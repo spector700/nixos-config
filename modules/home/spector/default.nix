@@ -14,7 +14,7 @@ in
     ./services
     ./shell
     ./themes
-    ./editors/neovim
+    ./editors
     ./wayland
   ];
 
