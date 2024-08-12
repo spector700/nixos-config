@@ -37,8 +37,6 @@ let
     # slurp
     wf-recorder
     wl-clipboard
-    # wayshot
-    # swappy
     hyprpicker
     pwvucontrol
     networkmanager
@@ -60,7 +58,7 @@ let
   config = buildNpmPackage {
     inherit name version;
     src = ./.;
-    npmDepsHash = "sha256-06Lb6hmCPsJt1MIkTYg+pJbAIgnKzftf9e2Iygipr6c=";
+    npmDepsHash = "sha256-3SFxukPdb9SpStCvmMDwfCw12VYfdCVJDmWQVw16/Aw=";
     dontNpmBuild = true;
 
     buildPhase = ''

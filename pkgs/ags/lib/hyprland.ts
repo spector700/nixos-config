@@ -1,15 +1,20 @@
 import options from "options"
+
 const { messageAsync } = await Service.import("hyprland")
 
-const { hyprland } = options
+// const { hyprland } = options
 const {
     spacing,
     radius,
     border: { width },
     blur,
     shadows,
-    dark: { primary: { bg: darkActive } },
-    light: { primary: { bg: lightActive } },
+    dark: {
+        primary: { bg: darkActive },
+    },
+    light: {
+        primary: { bg: lightActive },
+    },
     scheme,
 } = options.theme
 
@@ -25,18 +30,13 @@ const deps = [
     scheme.id,
 ]
 
-export default function init() {
-    options.handler(deps, setupHyprland)
-    setupHyprland()
-}
-
-function activeBorder() {
-    const color = scheme.value === "dark"
-        ? darkActive.value
-        : lightActive.value
-
-    return color.replace("#", "")
-}
+// function activeBorder() {
+//     const color = scheme.value === "dark"
+//         ? darkActive.value
+//         : lightActive.value
+//
+//     return color.replace("#", "")
+// }
 
 function sendBatch(batch: string[]) {
     const cmd = batch
@@ -48,24 +48,32 @@ function sendBatch(batch: string[]) {
 }
 
 async function setupHyprland() {
-    const wm_gaps = Math.floor(hyprland.gaps.value * spacing.value)
+    // const wm_gaps = Math.floor(hyprland.gaps.value * spacing.value)
 
-    sendBatch([
-        `general:border_size ${width.value}`,
-        `general:gaps_out ${wm_gaps}`,
-        `general:gaps_in ${Math.floor(wm_gaps / 2)}`,
-        `general:col.active_border rgba(${activeBorder()}ff)`,
-        `general:col.inactive_border rgba(${hyprland.inactiveBorder.value})`,
-        `decoration:rounding ${radius.value}`,
-        `decoration:drop_shadow ${shadows.value ? "yes" : "no"}`,
-    ])
+    // sendBatch([
+    //     `general:border_size ${width.value}`,
+    //     `general:gaps_out ${wm_gaps}`,
+    //     `general:gaps_in ${Math.floor(wm_gaps / 2)}`,
+    //     `general:col.active_border rgba(${activeBorder()}ff)`,
+    //     `general:col.inactive_border rgba(${hyprland.inactiveBorder.value})`,
+    //     `decoration:rounding ${radius.value}`,
+    //     `decoration:drop_shadow ${shadows.value ? "yes" : "no"}`,
+    // ])
 
     await sendBatch(App.windows.map(({ name }) => `layerrule unset, ${name}`))
 
     if (blur.value > 0) {
-        sendBatch(App.windows.flatMap(({ name }) => [
-            `layerrule unset, ${name}`,
-            `layerrule blur, ${name}`,
-            `layerrule ignorealpha ${/* based on shadow color */.29}, ${name}`,
-        ]))
-    }}
+        sendBatch(
+            App.windows.flatMap(({ name }) => [
+                `layerrule unset, ${name}`,
+                `layerrule blur, ${name}`,
+                `layerrule ignorealpha ${/* based on shadow color */ 0.29}, ${name}`,
+            ]),
+        )
+    }
+}
+
+export default function init() {
+    options.handler(deps, setupHyprland)
+    setupHyprland()
+}
