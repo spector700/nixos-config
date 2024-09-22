@@ -6,8 +6,8 @@
 }:
 let
   # variant = config.theme.name;
-  variant = "dark";
-  colors = config.programs.matugen.theme.colors.colors.${variant};
+  # variant = "dark";
+  # colors = config.programs.matugen.theme.colors.colors.${variant};
   inherit (lib) optionals head filter;
   inherit (osConfig.modules.display) monitors;
 
@@ -39,12 +39,12 @@ in
 
           outline_thickness = 2;
 
-          outer_color = "rgb(${colors.primary})";
-          inner_color = "rgb(${colors.on_primary_container})";
-          font_color = "rgb(${colors.primary_container})";
+          # outer_color = "rgb(${colors.primary})";
+          # inner_color = "rgb(${colors.on_primary_container})";
+          # font_color = "rgb(${colors.primary_container})";
 
           fade_on_empty = false;
-          placeholder_text = ''<span font_family="${font_family}" foreground="##${colors.primary_container}">Password...</span>'';
+          # placeholder_text = ''<span font_family="${font_family}" foreground="##${colors.primary_container}">Password...</span>'';
 
           dots_spacing = 0.3;
           dots_center = true;
@@ -57,7 +57,7 @@ in
           text = "$TIME";
           inherit font_family;
           font_size = 50;
-          color = "rgb(${colors.primary})";
+          # color = "rgb(${colors.primary})";
 
           position = "0, 150";
 
@@ -69,7 +69,7 @@ in
           text = "cmd[update:3600000] date +'%a %b %d'";
           inherit font_family;
           font_size = 20;
-          color = "rgb(${colors.primary})";
+          # color = "rgb(${colors.primary})";
 
           position = "0, 50";
 
