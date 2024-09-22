@@ -17,7 +17,10 @@ in
       users.${user} = {
         # System User
         isNormalUser = true;
-        extraGroups = [ "wheel" ] ++ optionals config.networking.networkmanager.enable [ "networkmanager" ];
+        extraGroups = [
+          "wheel"
+          "dialout" # for USB Serial
+        ] ++ optionals config.networking.networkmanager.enable [ "networkmanager" ];
         # initialPassword = "changeme";
         hashedPasswordFile = config.sops.secrets.spector-password.path;
         shell = pkgs.zsh; # Default shell
