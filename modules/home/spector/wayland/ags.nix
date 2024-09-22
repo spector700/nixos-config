@@ -7,12 +7,7 @@ in
 
   home.packages = with pkgs; [
     koshi
-    # inputs.matugen.packages.${pkgs.system}.default
-    # dart-sass
     gtk3 # gtk-launch
-    # brightnessctl
-    # fd
-    # swww
   ];
 
   programs.ags = {

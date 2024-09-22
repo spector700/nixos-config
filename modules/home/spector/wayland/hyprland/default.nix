@@ -42,7 +42,7 @@ in
       "pin, title:^(Picture-in-Picture)$"
 
       # Force Screen tearing
-      "immediate, class:^(steam_app.*)$"
+      "immediate, class:^(steam_app_[0-9]*)$"
 
       # Application in workspaces
       "workspace 8 silent, title:^(Steam)|(Lutris)$"
@@ -64,9 +64,9 @@ in
       "size 640 400, title:^(splash)$"
 
       # Fix steam menus
-      "float, title:^(Steam Settings)$"
-      # "stayfocused, title:^()$,class:^(steam)$"
-      # "minsize 1 1, title:^()$,class:^(steam)$"
+      # "float, title:^(Steam Settings)$"
+      "stayfocused, title:^()$,class:^(steam)$"
+      "minsize 1 1, title:^()$,class:^(steam)$"
 
       # Opacity
       "opacity 0.94 0.94,class:^(kitty|thunar|code(.*))$"
@@ -81,7 +81,7 @@ in
       "${pkgs.blueman}/bin/blueman-applet"
       "sleep 8 && ${pkgs.vesktop}/bin/vesktop"
       "spotify"
-      "nextcloud --background"
+      "${pkgs.nextcloud-client}/bin/nextcloud --background"
     ];
 
     general = {
@@ -131,7 +131,7 @@ in
     input = {
       # focus change on cursor move
       follow_mouse = 1;
-      sensitivity = -0.44;
+      sensitivity = -0.49;
       accel_profile = "flat";
     };
 
@@ -148,9 +148,14 @@ in
       special_scale_factor = 0.9; # restore old special workspace behaviour
     };
 
+    binds = {
+      movefocus_cycles_fullscreen = false; # when on fullscreen window, movefocus will cycle fullscreen, if not, will move focus in a direction.
+    };
+
     misc = {
       disable_autoreload = true; # autoreload is unnecessary on nixos, because the config is readonly anyway
       disable_hyprland_logo = true;
+      focus_on_activate = true; # Whether Hyprland should focus an app that requests to be focused (an activate request)
 
       enable_swallow = true; # hide windows that spawn other windows
       swallow_regex = "kitty|thunar|wezterm"; # windows for which swallow is applied
@@ -163,8 +168,11 @@ in
 
     render = {
       direct_scanout = true;
+      # Fix screen freezing on nvidia
+      explicit_sync_kms = false;
     };
 
-    xwayland.force_zero_scaling = false;
+    # fix bad resolution on games
+    xwayland.force_zero_scaling = true;
   };
 }

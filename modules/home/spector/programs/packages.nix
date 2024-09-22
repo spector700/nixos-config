@@ -12,7 +12,6 @@
     gimp
 
     signal-desktop
-    nextcloud-client
     obsidian
     anki
     vial
