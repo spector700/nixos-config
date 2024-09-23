@@ -13,7 +13,7 @@ in
     ./programs
     ./services
     ./shell
-    ./themes
+    ./theming
     ./editors
     ./wayland
   ];
