@@ -10,7 +10,7 @@ let
   inherit (config.modules) display;
   cfg = config.modules.hardware;
 
-  nvidiaPackage = config.boot.kernelPackages.nvidiaPackages.production;
+  nvidiaPackage = config.boot.kernelPackages.nvidiaPackages.latest;
 in
 {
   config =
@@ -20,25 +20,7 @@ in
         "hybrid-nv"
       ])
       {
-        services.xserver = mkMerge [
-          { videoDrivers = [ "nvidia" ]; }
-
-          # xorg settings
-          (mkIf (!display.isWayland) {
-            # disable DPMS
-            monitorSection = ''
-              Option "DPMS" "false"
-            '';
-
-            # disable screen blanking in general
-            serverFlagsSection = ''
-              Option "StandbyTime" "0"
-              Option "SuspendTime" "0"
-              Option "OffTime" "0"
-              Option "BlankTime" "0"
-            '';
-          })
-        ];
+        services.xserver = mkMerge [ { videoDrivers = [ "nvidia" ]; } ];
 
         environment = {
           sessionVariables = mkMerge [
@@ -67,7 +49,7 @@ in
             # vulkan
             vulkan-tools
             vulkan-loader
-            vulkan-validation-layers
+            # vulkan-validation-layers
             vulkan-extension-layer
 
             # libva
@@ -76,10 +58,42 @@ in
           ];
         };
 
+        # Fix for firefox crashing on 560
+        # environment.etc =
+        #   let
+        #     mkEglFile =
+        #       n: library:
+        #       let
+        #         suffix = lib.optionalString (library != "wayland") ".1";
+        #         pkg = if library != "wayland" then config.hardware.nvidia.package else pkgs.egl-wayland;
+        #
+        #         fileName = "${toString n}_nvidia_${library}.json";
+        #         library_path = "${pkg}/lib/libnvidia-egl-${library}.so${suffix}";
+        #       in
+        #       {
+        #         "egl/egl_external_platform.d/${fileName}".source = pkgs.writeText fileName (
+        #           builtins.toJSON {
+        #             file_format_version = "1.0.0";
+        #             ICD = {
+        #               inherit library_path;
+        #             };
+        #           }
+        #         );
+        #       };
+        #   in
+        #   {
+        #     "egl/egl_external_platform.d".enable = false;
+        #   }
+        #   // mkEglFile 10 "wayland"
+        #   // mkEglFile 15 "gbm"
+        #   // mkEglFile 20 "xcb"
+        #   // mkEglFile 20 "xlib";
+
         hardware = {
           nvidia = {
             package = mkDefault nvidiaPackage;
             modesetting.enable = mkDefault true;
+            open = false;
 
             prime.offload =
               let
@@ -97,7 +111,6 @@ in
 
             nvidiaSettings = false;
             nvidiaPersistenced = true;
-            forceFullCompositionPipeline = true;
           };
         };
       };
