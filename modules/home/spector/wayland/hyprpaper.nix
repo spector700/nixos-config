@@ -6,8 +6,8 @@
 }:
 {
   xdg.configFile."hypr/hyprpaper.conf".text = ''
-    preload = ${config.theme.wallpaper}
-    wallpaper = , ${config.theme.wallpaper}
+    preload = ${config.modules.theme.wallpaper}
+    wallpaper = , ${config.modules.theme.wallpaper}
   '';
 
   systemd.user.services.hyprpaper = {

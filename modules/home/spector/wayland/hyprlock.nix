@@ -22,7 +22,7 @@ in
       background = [
         {
           monitor = "";
-          path = builtins.toString config.theme.wallpaper;
+          path = builtins.toString config.modules.theme.wallpaper;
           blur_passes = 3;
           blur_size = 6;
         }

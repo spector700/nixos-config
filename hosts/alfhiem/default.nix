@@ -20,6 +20,11 @@
 
   networking.hostName = "alfhiem";
 
+  # home-manager modules
+  home-manager.users.${config.modules.os.mainUser}.config.modules = {
+    theme.wallpaper = ../../modules/home/spector/theming/wallpaper;
+  };
+
   modules = {
     hardware = {
       cpu.type = "amd";
@@ -96,6 +101,4 @@
     };
   };
 
-  # import home.nix for this host
-  home-manager.users.${config.modules.os.mainUser} = import ./home.nix;
 }
