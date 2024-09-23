@@ -64,12 +64,8 @@ in
       };
     in
     {
-      sudo.fprintAuth = true;
-      hyprlock.fprintAuth = true;
-
       login = {
         enableGnomeKeyring = true;
-        fprintAuth = true;
         inherit gnupg;
       };
 
