@@ -11,7 +11,7 @@ let
   inherit (lib) optionals head filter;
   inherit (osConfig.modules.display) monitors;
 
-  font_family = "Inter";
+  font_family = "JetBrainsMono";
 in
 {
 

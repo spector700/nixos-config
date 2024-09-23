@@ -21,8 +21,8 @@
     };
 
     font = {
-      name = "Inter";
-      package = pkgs.google-fonts.override { fonts = [ "Inter" ]; };
+      name = "JetBrainsMono";
+      package = pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; };
       size = 12;
     };
   };

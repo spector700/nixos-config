@@ -41,12 +41,7 @@ in
           openmoji-black
 
           # nerdfonts
-          (nerdfonts.override {
-            fonts = [
-              "FiraCode"
-              "JetBrainsMono"
-            ];
-          })
+          (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
         ];
         # causes more issues than it solves
         enableDefaultPackages = false;
