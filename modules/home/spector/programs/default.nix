@@ -2,17 +2,12 @@
   imports = [
     ./browsers
     ./rofi
-    ./vesktop
     ./kitty.nix
     ./packages.nix
     ./spicetify.nix
+    ./vesktop
+    ./vscode.nix
     ./zathura.nix
   ];
 
-  programs = {
-    vscode = {
-      enable = true;
-      enableExtensionUpdateCheck = true;
-    };
-  };
 }
