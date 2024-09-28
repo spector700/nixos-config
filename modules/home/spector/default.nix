@@ -10,13 +10,13 @@ in
 {
   imports = [
     inputs.spicetify.homeManagerModules.default
+    ./desktops
     ./programs
     ./roles
     ./services
     ./shell
     ./theming
     ./editors
-    ./wayland
   ];
 
   home = {
