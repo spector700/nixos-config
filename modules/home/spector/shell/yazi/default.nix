@@ -1,17 +1,5 @@
-{ config, pkgs, ... }:
-let
-  flavors = pkgs.fetchFromGitHub {
-    owner = "yazi-rs";
-    repo = "flavors";
-    rev = "";
-    hash = "sha256-QpQnOmEeIdUd8OeY3u2BpnfJXz/7v0GbspV475p1gBE=";
-  };
-in
+{ config, ... }:
 {
-  home.file.".config/yazi/flavors/catppuccin-mocha.yazi" = {
-    source = "${flavors}/catppuccin-mocha.yazi";
-    recursive = true;
-  };
 
   imports = [ ./plugins/starship.nix ];
 
@@ -19,10 +7,7 @@ in
   programs.yazi = {
     enable = true;
 
-    enableBashIntegration = config.programs.bash.enable;
     enableZshIntegration = config.programs.zsh.enable;
-
-    theme.flavor.use = "catppuccin-mocha";
 
     keymap = {
       manager.prepend_keymap = [
