@@ -10,7 +10,7 @@ in
 {
   imports = [
     inputs.spicetify.homeManagerModules.default
-    ./desktops
+    ./desktop
     ./programs
     ./roles
     ./services
