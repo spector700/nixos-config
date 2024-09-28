@@ -12,7 +12,7 @@ let
     head
     filter
     ;
-  cfg = config.modules.desktops.hyprpaper;
+  cfg = config.modules.desktop.hyprpaper;
   primaryWall = config.modules.theme.wallpaper;
 
   inherit (osConfig.modules.display) monitors;
@@ -21,7 +21,7 @@ let
   primaryMonitor = optionals (monitors != [ ]) (head (filter (x: x.primary or false) monitors)).name;
 in
 {
-  options.modules.desktops.hyprpaper = {
+  options.modules.desktop.hyprpaper = {
     enable = mkEnableOption "Enable the hyprpaper service";
   };
 
@@ -34,20 +34,4 @@ in
       };
     };
   };
-  # xdg.configFile."hypr/hyprpaper.conf".text = ''
-  #   preload = ${config.modules.theme.wallpaper}
-  #   wallpaper = , ${config.modules.theme.wallpaper}
-  # '';
-  #
-  # systemd.user.services.hyprpaper = {
-  #   Unit = {
-  #     Description = "Hyprland wallpaper daemon";
-  #     PartOf = [ "graphical-session.target" ];
-  #   };
-  #   Service = {
-  #     ExecStart = "${lib.getExe pkgs.hyprpaper}";
-  #     Restart = "on-failure";
-  #   };
-  #   Install.WantedBy = [ "graphical-session.target" ];
-  # };
 }
