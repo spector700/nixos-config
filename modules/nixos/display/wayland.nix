@@ -7,13 +7,13 @@
 let
   inherit (lib) mkMerge mkIf optionalString;
 
-  cfg = config.modules.display;
+  cfg = config.modules.display.desktop;
 in
 {
   config = mkMerge [
     (mkIf cfg.isWayland {
       environment.etc."greetd/environments".text = ''
-        ${optionalString (cfg.desktop == "Hyprland") "Hyprland"}
+        ${optionalString cfg.hyprland.enable "Hyprland"}
         zsh
       '';
 
@@ -30,7 +30,7 @@ in
     })
 
     # Session for greetd
-    (mkIf (cfg.desktop == "Hyprland") {
+    (mkIf cfg.hyprland.enable {
       services.displayManager.sessionPackages = [ pkgs.hyprland ];
 
       xdg.portal = {

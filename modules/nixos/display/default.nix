@@ -1,7 +1,12 @@
 { lib, config, ... }:
 let
-  inherit (lib) mkOption types;
-  cfg = config.modules.display;
+  inherit (lib)
+    optionalString
+    mkEnableOption
+    mkOption
+    types
+    ;
+  cfg = config.modules.display.desktop;
 in
 {
   imports = [
@@ -11,26 +16,24 @@ in
     ./wayland.nix
   ];
 
-  options.modules.display = {
-    desktop = mkOption {
-      type = types.enum [
-        "none"
-        "Hyprland"
-      ];
-      default = "none";
-      description = ''
-        The desktop environment to be used.
-      '';
-    };
+  options.modules.display.desktop = {
+    hyprland.enable = mkEnableOption "Enable the hyprland desktop";
 
     isWayland = mkOption {
       type = types.bool;
-      # default = with cfg.desktops; (sway.enable || hyprland.enable);
-      default = cfg.desktop == "Hyprland";
+      default = cfg.hyprland.enable;
       description = ''
         Whether to enable Wayland exclusive modules, this contains a wariety
         of packages, modules, overlays, XDG portals and so on.
       '';
+    };
+
+    # Add the command of each desktop for stuff like greetd
+    command = mkOption {
+      type = types.str;
+      default = "
+        ${optionalString cfg.hyprland.enable "Hyprland"}
+        ";
     };
   };
 }

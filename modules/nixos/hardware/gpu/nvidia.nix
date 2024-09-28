@@ -7,7 +7,7 @@
 let
   inherit (lib) mkIf mkDefault mkMerge;
 
-  inherit (config.modules) display;
+  inherit (config.modules.display) desktop;
   cfg = config.modules.hardware;
 
   nvidiaPackage = config.boot.kernelPackages.nvidiaPackages.latest;
@@ -26,19 +26,19 @@ in
           sessionVariables = mkMerge [
             { LIBVA_DRIVER_NAME = "nvidia"; }
 
-            (mkIf display.isWayland {
+            (mkIf desktop.isWayland {
               __GL_VRR_ALLOWED = "1";
               __GL_GSYNC_ALLOWED = "1";
               # Perhaps breaks firefox
               # GBM_BACKEND = "nvidia-drm";
             })
 
-            (mkIf (display.isWayland && (cfg.gpu == "hybrid-nv")) {
+            (mkIf (desktop.isWayland && (cfg.gpu == "hybrid-nv")) {
               #__NV_PRIME_RENDER_OFFLOAD = "1";
               #WLR_DRM_DEVICES = mkDefault "/dev/dri/card1:/dev/dri/card0";
             })
 
-            (mkIf (display.isWayland && (cfg == "vm")) { WLR_RENDERER_ALLOW_SOFTWARE = "1"; })
+            (mkIf (desktop.isWayland && (cfg == "vm")) { WLR_RENDERER_ALLOW_SOFTWARE = "1"; })
           ];
           systemPackages = with pkgs; [
             nvtopPackages.nvidia

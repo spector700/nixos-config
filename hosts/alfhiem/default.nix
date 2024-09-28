@@ -21,7 +21,6 @@
 
   # home-manager modules
   home-manager.users.${config.modules.os.mainUser}.config = {
-    roles.desktop.enable = true;
     modules = {
       theme.wallpaper = ../../modules/home/spector/theming/wallpaper;
     };
@@ -41,7 +40,7 @@
     display = {
       gpuAcceleration.enable = true;
 
-      desktop = "Hyprland";
+      desktop.hyprland.enable = true;
       monitors = [
         {
           name = "DP-2";
