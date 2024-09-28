@@ -75,6 +75,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Color theming
+    stylix.url = "github:danth/stylix";
     # persist files on boot
     impermanence.url = "github:nix-community/impermanence";
     # create nix project automaticly

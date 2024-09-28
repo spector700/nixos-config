@@ -22,7 +22,7 @@ let
     };
   };
 
-  defaultFont = "${config.gtk.font.name},${builtins.toString config.gtk.font.size}";
+  defaultFont = "${config.stylix.fonts.monospace.name},${builtins.toString config.stylix.fonts.sizes.applications}";
 in
 {
   qt = {

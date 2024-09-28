@@ -3,10 +3,6 @@
   programs.zathura = {
     enable = true;
     options = {
-      recolor-lightcolor = "rgba(0,0,0,0)";
-      default-bg = "rgba(0,0,0,0.7)";
-
-      # font = "Lexend 12";
       selection-notification = true;
 
       selection-clipboard = "clipboard";

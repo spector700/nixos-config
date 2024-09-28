@@ -14,6 +14,8 @@ in
     # tell home-manager to be as verbose as possible
     verbose = true;
 
+    backupFileExtension = "backup";
+
     # use the system configuration’s pkgs argument
     # this ensures parity between nixos' pkgs and hm's pkgs
     useGlobalPkgs = true;

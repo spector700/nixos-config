@@ -11,6 +11,7 @@ in
   imports = [
     inputs.spicetify.homeManagerModules.default
     ./programs
+    ./roles
     ./services
     ./shell
     ./theming

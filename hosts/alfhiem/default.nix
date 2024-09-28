@@ -20,8 +20,11 @@
   networking.hostName = "alfhiem";
 
   # home-manager modules
-  home-manager.users.${config.modules.os.mainUser}.config.modules = {
-    theme.wallpaper = ../../modules/home/spector/theming/wallpaper;
+  home-manager.users.${config.modules.os.mainUser}.config = {
+    roles.desktop.enable = true;
+    modules = {
+      theme.wallpaper = ../../modules/home/spector/theming/wallpaper;
+    };
   };
 
   modules = {
