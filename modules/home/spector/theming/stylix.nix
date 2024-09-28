@@ -36,6 +36,13 @@ in
         size = 20;
       };
 
+      opacity = {
+        applications = 1.0;
+        terminal = 0.95;
+        desktop = 1.0;
+        popups = 1.0;
+      };
+
       fonts = {
         sizes = {
           terminal = 12;
