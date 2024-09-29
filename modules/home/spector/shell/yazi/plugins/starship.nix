@@ -1,60 +1,49 @@
-{ pkgs, ... }:
-let
-  starshipSrc = pkgs.fetchFromGitHub {
-    owner = "Rolv-Apneseth";
-    repo = "starship.yazi";
-    rev = "";
-    hash = "sha256-oHoBq7BESjGeKsaBnDt0TXV78ggGCdYndLpcwwQ8Zts=";
-  };
-in
 {
   config = {
-    xdg.configFile."yazi/plugins/starship.yazi" = {
-      source = starshipSrc;
-      recursive = true;
-    };
 
-    xdg.configFile."yazi/init.lua" = {
-      text = ''
-        require("starship"):setup()
+    xdg.configFile."yazi/init.lua".text = ''
+      require("starship"):setup()
 
-        function Manager:render(area)
-            local chunks = self:layout(area)
+      local old_build = Tab.build
+      Tab.build = function(self, ...)
+          local bar = function(c, x, y)
+              if x <= 0 or x == self._area.w - 1 then
+                  return ui.Bar(ui.Rect.default, ui.Bar.TOP)
+              end
 
-            local bar = function(c, x, y)
-                x, y = math.max(0, x), math.max(0, y)
-                return ui.Bar( ui.Rect({
-                        x = x,
-                        y = y,
-                        w = ya.clamp(0, area.w - x, 1),
-                        h = math.min(1, area.h),
-                    }),
-                    ui.Bar.TOP
-                ):symbol(c)
-            end
+              return ui.Bar(
+                  ui.Rect({
+                      x = x,
+                      y = math.max(0, y),
+                      w = ya.clamp(0, self._area.w - x, 1),
+                      h = math.min(1, self._area.h),
+                  }),
+                  ui.Bar.TOP
+              ):symbol(c)
+          end
 
-            return ya.flat({
-                ui.Bar(chunks[1], ui.Bar.RIGHT)
-                    :symbol(THEME.manager.border_symbol)
-                    :style(THEME.manager.border_style),
-                ui.Bar(chunks[3], ui.Bar.LEFT)
-                    :symbol(THEME.manager.border_symbol)
-                    :style(THEME.manager.border_style),
+          local c = self._chunks
+          self._chunks = {
+              c[1]:padding(ui.Padding.y(1)),
+              c[2]:padding(ui.Padding(c[1].w > 0 and 0 or 1, c[3].w > 0 and 0 or 1, 1, 1)),
+              c[3]:padding(ui.Padding.y(1)),
+          }
 
-                bar(" ", chunks[1].right - 1, chunks[1].y),
-                bar(" ", chunks[1].right - 1, chunks[1].bottom - 1),
-                bar(" ", chunks[2].right, chunks[2].y),
-                bar(" ", chunks[2].right, chunks[1].bottom - 1),
+          local style = THEME.manager.border_style
+          self._base = ya.list_merge(self._base or {}, {
+              -- Enable for full border
+              --[[ ui.Border(self._area, ui.Border.ALL):type(ui.Border.ROUNDED):style(style), ]]
+              ui.Bar(self._chunks[1], ui.Bar.RIGHT):style(style),
+              ui.Bar(self._chunks[3], ui.Bar.LEFT):style(style),
 
-                -- Parent
-                Parent:render(chunks[1]:padding(ui.Padding.xy(1))),
-                -- Current
-                Current:render(chunks[2]:padding(ui.Padding.y(1))),
-                -- Preview
-                Preview:render(chunks[3]:padding(ui.Padding.xy(1))),
-            })
+              bar(" ", c[1].right - 1, c[1].y),
+              bar(" ", c[1].right - 1, c[1].bottom - 1),
+              bar(" ", c[2].right, c[2].y),
+              bar(" ", c[2].right, c[1].bottom - 1),
+          })
+
+          old_build(self, ...)
         end
-      '';
-    };
+    '';
   };
 }

@@ -1,4 +1,4 @@
-{ config, ... }:
+{ inputs, config, ... }:
 {
 
   imports = [ ./plugins/starship.nix ];
@@ -8,6 +8,9 @@
     enable = true;
 
     enableZshIntegration = config.programs.zsh.enable;
+    plugins = {
+      starship = "${inputs.starship-yazi}";
+    };
 
     keymap = {
       manager.prepend_keymap = [

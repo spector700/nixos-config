@@ -75,6 +75,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # plugin to show the starship prompt in yazi
+    starship-yazi = {
+      url = "github:Rolv-Apneseth/starship.yazi";
+      flake = false;
+    };
+
     # Color theming
     stylix.url = "github:danth/stylix";
     # persist files on boot
