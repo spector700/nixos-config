@@ -27,17 +27,11 @@ in
       m: map (x: "${toString x},monitor:${m.name}") m.workspaces
     ) monitors;
 
-    layerrule =
-      let
-        layers = "^(lumastart)$";
-      in
-      [
-        "blur, ${layers}"
-        "xray 1, ^(bar)$"
-        # "ignorealpha 0.2, ${layers}"
-        "ignorezero, ^(layers)$"
-        # "ignorealpha 0.5, ^(lumastart)$"
-      ];
+    layerrule = [
+      "blur, ^(lumastart)|(bar)$"
+      "xray 1, ^(bar)$"
+      "ignorezero, ^(lumastart)$"
+    ];
 
     windowrulev2 = [
       # make Firefox PiP window floating and sticky
@@ -67,7 +61,6 @@ in
       "size 640 400, title:^(splash)$"
 
       # Fix steam menus
-      # "float, title:^(Steam Settings)$"
       "stayfocused, title:^()$,class:^(steam)$"
       "minsize 1 1, title:^()$,class:^(steam)$"
 
@@ -78,10 +71,8 @@ in
     exec-once = [
       "hyprctl setcursor ${pointer.name} ${toString pointer.size}"
       "koshi"
-      "${pkgs.hyprpaper}/bin/hyprpaper"
       "wl-paste --watch cliphist store"
       "${pkgs.wlsunset}/bin/wlsunset -l 32.7 -L -96.9"
-      # "${pkgs.blueman}/bin/blueman-applet"
       "sleep 8 && ${pkgs.vesktop}/bin/vesktop"
       "spotify"
       "${pkgs.nextcloud-client}/bin/nextcloud --background"
@@ -91,8 +82,6 @@ in
       gaps_in = 5;
       gaps_out = 5;
       border_size = 1;
-      # "col.active_border" = "rgba(48A0E6ff)";
-      # "col.inactive_border" = "rgba(565f89cc)";
       allow_tearing = true;
     };
 
@@ -119,7 +108,6 @@ in
 
       shadow_offset = "0 2";
       shadow_range = 20;
-      # "col.shadow" = "rgba(00000055)";
     };
 
     animations = {
