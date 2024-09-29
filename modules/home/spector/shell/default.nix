@@ -5,6 +5,7 @@
     ./yazi
     ./zellij
     ./git.nix
+    ./kitty.nix
     ./ssh.nix
     ./starship.nix
     ./zsh.nix
