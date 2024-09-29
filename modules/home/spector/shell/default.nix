@@ -3,6 +3,7 @@
   imports = [
     ./tools
     ./yazi
+    ./zellij
     ./git.nix
     ./ssh.nix
     ./starship.nix
