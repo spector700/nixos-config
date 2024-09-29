@@ -3,7 +3,6 @@
 # Do not forget to enable Steam capatability for all title in the settings menu
 #
 {
-  inputs,
   pkgs,
   lib,
   config,
@@ -12,22 +11,15 @@
 let
   inherit (lib) mkIf mkEnableOption;
 
-  cfg = config.modules.programs.gaming;
+  cfg = config.modules.roles.gaming;
   user = config.modules.os.mainUser;
 in
 {
-  options.modules.programs.gaming = {
+  options.modules.roles.gaming = {
     enable = mkEnableOption "Enable packages required for the device to be gaming-ready";
   };
 
   config = mkIf cfg.enable {
-    home-manager.users.${user}.home.packages = with pkgs; [
-      inputs.nix-citizen.packages.${system}.star-citizen
-      lutris
-      prismlauncher # Minecraft
-      bottles
-    ];
-
     boot.kernel.sysctl = {
       # default on some gaming (SteamOS) and desktop (Fedora) distributions
       # might help with gaming performance
@@ -73,6 +65,7 @@ in
           destination = "/etc/udev/rules.d/51-disable-Dualshock-motion-and-trackpad.rules";
         })
       ];
+
       extraRules = ''KERNEL=="vhba_ctl", MODE="0660", OWNER="root", GROUP="cdrom"'';
     };
   };

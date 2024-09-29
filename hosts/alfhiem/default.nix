@@ -27,6 +27,7 @@
   modules = {
     roles = {
       development.enable = true;
+      gaming.enable = true;
     };
 
     hardware = {
@@ -41,8 +42,8 @@
 
     display = {
       gpuAcceleration.enable = true;
-
       desktop.hyprland.enable = true;
+
       monitors = [
         {
           name = "DP-2";
@@ -76,7 +77,6 @@
     };
 
     programs = {
-      gaming.enable = true;
       thunar.enable = true;
     };
 
