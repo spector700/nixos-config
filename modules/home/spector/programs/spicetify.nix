@@ -6,7 +6,6 @@
     in
     {
       enable = true;
-      theme = spicePkgs.themes.blossom;
       enabledExtensions = with spicePkgs.extensions; [
         hidePodcasts
         keyboardShortcut
