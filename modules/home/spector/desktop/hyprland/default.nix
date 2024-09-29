@@ -40,6 +40,9 @@ in
         hyprlock.enable = mkDefault true;
       };
       theme.stylix.enable = mkDefault true;
+      programs = {
+        spicetify.enable = mkDefault true;
+      };
     };
   };
 }
