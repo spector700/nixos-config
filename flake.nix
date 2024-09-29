@@ -93,6 +93,8 @@
     Akari.url = "github:spector700/Akari";
     # gaming tweaks and addons
     gaming.url = "github:fufexan/nix-gaming";
+    # star citizen
+    nix-citizen.url = "github:LovingMelody/nix-citizen";
   };
 
   outputs =
