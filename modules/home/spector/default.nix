@@ -12,6 +12,7 @@ in
     inputs.spicetify.homeManagerModules.default
     ./desktop
     ./programs
+    ./roles
     ./services
     ./shell
     ./theming

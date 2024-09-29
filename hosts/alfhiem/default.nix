@@ -25,6 +25,10 @@
   };
 
   modules = {
+    roles = {
+      development.enable = true;
+    };
+
     hardware = {
       cpu.type = "amd";
       gpu.type = "nvidia";

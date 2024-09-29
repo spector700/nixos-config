@@ -6,6 +6,7 @@
     ./networking
     ./os
     ./programs
+    ./roles
     ./security
     ./services
   ];
