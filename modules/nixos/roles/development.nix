@@ -4,6 +4,6 @@ let
 in
 {
   options.modules.roles.development = {
-    enable = mkEnableOption "Enable the development role";
+    enable = mkEnableOption "Enable the Development role";
   };
 }

@@ -26,6 +26,7 @@
 
   modules = {
     roles = {
+      desktop.enable = true;
       development.enable = true;
       gaming.enable = true;
     };

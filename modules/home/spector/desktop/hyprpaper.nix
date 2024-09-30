@@ -13,13 +13,13 @@ let
     filter
     ;
   cfg = config.modules.desktop.hyprpaper;
-  primaryWall = config.modules.theme.wallpaper;
+  # primaryWall = config.modules.theme.stylix.image;
 
   inherit (osConfig.modules.display) monitors;
 
-  # Get the name of the monitor with "primary = true"
-  primaryMonitor = optionals (monitors != [ ]) (head (filter (x: x.primary or false) monitors)).name;
 in
+# Get the name of the monitor with "primary = true"
+# primaryMonitor = optionals (monitors != [ ]) (head (filter (x: x.primary or false) monitors)).name;
 {
   options.modules.desktop.hyprpaper = {
     enable = mkEnableOption "Enable the hyprpaper service";
@@ -28,10 +28,10 @@ in
   config = mkIf cfg.enable {
     services.hyprpaper = {
       enable = true;
-      settings = {
-        preload = [ "${primaryWall}" ];
-        wallpaper = [ "${primaryMonitor},${primaryWall}" ];
-      };
+      # settings = {
+      #   preload = [ "${primaryWall}" ];
+      #   wallpaper = [ "${primaryMonitor},${primaryWall}" ];
+      # };
     };
   };
 }
