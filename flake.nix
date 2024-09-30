@@ -81,6 +81,11 @@
       flake = false;
     };
 
+    zen-browser = {
+      url = "github:fufexan/zen-browser-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Color theming
     stylix.url = "github:danth/stylix";
     # persist files on boot

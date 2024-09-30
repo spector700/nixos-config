@@ -34,7 +34,7 @@ in
     ];
 
     windowrulev2 = [
-      # make Firefox PiP window floating and sticky
+      # make Firefox/Zen PiP window floating and sticky
       "float, title:^(Picture-in-Picture)$"
       "pin, title:^(Picture-in-Picture)$"
 
@@ -48,8 +48,8 @@ in
 
       # idle inhibit while watching videos
       "idleinhibit focus, class:^(mpv|.+exe|celluloid)$"
-      "idleinhibit focus, class:^(firefox)$, title:^(.*YouTube.*)$"
-      "idleinhibit fullscreen, class:^(firefox)$"
+      "idleinhibit focus, class:^(firefox|zen)$, title:^(.*YouTube.*)$"
+      "idleinhibit fullscreen, class:^(firefox|zen)$"
 
       "dimaround, class:^(gcr-prompter)$"
       "dimaround, class:^(xdg-desktop-portal-gtk)$"

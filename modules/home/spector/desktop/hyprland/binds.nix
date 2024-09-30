@@ -68,7 +68,8 @@ in
       "CTRL SHIFT, Escape, exec, ${pkgs.kitty}/bin/kitty -e btop"
 
       # Programs
-      "$mod, B, exec, ${pkgs.firefox}/bin/firefox"
+      "$mod, B, exec, ${inputs.zen-browser.packages.${pkgs.system}.default}/bin/zen"
+      # "$mod, B, exec, ${pkgs.firefox}/bin/firefox"
       "$mod SHIFT, E, exec, ${pkgs.xfce.thunar}/bin/thunar"
 
       # Launcher
