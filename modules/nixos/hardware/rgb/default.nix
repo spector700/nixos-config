@@ -5,8 +5,10 @@
   ...
 }:
 let
-  inherit (lib) mkEnableOption mkIf mkAfter;
+  inherit (lib) mkEnableOption mkIf;
   cfg = config.modules.hardware;
+
+  profile = "iceie.orp";
 in
 {
   options.modules.hardware = {
@@ -17,15 +19,16 @@ in
     services.hardware.openrgb.enable = true;
 
     # Link profile
-    home-manager.users.${config.modules.os.mainUser} = {
-      xdg.configFile = {
-        "OpenRGB/iceie.orp".source = ./iceie.orp;
-      };
+    environment.etc."OpenRGB/${profile}".source = ./${profile};
 
-      # Autostart for hyprland
-      wayland.windowManager.hyprland.settings = mkIf (config.modules.display.desktop == "Hyprland") {
-        exec-once = mkAfter [ "sleep 5 && ${pkgs.openrgb}/bin/openrgb --profile iceie" ];
+    # start the service
+    systemd.user.services.openrgb = {
+      description = "OpenRGB";
+      wantedBy = [ "graphical-session.target" ];
+      serviceConfig = {
+        ExecStart = "${pkgs.openrgb}/bin/openrgb --profile /etc/OpenRGB/${profile}";
       };
+      restartTriggers = [ "/etc/OpenRGB/${profile}" ];
     };
   };
 }
