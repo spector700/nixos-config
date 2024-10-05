@@ -75,7 +75,7 @@ in
       "${pkgs.wlsunset}/bin/wlsunset -l 32.7 -L -96.9"
       "sleep 8 && ${pkgs.vesktop}/bin/vesktop"
       "spotify"
-      "${pkgs.nextcloud-client}/bin/nextcloud --background"
+      # "${pkgs.nextcloud-client}/bin/nextcloud --background"
     ];
 
     general = {
