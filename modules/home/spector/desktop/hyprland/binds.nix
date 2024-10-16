@@ -74,7 +74,9 @@ in
 
       # Launcher
       "$mod, Space, exec, pkill lumastart || ${lumastart}"
-      "$mod, V, exec, pkill rofi || ${pkgs.cliphist}/bin/cliphist list | rofi -dmenu -display-columns 2 | cliphist decode | wl-copy"
+      #TODO change when cliphist pr merge
+      # "$mod, V, exec, pkill rofi || ${pkgs.cliphist}/bin/cliphist list | rofi -dmenu -display-columns 2 | cliphist decode | wl-copy"
+      "$mod, V, exec, pkill rofi || cliphist list | rofi -dmenu -display-columns 2 | cliphist decode | wl-copy"
 
       # lock screen
       "$mod, L, exec, ${config.programs.hyprlock.package}/bin/hyprlock"

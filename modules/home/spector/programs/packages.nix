@@ -13,7 +13,7 @@
 
     signal-desktop
     obsidian
-    anki
+    anki-bin
     vial
     orca-slicer
     inputs.lumastart.packages.${pkgs.system}.default
