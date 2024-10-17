@@ -20,11 +20,8 @@ in
       environment.variables = {
         NIXOS_OZONE_WL = "1";
         _JAVA_AWT_WM_NONEREPARENTING = "1";
-        QT_QPA_PLATFORM = "wayland";
-        QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
         ANKI_WAYLAND = "1";
-        # For Orca-slicer to actually show
-        WEBKIT_DISABLE_COMPOSITING_MODE = "1";
+        WEBKIT_DISABLE_COMPOSITING_MODE = "1"; # For Orca-slicer to actually show
         WLR_DRM_NO_ATOMIC = "1";
       };
     })
