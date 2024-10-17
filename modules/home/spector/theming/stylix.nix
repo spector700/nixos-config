@@ -25,7 +25,7 @@ in
     stylix = {
       enable = true;
       autoEnable = true;
-      base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
+      base16Scheme = "${pkgs.base16-schemes}/share/themes/tokyo-city-dark.yaml";
       polarity = "dark";
 
       image = config.modules.theme.wallpaper;
