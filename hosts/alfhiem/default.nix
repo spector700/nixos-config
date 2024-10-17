@@ -12,12 +12,17 @@
   ];
 
   boot = {
-    kernelPackages = pkgs.linuxPackages_xanmod_latest;
+    kernelPackages = pkgs.linuxPackages_6_10;
     #For openrgb with gigabyte motherboard
     kernelParams = [ "acpi_enforce_resources=lax" ];
   };
 
   networking.hostName = "alfhiem";
+
+  virtualisation.docker.rootless = {
+    enable = true;
+    setSocketVariable = true;
+  };
 
   # home-manager modules
   home-manager.users.${config.modules.os.mainUser}.config.modules = {
