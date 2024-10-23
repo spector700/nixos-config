@@ -28,7 +28,7 @@ in
         packages = with pkgs; [
           # normal fonts
           noto-fonts
-          noto-fonts-cjk
+          noto-fonts-cjk-sans
           roboto
           material-icons
           material-design-icons
