@@ -25,19 +25,9 @@ in
       grimblast
       wl-clipboard
       wlsunset
-      #TODO change when cliphist pr merge
-      (cliphist.overrideAttrs (_old: {
-        src = pkgs.fetchFromGitHub {
-          owner = "sentriz";
-          repo = "cliphist";
-          rev = "c49dcd26168f704324d90d23b9381f39c30572bd";
-          sha256 = "sha256-2mn55DeF8Yxq5jwQAjAcvZAwAg+pZ4BkEitP6S2N0HY=";
-        };
-        vendorHash = "sha256-M5n7/QWQ5POWE4hSCMa0+GOVhEDCOILYqkSYIGoy/l0=";
-      }))
     ];
 
-    # services.cliphist.enable = true;
+    services.cliphist.enable = true;
 
     wayland.windowManager.hyprland = {
       enable = true;
@@ -49,6 +39,8 @@ in
       QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
       NIXOS_OZONE_WL = "1";
       WEBKIT_DISABLE_COMPOSITING_MODE = "1"; # For Orca-slicer to actually show
+      __EGL_VENDOR_LIBRARY_FILENAMES = "${pkgs.mesa.drivers}/share/glvnd/egl_vendor.d/50_mesa.json";
+      __GLX_VENDOR_LIBRARY_NAME = "mesa";
     };
 
     modules = {
