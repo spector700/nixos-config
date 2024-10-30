@@ -10,7 +10,7 @@ let
   inherit (config.modules.display) desktop;
   cfg = config.modules.hardware;
 
-  nvidiaPackage = config.boot.kernelPackages.nvidiaPackages.latest;
+  nvidiaPackage = config.boot.kernelPackages.nvidiaPackages.beta;
 in
 {
   config =
