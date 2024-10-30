@@ -131,7 +131,7 @@ in
         "n-hdlc" # High-level Data Link Control
         "netrom" # NetRom
         "x25" # X.25
-        "ax25" # Amatuer X.25
+        "ax25" # Amateur X.25
         "rose" # ROSE
         "decnet" # DECnet
         "econet" # Econet
