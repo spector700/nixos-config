@@ -2,6 +2,7 @@
   inputs,
   location,
   lib,
+  pkgs,
   config,
   ...
 }:
@@ -29,11 +30,35 @@
       auto-optimise-store = true;
       builders-use-substitutes = true;
       experimental-features = [
-        "nix-command"
+        # enables flakes, needed for this config
         "flakes"
+
+        # enables the nix3 commands, a requirement for flakes
+        "nix-command"
       ];
-      flake-registry = "/etc/nix/registry.json";
+      # flake-registry = "/etc/nix/registry.json";
+
+      # we don't want to track the registry, but we do want to allow the usage
+      # of the `flake:` references, so we need to enable use-registries
+      use-registries = true;
+      flake-registry = pkgs.writers.writeJSON "flakes-empty.json" {
+        flakes = [ ];
+        version = 2;
+      };
+
+      # let the system decide the number of max jobs
+      max-jobs = "auto";
+
+      # continue building derivations even if one fails
+      keep-going = true;
+
+      # show more log lines for failed builds
+      log-lines = 30;
+
       warn-dirty = false;
+
+      # maximum number of parallel TCP connections used to fetch imports and binary caches, 0 means no limit
+      http-connections = 50;
 
       trusted-users = [
         "root"
@@ -66,10 +91,13 @@
 
   nixpkgs.config = {
     allowUnfree = true;
-    permittedInsecurePackages = [ "electron-25.9.0" ];
+
+    # But occasionally we need to install some anyway so we can predicated those
+    # these are usually packages like electron
+    permittedInsecurePackages = [ ];
   };
 
-  # By default nix-gc makes no effort to respect battery life by avoding
+  # By default nix-gc makes no effort to respect battery life by avoiding
   # GC runs on battery and fully commits a few cores to collecting garbage.
   # This will drain the battery faster than you can say "Nix, what the hell?"
   # and contribute heavily to you wanting to get a new desktop.
@@ -79,5 +107,7 @@
     unitConfig.ConditionACPower = true;
   };
 
+  # this is the NixOS version that the configuration was generated with
+  # this should be change to the version of the NixOS release that the configuration was generated with
   system.stateVersion = "23.05";
 }
