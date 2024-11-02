@@ -1,1 +1,6 @@
-{ imports = [ ./neovim ]; }
+{
+  imports = [
+    ./neovim
+    ./vscode.nix
+  ];
+}

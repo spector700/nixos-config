@@ -2,7 +2,7 @@
   programs = {
     vscode = {
       enable = true;
-      enableExtensionUpdateCheck = true;
     };
   };
+  stylix.targets.vscode.enable = false;
 }
