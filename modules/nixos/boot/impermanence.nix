@@ -32,6 +32,10 @@ in
   };
 
   config = mkIf cfg.enable {
+    #TODO: https://github.com/nix-community/impermanence/issues/229
+    boot.initrd.systemd.suppressedUnits = [ "systemd-machine-id-commit.service" ];
+    systemd.suppressedSystemUnits = [ "systemd-machine-id-commit.service" ];
+
     boot.initrd.postDeviceCommands = mkAfter ''
       mkdir /btrfs_tmp
       mount /dev/root_vg/root /btrfs_tmp
