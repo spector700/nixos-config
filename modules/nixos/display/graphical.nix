@@ -66,6 +66,16 @@ in
         themePackages = [ (pkgs.adi1090x-plymouth-themes.override { selected_themes = [ "lone" ]; }) ];
       };
 
+      # make plymouth work with sleep
+      powerManagement = {
+        powerDownCommands = ''
+          ${pkgs.plymouth} --show-splash
+        '';
+        resumeCommands = ''
+          ${pkgs.plymouth} --quit
+        '';
+      };
+
       programs = {
         partition-manager.enable = true;
         seahorse.enable = true;
