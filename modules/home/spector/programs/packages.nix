@@ -1,4 +1,11 @@
-{ inputs, pkgs, ... }:
+{
+  inputs,
+  pkgs,
+  ...
+}:
+let
+  orca-slicer-beta = pkgs.callPackage ../../../../pkgs/orca-slicer-appimage.nix { };
+in
 {
   home.packages = with pkgs; [
     # Terminal Utils
@@ -15,7 +22,9 @@
     obsidian
     anki-bin
     vial
-    orca-slicer
+    # orca-slicer
+    orca-slicer-beta
+
     inputs.lumastart.packages.${pkgs.system}.default
   ];
 }

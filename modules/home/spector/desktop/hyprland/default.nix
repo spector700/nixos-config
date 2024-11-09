@@ -33,9 +33,9 @@ in
       QT_QPA_PLATFORM = "wayland";
       QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
       NIXOS_OZONE_WL = "1";
-      WEBKIT_DISABLE_COMPOSITING_MODE = "1"; # For Orca-slicer to actually show
-      __EGL_VENDOR_LIBRARY_FILENAMES = "${pkgs.mesa.drivers}/share/glvnd/egl_vendor.d/50_mesa.json";
-      __GLX_VENDOR_LIBRARY_NAME = "mesa";
+      # WEBKIT_DISABLE_COMPOSITING_MODE = "1"; # For Orca-slicer to actually show
+      # __EGL_VENDOR_LIBRARY_FILENAMES = "${pkgs.mesa.drivers}/share/glvnd/egl_vendor.d/50_mesa.json";
+      # __GLX_VENDOR_LIBRARY_NAME = "mesa";
     };
 
     modules = {
