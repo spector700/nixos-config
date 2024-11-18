@@ -29,14 +29,14 @@ in
       enable = true;
       settings = {
         general.hide_cursor = false;
-        background = [
-          {
-            monitor = "";
-            path = builtins.toString config.modules.theme.wallpaper;
-            blur_passes = 3;
-            blur_size = 6;
-          }
-        ];
+        # background = [
+        #   {
+        #     monitor = "";
+        #     path = builtins.toString config.modules.theme.wallpaper;
+        #     blur_passes = 3;
+        #     blur_size = 6;
+        #   }
+        # ];
 
         input-fields = [
           {

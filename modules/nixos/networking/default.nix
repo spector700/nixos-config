@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ pkgs, lib, ... }:
 let
   inherit (lib) mkEnableOption;
 in
@@ -27,6 +27,9 @@ in
     };
 
     # Network wait fails with networkmanager
-    systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;
+    systemd.services.NetworkManager-wait-online.serviceConfig.ExecStart = [
+      ""
+      "${pkgs.networkmanager}/bin/nm-online -q"
+    ];
   };
 }
