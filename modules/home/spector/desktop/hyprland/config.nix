@@ -70,7 +70,7 @@ in
 
     exec-once = [
       "hyprctl setcursor ${pointer.name} ${toString pointer.size}"
-      "koshi"
+      "hyprpanel"
       "wl-paste --watch cliphist store"
       "${pkgs.wlsunset}/bin/wlsunset -l 32.7 -L -96.9"
       "sleep 8 && ${pkgs.vesktop}/bin/vesktop"
@@ -104,9 +104,10 @@ in
 
         popups = true;
       };
-
-      shadow_offset = "0 2";
-      shadow_range = 20;
+      shadow = {
+        offset = "0 2";
+        range = 20;
+      };
     };
 
     animations = {
@@ -132,7 +133,7 @@ in
     };
 
     dwindle = {
-      # keep floating dimentions while tiling
+      # keep floating dimensions while tiling
       pseudotile = true;
       preserve_split = true;
       special_scale_factor = 0.9; # restore old special workspace behaviour

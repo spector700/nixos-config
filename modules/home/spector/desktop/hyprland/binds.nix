@@ -40,7 +40,8 @@ in
     # Binds
     bind = [
       # Compositor
-      "$mod SHIFT, R, exec, ${pkgs.hyprland}/bin/hyprctl reload && koshi quit; koshi"
+      # "$mod SHIFT, R, exec, ${pkgs.hyprland}/bin/hyprctl reload && koshi quit; koshi"
+      "$mod SHIFT, R, exec, ${pkgs.hyprland}/bin/hyprctl reload && hyprpanel quit; hyprpanel"
       "$mod, Q, killactive,"
       "$mod, F, fullscreen,"
       "$mod, G, togglefloating"
@@ -80,7 +81,7 @@ in
       "$mod, L, exec, ${config.programs.hyprlock.package}/bin/hyprlock"
 
       # Power menu
-      ", XF86PowerOff, exec, koshi -t powermenu"
+      ", XF86PowerOff, exec, hyprpanel -t powermenu"
 
       # Screenshot
       ", Print, exec, ${screenshotarea}"
@@ -98,8 +99,8 @@ in
 
     bindle = [
       # Volume
-      ", XF86AudioRaiseVolume, exec, koshi -r 'audio.speaker.volume += 0.05; indicator.speaker()'"
-      ", XF86AudioLowerVolume, exec, koshi -r 'audio.speaker.volume -= 0.05; indicator.speaker()'"
+      ", XF86AudioRaiseVolume, exec, hyprpanel -r 'audio.speaker.volume += 0.05; indicator.speaker()'"
+      ", XF86AudioLowerVolume, exec, hyprpanel -r 'audio.speaker.volume -= 0.05; indicator.speaker()'"
     ];
   };
 }

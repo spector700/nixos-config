@@ -8,30 +8,31 @@ import Verification from "widget/powermenu/Verification"
 import NotificationPopups from "widget/notifications/NotificationPopups"
 import OSD from "widget/osd/OSD"
 import SettingsDialog from "widget/settings/SettingsDialog"
+import { App } from "astal/gtk3"
 import { forMonitors } from "lib/utils"
 import { setupQuickSettings } from "widget/quicksettings/QuickSettings"
 import { setupDateMenu } from "widget/datemenu/DateMenu"
 import { setupAiWindowSettings } from "widget/aiwindow/AiWindow"
 
-App.config({
-    onConfigParsed: () => {
-        setupQuickSettings()
-        setupDateMenu()
-        setupAiWindowSettings()
-        init()
+App.start({
+    main() {
+        forMonitors(Bar),
+        forMonitors(NotificationPopups),
+        forMonitors(OSD),
+        Overview()
+        PowerMenu()
+        Verification()
+        SettingsDialog()
     },
-    closeWindowDelay: {
-        "overview": options.transition.value,
-        "quicksettings": options.transition.value,
-        "datemenu": options.transition.value,
-    },
-    windows: [
-        ...forMonitors(Bar),
-        ...forMonitors(NotificationPopups),
-        ...forMonitors(OSD),
-        Overview(),
-        PowerMenu(),
-        Verification(),
-        SettingsDialog(),
-    ],
+    // onConfigParsed: () => {
+    //     setupQuickSettings()
+    //     setupDateMenu()
+    //     setupAiWindowSettings()
+    //     init()
+    // },
+    // closeWindowDelay: {
+    //     "overview": options.transition.value,
+    //     "quicksettings": options.transition.value,
+    //     "datemenu": options.transition.value,
+    // },
 })

@@ -52,7 +52,7 @@ let
 
   desktop = writeShellScript name ''
     export PATH=$PATH:${addBins dependencies}
-    ${ags}/bin/ags -b ${name} -c ${config}/config.js $@
+    ${ags}/bin/ags run ${config}/config.js
   '';
 
   config = buildNpmPackage {
