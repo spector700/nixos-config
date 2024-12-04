@@ -12,13 +12,6 @@ let
   inherit (config.modules) os;
   inherit (config.modules.display) desktop;
 
-  # make desktop session paths available to greetd
-  # sessionData = config.services.displayManager.sessionData.desktops;
-  # sessionPaths = concatStringsSep ":" [
-  #   "${sessionData}/share/xsessions"
-  #   "${sessionData}/share/wayland-sessions"
-  # ];
-
   initialSession = {
     user = "${os.mainUser}";
     command = "${desktop.command}";

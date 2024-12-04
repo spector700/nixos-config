@@ -1,7 +1,6 @@
 { lib, config, ... }:
 let
   inherit (lib)
-    optionalString
     mkEnableOption
     mkOption
     types
@@ -31,9 +30,7 @@ in
     # Add the command of each desktop for stuff like greetd
     command = mkOption {
       type = types.str;
-      default = "
-        ${optionalString cfg.hyprland.enable "Hyprland"}
-        ";
+      default = "Hyprland";
     };
   };
 }

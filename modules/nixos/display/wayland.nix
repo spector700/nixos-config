@@ -12,10 +12,10 @@ in
 {
   config = mkMerge [
     (mkIf cfg.isWayland {
-      environment.etc."greetd/environments".text = ''
-        ${optionalString cfg.hyprland.enable "Hyprland"}
-        zsh
-      '';
+      # environment.etc."greetd/environments".text = ''
+      #   ${optionalString cfg.hyprland.enable "Hyprland"}
+      #   zsh
+      # '';
 
       environment.variables = {
         NIXOS_OZONE_WL = "1";
@@ -28,7 +28,8 @@ in
 
     # Session for greetd
     (mkIf cfg.hyprland.enable {
-      services.displayManager.sessionPackages = [ pkgs.hyprland ];
+      # services.displayManager.sessionPackages = [ pkgs.hyprland ];
+      programs.hyprland.enable = true;
 
       xdg.portal = {
         enable = true;
@@ -39,9 +40,9 @@ in
           "org.freedesktop.impl.portal.Screenshot" = [ "hyprland" ];
           "org.freedesktop.portal.FileChooser" = [ "xdg-desktop-portal-gtk" ];
         };
-        extraPortals = [
-          pkgs.xdg-desktop-portal-hyprland
-          pkgs.xdg-desktop-portal-gtk
+        extraPortals = with pkgs; [
+          xdg-desktop-portal-hyprland
+          xdg-desktop-portal-gtk
         ];
       };
 
