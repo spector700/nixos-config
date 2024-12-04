@@ -24,41 +24,6 @@ in
     })
 
     (mkIf (cfg != "none") {
-      fonts = {
-        packages = with pkgs; [
-          # normal fonts
-          noto-fonts
-          noto-fonts-cjk-sans
-          roboto
-          material-icons
-          material-design-icons
-          inter
-
-          # emojis
-          noto-fonts-color-emoji
-          twemoji-color-font
-          openmoji-color
-          openmoji-black
-
-          # nerdfonts
-          (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
-        ];
-        # causes more issues than it solves
-        enableDefaultPackages = false;
-
-        fontconfig = {
-          enable = true;
-          defaultFonts = {
-            serif = [ "Noto Serif" ];
-            sansSerif = [ "JetBrainsMono Nerd Font" ];
-            monospace = [ "JetBrainsMono Nerd Font" ];
-            emoji = [ "Noto Color Emoji" ];
-          };
-          hinting.enable = true;
-          antialias = true;
-        };
-      };
-
       # Boot logo
       boot.plymouth = {
         enable = true;

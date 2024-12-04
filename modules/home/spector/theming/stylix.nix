@@ -1,6 +1,7 @@
 {
   inputs,
   config,
+  osConfig,
   lib,
   pkgs,
   ...
@@ -8,6 +9,7 @@
 let
   inherit (lib) mkIf mkEnableOption;
 
+  inherit (osConfig.modules.os) font;
   cfg = config.modules.theme.stylix;
 in
 {
@@ -19,7 +21,7 @@ in
 
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
-      (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
+      nerd-fonts.symbols-only
     ];
 
     stylix = {
@@ -45,15 +47,14 @@ in
 
       fonts = {
         sizes = {
-          terminal = 12;
-          applications = 12;
+          terminal = font.size;
+          applications = font.size;
           desktop = 11;
-          popups = 12;
+          popups = font.size;
         };
 
         monospace = {
-          package = with pkgs; (nerdfonts.override { fonts = [ "JetBrainsMono" ]; });
-          name = "JetBrainsMono Nerd Font";
+          inherit (font) package name;
         };
 
         serif = {
