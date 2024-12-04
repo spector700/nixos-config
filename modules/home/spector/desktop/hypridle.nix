@@ -7,22 +7,6 @@
 let
   inherit (lib) mkIf mkEnableOption;
   cfg = config.modules.desktop.hypridle;
-
-  suspendScriptLaptop = pkgs.writeShellScript "suspend-script" ''
-    ${pkgs.pipewire}/bin/pw-cli i all 2>&1 | ${pkgs.ripgrep}/bin/rg Playing -q
-    # only suspend if audio isn't running
-    if [ $? == 1 ]; then
-      ${pkgs.systemd}/bin/systemctl suspend
-    fi
-  '';
-
-  suspendScriptDesktop = pkgs.writeShellScript "suspend-script" ''
-    ${pkgs.pipewire}/bin/pw-cli i all 2>&1 | ${pkgs.ripgrep}/bin/rg Playing -q
-    # only suspend if audio isn't running
-    if [ $? == 1 ]; then
-      ${pkgs.hyprland}/bin/hyprctl dispatch dpms off
-      fi
-  '';
 in
 {
   options.modules.desktop.hypridle = {
@@ -35,7 +19,7 @@ in
       enable = true;
       settings = {
         general = {
-          before_sleep_cmd = "${pkgs.systemd}/bin/loginctl lock-session";
+          # before_sleep_cmd = "${pkgs.systemd}/bin/loginctl lock-session";
           lock_cmd = lib.getExe config.programs.hyprlock.package;
 
           listener = [
@@ -48,5 +32,36 @@ in
         };
       };
     };
+
+    systemd.user.services.hypridle.Unit.After = lib.mkForce "graphical-session.target";
+
+    # Use in place of hypridle's before_sleep_cmd, since systemd does not wait for
+    # it to complete
+    systemd.user.services.before-suspend =
+      let
+        suspendScript = pkgs.writeShellScript "suspend-script" ''
+          # Pause media before suspend
+          ${lib.getExe pkgs.playerctl} pause
+
+          # Lock the compositor
+          ${pkgs.systemd}/bin/loginctl lock-session
+
+          # Wait for lockscreen to be up
+          sleep 3
+        '';
+      in
+      {
+        Install.RequiredBy = [ "suspend.target" ];
+
+        Service = {
+          ExecStart = suspendScript.outPath;
+          Type = "forking";
+        };
+
+        Unit = {
+          Description = "Commands run before suspend";
+          PartOf = "suspend.target";
+        };
+      };
   };
 }
