@@ -54,6 +54,3 @@ sudo nixos-install --flake github:spector700/nixos-config#alfhiem --no-write-loc
 - [linuxmobile/kaku](https://github.com/linuxmobile/kaku)
 - [Gerg-L/nixos](https://github.com/Gerg-L/nixos)
 - [Misterio77/nix-config](https://github.com/Misterio77/nix-config)
-
----
-<small align="center" >Intro Stolen from @linuxmobile</small>
