@@ -23,17 +23,19 @@ in
     # realtime priority
     security.rtkit.enable = true;
 
-    hardware.pulseaudio.enable = mkForce false; # disable pulseAudio
+    services = {
+      pulseaudio.enable = mkForce false; # disable pulseAudio
 
-    services.pipewire = {
-      enable = true;
-      alsa = {
+      pipewire = {
         enable = true;
-        support32Bit = lib'.isx86Linux pkgs; # if we're on x86 linux, we can support 32 bit
+        alsa = {
+          enable = true;
+          support32Bit = lib'.isx86Linux pkgs; # if we're on x86 linux, we can support 32 bit
+        };
+        pulse.enable = true;
+        jack.enable = false;
+        lowLatency.enable = true;
       };
-      pulse.enable = true;
-      jack.enable = false;
-      lowLatency.enable = true;
     };
 
     environment.persistence."/persist".directories = mkIf config.modules.boot.impermanence.enable [
