@@ -40,6 +40,11 @@ in
 
       # Force Screen tearing
       "immediate, class:^(steam_app_[0-9]*)$"
+      "immediate, class:ffxiv"
+
+      # fix fullscreen flashing
+      "suppressevent fullscreen, class:^(steam_app_[0-9]*)$"
+      "suppressevent fullscreen, class:ffxiv"
 
       # Application in workspaces
       "workspace 8 silent, title:^(Steam)|(Lutris)$"
@@ -75,6 +80,7 @@ in
       "${pkgs.wlsunset}/bin/wlsunset -l 32.7 -L -96.9"
       "sleep 8 && ${pkgs.vesktop}/bin/vesktop"
       "spotify"
+      "steam"
     ];
 
     general = {
@@ -85,9 +91,9 @@ in
     };
 
     # Fix the cursor lagging on nvidia
-    cursor = {
-      no_hardware_cursors = true;
-    };
+    # cursor = {
+    #   no_hardware_cursors = true;
+    # };
 
     decoration = {
       rounding = 16;
@@ -136,7 +142,7 @@ in
       # keep floating dimensions while tiling
       pseudotile = true;
       preserve_split = true;
-      special_scale_factor = 0.9; # restore old special workspace behaviour
+      special_scale_factor = 0.9; # restore old special workspace size
     };
 
     binds = {
@@ -157,11 +163,13 @@ in
       vrr = 1;
     };
 
-    render = {
-      direct_scanout = true;
-      # explicit_sync_kms = 0; # Fix screen freezing on nvidia
+    # render = {
+    #   direct_scanout = true;
 
-    };
+    # Fix screen flickering on nvidia
+    # explicit_sync = 0;
+    # explicit_sync_kms = 0;
+    # };
 
     # fix bad resolution on games
     xwayland.force_zero_scaling = true;

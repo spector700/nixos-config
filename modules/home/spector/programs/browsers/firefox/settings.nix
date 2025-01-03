@@ -86,7 +86,7 @@
   "security.mixed_content.upgrade_display_content.image" = true;
   "pdfjs.enableScripting" = false;
   "extensions.postDownloadThirdPartyPrompt" = false;
-  # HEADERS / REFERERS
+  # HEADERS / REFERRERS
   "network.http.referer.XOriginTrimmingPolicy" = 2;
   # CONTAINERS
   "privacy.userContext.ui.enabled" = true;

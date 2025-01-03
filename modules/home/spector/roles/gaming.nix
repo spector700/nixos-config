@@ -16,6 +16,7 @@ in
       lutris
       prismlauncher # Minecraft
       bottles
+      inputs.xivlauncher-rb.packages.${system}.default
     ];
   };
 }

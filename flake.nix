@@ -101,6 +101,8 @@
     Akari.url = "github:spector700/Akari";
     # gaming tweaks and addons
     gaming.url = "github:fufexan/nix-gaming";
+    # FFxiv
+    xivlauncher-rb.url = "github:drakon64/nixos-xivlauncher-rb";
     # star citizen
     nix-citizen.url = "github:LovingMelody/nix-citizen";
   };
