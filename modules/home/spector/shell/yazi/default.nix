@@ -1,16 +1,16 @@
 { inputs, config, ... }:
 {
 
-  imports = [ ./plugins/starship.nix ];
+  # imports = [ ./plugins/starship.nix ];
 
   # yazi file manager
   programs.yazi = {
     enable = true;
 
     enableZshIntegration = config.programs.zsh.enable;
-    plugins = {
-      starship = "${inputs.starship-yazi}";
-    };
+    # plugins = {
+    #   starship = "${inputs.starship-yazi}";
+    # };
 
     keymap = {
       manager.prepend_keymap = [
