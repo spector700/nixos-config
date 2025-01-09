@@ -11,8 +11,8 @@
 - **Shell** • [Zsh](https://www.zsh.org) 🐚 with
   [starship](https://github.com/starship/starship)
 - **Terminal** • [Kitty](https://sw.kovidgoyal.net/kitty/) 💻
-- **Panel** • [AGS](https://github.com/Aylur/ags)🍧
-- **Launcher** • [AnyRun](https://github.com/Kirottu/anyrun) 🚀
+- **Panel** • [Hyprpanel](https://hyprpanel.com/)🍧
+- **Launcher** • [Lumastart](https://github.com/spector700/lumastart) 🚀
 - **File Manager** • [yazi](https://yazi-rs.github.io)🔖
 - **Neovim** • [Akari](https://github.com/spector700/Akari)
 

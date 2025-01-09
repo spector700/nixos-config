@@ -75,7 +75,6 @@ in
 
     exec-once = [
       "hyprctl setcursor ${pointer.name} ${toString pointer.size}"
-      "hyprpanel"
       "wl-paste --watch cliphist store"
       "${pkgs.wlsunset}/bin/wlsunset -l 32.7 -L -96.9"
       "sleep 8 && ${pkgs.vesktop}/bin/vesktop"

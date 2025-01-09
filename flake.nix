@@ -76,7 +76,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
+    hyprpanel = {
+      url = "github:Jas-SinghFSU/HyprPanel";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # plugin to show the starship prompt in yazi
     starship-yazi = {
