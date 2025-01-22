@@ -89,10 +89,11 @@ in
       allow_tearing = true;
     };
 
-    # Fix the cursor lagging on nvidia
-    # cursor = {
-    #   no_hardware_cursors = true;
-    # };
+    # Fix broken rotatated cursor
+    cursor = {
+      no_hardware_cursors = true;
+      use_cpu_buffer = 0;
+    };
 
     decoration = {
       rounding = 16;
