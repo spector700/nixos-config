@@ -14,7 +14,6 @@ in
     ./binds.nix
     ./config.nix
   ];
-
   config = mkIf cfg.hyprland.enable {
     home.packages = with pkgs; [
       grimblast
@@ -26,7 +25,8 @@ in
 
     wayland.windowManager.hyprland = {
       enable = true;
-      systemd.variables = [ "--all" ];
+      # conflicts with programs.hyprland.withUWSM in nixos
+      systemd.enable = false;
     };
 
     modules = {

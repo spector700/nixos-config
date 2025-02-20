@@ -30,7 +30,7 @@ in
     # Add the command of each desktop for stuff like greetd
     command = mkOption {
       type = types.str;
-      default = "Hyprland";
+      default = "uwsm start hyprland-uwsm.desktop";
     };
   };
 }
