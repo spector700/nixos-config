@@ -9,6 +9,6 @@ let
 in
 {
   config = mkIf cfg.enable {
-    modules.shell.zellij.enable = mkDefault true;
+    # modules.shell.zellij.enable = mkDefault true;
   };
 }
