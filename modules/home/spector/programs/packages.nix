@@ -22,7 +22,6 @@ in
     obsidian
     anki-bin
     vial
-    orca-slicer
     # orca-slicer-beta
 
     inputs.lumastart.packages.${pkgs.system}.default

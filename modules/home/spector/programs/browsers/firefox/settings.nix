@@ -98,7 +98,8 @@
   # MOZILLA
   "permissions.default.desktop-notification" = 2;
   "permissions.default.geo" = 2;
-  "geo.provider.network.url" = "https://location.services.mozilla.com/v1/geolocate?key=%MOZILLA_API_KEY%";
+  "geo.provider.network.url" =
+    "https://location.services.mozilla.com/v1/geolocate?key=%MOZILLA_API_KEY%";
   "permissions.manager.defaultsUrl" = "";
   "webchannel.allowObject.urlWhitelist" = "";
   # TELEMETRY

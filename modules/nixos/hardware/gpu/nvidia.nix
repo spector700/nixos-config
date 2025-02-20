@@ -10,7 +10,7 @@ let
   inherit (config.modules.display) desktop;
   cfg = config.modules.hardware;
 
-  nvidiaPackage = config.boot.kernelPackages.nvidiaPackages.beta;
+  nvidiaPackage = config.boot.kernelPackages.nvidiaPackages.latest;
 in
 {
   config =
@@ -29,6 +29,9 @@ in
             (mkIf desktop.isWayland {
               __GL_VRR_ALLOWED = "1";
               __GL_GSYNC_ALLOWED = "1";
+              NIXOS_OZONE_WL = "1";
+              QT_QPA_PLATFORM = "wayland";
+              QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
             })
 
             (mkIf (desktop.isWayland && (cfg.gpu == "hybrid-nv")) {
@@ -41,13 +44,15 @@ in
           systemPackages = with pkgs; [
             nvtopPackages.nvidia
 
+            # mesa
             mesa
 
+            # vulkan
             vulkan-tools
             vulkan-loader
-            # vulkan-validation-layers
             vulkan-extension-layer
 
+            # libva
             libva
             libva-utils
           ];
