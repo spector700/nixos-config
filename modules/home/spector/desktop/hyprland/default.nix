@@ -13,6 +13,7 @@ in
   imports = [
     ./binds.nix
     ./config.nix
+    ./startup.nix
   ];
   config = mkIf cfg.hyprland.enable {
     home.packages = with pkgs; [

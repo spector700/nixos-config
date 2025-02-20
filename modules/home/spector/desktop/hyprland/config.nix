@@ -1,14 +1,11 @@
 {
-  config,
   osConfig,
-  pkgs,
   ...
 }:
 let
 
   inherit (osConfig.modules.display) monitors;
 
-  pointer = config.home.pointerCursor;
 in
 {
 
@@ -61,9 +58,9 @@ in
       "dimaround, class:^(polkit-gnome-authentication-agent-1)$"
 
       # Fix xwayland apps
-      "rounding 0, xwayland:1"
-      "center, title:^(Confirm Exit|Open Project|win424|win201|splash)$"
-      "size 640 400, title:^(splash)$"
+      # "rounding 0, xwayland:1"
+      # "center, title:^(Confirm Exit|Open Project|win424|win201|splash)$"
+      # "size 640 400, title:^(splash)$"
 
       # Fix steam menus
       "stayfocused, title:^()$,class:^(steam)$"
@@ -71,15 +68,6 @@ in
 
       # Opacity
       "opacity 0.94 0.94,class:^(kitty|thunar|code(.*))$"
-    ];
-
-    exec-once = [
-      "hyprctl setcursor ${pointer.name} ${toString pointer.size}"
-      "wl-paste --watch cliphist store"
-      "${pkgs.wlsunset}/bin/wlsunset -l 32.7 -L -96.9"
-      "sleep 8 && ${pkgs.vesktop}/bin/vesktop"
-      "spotify"
-      "steam"
     ];
 
     general = {
