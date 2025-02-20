@@ -1,10 +1,8 @@
 {
-  inputs,
   ...
 }:
 {
   imports = [
-    inputs.hyprland.homeManagerModules.default
     ./hyprland
     ./ags.nix
     ./anyrun.nix
