@@ -33,6 +33,7 @@
       ignores = [
         ".direnv"
         "result"
+        "node_modules"
       ];
 
       userEmail = "72362399+spector700@users.noreply.github.com";
