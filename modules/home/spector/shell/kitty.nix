@@ -7,7 +7,6 @@
       };
       shellIntegration.enableZshIntegration = true;
 
-      themeFile = "Catppuccin-Mocha";
       settings = {
         confirm_os_window_close = 0;
         placement_strategy = "center";
@@ -19,5 +18,10 @@
         "ctrl+shift+tab" = "send_text all \\x1b[9;6u"; # <C-S-Tab>
       };
     };
+  };
+
+  home.shellAliases = {
+    # change color on ssh
+    ssh = "kitten ssh --kitten=color_scheme=Dracula";
   };
 }
