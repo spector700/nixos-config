@@ -27,6 +27,7 @@ in
           ];
           "middle" = [
             "clock"
+            "media"
           ];
           "right" = [
             "volume"
@@ -45,7 +46,6 @@ in
           ];
           "middle" = [
             "clock"
-            "media"
           ];
           "right" = [
             "volume"
