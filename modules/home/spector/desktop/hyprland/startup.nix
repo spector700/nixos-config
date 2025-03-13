@@ -15,10 +15,10 @@ in
     exec-once = [
       "hyprctl setcursor ${pointer.name} ${toString pointer.size}"
       "wl-paste --watch cliphist store"
-      "${pkgs.wlsunset}/bin/wlsunset -l 32.7 -L -96.9"
+      "${getExe pkgs.wlsunset} -l 32.7 -L -96.9"
 
       "hyprctl dispatch workspace 1"
-      "sleep 9 && ${(uexec (getExe pkgs.vesktop))}"
+      "sleep 9 && ${uexec (getExe pkgs.vesktop)}"
       (uexec (getExe config.programs.spicetify.spicedSpotify))
       (uexec (getExe pkgs.steam))
     ];

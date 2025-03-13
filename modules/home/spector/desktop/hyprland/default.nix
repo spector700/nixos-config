@@ -15,6 +15,7 @@ in
     ./config.nix
     ./startup.nix
   ];
+
   config = mkIf cfg.hyprland.enable {
     home.packages = with pkgs; [
       grimblast
@@ -33,7 +34,7 @@ in
     modules = {
       desktop = {
         hyprpaper.enable = mkDefault true;
-        hypridle.enable = mkDefault true;
+        hypridle.enable = mkDefault false;
         hyprlock.enable = mkDefault true;
       };
     };

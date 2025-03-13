@@ -2,12 +2,13 @@
   pkgs,
   config,
   inputs,
+  lib,
   ...
 }:
 let
-  screenshotarea = "hyprctl keyword animation 'fadeOut,0,8,slow'; grimblast --notify copysave area; hyprctl keyword animation 'fadeOut,1,8,slow'";
+  screenshotarea = "hyprctl keyword animation 'fadeOut,0,8,slow'; ${getExe pkgs.grimblast} --notify copysave area; hyprctl keyword animation 'fadeOut,1,8,slow'";
 
-  lumastart = "${inputs.lumastart.packages.${pkgs.system}.default}/bin/lumastart";
+  lumastart = "${getExe inputs.lumastart.packages.${pkgs.system}.default}";
 
   # binds $mod + [alt +] {1..10} to [move to] workspace {1..10}
   workspaces = builtins.concatLists (
@@ -26,6 +27,8 @@ let
       ]
     ) 10
   );
+
+  inherit (lib) getExe;
 in
 {
   wayland.windowManager.hyprland.settings = {
@@ -38,60 +41,63 @@ in
     ];
 
     # Binds
-    bind = [
-      # Compositor
-      # "$mod SHIFT, R, exec, ${pkgs.hyprland}/bin/hyprctl reload && koshi quit; koshi"
-      "$mod SHIFT, R, exec, ${pkgs.hyprland}/bin/hyprctl reload && hyprpanel quit; hyprpanel"
-      "$mod, Q, killactive,"
-      "$mod, F, fullscreen,"
-      "$mod, G, togglefloating"
+    bind =
+      let
+        uexec = program: "exec, uwsm app -- ${program}";
+      in
+      [
+        # Compositor
+        "$mod SHIFT, R, ${uexec pkgs.hyprland}/bin/hyprctl reload && hyprpanel quit; hyprpanel"
+        "$mod, Q, killactive,"
+        "$mod, F, fullscreen,"
+        "$mod, G, togglefloating"
 
-      # move focus
-      "$mod, left, movefocus, l"
-      "$mod, right, movefocus, r"
-      "$mod, up, movefocus, u"
-      "$mod, down, movefocus, d"
-      "ALT, Tab, focuscurrentorlast"
+        # move focus
+        "$mod, left, movefocus, l"
+        "$mod, right, movefocus, r"
+        "$mod, up, movefocus, u"
+        "$mod, down, movefocus, d"
+        "ALT, Tab, focuscurrentorlast"
 
-      # move window
-      "$mod SHIFT, left, movewindow, l"
-      "$mod SHIFT, right, movewindow, r"
-      "$mod SHIFT, up, movewindow, u"
-      "$mod SHIFT, down, movewindow, d"
+        # move window
+        "$mod SHIFT, left, movewindow, l"
+        "$mod SHIFT, right, movewindow, r"
+        "$mod SHIFT, up, movewindow, u"
+        "$mod SHIFT, down, movewindow, d"
 
-      # special workspaces
-      "$mod, S, togglespecialworkspace, spotify"
-      "ALT SHIFT, S, movetoworkspace, special"
+        # special workspaces
+        "$mod, S, togglespecialworkspace, spotify"
+        "ALT SHIFT, S, movetoworkspace, special"
 
-      # terminal
-      "$mod, T, exec, ${pkgs.kitty}/bin/kitty"
-      "$mod, E, exec, ${pkgs.kitty}/bin/kitty -e yazi"
-      "CTRL SHIFT, Escape, exec, ${pkgs.kitty}/bin/kitty -e btop"
+        # terminal
+        "$mod, T, ${uexec (getExe pkgs.kitty)}"
+        "$mod, E, ${uexec (getExe pkgs.kitty)} -e yazi"
+        "CTRL SHIFT, Escape, ${uexec (getExe pkgs.kitty)} -e btop"
 
-      # Programs
-      "$mod, B, exec, ${inputs.zen-browser.packages.${pkgs.system}.default}/bin/zen"
-      # "$mod, B, exec, ${pkgs.firefox}/bin/firefox"
-      "$mod SHIFT, E, exec, ${pkgs.xfce.thunar}/bin/thunar"
+        # Programs
+        "$mod, B, ${uexec (getExe inputs.zen-browser.packages.${pkgs.system}.default)}"
+        "$mod SHIFT, E, ${uexec (getExe pkgs.xfce.thunar)}"
 
-      # Launcher
-      "$mod, Space, exec, pkill lumastart || ${lumastart}"
-      "$mod, V, exec, pkill rofi || ${pkgs.cliphist}/bin/cliphist list | rofi -dmenu -display-columns 2 | ${pkgs.cliphist}/bin/cliphist decode | wl-copy"
+        # Launcher
+        "$mod, Space, exec, pkill lumastart || ${lumastart}"
+        "$mod, V, exec, pkill rofi || ${getExe pkgs.cliphist} list | ${getExe pkgs.rofi} -dmenu -display-columns 2 | ${getExe pkgs.cliphist} decode | wl-copy"
 
-      # lock screen
-      "$mod, L, exec, ${config.programs.hyprlock.package}/bin/hyprlock"
+        # lock screen
+        "$mod, L, ${uexec (getExe config.programs.hyprlock.package)}"
 
-      # Power menu
-      ", XF86PowerOff, exec, hyprpanel -t powermenu"
+        # Power menu
+        ", XF86PowerOff, exec, hyprpanel -t powermenu"
 
-      # Screenshot
-      ", Print, exec, ${screenshotarea}"
-    ] ++ workspaces;
+        # Screenshot
+        ", Print, exec, ${screenshotarea}"
+      ]
+      ++ workspaces;
 
     bindl = [
       # Media Controls
-      ", XF86AudioPlay, exec, ${pkgs.playerctl}/bin/playerctl play-pause"
-      ", XF86AudioNext, exec, ${pkgs.playerctl}/bin/playerctl next"
-      ", XF86AudioPrev, exec, ${pkgs.playerctl}/bin/playerctl previous"
+      ", XF86AudioPlay, exec, ${getExe pkgs.playerctl} play-pause"
+      ", XF86AudioNext, exec, ${getExe pkgs.playerctl} next"
+      ", XF86AudioPrev, exec, ${getExe pkgs.playerctl} previous"
       # Mute
       ", XF86AudioMute, exec, ${pkgs.pamixer}/bin/wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
       ", XF86AudioMicMute, exec, ${pkgs.pamixer}/bin/wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
