@@ -3,9 +3,6 @@
   pkgs,
   ...
 }:
-let
-  orca-slicer-beta = pkgs.callPackage ../../../../pkgs/orca-slicer-appimage.nix { };
-in
 {
   home.packages = with pkgs; [
     # Terminal Utils
@@ -20,9 +17,8 @@ in
 
     signal-desktop
     obsidian
-    anki-bin
+    anki
     vial
-    # orca-slicer-beta
 
     inputs.lumastart.packages.${pkgs.system}.default
   ];
