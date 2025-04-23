@@ -17,43 +17,45 @@ in
     enable = true;
     hyprland.enable = true;
     overwrite.enable = true;
-    layout = {
-      "bar.layouts" = {
-        "0" = {
-          "left" = [
-            "dashboard"
-            "workspaces"
-            "windowtitle"
-          ];
-          "middle" = [
-            "clock"
-            "media"
-          ];
-          "right" = [
-            "volume"
-            "bluetooth"
-            "network"
-            "systray"
-            "notifications"
-          ];
-        };
+    settings = {
+      layout = {
+        "bar.layouts" = {
+          "0" = {
+            "left" = [
+              "dashboard"
+              "workspaces"
+              "windowtitle"
+            ];
+            "middle" = [
+              "clock"
+              "media"
+            ];
+            "right" = [
+              "volume"
+              "bluetooth"
+              "network"
+              "systray"
+              "notifications"
+            ];
+          };
 
-        "1" = {
-          "left" = [
-            "dashboard"
-            "workspaces"
-            "windowtitle"
-          ];
-          "middle" = [
-            "clock"
-          ];
-          "right" = [
-            "volume"
-            "bluetooth"
-            "network"
-            "systray"
-            "notifications"
-          ];
+          "1" = {
+            "left" = [
+              "dashboard"
+              "workspaces"
+              "windowtitle"
+            ];
+            "middle" = [
+              "clock"
+            ];
+            "right" = [
+              "volume"
+              "bluetooth"
+              "network"
+              "systray"
+              "notifications"
+            ];
+          };
         };
       };
     };

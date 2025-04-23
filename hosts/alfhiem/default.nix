@@ -12,7 +12,7 @@
   ];
 
   boot = {
-    kernelPackages = pkgs.linuxPackages_6_11;
+    kernelPackages = pkgs.linuxPackages_latest;
     #For openrgb with gigabyte motherboard
     kernelParams = [ "acpi_enforce_resources=lax" ];
   };
