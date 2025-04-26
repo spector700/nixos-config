@@ -35,7 +35,7 @@
       # search sub commands
       historySubstringSearch.enable = true;
 
-      initExtra = ''
+      initContent = ''
         source ${pkgs.zsh-vi-mode}/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
 
         show_file_or_dir_preview="if [ -d {} ]; then eza --tree --color=always {} | head -200; else bat -n --color=always --line-range :500 {}; fi"
