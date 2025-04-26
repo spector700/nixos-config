@@ -34,7 +34,7 @@ in
     modules = {
       desktop = {
         hyprpaper.enable = mkDefault true;
-        hypridle.enable = mkDefault true;
+        hypridle.enable = mkDefault false;
         hyprlock.enable = mkDefault true;
       };
     };
