@@ -12,7 +12,7 @@ in
 {
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
-      inputs.nix-citizen.packages.${system}.star-citizen
+      # inputs.nix-citizen.packages.${system}.star-citizen
       lutris
       prismlauncher # Minecraft
       bottles
