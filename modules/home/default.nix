@@ -10,6 +10,8 @@ let
   inherit (lib) genAttrs;
 in
 {
+  nixpkgs.overlays = [ inputs.hyprpanel.overlay ];
+
   home-manager = {
     # tell home-manager to be as verbose as possible
     verbose = true;

@@ -12,7 +12,6 @@ let
   homeManager = [
     inputs.home-manager.nixosModules.home-manager
     ../modules/home # home-manager configurations for hosts that need home-manager
-    { nixpkgs.overlays = [ inputs.hyprpanel.overlay ]; }
   ];
 
   specialArgs = {
