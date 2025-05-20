@@ -13,7 +13,7 @@ let
   cfg = config.modules.theme.stylix;
 in
 {
-  imports = [ inputs.stylix.homeManagerModules.stylix ];
+  imports = [ inputs.stylix.homeModules.stylix ];
 
   options.modules.theme.stylix = {
     enable = mkEnableOption "Enable stylix theming";
