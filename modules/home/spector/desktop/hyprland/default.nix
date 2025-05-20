@@ -29,6 +29,8 @@ in
       enable = true;
       # conflicts with programs.hyprland.withUWSM in nixos
       systemd.enable = false;
+      package = null;
+      portalPackage = null;
     };
 
     modules = {
