@@ -21,6 +21,7 @@
 ![desktop-pic-1](.github/assets/desktop-pic-1.png)
 ![desktop-pic-2](.github/assets/desktop-pic-2.png)
 ![desktop-pic-3](.github/assets/desktop-pic-3.png)
+
 <p align="center">Screenshots Circa: 2024-4-9</p>
 
 ---
@@ -28,6 +29,7 @@
 ## <samp>INSTALLATION (NixOS)</samp>
 
 - Download ISO.
+
 ```bash
 wget -O https://channels.nixos.org/nixos-23.05/latest-nixos-minimal-x86_64-linux.iso
 ```
@@ -37,13 +39,13 @@ wget -O https://channels.nixos.org/nixos-23.05/latest-nixos-minimal-x86_64-linux
 - Format Partitions with Disko:
 
 ```bash
-sudo nix --experimental-features "nix-command flakes" run github:nix-community/disko -- --mode disko --flake github:spector700/nixos-config#alfhiem
+sudo nix --experimental-features "nix-command flakes" run github:nix-community/disko -- --mode disko --flake github:spector700/nixos-config#alfheim
 ```
 
 - Install Dotfiles Using Flake
 
 ```bash
-sudo nixos-install --flake github:spector700/nixos-config#alfhiem --no-write-lock-file
+sudo nixos-install --flake github:spector700/nixos-config#alfheim --no-write-lock-file
 ```
 
 - Reboot

@@ -26,7 +26,7 @@ in
       programs.hyprland = {
         enable =
           assert (
-            lib.assertMsg (lib.versionOlder config.programs.hyprland.package.version "0.49") "hyprland updated, check orca-slicer."
+            lib.assertMsg (lib.versionOlder config.programs.hyprland.package.version "0.50") "hyprland updated, check orca-slicer."
           );
           true;
 

@@ -5,6 +5,6 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   networking = {
-    hostName = "vm-nix";
+    hostName = "vanaheim";
   };
 }

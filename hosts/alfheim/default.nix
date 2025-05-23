@@ -17,7 +17,7 @@
     kernelParams = [ "acpi_enforce_resources=lax" ];
   };
 
-  networking.hostName = "alfhiem";
+  networking.hostName = "alfheim";
 
   virtualisation.docker.rootless = {
     enable = true;

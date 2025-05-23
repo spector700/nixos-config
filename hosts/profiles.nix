@@ -25,22 +25,22 @@ let
 in
 {
   # Desktop
-  alfhiem = nixosSystem {
+  alfheim = nixosSystem {
     inherit specialArgs;
     # Modules that are used
     modules = [
-      ./alfhiem
+      ./alfheim
       ../modules/nixos
     ] ++ concatLists [ homeManager ];
   };
 
-  # VM
-  vm = nixosSystem {
+  # Homelab
+  vanaheim = nixosSystem {
     inherit specialArgs;
     # Modules that are used
     modules = [
-      ./vm
+      ./vanaheim
       ../modules/nixos
-    ] ++ concatLists [ homeManager ];
+    ];
   };
 }
