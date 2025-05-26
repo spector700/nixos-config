@@ -5,7 +5,6 @@ in
 {
   security = {
     # https://github.com/NixOS/nixpkgs/pull/256491
-    # no nixpkgs, you are not breaking my system because of "muh rust" delusions again
     sudo-rs.enable = mkForce false;
 
     sudo = {
@@ -14,7 +13,7 @@ in
 
       # only allow members of the wheel group to execute sudo
       # by setting the executable’s permissions accordingly
-      # execWheelOnly = mkForce true;
+      execWheelOnly = mkForce true;
     };
   };
 }

@@ -12,8 +12,14 @@ in
     modules = {
       services.nextcloud-client.enable = mkDefault true;
       theme.stylix.enable = mkDefault true;
-      programs.spicetify.enable = mkDefault true;
-      programs.orca-slicer.enable = mkDefault true;
+      programs = {
+        spicetify.enable = mkDefault true;
+        zathura.enable = mkDefault true;
+        orca-slicer.enable = mkDefault true;
+        rofi.enable = mkDefault true;
+        brave.enable = mkDefault true;
+        zen.enable = mkDefault true;
+      };
     };
   };
 }

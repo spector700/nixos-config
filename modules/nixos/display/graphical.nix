@@ -8,6 +8,7 @@
 let
   inherit (lib) mkEnableOption mkIf mkMerge;
   cfg = config.modules.display;
+  role = config.modules.roles.desktop;
 in
 {
   options.modules.display.gpuAcceleration = {
@@ -23,7 +24,7 @@ in
       };
     })
 
-    (mkIf (cfg != "none") {
+    (mkIf role.enable {
       # Boot logo
       boot.plymouth = {
         enable = true;

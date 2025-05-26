@@ -1,10 +1,25 @@
-{ pkgs, ... }:
 {
-  programs.rofi = {
-    enable = true;
-    package = pkgs.rofi-wayland;
-    theme = ./launcher-config.rasi;
+  config,
+  pkgs,
+  lib,
+  ...
+}:
+let
+  cfg = config.modules.programs.rofi;
+  inherit (lib) mkIf mkEnableOption;
+in
+{
+  options.modules.programs.rofi = {
+    enable = mkEnableOption "Enable rofi launcher";
   };
 
-  stylix.targets.rofi.enable = false;
+  config = mkIf cfg.enable {
+    programs.rofi = {
+      enable = true;
+      package = pkgs.rofi-wayland;
+      theme = ./launcher-config.rasi;
+    };
+
+    stylix.targets.rofi.enable = false;
+  };
 }
