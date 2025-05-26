@@ -11,9 +11,11 @@
         # packages available in the dev shell
         # inputsFrom = [ config.treefmt.build.devShell ];
         #
-        packages = [
+        packages = with pkgs; [
           # the treefmt command
           config.treefmt.build.wrapper
+          just
+          yq-go
         ];
       };
     };
