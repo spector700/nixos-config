@@ -1,8 +1,21 @@
-{ self, ... }:
+{
+  self,
+  osConfig,
+  config,
+  ...
+}:
 let
   hostnames = builtins.attrNames self.nixosConfigurations;
+  inherit (config.home) homeDirectory;
 in
 {
+
+  sops.secrets = {
+    "keys/ssh/${osConfig.modules.os.mainUser}_${osConfig.networking.hostName}" = {
+      path = "${homeDirectory}/.ssh/id_spector";
+    };
+  };
+
   programs.ssh = {
     enable = true;
     hashKnownHosts = true;

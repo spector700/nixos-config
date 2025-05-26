@@ -1,23 +1,21 @@
-{ inputs, config, ... }:
+{
+  inputs,
+  config,
+  osConfig,
+  ...
+}:
 let
-  secretsPath = builtins.toString inputs.nix-secrets;
-  secretsFile = "${secretsPath}/secrets.yaml";
+  secretsFolder = (builtins.toString inputs.nix-secrets) + "/sops";
   inherit (config.home) homeDirectory;
 in
 {
   imports = [ inputs.sops-nix.homeManagerModules.sops ];
 
   sops = {
-    # This is the ta/dev key and needs to have been copied to this location on the host
+    # This is the age key and needs to have been copied to this location on the host
     age.keyFile = "${homeDirectory}/.config/sops/age/keys.txt";
 
-    defaultSopsFile = "${secretsFile}";
+    defaultSopsFile = "${secretsFolder}/${osConfig.networking.hostName}.yaml";
     validateSopsFiles = false;
-
-    secrets = {
-      "private_keys/spector" = {
-        path = "${homeDirectory}/.ssh/id_spector";
-      };
-    };
   };
 }
