@@ -110,5 +110,4 @@
       users = [ "${config.modules.os.mainUser}" ];
     };
   };
-
 }
