@@ -36,7 +36,8 @@ in
       "pin, title:^(Picture-in-Picture)$"
 
       # Force Screen tearing
-      "immediate, class:^(steam_app_[0-9]*)$"
+      # "immediate, class:^(steam_app_[0-9]*)$"
+      "immediate, initialclass:^(steam_app_)(.*)$"
       "immediate, class:ffxiv"
 
       # fix fullscreen flashing
@@ -151,13 +152,9 @@ in
       vrr = 1;
     };
 
-    # render = {
-    #   direct_scanout = true;
-
-    # Fix screen flickering on nvidia
-    # explicit_sync = 0;
-    # explicit_sync_kms = 0;
-    # };
+    render = {
+      direct_scanout = true;
+    };
 
     # fix bad resolution on games
     xwayland.force_zero_scaling = true;
