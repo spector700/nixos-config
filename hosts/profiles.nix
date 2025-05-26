@@ -41,6 +41,6 @@ in
     modules = [
       ./vanaheim
       ../modules/nixos
-    ];
+    ] ++ concatLists [ homeManager ];
   };
 }
