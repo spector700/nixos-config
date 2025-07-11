@@ -6,7 +6,7 @@
         name = "nixos-config";
         meta.description = "The default development shell for my NixOS configuration";
 
-        NIX_CONFIG = "extra-experimental-features = nix-command flakes repl-flake";
+        NIX_CONFIG = "extra-experimental-features = nix-command flakes";
 
         # packages available in the dev shell
         # inputsFrom = [ config.treefmt.build.devShell ];

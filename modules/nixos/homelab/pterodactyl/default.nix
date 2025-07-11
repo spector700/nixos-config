@@ -1,0 +1,6 @@
+{
+  imports = [
+    ./panel
+    ./wings.nix
+  ];
+}

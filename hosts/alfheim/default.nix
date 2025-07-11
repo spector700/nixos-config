@@ -4,6 +4,9 @@
   inputs,
   ...
 }:
+let
+  user = config.modules.os.mainUser;
+in
 {
   imports = [
     ./hardware-configuration.nix
@@ -12,7 +15,7 @@
   ];
 
   boot = {
-    kernelPackages = pkgs.linuxPackages_latest;
+    kernelPackages = pkgs.linuxPackages_6_6;
     #For openrgb with gigabyte motherboard
     kernelParams = [ "acpi_enforce_resources=lax" ];
   };
@@ -25,8 +28,16 @@
   };
 
   # home-manager modules
-  home-manager.users.${config.modules.os.mainUser}.config.modules = {
-    theme.wallpaper = ../../modules/home/spector/theming/wallpaper;
+  home-manager.users.${config.modules.os.mainUser}.config = {
+    sops.secrets = {
+      "keys/ssh/${user}_${config.networking.hostName}" = {
+        path = "/home/${user}/.ssh/id_spector";
+      };
+    };
+
+    modules = {
+      theme.wallpaper = ../../modules/home/spector/theming/wallpaper;
+    };
   };
 
   modules = {
@@ -91,8 +102,6 @@
       mainUser = "spector";
       autoLogin = true;
     };
-
-    networking.optomizeTcp = true;
 
     boot = {
       enableKernelTweaks = true;
