@@ -37,7 +37,7 @@ in
 
       # Force Screen tearing
       # "immediate, class:^(steam_app_[0-9]*)$"
-      "immediate, initialclass:^(steam_app_)(.*)$"
+      # "immediate, initialclass:^(steam_app_)(.*)$"
       "immediate, class:ffxiv"
 
       # fix fullscreen flashing

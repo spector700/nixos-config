@@ -17,6 +17,9 @@ in
       prismlauncher # Minecraft
       bottles
       inputs.xivlauncher-rb.packages.${system}.default
+      winetricks
+      wineWowPackages.waylandFull
+      protonplus
     ];
   };
 }

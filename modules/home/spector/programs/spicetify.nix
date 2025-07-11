@@ -10,7 +10,7 @@ let
   inherit (lib) mkIf mkEnableOption;
 in
 {
-  imports = [ inputs.spicetify.homeManagerModules.default ];
+  imports = [ inputs.spicetify.homeManagerModules.spicetify ];
 
   options.modules.programs.spicetify = {
     enable = mkEnableOption "Enable spicetify";
