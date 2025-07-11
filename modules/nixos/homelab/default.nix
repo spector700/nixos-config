@@ -1,6 +1,8 @@
 {
-  import = [
-    ./pterodactyl.nix
-    ./traefik.nix
+  imports = [
+    ./pterodactyl
+    # ./pterodactyl.nix
+    # ./wings.nix
+    ./ollama.nix
   ];
 }
