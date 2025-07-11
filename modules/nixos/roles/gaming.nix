@@ -20,11 +20,15 @@ in
   };
 
   config = mkIf cfg.enable {
-    boot.kernel.sysctl = {
-      # default on some gaming (SteamOS) and desktop (Fedora) distributions
-      # might help with gaming performance
-      "vm.max_map_count" = 2147483642;
-      "fs.file-max" = 524288;
+    boot = {
+      # For division 2
+      kernelParams = [ "split_lock_mitigate=0" ];
+      kernel.sysctl = {
+        # default on some gaming (SteamOS) and desktop (Fedora) distributions
+        # might help with gaming performance
+        "vm.max_map_count" = 2147483642;
+        "fs.file-max" = 524288;
+      };
     };
 
     programs = {
