@@ -7,15 +7,9 @@
 let
   hostnames = builtins.attrNames self.nixosConfigurations;
   inherit (config.home) homeDirectory;
+  user = osConfig.modules.os.mainUser;
 in
 {
-
-  sops.secrets = {
-    "keys/ssh/${osConfig.modules.os.mainUser}_${osConfig.networking.hostName}" = {
-      path = "${homeDirectory}/.ssh/id_spector";
-    };
-  };
-
   programs.ssh = {
     enable = true;
     hashKnownHosts = true;
@@ -27,7 +21,12 @@ in
       };
       "github.com" = {
         hostname = "github.com";
-        identityFile = "~/.ssh/gitkey";
+        identityFile = "${homeDirectory}/.ssh/gitkey";
+      };
+      "vanaheim" = {
+        hostname = "192.168.1.107";
+        inherit user;
+        identityFile = "${homeDirectory}/.ssh/id_spector";
       };
     };
   };

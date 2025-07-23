@@ -7,6 +7,10 @@ let
   isPersistence = config.modules.boot.impermanence.enable;
 in
 {
+  users.users.${config.modules.os.mainUser}.openssh.authorizedKeys.keys = [
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDTXJzakLW2xSxhfre6KN/0KEg0zabNIKrqT7YcDzMUf spector@alfheim"
+  ];
+
   services.openssh = {
     enable = true; # local: $ ssh <user>@<ip>
     # generating a key:
@@ -19,6 +23,7 @@ in
     #   - put/get <filename> = send or receive file
     settings = {
       PermitRootLogin = "no";
+      PasswordAuthentication = false; # use ssh keys only
     };
 
     hostKeys = [
@@ -55,7 +60,7 @@ in
       ⣿⣿⣿⣿⠿⠛⠉⠉⠁⠀⢻⣿⡇⠀⠀⠀⠀⠀⠀⢀⠈⣿⣿⡿⠉⠛⠛⠛⠉⠉
       ⣿⡿⠋⠁⠀⠀⢀⣀⣠⡴⣸⣿⣇⡄⠀⠀⠀⠀⢀⡿⠄⠙⠛⠀⣀⣠⣤⣤⠄⠀
 
-      Connected to ${config.system.name} @ ${config.system.configurationRevision}
+      Connected to ${config.system.name}
     '';
   };
 
