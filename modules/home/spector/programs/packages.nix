@@ -19,6 +19,7 @@
     obsidian
     anki
     vial
+    lmstudio
 
     inputs.lumastart.packages.${pkgs.system}.default
   ];

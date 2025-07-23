@@ -58,6 +58,10 @@ in
       printing.enable = true;
     };
 
+    homelab = {
+      ollama.enable = true;
+    };
+
     display = {
       gpuAcceleration.enable = true;
       desktop.hyprland.enable = true;
