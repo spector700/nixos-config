@@ -31,6 +31,9 @@ in
       };
     };
 
+    # Xbox controller support
+    hardware.xone.enable = true;
+
     programs = {
       steam = {
         enable = true;
