@@ -94,7 +94,10 @@
 
     # But occasionally we need to install some anyway so we can predicated those
     # these are usually packages like electron
-    permittedInsecurePackages = [ ];
+    permittedInsecurePackages = [
+      # FIX when updated, part of orcaslicer
+      "libsoup-2.74.3"
+    ];
   };
 
   # By default nix-gc makes no effort to respect battery life by avoiding
