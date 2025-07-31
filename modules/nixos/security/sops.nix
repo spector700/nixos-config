@@ -1,19 +1,16 @@
 {
   inputs,
   config,
-  lib,
   pkgs,
   ...
 }:
 let
-  inherit (lib) optionalString;
   isEd25519 = k: k.type == "ed25519";
   getKeyPath = k: k.path;
   keys = builtins.filter isEd25519 config.services.openssh.hostKeys;
 
   secretsPath = (builtins.toString inputs.nix-secrets) + "/sops";
 
-  isPersistence = config.modules.boot.impermanence.enable;
   inherit (config.networking) hostName;
   user = config.modules.os.mainUser;
 in
@@ -35,7 +32,6 @@ in
       # maps to ["/persist/etc/ssh/ssh_host_ed25519_key"]
       sshKeyPaths = map getKeyPath keys;
       # key that is expected to already be in the file system
-      # keyFile = "${optionalString isPersistence "/persist"}/var/lib/sops-nix/key.txt";
       keyFile = "/home/${user}/.config/sops/age/keys.txt";
       # This will generate a new key if the key specified above does not exist
       generateKey = true;

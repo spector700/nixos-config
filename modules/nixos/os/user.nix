@@ -21,19 +21,21 @@ in
         extraGroups = [
           "wheel"
           "dialout" # for USB Serial
-        ] ++ optionals config.networking.networkmanager.enable [ "networkmanager" ];
+        ]
+        ++ optionals config.networking.networkmanager.enable [ "networkmanager" ];
         hashedPasswordFile = config.sops.secrets.${subPath}.path;
-        hashedPassword = "$y$j9T$0LAzDTG8mgvgvOuu46PbF1$zWgPWtHOfvXhI8jJBI8UG6Pcl5o4I/k0J4hZbftjHu2";
+        # hashedPassword = "$y$j9T$0LAzDTG8mgvgvOuu46PbF1$zWgPWtHOfvXhI8jJBI8UG6Pcl5o4I/k0J4hZbftjHu2";
         shell = pkgs.zsh; # Default shell
       };
     };
 
-    users.users.root = {
-      shell = pkgs.zsh;
-      inherit (config.users.users.${user}) hashedPasswordFile;
-      inherit (config.users.users.${user}) hashedPassword; # This comes from hosts/common/optional/minimal.nix and gets overridden if sops is working
-      openssh.authorizedKeys.keys = config.users.users.${user}.openssh.authorizedKeys.keys; # root's ssh keys are mainly used for remote deployment.
-    };
+    # users.users.root = {
+    #   shell = pkgs.zsh;
+    #   inherit (config.users.users.${user}) hashedPasswordFile;
+    #   inherit (config.users.users.${user}) hashedPassword; # This comes from hosts/common/optional/minimal.nix and gets overridden if sops is working
+    # initialPassword = "nixos";
+    # openssh.authorizedKeys.keys = config.users.users.${user}.openssh.authorizedKeys.keys; # root's ssh keys are mainly used for remote deployment.
+    # };
   };
 
   config.warnings = optionals (config.modules.os.users == [ ]) [

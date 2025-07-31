@@ -1,6 +1,5 @@
 {
   config,
-  pkgs,
   lib,
   ...
 }:
@@ -14,6 +13,14 @@ in
   };
 
   config = mkIf cfg.enable {
+
+    modules = {
+      networking = {
+        avahi.enable = true;
+        optomizeTcp = true;
+      };
+    };
+
     systemd = {
       # Given that our systems are headless, emergency mode is useless.
       # We prefer the system to attempt to continue booting so

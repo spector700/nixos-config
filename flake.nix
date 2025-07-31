@@ -15,11 +15,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nur = {
-      url = "github:nix-community/NUR";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     # hyprland.url = "git+https://github.com/hyprwm/Hyprland/?submodules=1/d26439a0fe5594fb26d5a3c01571f9490a9a2d2c";
 
     # app launcher

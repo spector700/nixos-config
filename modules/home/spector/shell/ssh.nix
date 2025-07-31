@@ -24,7 +24,7 @@ in
         identityFile = "${homeDirectory}/.ssh/gitkey";
       };
       "vanaheim" = {
-        hostname = "192.168.1.107";
+        hostname = "192.168.1.111";
         inherit user;
         identityFile = "${homeDirectory}/.ssh/id_spector";
       };

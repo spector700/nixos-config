@@ -31,7 +31,8 @@ in
     modules = [
       ./alfheim
       ../modules/nixos
-    ] ++ concatLists [ homeManager ];
+    ]
+    ++ concatLists [ homeManager ];
   };
 
   # Homelab
@@ -41,6 +42,7 @@ in
     modules = [
       ./vanaheim
       ../modules/nixos
-    ] ++ concatLists [ homeManager ];
+    ]
+    ++ concatLists [ homeManager ];
   };
 }
