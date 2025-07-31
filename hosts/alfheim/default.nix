@@ -43,7 +43,7 @@ in
   modules = {
     roles = {
       desktop.enable = true;
-      development.enable = true;
+      development.enable = false;
       gaming.enable = true;
       video.enable = true;
     };
