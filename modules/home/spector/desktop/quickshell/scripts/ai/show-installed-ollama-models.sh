@@ -6,7 +6,7 @@ model_names=$(ollama list | tail -n +2 | awk '{print $1}')
 # Build a JSON array
 json_array="["
 for name in $model_names; do
-    json_array+="\"$name\","
+  json_array+="\"$name\","
 done
 
 # Remove trailing comma and close the array

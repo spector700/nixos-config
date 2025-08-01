@@ -1,5 +1,4 @@
 {
-  config,
   lib,
   ...
 }:
@@ -10,7 +9,6 @@ in
 {
   imports = [
     ./hyprland
-    ./ags.nix
     # ./anyrun.nix
     ./hypridle.nix
     ./hyprlock.nix
