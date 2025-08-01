@@ -11,15 +11,11 @@ let
   foreground = "#${config.lib.stylix.colors.base05}";
   rounding = 18;
 
-  inherit (lib) mkIf mkEnableOption;
-  cfg = config.modules.desktop.hyprpanel;
+  inherit (lib) mkIf;
+  cfg = config.modules.desktop.bar;
 in
 {
-  options.modules.desktop.hyprpanel = {
-    enable = mkEnableOption "Enable the hyprpanel taskbar";
-  };
-
-  config = mkIf cfg.enable {
+  config = mkIf (cfg == "hyprpanel") {
     programs.hyprpanel = {
       enable = true;
       # hyprland.enable = true;

@@ -8,7 +8,8 @@ let
   uexec = program: "uwsm app -- ${program}";
 
   pointer = config.home.pointerCursor;
-  inherit (lib) getExe;
+  inherit (lib) getExe optionals;
+  cfg = config.modules.desktop.bar;
 in
 {
   wayland.windowManager.hyprland.settings = {
@@ -21,6 +22,9 @@ in
       "sleep 9 && ${uexec (getExe pkgs.vesktop)}"
       (uexec (getExe config.programs.spicetify.spicedSpotify))
       (uexec (getExe pkgs.steam))
+    ]
+    ++ optionals (cfg == "quickshell") [
+      "${uexec (getExe pkgs.quickshell)} --config ~/nixos-config/modules/home/spector/desktop/quickshell"
     ];
   };
 }

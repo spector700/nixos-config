@@ -9,6 +9,8 @@ let
   screenshotarea = "hyprctl keyword animation 'fadeOut,0,8,slow'; ${getExe pkgs.grimblast} --notify copysave area; hyprctl keyword animation 'fadeOut,1,8,slow'";
 
   lumastart = "${getExe inputs.lumastart.packages.${pkgs.system}.default}";
+  inherit (config.modules.desktop) bar;
+  inherit (lib) optionals mkIf;
 
   # binds $mod + [alt +] {1..10} to [move to] workspace {1..10}
   workspaces = builtins.concatLists (
@@ -47,7 +49,6 @@ in
       in
       [
         # Compositor
-        "$mod SHIFT, R, ${uexec pkgs.hyprland}/bin/hyprctl reload && hyprpanel quit; hyprpanel"
         "$mod, Q, killactive,"
         "$mod, F, fullscreen,"
         "$mod, G, togglefloating"
@@ -85,13 +86,15 @@ in
         # lock screen
         "$mod, L, ${uexec (getExe config.programs.hyprlock.package)}"
 
-        # Power menu
-        ", XF86PowerOff, exec, hyprpanel -t powermenu"
-
         # Screenshot
         ", Print, exec, ${screenshotarea}"
       ]
-      ++ workspaces;
+      ++ workspaces
+      ++ optionals (bar == "hyprpanel") [
+        "$mod SHIFT, R, ${uexec pkgs.hyprland}/bin/hyprctl reload && hyprpanel quit; hyprpanel"
+        # Power menu
+        ", XF86PowerOff, exec, hyprpanel -t powermenu"
+      ];
 
     bindl = [
       # Media Controls
@@ -103,7 +106,7 @@ in
       ", XF86AudioMicMute, exec, ${pkgs.pamixer}/bin/wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
     ];
 
-    bindle = [
+    bindle = mkIf (bar == "hyprpanel") [
       # Volume
       ", XF86AudioRaiseVolume, exec, hyprpanel -r 'audio.speaker.volume += 0.05; indicator.speaker()'"
       ", XF86AudioLowerVolume, exec, hyprpanel -r 'audio.speaker.volume -= 0.05; indicator.speaker()'"
