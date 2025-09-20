@@ -122,10 +122,12 @@ in
     };
 
     # touchpad gestures
-    gestures = {
-      workspace_swipe = true;
-      workspace_swipe_forever = true;
-    };
+    gesture = [
+      "3, horizontal, workspace"
+      "4, left, dispatcher, movewindow, mon:-1"
+      "4, right, dispatcher, movewindow, mon:+1"
+      "4, pinch, fullscreen"
+    ];
 
     dwindle = {
       # keep floating dimensions while tiling
