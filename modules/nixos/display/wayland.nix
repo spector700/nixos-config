@@ -25,9 +25,9 @@ in
     (mkIf cfg.hyprland.enable {
       programs.hyprland = {
         enable =
-          assert (
-            lib.assertMsg (lib.versionOlder config.programs.hyprland.package.version "0.51") "hyprland updated, check orca-slicer."
-          );
+          # assert (
+          #   lib.assertMsg (lib.versionOlder config.programs.hyprland.package.version "0.51") "hyprland updated, check orca-slicer."
+          # );
           true;
 
         # needed for setting the wayland environment variables

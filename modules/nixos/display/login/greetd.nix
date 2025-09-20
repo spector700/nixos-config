@@ -22,7 +22,7 @@ let
   defaultSession = {
     user = "greeter";
     command = concatStringsSep " " [
-      (getExe pkgs.greetd.tuigreet)
+      (getExe pkgs.tuigreet)
       "--time"
       "--remember"
       "--remember-user-session"
@@ -36,7 +36,6 @@ in
     # greetd display manager
     services.greetd = {
       enable = true;
-      vt = 2;
       restart = !os.autoLogin;
 
       # <https://man.sr.ht/~kennylevinsen/greetd/>

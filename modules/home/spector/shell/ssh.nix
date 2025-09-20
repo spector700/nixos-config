@@ -12,8 +12,6 @@ in
 {
   programs.ssh = {
     enable = true;
-    hashKnownHosts = true;
-    compression = true;
     matchBlocks = {
       net = {
         host = builtins.concatStringsSep " " hostnames;
@@ -22,11 +20,15 @@ in
       "github.com" = {
         hostname = "github.com";
         identityFile = "${homeDirectory}/.ssh/gitkey";
+        compression = true;
+        hashKnownHosts = true;
       };
       "vanaheim" = {
         hostname = "192.168.1.111";
         inherit user;
         identityFile = "${homeDirectory}/.ssh/id_spector";
+        compression = true;
+        hashKnownHosts = true;
       };
     };
   };

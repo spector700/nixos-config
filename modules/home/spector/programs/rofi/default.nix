@@ -16,7 +16,6 @@ in
   config = mkIf cfg.enable {
     programs.rofi = {
       enable = true;
-      package = pkgs.rofi-wayland;
       theme = ./launcher-config.rasi;
     };
 

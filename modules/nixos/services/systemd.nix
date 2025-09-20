@@ -10,7 +10,6 @@
     in
     {
       # avoid hanging the system for too long on boot or shutdown.
-      extraConfig = timeoutConfig;
       user.extraConfig = timeoutConfig;
     };
 }

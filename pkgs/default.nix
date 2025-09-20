@@ -5,8 +5,8 @@
   perSystem =
     { pkgs, ... }:
     {
-      packages = {
-        koshi = pkgs.callPackage ./ags { inherit inputs; };
-      };
+      # packages = {
+      #   koshi = pkgs.callPackage ./ags { inherit inputs; };
+      # };
     };
 }
