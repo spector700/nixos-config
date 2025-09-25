@@ -1,4 +1,10 @@
-{ inputs, config, ... }:
+{
+  inputs,
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 {
 
   imports = [ ./plugins/starship.nix ];
@@ -21,6 +27,11 @@
           ];
           run = "cd ~/Nextcloud";
           desc = "Go to Nextcloud";
+        }
+        # Run ripdrag when pressing C-n
+        {
+          on = [ "<C-n>" ];
+          run = ''shell '${lib.getExe pkgs.ripdrag} "$@" -x 2>/dev/null &' --confirm'';
         }
       ];
     };

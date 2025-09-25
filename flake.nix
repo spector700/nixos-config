@@ -69,12 +69,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # bar
-    ags = {
-      url = "github:Aylur/ags";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     # plugin to show the starship prompt in yazi
     starship-yazi = {
       url = "github:Rolv-Apneseth/starship.yazi";

@@ -94,6 +94,9 @@ in
         "$mod SHIFT, R, ${uexec pkgs.hyprland}/bin/hyprctl reload && hyprpanel quit; hyprpanel"
         # Power menu
         ", XF86PowerOff, exec, hyprpanel -t powermenu"
+      ]
+      ++ optionals (bar == "quickshell") [
+        "$mod SHIFT, R, ${uexec pkgs.hyprland}/bin/hyprctl reload"
       ];
 
     bindl = [
