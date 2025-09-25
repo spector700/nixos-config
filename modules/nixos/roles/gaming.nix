@@ -42,7 +42,20 @@ in
         remotePlay.openFirewall = false;
         # Compatibility tools to install
         extraCompatPackages = with pkgs; [ proton-ge-bin ];
+
+        # gamescopeSession = {
+        #   enable = true;
+        #   args = [
+        #     "--expose-wayland"
+        #     "-e" # Enable steam integration
+        #   ];
+        # };
       };
+
+      # gamescope = {
+      #   enable = true;
+      #   capSysNice = false; # doesn't work inside of steam
+      # };
 
       gamemode = {
         enable = true;

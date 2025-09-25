@@ -28,7 +28,7 @@ in
   };
 
   # home-manager modules
-  home-manager.users.${config.modules.os.mainUser}.config = {
+  home-manager.users.${user}.config = {
     sops.secrets = {
       "keys/ssh/${user}_${config.networking.hostName}" = {
         path = "/home/${user}/.ssh/id_spector";
@@ -61,6 +61,8 @@ in
     homelab = {
       ollama.enable = true;
     };
+
+    services.sunshine.enable = true;
 
     display = {
       gpuAcceleration.enable = true;
@@ -120,7 +122,7 @@ in
     openrazer = {
       enable = true;
       batteryNotifier.enable = false;
-      users = [ "${config.modules.os.mainUser}" ];
+      users = [ "${user}" ];
     };
   };
 }

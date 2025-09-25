@@ -3,12 +3,9 @@
   ...
 }:
 let
-
   inherit (osConfig.modules.display) monitors;
-
 in
 {
-
   wayland.windowManager.hyprland.settings = {
     "$mod" = "SUPER";
 
@@ -41,8 +38,8 @@ in
       "immediate, class:ffxiv"
 
       # fix fullscreen flashing
-      "suppressevent fullscreen, class:^(steam_app_[0-9]*)$"
-      "suppressevent fullscreen, class:ffxiv"
+      # "suppressevent fullscreen, class:^(steam_app_[0-9]*)$"
+      # "suppressevent fullscreen, class:ffxiv"
 
       # Application in workspaces
       "workspace 8 silent, title:^(Steam)|(Lutris)$"

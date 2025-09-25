@@ -20,6 +20,7 @@ in
       winetricks
       wineWowPackages.waylandFull
       protonplus
+      sgdboop # Get game art work for steam
     ];
   };
 }
