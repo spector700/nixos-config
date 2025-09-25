@@ -36,7 +36,7 @@ in
     modules = {
       desktop = {
         hyprpaper.enable = mkDefault true;
-        hypridle.enable = mkDefault false;
+        hypridle.enable = mkDefault true;
         hyprlock.enable = mkDefault true;
         bar = "quickshell";
       };
