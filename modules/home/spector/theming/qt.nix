@@ -27,7 +27,7 @@ in
 {
   qt = {
     enable = true;
-    platformTheme.name = "qtct";
+    platformTheme.name = lib.mkForce "kde";
   };
 
   home.packages = with pkgs; [

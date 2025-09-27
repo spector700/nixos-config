@@ -25,6 +25,28 @@ in
       "blur, ^(lumastart)|(bar)$"
       "xray 1, ^(bar)$"
       "ignorezero, ^(lumastart)$"
+
+      # Quickshell
+      "blurpopups, quickshell:.*"
+      "blur, quickshell:.*"
+      "ignorealpha 0.79, quickshell:.*"
+      "animation slide, quickshell:bar"
+      "animation slide bottom, quickshell:cheatsheet"
+      "animation popin 120%, quickshell:screenCorners"
+      "noanim, quickshell:lockWindowPusher"
+      "animation fade, quickshell:notificationPopup"
+      "noanim, quickshell:overview"
+      "noanim, quickshell:screenshot"
+      "blur, quickshell:session"
+      "noanim, quickshell:session"
+      "ignorealpha 0, quickshell:session"
+      "animation slide right, quickshell:sidebarRight"
+      "animation slide left, quickshell:sidebarLeft"
+      "animation slide, quickshell:verticalBar"
+      "animation slide top, quickshell:wallpaperSelector"
+
+      # Launchers need to be FAST
+      "noanim, gtk4-layer-shell"
     ];
 
     windowrulev2 = [
