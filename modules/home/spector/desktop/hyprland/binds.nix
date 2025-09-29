@@ -42,6 +42,10 @@ in
       "$mod, mouse:273, resizewindow"
     ];
 
+    bindd = [
+      "Super, Tab, Toggle overview, global, quickshell:overviewToggle"
+    ];
+
     # Binds
     bind =
       let

@@ -22,9 +22,6 @@ in
       "sleep 9 && ${uexec (getExe pkgs.vesktop)}"
       (uexec (getExe config.programs.spicetify.spicedSpotify))
       (uexec (getExe pkgs.steam))
-    ]
-    ++ optionals (cfg == "quickshell") [
-      "${uexec (getExe pkgs.quickshell)} --config ~/nixos-config/modules/home/spector/desktop/quickshell"
     ];
   };
 }
