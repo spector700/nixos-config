@@ -2,6 +2,7 @@
   pkgs,
   config,
   inputs,
+  modulesPath,
   ...
 }:
 let
@@ -12,18 +13,15 @@ in
     ./hardware-configuration.nix
     inputs.disko.nixosModules.disko
     (import ../disks/lvm-btrfs.nix { disks = [ "/dev/nvme0n1" ]; })
+    "${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix"
   ];
 
   boot = {
+    # kernelPackages = pkgs.linuxPackages_6_6; # fix Freezing in games
     kernelPackages = pkgs.linuxPackages_latest;
   };
 
-  networking.hostName = "vivo";
-
-  virtualisation.docker.rootless = {
-    enable = true;
-    setSocketVariable = true;
-  };
+  networking.hostName = "iso";
 
   # home-manager modules
   home-manager.users.${user}.config = {
@@ -33,17 +31,9 @@ in
       };
     };
 
-    modules = {
-      theme.wallpaper = ../../modules/home/spector/theming/wallpaper;
-    };
   };
 
   modules = {
-    roles = {
-      desktop.enable = true;
-      development.enable = false;
-      video.enable = true;
-    };
 
     hardware = {
       cpu.type = "amd";
@@ -58,28 +48,6 @@ in
       # gpuAcceleration.enable = true;
       desktop.hyprland.enable = true;
 
-      # monitors = [
-      #   {
-      #     name = "DP-2";
-      #     resolution = "3440x1440";
-      #     position = "1152x420";
-      #     refreshRate = 100;
-      #     scale = "1.25";
-      #     primary = true;
-      #     workspaces = [
-      #       1
-      #       2
-      #       3
-      #       7
-      #       8
-      #       9
-      #     ];
-      #   }
-      # ];
-    };
-
-    programs = {
-      thunar.enable = true;
     };
 
     os = {
