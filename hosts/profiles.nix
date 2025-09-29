@@ -35,6 +35,17 @@ in
     ++ concatLists [ homeManager ];
   };
 
+  # Laptop
+  vivo = nixosSystem {
+    inherit specialArgs;
+    # Modules that are used
+    modules = [
+      ./vivo
+      ../modules/nixos
+    ]
+    ++ concatLists [ homeManager ];
+  };
+
   # Homelab
   vanaheim = nixosSystem {
     inherit specialArgs;
