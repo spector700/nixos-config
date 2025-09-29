@@ -74,7 +74,7 @@ in
               };
 
             powerManagement = {
-              enable = mkDefault false;
+              enable = mkDefault true;
               finegrained = mkDefault false;
             };
 

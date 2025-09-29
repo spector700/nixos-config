@@ -11,11 +11,13 @@ in
   imports = [
     ./hardware-configuration.nix
     inputs.disko.nixosModules.disko
+    inputs.chaotic.nixosModules.default
     (import ../disks/lvm-btrfs.nix { disks = [ "/dev/sda" ]; })
   ];
 
   boot = {
-    kernelPackages = pkgs.linuxPackages_6_6;
+    # kernelPackages = pkgs.linuxPackages_6_6; # fix Freezing in games
+    kernelPackages = pkgs.linuxPackages_cachyos-gcc;
     #For openrgb with gigabyte motherboard
     kernelParams = [ "acpi_enforce_resources=lax" ];
   };
