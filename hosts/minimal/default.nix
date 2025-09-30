@@ -20,16 +20,6 @@ in
 
   networking.hostName = "minimal";
 
-  # home-manager modules
-  home-manager.users.${user}.config = {
-    sops.secrets = {
-      "keys/ssh/${user}_${config.networking.hostName}" = {
-        path = "/home/${user}/.ssh/id_spector";
-      };
-    };
-
-  };
-
   modules = {
     hardware = {
       cpu.type = "amd";

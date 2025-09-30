@@ -27,11 +27,11 @@ in
 
   # home-manager modules
   home-manager.users.${user}.config = {
-    sops.secrets = {
-      "keys/ssh/${user}_${config.networking.hostName}" = {
-        path = "/home/${user}/.ssh/id_spector";
-      };
-    };
+    # sops.secrets = {
+    #   "keys/ssh/${user}_${config.networking.hostName}" = {
+    #     path = "/home/${user}/.ssh/id_spector";
+    #   };
+    # };
 
     modules = {
       theme.wallpaper = ../../modules/home/spector/theming/wallpaper;
@@ -42,7 +42,6 @@ in
     roles = {
       desktop.enable = true;
       development.enable = false;
-      video.enable = true;
     };
 
     hardware = {
@@ -55,27 +54,30 @@ in
     };
 
     display = {
-      # gpuAcceleration.enable = true;
+      gpuAcceleration.enable = true;
       desktop.hyprland.enable = true;
 
-      # monitors = [
-      #   {
-      #     name = "DP-2";
-      #     resolution = "3440x1440";
-      #     position = "1152x420";
-      #     refreshRate = 100;
-      #     scale = "1.25";
-      #     primary = true;
-      #     workspaces = [
-      #       1
-      #       2
-      #       3
-      #       7
-      #       8
-      #       9
-      #     ];
-      #   }
-      # ];
+      monitors = [
+        {
+          name = "eDP-1";
+          resolution = "1920x1080";
+          position = "auto";
+          refreshRate = 60;
+          scale = "1.50";
+          primary = true;
+          workspaces = [
+            1
+            2
+            3
+            4
+            5
+            6
+            7
+            8
+            9
+          ];
+        }
+      ];
     };
 
     programs = {
@@ -84,7 +86,7 @@ in
 
     os = {
       mainUser = "spector";
-      # autoLogin = true;
+      autoLogin = true;
     };
 
     boot = {

@@ -8,8 +8,7 @@ let
   uexec = program: "uwsm app -- ${program}";
 
   pointer = config.home.pointerCursor;
-  inherit (lib) getExe optionals;
-  cfg = config.modules.desktop.bar;
+  inherit (lib) getExe;
 in
 {
   wayland.windowManager.hyprland.settings = {
