@@ -62,7 +62,7 @@ in
     inherit specialArgs;
     # Modules that are used
     modules = [
-      ./iso
+      ./minimal
       ../modules/nixos
     ]
     ++ concatLists [ homeManager ];
