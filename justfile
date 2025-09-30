@@ -2,7 +2,7 @@ SOPS_DIR := "/home/spector/Projects/nix-secrets"
 SOPS_FILE := "@{SOPS_DIR}/.sops.yaml"
 
 # Define path to helpers
-export HELPERS_PATH := justfile_directory() + "helpers.sh"
+export HELPERS_PATH := justfile_directory() + "/helpers.sh"
 
 # default recipe to display help information
 default:

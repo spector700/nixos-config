@@ -17,7 +17,7 @@ in
 
   boot = {
     # kernelPackages = pkgs.linuxPackages_6_6; # fix Freezing in games
-    kernelPackages = pkgs.linuxPackages_cachyos-gcc;
+    kernelPackages = pkgs.linuxPackages_latest;
     #For openrgb with gigabyte motherboard
     kernelParams = [ "acpi_enforce_resources=lax" ];
   };
