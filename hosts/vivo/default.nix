@@ -41,7 +41,7 @@ in
   modules = {
     roles = {
       desktop.enable = true;
-      development.enable = false;
+      laptop.enable = true;
     };
 
     hardware = {
