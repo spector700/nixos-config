@@ -86,7 +86,7 @@ in
 
     os = {
       mainUser = "spector";
-      autoLogin = true;
+      # autoLogin = true;
     };
 
     boot = {

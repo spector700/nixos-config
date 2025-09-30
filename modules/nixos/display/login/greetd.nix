@@ -14,6 +14,9 @@ let
 
   cfg = config.modules.roles.desktop;
 
+  sessionData = config.services.displayManager.sessionData.desktops;
+  sessionPath = "${sessionData}/share/wayland-sessions";
+
   initialSession = {
     user = "${os.mainUser}";
     command = "${desktop.command}";
@@ -27,7 +30,7 @@ let
       "--remember"
       "--remember-user-session"
       "--asterisks"
-      "--sessions '${desktop.command}'"
+      "--sessions '${sessionPath}'"
     ];
   };
 in
