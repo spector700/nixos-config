@@ -6,6 +6,7 @@ in
   imports = [
     ./cpu
     ./gpu
+    ./power
     ./rgb
     ./bluetooth.nix
     ./printing.nix
