@@ -28,6 +28,7 @@ in
         shell = pkgs.zsh; # Default shell
       };
     };
+  };
 
   config.warnings = optionals (config.modules.os.users == [ ]) [
     ''
