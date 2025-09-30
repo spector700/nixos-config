@@ -56,4 +56,15 @@ in
     ]
     ++ concatLists [ homeManager ];
   };
+
+  # minimal build for initial install
+  minimal = nixosSystem {
+    inherit specialArgs;
+    # Modules that are used
+    modules = [
+      ./iso
+      ../modules/nixos
+    ]
+    ++ concatLists [ homeManager ];
+  };
 }

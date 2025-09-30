@@ -2,7 +2,6 @@
   pkgs,
   config,
   inputs,
-  modulesPath,
   ...
 }:
 let
@@ -10,18 +9,15 @@ let
 in
 {
   imports = [
-    ./hardware-configuration.nix
     inputs.disko.nixosModules.disko
     (import ../disks/lvm-btrfs.nix { disks = [ "/dev/nvme0n1" ]; })
-    "${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix"
   ];
 
   boot = {
-    # kernelPackages = pkgs.linuxPackages_6_6; # fix Freezing in games
     kernelPackages = pkgs.linuxPackages_latest;
   };
 
-  networking.hostName = "iso";
+  networking.hostName = "minimal";
 
   # home-manager modules
   home-manager.users.${user}.config = {
@@ -34,20 +30,10 @@ in
   };
 
   modules = {
-
     hardware = {
       cpu.type = "amd";
       # gpu.type = "nvidia";
       sound.enable = true;
-
-      bluetooth.enable = true;
-      printing.enable = true;
-    };
-
-    display = {
-      # gpuAcceleration.enable = true;
-      desktop.hyprland.enable = true;
-
     };
 
     os = {
