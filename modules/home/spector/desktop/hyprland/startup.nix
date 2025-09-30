@@ -1,5 +1,6 @@
 {
   config,
+  osConfig,
   pkgs,
   lib,
   ...
@@ -8,7 +9,7 @@ let
   uexec = program: "uwsm app -- ${program}";
 
   pointer = config.home.pointerCursor;
-  inherit (lib) getExe;
+  inherit (lib) getExe optionals;
 in
 {
   wayland.windowManager.hyprland.settings = {
@@ -20,7 +21,7 @@ in
       "hyprctl dispatch workspace 1"
       "sleep 9 && ${uexec (getExe pkgs.vesktop)}"
       (uexec (getExe config.programs.spicetify.spicedSpotify))
-      (uexec (getExe pkgs.steam))
-    ];
+    ]
+    ++ optionals osConfig.programs.steam.enable [ (uexec (getExe pkgs.steam)) ];
   };
 }
