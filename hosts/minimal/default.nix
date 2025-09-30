@@ -9,6 +9,7 @@ let
 in
 {
   imports = [
+    ./hardware-configuration.nix
     inputs.disko.nixosModules.disko
     (import ../disks/lvm-btrfs.nix { disks = [ "/dev/nvme0n1" ]; })
   ];
