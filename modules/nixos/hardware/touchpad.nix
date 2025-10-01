@@ -15,7 +15,7 @@ in
       };
 
       touchpad = {
-        naturalScrolling = true;
+        naturalScrolling = false;
         tapping = true;
         clickMethod = "clickfinger";
         disableWhileTyping = true;
