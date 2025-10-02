@@ -37,6 +37,11 @@ in
       };
     };
 
+    home.packages = with pkgs; [
+      gimp
+      lmstudio
+    ];
+
     modules = {
       theme = {
         wallpaper = ../../modules/home/spector/theming/wallpaper;

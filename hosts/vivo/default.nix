@@ -44,7 +44,7 @@ in
       programs = {
         spicetify.enable = true;
         zathura.enable = true;
-        # rofi.enable = true;
+        rofi.enable = true;
         zen.enable = true;
       };
     };
