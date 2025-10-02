@@ -109,8 +109,6 @@ in
           "/var/lib/libvirt"
           "/var/lib/nixos"
           "/var/lib/systemd/coredump"
-          "/var/cache/tailscale"
-          "/var/lib/tailscale"
         ];
         files = [ "/etc/machine-id" ];
       };

@@ -30,11 +30,23 @@ in
     # };
 
     modules = {
-      theme.wallpaper = ../../modules/home/spector/theming/wallpaper;
       desktop = {
         bar = lib.mkForce "hyprpanel";
       };
 
+      theme = {
+        wallpaper = ../../modules/home/spector/theming/wallpaper;
+        stylix.enable = true;
+      };
+
+      services.nextcloud-client.enable = true;
+
+      programs = {
+        spicetify.enable = true;
+        zathura.enable = true;
+        # rofi.enable = true;
+        zen.enable = true;
+      };
     };
   };
 
@@ -47,16 +59,17 @@ in
   };
 
   modules = {
-    networking.tailscale.enable = true;
-
     roles = {
-      desktop.enable = true;
       laptop.enable = true;
+    };
+
+    networking = {
+      tailscale.enable = true;
+      optomizeTcp = true;
     };
 
     hardware = {
       cpu.type = "amd";
-      # gpu.type = "nvidia";
       sound.enable = true;
 
       bluetooth.enable = true;
@@ -64,7 +77,7 @@ in
     };
 
     display = {
-      gpuAcceleration.enable = true;
+      # gpuAcceleration.enable = true;
       desktop.hyprland.enable = true;
 
       monitors = [

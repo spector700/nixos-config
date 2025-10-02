@@ -38,16 +38,34 @@ in
     };
 
     modules = {
-      theme.wallpaper = ../../modules/home/spector/theming/wallpaper;
+      theme = {
+        wallpaper = ../../modules/home/spector/theming/wallpaper;
+        stylix.enable = true;
+      };
+
+      services.nextcloud-client.enable = true;
+
+      programs = {
+        spicetify.enable = true;
+        zathura.enable = true;
+        orca-slicer.enable = true;
+        rofi.enable = true;
+        brave.enable = true;
+        zen.enable = true;
+      };
     };
   };
 
   modules = {
     roles = {
-      desktop.enable = true;
       development.enable = false;
       gaming.enable = true;
       video.enable = true;
+    };
+
+    networking = {
+      avahi.enable = true;
+      optomizeTcp = true;
     };
 
     hardware = {

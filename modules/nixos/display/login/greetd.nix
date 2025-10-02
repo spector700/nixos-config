@@ -11,8 +11,7 @@ let
 
   inherit (config.modules) os;
   inherit (config.modules.display) desktop;
-
-  cfg = config.modules.roles.desktop;
+  inherit (desktop) isWayland;
 
   sessionData = config.services.displayManager.sessionData.desktops;
   sessionPath = "${sessionData}/share/wayland-sessions";
@@ -35,7 +34,7 @@ let
   };
 in
 {
-  config = mkIf cfg.enable {
+  config = mkIf isWayland {
     # greetd display manager
     services.greetd = {
       enable = true;
