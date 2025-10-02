@@ -7,6 +7,7 @@ in
     ./avahi.nix
     ./optomize.nix
     ./ssh.nix
+    ./tailscale.nix
   ];
 
   options.modules.networking = {

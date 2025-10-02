@@ -1,14 +1,24 @@
-{ config, lib, ... }:
+{
+  inputs,
+  config,
+  lib,
+  ...
+}:
+let
+  secretsPath = (builtins.toString inputs.nix-secrets) + "/sops";
+in
 {
   options.modules.networking.tailscale.enable = lib.mkEnableOption "tailscale";
 
   config = lib.mkIf config.modules.networking.tailscale.enable {
     services.tailscale = {
       enable = true;
-      authKeyFile = config.age.secrets.tailscale-key.path;
+      useRoutingFeatures = "client";
+      authKeyFile = config.sops.secrets.tailscale-key.path;
     };
-    age.secrets.tailscale-key = {
-      file = ./secrets/tailscale-key-${config.networking.hostName}.age;
+
+    sops.secrets."tailscale-key" = {
+      sopsFile = "${secretsPath}/${config.networking.hostName}.yaml";
       mode = "400";
     };
   };
