@@ -1,6 +1,7 @@
 {
   pkgs,
   config,
+  osConfig,
   inputs,
   lib,
   ...
@@ -9,6 +10,10 @@ let
   screenshotarea = "hyprctl keyword animation 'fadeOut,0,8,slow'; ${getExe pkgs.grimblast} --notify copysave area; hyprctl keyword animation 'fadeOut,1,8,slow'";
 
   lumastart = "${getExe inputs.lumastart.packages.${pkgs.system}.default}";
+  volume = "${pkgs.wireplumber}/bin/wpctl";
+  brightness = "${getExe pkgs.brightnessctl}";
+  media = "${getExe pkgs.playerctl}";
+
   inherit (config.modules.desktop) bar;
   inherit (lib) optionals mkIf;
 
@@ -105,18 +110,22 @@ in
 
     bindl = [
       # Media Controls
-      ", XF86AudioPlay, exec, ${getExe pkgs.playerctl} play-pause"
-      ", XF86AudioNext, exec, ${getExe pkgs.playerctl} next"
-      ", XF86AudioPrev, exec, ${getExe pkgs.playerctl} previous"
+      ", XF86AudioPlay, exec, ${media} play-pause"
+      ", XF86AudioNext, exec, ${media} next"
+      ", XF86AudioPrev, exec, ${media} previous"
       # Mute
-      ", XF86AudioMute, exec, ${pkgs.pamixer}/bin/wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
-      ", XF86AudioMicMute, exec, ${pkgs.pamixer}/bin/wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
+      ", XF86AudioMute, exec, ${volume} set-mute @DEFAULT_SINK@ toggle"
+      ", XF86AudioMicMute, exec, ${volume} set-mute @DEFAULT_SOURCE@ toggle"
     ];
 
-    bindle = mkIf (bar == "hyprpanel") [
+    bindle = mkIf osConfig.modules.roles.laptop.enable [
       # Volume
-      ", XF86AudioRaiseVolume, exec, hyprpanel -r 'audio.speaker.volume += 0.05; indicator.speaker()'"
-      ", XF86AudioLowerVolume, exec, hyprpanel -r 'audio.speaker.volume -= 0.05; indicator.speaker()'"
+      ", XF86AudioRaiseVolume, exec, ${volume} set-volume -l '1.0' @DEFAULT_SINK@ 5%+"
+      ", XF86AudioLowerVolume, exec, ${volume} set-volume -l '1.0' @DEFAULT_SINK@ 5%-"
+
+      # Brightness
+      ", XF86MonBrightnessUp, exec, ${brightness} s 5%+"
+      ", XF86MonBrightnessDown, exec, ${brightness} s 5%-"
     ];
   };
 }
