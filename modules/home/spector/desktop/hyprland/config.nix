@@ -138,6 +138,11 @@ in
       sensitivity = -0.49;
       accel_profile = "flat";
       off_window_axis_events = true;
+      numlock_by_default = true;
+
+      touchpad = {
+        natural_scroll = true;
+      };
     };
 
     # touchpad gestures

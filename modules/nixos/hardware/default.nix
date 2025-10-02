@@ -11,7 +11,6 @@ in
     ./bluetooth.nix
     ./printing.nix
     ./sound.nix
-    ./touchpad.nix
   ];
 
   options.modules.hardware = {

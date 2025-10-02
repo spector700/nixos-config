@@ -1,5 +1,6 @@
 {
   pkgs,
+  lib,
   config,
   inputs,
   ...
@@ -20,11 +21,6 @@ in
 
   networking.hostName = "vivo";
 
-  virtualisation.docker.rootless = {
-    enable = true;
-    setSocketVariable = true;
-  };
-
   # home-manager modules
   home-manager.users.${user}.config = {
     # sops.secrets = {
@@ -35,10 +31,24 @@ in
 
     modules = {
       theme.wallpaper = ../../modules/home/spector/theming/wallpaper;
+      desktop = {
+        bar = lib.mkForce "hyprpanel";
+      };
+
     };
   };
 
+  services = {
+    fprintd = {
+      enable = true; # run sudo fprintd-enroll
+    };
+
+    fwupd.enable = true;
+  };
+
   modules = {
+    networking.tailscale.enable = true;
+
     roles = {
       desktop.enable = true;
       laptop.enable = true;
@@ -86,7 +96,7 @@ in
 
     os = {
       mainUser = "spector";
-      # autoLogin = true;
+      autoLogin = true;
     };
 
     boot = {
