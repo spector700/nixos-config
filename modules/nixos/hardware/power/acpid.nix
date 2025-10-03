@@ -5,7 +5,8 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
+  inherit (lib) mkEnableOption mkIf;
+  cfg = config.modules.hardware.power.acpid;
 in
 {
   # Pressing special keys, including the Power/Sleep/Suspend button
@@ -13,7 +14,11 @@ in
   # (Un)Plugging an AC power adapter from a notebook
   # (Un)Plugging phone jack etc.
 
-  config = mkIf config.modules.roles.laptop.enable {
+  options.modules.hardware.power.acpid = {
+    enable = mkEnableOption "Enable acpid service for handling ACPI events";
+  };
+
+  config = mkIf cfg.enable {
     # handle ACPI events
     services.acpid.enable = true;
 

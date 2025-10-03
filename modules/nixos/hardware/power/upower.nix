@@ -4,10 +4,15 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
+  inherit (lib) mkEnableOption mkIf;
+  cfg = config.modules.hardware.power.upower;
 in
 {
-  config = mkIf config.modules.roles.laptop.enable {
+  options.modules.hardware.power.upower = {
+    enable = mkEnableOption "Enable upower service for power management";
+  };
+
+  config = mkIf cfg.enable {
     # DBus service that provides power management support to applications.
     services.upower = {
       enable = true;
