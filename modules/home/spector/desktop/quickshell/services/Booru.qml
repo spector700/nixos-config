@@ -214,7 +214,7 @@ Singleton {
             },
             "tagSearchTemplate": "https://api.waifu.im/tags",
             "tagMapFunc": (response) => {
-                return [...response.versatile.map(item => {return {"name": item}}), 
+                return [...response.versatile.map(item => {return {"name": item}}),
                     ...response.nsfw.map(item => {return {"name": item}})]
             }
         },
@@ -281,7 +281,7 @@ Singleton {
         }
         return url;
     }
-    
+
     function setProvider(provider) {
         provider = provider.toLowerCase()
         if (providerList.indexOf(provider) !== -1) {
@@ -313,9 +313,9 @@ Singleton {
         var url = baseUrl
         var tagString = tags.join(" ")
         if (!nsfw && !(["zerochan", "waifu.im", "t.alcy.cc"].includes(currentProvider))) {
-            if (currentProvider == "gelbooru") 
+            if (currentProvider == "gelbooru")
                 tagString += " rating:general";
-            else 
+            else
                 tagString += " rating:safe";
         }
         var params = []
@@ -387,7 +387,7 @@ Singleton {
                     // console.log("[Booru] Mapped response: " + JSON.stringify(response))
                     newResponse.images = response
                     newResponse.message = response.length > 0 ? "" : root.failMessage
-                    
+
                 } catch (e) {
                     console.log("[Booru] Failed to parse response: " + e)
                     newResponse.message = root.failMessage
@@ -414,7 +414,7 @@ Singleton {
             xhr.send()
         } catch (error) {
             console.log("Could not set User-Agent:", error)
-        } 
+        }
     }
 
     property var currentTagRequest: null
@@ -461,7 +461,6 @@ Singleton {
             xhr.send()
         } catch (error) {
             console.log("Could not set User-Agent:", error)
-        } 
+        }
     }
 }
-

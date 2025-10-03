@@ -15,7 +15,7 @@ import Quickshell
  */
 Singleton {
     id: root
-    
+
     readonly property var renderPadding: 4 // This is to prevent cutoff in the rendered images
 
     property list<string> processedHashes: []
@@ -35,7 +35,7 @@ Singleton {
         // 1. Hash it and initialize necessary variables
         const hash = Qt.md5(expression)
         const imagePath = `${latexOutputPath}/${hash}.svg`
-        
+
         // 2. Check if the hash is already processed
         if (processedHashes.includes(hash)) {
             // console.log("Already processed: " + hash)
@@ -56,9 +56,9 @@ Singleton {
             Process {
                 id: microtexProcess${hash}
                 running: true
-                command: [ "bash", "-c", 
+                command: [ "bash", "-c",
                     "cd ${root.microtexBinaryDir} && ./${root.microtexBinaryName} -headless '-input=${StringUtils.shellSingleQuoteEscape(StringUtils.escapeBackslashes(expression))}' "
-                    + "'-output=${imagePath}' " 
+                    + "'-output=${imagePath}' "
                     + "'-textsize=${Appearance.font.pixelSize.normal}' "
                     + "'-padding=${renderPadding}' "
                     // + "'-background=${Appearance.m3colors.m3tertiary}' "

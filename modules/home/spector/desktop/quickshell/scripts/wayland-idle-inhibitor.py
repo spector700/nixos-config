@@ -7,8 +7,8 @@ import sys
 from dataclasses import dataclass
 from signal import SIGINT, SIGTERM, signal
 from threading import Event
-import setproctitle
 
+import setproctitle
 from pywayland.client.display import Display
 from pywayland.protocol.idle_inhibit_unstable_v1.zwp_idle_inhibit_manager_v1 import (
     ZwpIdleInhibitManagerV1,

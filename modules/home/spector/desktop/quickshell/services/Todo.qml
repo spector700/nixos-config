@@ -14,7 +14,7 @@ Singleton {
     id: root
     property var filePath: Directories.todoPath
     property var list: []
-    
+
     function addItem(item) {
         list.push(item)
         // Reassign to trigger onListChanged
@@ -84,4 +84,3 @@ Singleton {
         }
     }
 }
-

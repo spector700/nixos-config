@@ -41,7 +41,7 @@ Singleton {
         id: getDefaultKeybinds
         running: true
         command: [root.keybindParserPath, "--path", root.defaultKeybindConfigPath]
-        
+
         stdout: SplitParser {
             onRead: data => {
                 try {
@@ -57,7 +57,7 @@ Singleton {
         id: getUserKeybinds
         running: true
         command: [root.keybindParserPath, "--path", root.userKeybindConfigPath]
-        
+
         stdout: SplitParser {
             onRead: data => {
                 try {
@@ -69,4 +69,3 @@ Singleton {
         }
     }
 }
-
