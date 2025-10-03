@@ -12,23 +12,31 @@ in
 {
   programs.ssh = {
     enable = true;
+    enableDefaultConfig = false;
+
     matchBlocks = {
-      net = {
+      "*" = {
         host = builtins.concatStringsSep " " hostnames;
         forwardAgent = true;
+        compression = true;
+        serverAliveInterval = 0;
+        serverAliveCountMax = 3;
+        hashKnownHosts = true;
+        userKnownHostsFile = "~/.ssh/known_hosts";
+        controlMaster = "no";
+        controlPath = "~/.ssh/master-%r@%n:%p";
+        controlPersist = "no";
       };
+
       "github.com" = {
         hostname = "github.com";
         identityFile = "${homeDirectory}/.ssh/gitkey";
-        compression = true;
-        hashKnownHosts = true;
       };
+
       "vanaheim" = {
         hostname = "192.168.1.111";
         inherit user;
         identityFile = "${homeDirectory}/.ssh/id_spector";
-        compression = true;
-        hashKnownHosts = true;
       };
     };
   };
