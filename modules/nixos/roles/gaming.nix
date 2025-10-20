@@ -3,18 +3,22 @@
 # Do not forget to enable Steam capatability for all title in the settings menu
 #
 {
+  inputs,
   pkgs,
   lib,
   config,
   ...
 }:
 let
-  inherit (lib) mkIf mkEnableOption;
+  inherit (lib) mkIf mkEnableOption getExe;
 
   cfg = config.modules.roles.gaming;
   user = config.modules.os.mainUser;
 in
 {
+  # imports = [
+  #   inputs.chaotic.nixosModules.default
+  # ];
   options.modules.roles.gaming = {
     enable = mkEnableOption "Enable packages required for the device to be gaming-ready";
   };
@@ -31,6 +35,8 @@ in
       };
     };
 
+    # consoleExperience.enable = true;
+
     # Xbox controller support
     hardware.xone.enable = true;
 
@@ -41,20 +47,18 @@ in
         # Open ports in the firewall for Steam Remote Play
         remotePlay.openFirewall = false;
         # Compatibility tools to install
-        extraCompatPackages = with pkgs; [ proton-ge-bin ];
+        extraCompatPackages = [
+          inputs.chaotic.packages.${pkgs.system}.proton-cachyos
+        ];
 
         # gamescopeSession = {
         #   enable = true;
-        #   args = [
-        #     "--expose-wayland"
-        #     "-e" # Enable steam integration
-        #   ];
         # };
       };
 
       # gamescope = {
       #   enable = true;
-      #   capSysNice = false; # doesn't work inside of steam
+      #   capSysNice = true; # doesn't work inside of steam
       # };
 
       gamemode = {
@@ -64,6 +68,10 @@ in
           general = {
             softrealtime = "auto";
             renice = 15;
+          };
+          custom = {
+            start = "${getExe pkgs.libnotify} 'GameMode started'";
+            end = "${getExe pkgs.libnotify} 'GameMode ended'";
           };
         };
       };
