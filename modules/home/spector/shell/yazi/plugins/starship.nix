@@ -1,7 +1,11 @@
+{ pkgs, ... }:
 {
-  config = {
+  programs.yazi = {
+    plugins = with pkgs.yaziPlugins; {
+      inherit starship;
+    };
 
-    xdg.configFile."yazi/init.lua".text = ''
+    initLua = ''
       require("starship"):setup()
 
       local old_build = Tab.build

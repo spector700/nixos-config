@@ -77,12 +77,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # plugin to show the starship prompt in yazi
-    starship-yazi = {
-      url = "github:Rolv-Apneseth/starship.yazi";
-      flake = false;
-    };
-
     zen-browser = {
       url = "github:youwen5/zen-browser-flake";
       inputs.nixpkgs.follows = "nixpkgs";

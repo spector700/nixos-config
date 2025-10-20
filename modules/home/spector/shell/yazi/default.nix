@@ -1,5 +1,4 @@
 {
-  inputs,
   config,
   lib,
   pkgs,
@@ -7,7 +6,12 @@
 }:
 {
 
-  imports = [ ./plugins/starship.nix ];
+  imports = [
+    ./plugins/git.nix
+    ./plugins/mediainfo.nix
+    ./plugins/ouch.nix
+    ./plugins/starship.nix
+  ];
 
   # yazi file manager
   programs.yazi = {
@@ -15,11 +19,14 @@
 
     enableZshIntegration = config.programs.zsh.enable;
     plugins = {
-      starship = "${inputs.starship-yazi}";
+      inherit (pkgs.yaziPlugins)
+        mount
+        ;
+
     };
 
     keymap = {
-      manager.prepend_keymap = [
+      mgr.prepend_keymap = [
         {
           on = [
             "g"
@@ -28,10 +35,37 @@
           run = "cd ~/Nextcloud";
           desc = "Go to Nextcloud";
         }
+        {
+          run = "plugin mount";
+          on = [ "M" ];
+          desc = "Disk Mounting";
+        }
+        {
+          run = "plugin chmod";
+          on = [
+            "c"
+            "m"
+          ];
+          desc = "Chmod on selected files";
+        }
+        {
+          run = "tab_switch 1 --relative";
+          on = [ "<C-Tab>" ];
+        }
+        {
+          run = "tab_switch -1 --relative";
+          on = [ "<C-BackTab>" ];
+        }
+        # drop to shell
+        {
+          on = "!";
+          run = ''shell "$SHELL" --block'';
+          desc = "Open shell here";
+        }
         # Run ripdrag when pressing C-n
         {
-          on = [ "<C-n>" ];
           run = ''shell '${lib.getExe pkgs.ripdrag} "$@" -x 2>/dev/null &' --confirm'';
+          on = [ "<C-n>" ];
         }
       ];
     };
