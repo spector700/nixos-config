@@ -43,7 +43,6 @@ in
     programs = {
       steam = {
         enable = true;
-        protontricks.enable = true;
         # Open ports in the firewall for Steam Remote Play
         remotePlay.openFirewall = false;
         # Compatibility tools to install
