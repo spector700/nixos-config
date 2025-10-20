@@ -29,9 +29,10 @@ let
       "--remember"
       "--remember-user-session"
       "--asterisks"
-      "--sessions '${sessionPath}'"
+      "--sessions ${sessionPath}"
     ];
   };
+
 in
 {
   config = mkIf isWayland {
@@ -46,7 +47,6 @@ in
         # in this case it'll be a TUI greeter
         default_session = defaultSession;
 
-        # initial session
         initial_session = mkIf os.autoLogin initialSession;
       };
     };

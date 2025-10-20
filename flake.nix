@@ -89,7 +89,7 @@
     };
 
     quickshell = {
-      url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
+      url = "git+https://git.outfoxxed.me/outfoxxed/quickshell?submodules=1&rev=00858812f25b748d08b075a0d284093685fa3ffd";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -102,6 +102,7 @@
       url = "github:end-4/dots-hyprland";
       flake = false;
     };
+
     # Color theming
     stylix.url = "github:danth/stylix";
     # persist files on boot
