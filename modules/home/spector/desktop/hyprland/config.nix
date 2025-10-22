@@ -22,28 +22,9 @@ in
     ) monitors;
 
     layerrule = [
-      "blur, ^(lumastart)|(bar)$"
-      "xray 1, ^(bar)$"
+      "blur, ^(lumastart|.*bar.*|vicinae)$"
+      "xray 1, ^(.*bar.*)$"
       "ignorezero, ^(lumastart)$"
-
-      # Quickshell
-      "blurpopups, quickshell:.*"
-      "blur, quickshell:.*"
-      "ignorealpha 0.79, quickshell:.*"
-      "animation slide, quickshell:bar"
-      "animation slide bottom, quickshell:cheatsheet"
-      "animation popin 120%, quickshell:screenCorners"
-      "noanim, quickshell:lockWindowPusher"
-      "animation fade, quickshell:notificationPopup"
-      "noanim, quickshell:overview"
-      "noanim, quickshell:screenshot"
-      "blur, quickshell:session"
-      "noanim, quickshell:session"
-      "ignorealpha 0, quickshell:session"
-      "animation slide right, quickshell:sidebarRight"
-      "animation slide left, quickshell:sidebarLeft"
-      "animation slide, quickshell:verticalBar"
-      "animation slide top, quickshell:wallpaperSelector"
 
       # Launchers need to be FAST
       "noanim, gtk4-layer-shell"
@@ -58,8 +39,13 @@ in
         "float, title:^(Picture-in-Picture)$"
         "pin, title:^(Picture-in-Picture)$"
 
+        "float, class:^(.*blueman-manager(-wrapped)?|nm-applet|nm-connection-editor)$"
+
         # Force Screen tearing
         "immediate, class:${games}"
+
+        # Ignore maximize requests from apps.
+        "suppressevent maximize, class:.*"
 
         # fix fullscreen flashing
         # "suppressevent fullscreen, class:^(steam_app_[0-9]*)$"
@@ -79,10 +65,6 @@ in
         "workspace special:spotify silent, title:^(Spotify.*)$"
         "workspace special:spotify, title:^(signal)$"
 
-        # Fix steam menus
-        # "stayfocused, title:^()$,class:^(steam)$"
-        # "minsize 1 1, title:^()$,class:^(steam)$"
-
         # idle inhibit while watching videos
         "idleinhibit focus, class:^(mpv|.+exe|celluloid)$"
         "idleinhibit focus, class:^(firefox|zen)$, title:^(.*YouTube.*)$"
@@ -92,43 +74,48 @@ in
         "dimaround, class:^(xdg-desktop-portal-gtk)$"
         "dimaround, class:^(polkit-gnome-authentication-agent-1)$"
 
+        # Center all floating windows (not xwayland cause popups)
+        "center 1, floating:1, xwayland:0"
+
         # Fix xwayland apps
-        # "rounding 0, xwayland:1"
-        # "center, title:^(Confirm Exit|Open Project|win424|win201|splash)$"
-        # "size 640 400, title:^(splash)$"
+        "rounding 0, xwayland:1"
+        "center, title:^(Confirm Exit|Open Project|win424|win201|splash)$"
+        "size 640 400, title:^(splash)$"
 
         # Opacity
         "opacity 0.94 0.94,class:^(kitty|thunar|code(.*))$"
       ];
 
     general = {
-      gaps_in = 5;
-      gaps_out = 5;
+      gaps_in = 3;
+      gaps_out = 3;
       border_size = 1;
       allow_tearing = true;
     };
 
     # Fix broken rotatated cursor
-    cursor = {
-      no_hardware_cursors = true;
-      use_cpu_buffer = 0;
-    };
+    # cursor = {
+    #   no_hardware_cursors = true;
+    #   use_cpu_buffer = 0;
+    # };
 
     decoration = {
       rounding = 16;
+
       blur = {
-        brightness = 1.0;
-        contrast = 1.0;
-        noise = 1.0e-2;
+        size = 15;
+        passes = 2;
+
+        # brightness = 1.0;
+        contrast = 1.5;
+        noise = 0.08;
 
         vibrancy = 0.2;
         vibrancy_darkness = 0.5;
 
-        passes = 4;
-        size = 7;
-
         popups = true;
       };
+
       shadow = {
         offset = "0 2";
         range = 20;
@@ -146,9 +133,10 @@ in
 
     input = {
       follow_mouse = 1; # focus change on cursor move
-      sensitivity = -0.49;
+      sensitivity = -0.7;
       accel_profile = "flat";
       off_window_axis_events = true;
+      float_switch_override_focus = false;
       numlock_by_default = true;
 
       touchpad = {
@@ -179,8 +167,8 @@ in
       disable_autoreload = true; # autoreload is unnecessary on nixos, because the config is readonly anyway
       disable_hyprland_logo = true;
       focus_on_activate = true; # Whether Hyprland should focus an app that requests to be focused (an activate request)
-      exit_window_retains_fullscreen = true; # if a fullscreen window is closed, the next window will be fullscreened if this is true
-      new_window_takes_over_fullscreen = 1;
+      exit_window_retains_fullscreen = false; # if a fullscreen window is closed, the next window will be fullscreened if this is true
+      new_window_takes_over_fullscreen = 2;
 
       enable_swallow = true; # hide windows that spawn other windows
       swallow_regex = "kitty|thunar|wezterm"; # windows for which swallow is applied
@@ -195,7 +183,7 @@ in
       direct_scanout = true;
     };
 
-    # fix bad resolution on games
+    # fix bad resolution on games with fractional scaling
     xwayland.force_zero_scaling = true;
   };
 }

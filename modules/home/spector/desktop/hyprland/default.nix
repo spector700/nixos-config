@@ -38,7 +38,6 @@ in
         hyprpaper.enable = mkDefault true;
         hypridle.enable = mkDefault true;
         hyprlock.enable = mkDefault true;
-        bar = "quickshell";
       };
     };
   };
