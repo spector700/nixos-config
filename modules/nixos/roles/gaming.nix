@@ -16,9 +16,6 @@ let
   user = config.modules.os.mainUser;
 in
 {
-  # imports = [
-  #   inputs.chaotic.nixosModules.default
-  # ];
   options.modules.roles.gaming = {
     enable = mkEnableOption "Enable packages required for the device to be gaming-ready";
   };
@@ -45,21 +42,22 @@ in
         enable = true;
         # Open ports in the firewall for Steam Remote Play
         remotePlay.openFirewall = false;
-        # Compatibility tools to install
+        extest.enable = true; # For wayland
         extraCompatPackages = [
           inputs.chaotic.packages.${pkgs.system}.proton-cachyos
         ];
-
-        # gamescopeSession = {
-        #   enable = true;
-        # };
       };
 
-      # gamescope = {
-      #   enable = true;
-      #   capSysNice = true; # doesn't work inside of steam
-      # };
-
+      # Optimise Linux system performance on demand
+      # https://github.com/FeralInteractive/GameMode
+      # https://wiki.archlinux.org/title/Gamemode
+      #
+      # Usage:
+      #   1. For games/launchers which integrate GameMode support:
+      #      https://github.com/FeralInteractive/GameMode#apps-with-gamemode-integration
+      #      simply running the game will automatically activate GameMode.
+      #   2. For others, launching the game through gamemoderun: `gamemoderun ./game`
+      #   3. For steam: `gamemoderun %command%`
       gamemode = {
         enable = true;
         enableRenice = true;

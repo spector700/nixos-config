@@ -39,6 +39,7 @@ in
 
     home.packages = with pkgs; [
       gimp
+      jetbrains.idea-community-bin
     ];
 
     modules = {
@@ -46,6 +47,8 @@ in
         wallpaper = ../../modules/home/spector/theming/wallpaper;
         stylix.enable = true;
       };
+
+      desktop.bar = "noctalia";
 
       services.nextcloud-client.enable = true;
 
@@ -90,7 +93,9 @@ in
 
     display = {
       gpuAcceleration.enable = true;
-      desktop.hyprland.enable = true;
+      desktop = {
+        hyprland.enable = true;
+      };
 
       monitors = [
         {

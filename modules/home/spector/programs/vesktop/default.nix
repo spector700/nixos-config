@@ -17,7 +17,6 @@ in
     home.packages = with pkgs; [ vesktop ];
 
     xdg.configFile = {
-      "vesktop/themes/Catppuccin.theme.css".source = ./theme.css;
 
       # "vesktop/settings.json".text = builtins.toJSON {
       #   minimizeToTray = false;
