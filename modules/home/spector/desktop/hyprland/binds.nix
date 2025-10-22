@@ -38,6 +38,16 @@ let
   inherit (lib) getExe;
 in
 {
+  # l -> locked, will also work when an input inhibitor (e.g. a lockscreen) is active.
+  # r -> release, will trigger on release of a key.
+  # e -> repeat, will repeat when held.
+  # n -> non-consuming, key/mouse events will be passed to the active window in addition to triggering the dispatcher.
+  # m -> mouse.
+  # t -> transparent, cannot be shadowed by other binds.
+  # i -> ignore mods, will ignore modifiers.
+  # s -> separate, will arbitrarily combine keys between each mod/key, see [Keysym combos](#keysym-combos) above.
+  # d -> has description, will allow you to write a description for your bind.
+
   wayland.windowManager.hyprland.settings = {
     "$mod" = "SUPER";
 
@@ -104,6 +114,14 @@ in
         # Power menu
         ", XF86PowerOff, exec, hyprpanel -t powermenu"
       ];
+
+    binde = [
+      # resize with arrowkeys
+      "$mod CTRL, UP, resizeactive, 0 -20"
+      "$mod CTRL, DOWN, resizeactive, 0 20"
+      "$mod CTRL, LEFT, resizeactive, -20 0"
+      "$mod CTRL, RIGHT, resizeactive, 20 0"
+    ];
 
     bindl = [
       # Media Controls
