@@ -1,5 +1,4 @@
 {
-  inputs,
   osConfig,
   lib,
   pkgs,

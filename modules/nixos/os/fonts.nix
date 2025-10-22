@@ -36,7 +36,7 @@ in
         roboto
         inter
 
-        # emojis
+        # emojis / icons
         material-icons
         material-design-icons
         noto-fonts-color-emoji

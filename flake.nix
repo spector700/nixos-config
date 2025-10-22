@@ -82,19 +82,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    quickshell = {
-      url = "git+https://git.outfoxxed.me/outfoxxed/quickshell?submodules=1&rev=00858812f25b748d08b075a0d284093685fa3ffd";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # quickshell = {
+    #   url = "git+https://git.outfoxxed.me/outfoxxed/quickshell?submodules=1&rev=00858812f25b748d08b075a0d284093685fa3ffd";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
 
     dankMaterialShell = {
       url = "github:AvengeMedia/DankMaterialShell";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    end-4_dots-hyprland = {
-      url = "github:end-4/dots-hyprland";
-      flake = false;
     };
 
     # Color theming

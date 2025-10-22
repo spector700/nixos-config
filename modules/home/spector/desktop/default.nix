@@ -8,13 +8,12 @@ let
 in
 {
   imports = [
+    ./bar
     ./hyprland
     # ./anyrun.nix
     ./hypridle.nix
     ./hyprlock.nix
-    ./hyprpanel.nix
     ./hyprpaper.nix
-    ./quickshell.nix
   ];
 
   options.modules.desktop = {
@@ -23,7 +22,8 @@ in
         with types;
         nullOr (enum [
           "hyprpanel"
-          "quickshell"
+          "dankMaterialShell"
+          "noctalia"
         ]);
       default = null;
       description = "Which bar to use";
