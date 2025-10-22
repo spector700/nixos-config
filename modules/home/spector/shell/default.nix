@@ -1,4 +1,3 @@
-{ inputs, ... }:
 {
   imports = [
     ./tools
@@ -11,8 +10,5 @@
     ./ssh.nix
     ./starship.nix
     ./zsh.nix
-
-    inputs.nix-index-database.homeModules.nix-index
-    { programs.nix-index-database.comma.enable = true; }
   ];
 }

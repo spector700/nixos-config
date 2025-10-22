@@ -59,12 +59,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # database for comma
-    nix-index-database = {
-      url = "github:nix-community/nix-index-database";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     # custom spotify
     spicetify = {
       url = "github:/Gerg-L/spicetify-nix";
