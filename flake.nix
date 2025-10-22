@@ -13,17 +13,10 @@
     # CachyOS Kernel
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
 
-    nur = {
-      url = "github:nix-community/NUR";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    # hyprland.url = "git+https://github.com/hyprwm/Hyprland/?submodules=1/d26439a0fe5594fb26d5a3c01571f9490a9a2d2c";
 
     # app launcher
     anyrun = {
@@ -62,12 +55,6 @@
     # custom spotify
     spicetify = {
       url = "github:/Gerg-L/spicetify-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    # get colors from wallpaper
-    matugen = {
-      url = "github:InioX/matugen";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
