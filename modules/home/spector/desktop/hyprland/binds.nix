@@ -86,8 +86,8 @@ in
         "$mod SHIFT, down, movewindow, d"
 
         # special workspaces
-        "$mod, S, togglespecialworkspace, spotify"
-        "ALT SHIFT, S, movetoworkspace, special"
+        "$mod, S, togglespecialworkspace, special"
+        "ALT SHIFT, S, movetoworkspace, special:special"
 
         # terminal
         "$mod, T, ${uexec (getExe pkgs.kitty)}"

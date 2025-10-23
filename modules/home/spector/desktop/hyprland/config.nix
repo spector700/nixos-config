@@ -62,8 +62,8 @@ in
         "noshadow, class:${games}"
 
         "workspace 4 silent, title:^(.*((d|D)isc|ArmC|WebC)ord.*|vesktop)$"
-        "workspace special:spotify silent, title:^(Spotify.*)$"
-        "workspace special:spotify, title:^(signal)$"
+        "workspace special:special silent, title:^(Spotify.*)$"
+        "workspace special:special, title:^(signal)$"
 
         # idle inhibit while watching videos
         "idleinhibit focus, class:^(mpv|.+exe|celluloid)$"
@@ -78,7 +78,7 @@ in
         "center 1, floating:1, xwayland:0"
 
         # Fix xwayland apps
-        "rounding 0, xwayland:1"
+        # "rounding 0, xwayland:1"
         "center, title:^(Confirm Exit|Open Project|win424|win201|splash)$"
         "size 640 400, title:^(splash)$"
 
