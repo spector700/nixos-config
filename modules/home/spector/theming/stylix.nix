@@ -33,23 +33,23 @@ in
       image = config.modules.theme.wallpaper;
 
       cursor = {
-        name = "Bibata-Modern-Ice";
-        package = pkgs.bibata-cursors;
-        size = 20;
+        name = "capitaine-cursors-white";
+        package = pkgs.capitaine-cursors;
+        size = 30;
       };
 
       opacity = {
         applications = 1.0;
         terminal = 0.97;
         desktop = 1.0;
-        popups = 1.0;
+        popups = 0.8;
       };
 
       fonts = {
         sizes = {
           terminal = font.size;
           applications = font.size;
-          desktop = 11;
+          desktop = 12;
           popups = font.size;
         };
 
