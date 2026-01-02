@@ -27,55 +27,55 @@ in
 {
   qt = {
     enable = true;
-    platformTheme.name = lib.mkForce "kde";
+    # platformTheme.name = "gtk3";
   };
+  #
+  # home.packages = with pkgs; [
+  #   qt6Packages.qtstyleplugin-kvantum
+  #   qt6Packages.qt6ct
+  #   libsForQt5.qtstyleplugin-kvantum
+  #   libsForQt5.qt5ct
+  # ];
 
-  home.packages = with pkgs; [
-    qt6Packages.qtstyleplugin-kvantum
-    qt6Packages.qt6ct
-    libsForQt5.qtstyleplugin-kvantum
-    libsForQt5.qt5ct
-  ];
-
-  xdg.configFile = {
-    # Kvantum config
-    "Kvantum" = {
-      source = "${KvLibadwaita}/src";
-      recursive = true;
-    };
-
-    "Kvantum/kvantum.kvconfig".text = ''
-      [General]
-      theme=KvLibadwaitaDark
-    '';
-
-    # qtct config
-    "qt5ct/qt5ct.conf".text =
-      let
-        default = ''"${defaultFont},-1,5,50,0,0,0,0,0"'';
-      in
-      lib.generators.toINI { } (
-        qtctConf
-        // {
-          Fonts = {
-            fixed = default;
-            general = default;
-          };
-        }
-      );
-
-    "qt6ct/qt6ct.conf".text =
-      let
-        default = ''"${defaultFont},-1,5,400,0,0,0,0,0,0,0,0,0,0,1,Regular"'';
-      in
-      lib.generators.toINI { } (
-        qtctConf
-        // {
-          Fonts = {
-            fixed = default;
-            general = default;
-          };
-        }
-      );
-  };
+  # xdg.configFile = {
+  #   # Kvantum config
+  #   "Kvantum" = {
+  #     source = "${KvLibadwaita}/src";
+  #     recursive = true;
+  #   };
+  #
+  #   "Kvantum/kvantum.kvconfig".text = ''
+  #     [General]
+  #     theme=KvLibadwaitaDark
+  #   '';
+  #
+  #   # qtct config
+  #   "qt5ct/qt5ct.conf".text =
+  #     let
+  #       default = ''"${defaultFont},-1,5,50,0,0,0,0,0"'';
+  #     in
+  #     lib.generators.toINI { } (
+  #       qtctConf
+  #       // {
+  #         Fonts = {
+  #           fixed = default;
+  #           general = default;
+  #         };
+  #       }
+  #     );
+  #
+  #   "qt6ct/qt6ct.conf".text =
+  #     let
+  #       default = ''"${defaultFont},-1,5,400,0,0,0,0,0,0,0,0,0,0,1,Regular"'';
+  #     in
+  #     lib.generators.toINI { } (
+  #       qtctConf
+  #       // {
+  #         Fonts = {
+  #           fixed = default;
+  #           general = default;
+  #         };
+  #       }
+  #     );
+  # };
 }

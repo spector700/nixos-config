@@ -30,6 +30,8 @@ in
       base16Scheme = "${pkgs.base16-schemes}/share/themes/tokyo-city-dark.yaml";
       polarity = "dark";
 
+      targets.qt.platform = "gtk3";
+
       image = config.modules.theme.wallpaper;
 
       cursor = {

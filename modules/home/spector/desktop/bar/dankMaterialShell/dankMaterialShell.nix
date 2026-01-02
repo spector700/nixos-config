@@ -54,15 +54,43 @@ let
       info = base0C;
     };
   };
+
+  # Material Symbols Rounded font derivation
+  material-symbols-rounded = pkgs.stdenvNoCC.mkDerivation {
+    pname = "material-symbols-rounded";
+    version = "2024-09-01";
+
+    src = pkgs.fetchurl {
+      url = "https://github.com/google/material-design-icons/raw/master/variablefont/MaterialSymbolsRounded%5BFILL%2CGRAD%2Copsz%2Cwght%5D.ttf";
+      hash = "sha256-1xnyL97ifjRLB+Rub6i1Cx/OPPywPUqE8D+vvwgS/CI=";
+    };
+
+    dontUnpack = true;
+
+    installPhase = ''
+      runHook preInstall
+      install -Dm644 $src $out/share/fonts/truetype/MaterialSymbolsRounded.ttf
+      runHook postInstall
+    '';
+
+    meta = with lib; {
+      description = "Material Symbols Rounded - Variable icon font by Google";
+      homepage = "https://fonts.google.com/icons";
+      license = licenses.asl20;
+      platforms = platforms.all;
+    };
+  };
+
 in
 {
-  imports = [ inputs.dankMaterialShell.homeModules.dankMaterialShell.default ];
+  imports = [ inputs.dankMaterialShell.homeModules.dank-material-shell ];
 
   config = mkIf (cfg == "dankMaterialShell") {
 
     home.packages = with pkgs; [
       hyprpicker
       jq
+      material-symbols-rounded
     ];
 
     home.sessionVariables = {
@@ -76,13 +104,34 @@ in
 
     programs.dankMaterialShell = {
       enable = true;
-      enableSystemd = true;
+      enableSystemd = false;
       # enableBrightnessControl = mkIf config.modules.roles.laptop.enable;
     };
 
     xdg.configFile."DankMaterialShell/stylix-colors.json".text = builtins.toJSON colorTheme;
-    xdg.configFile."DankMaterialShell/settings.json" = {
-      source = ./settings.json;
+    # xdg.configFile."DankMaterialShell/settings.json" = {
+    #   source = ./settings.json;
+    # };
+
+    wayland.windowManager.hyprland = {
+      settings = {
+        exec-once = [
+          "sleep 2 && dms run"
+        ];
+
+        bind = [
+          "$mod, comma, exec, dms ipc call settings toggle"
+          "$mod CTRL, q, exec, dms ipc call lock lock"
+
+          # "$mod, Space, exec, dms ipc call spotlight toggle"
+          "$mod, P, exec, dms ipc call clipboard toggle"
+        ];
+
+        layerrule = [
+          "blur, quickshell:bar"
+        ];
+      };
     };
+
   };
 }

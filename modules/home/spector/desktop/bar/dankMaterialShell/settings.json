@@ -10,11 +10,11 @@
   "use24HourClock": true,
   "showSeconds": false,
   "useFahrenheit": false,
-  "nightModeEnabled": false,
+  "nightModeEnabled": true,
   "weatherLocation": "New York, NY",
   "weatherCoordinates": "40.7128,-74.0060",
-  "useAutoLocation": false,
-  "weatherEnabled": false,
+  "useAutoLocation": true,
+  "weatherEnabled": true,
   "showLauncherButton": true,
   "showWorkspaceSwitcher": true,
   "showFocusedWindow": true,
@@ -201,7 +201,7 @@
   "notepadLastCustomTransparency": 0.7,
   "soundsEnabled": true,
   "useSystemSoundTheme": false,
-  "soundNewNotification": true,
+  "soundNewNotification": false,
   "soundVolumeChanged": true,
   "soundPluggedIn": true,
   "gtkThemingEnabled": false,
@@ -262,6 +262,9 @@
     "dock": [],
     "notifications": [
       "all"
+    ],
+    "wallpaper": [
+      "none"
     ]
   },
   "animationSpeed": 1,
