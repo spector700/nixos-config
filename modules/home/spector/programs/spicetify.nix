@@ -28,7 +28,10 @@ in
           keyboardShortcut
           shuffle
         ];
-        enabledCustomApps = with spicePkgs.apps; [ reddit ];
+        enabledCustomApps = with spicePkgs.apps; [
+          reddit
+          marketplace
+        ];
       };
   };
 }
