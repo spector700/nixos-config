@@ -58,7 +58,7 @@ in
         "workspace 8, title:^(Lutris)$"
 
         #   Games no animation, no blur, no shadow
-        "workspace 8 class:${games}"
+        "workspace 8, class:${games}"
         "noanim, class:${games}"
         "noblur, class:${games}"
         "noshadow, class:${games}"
@@ -135,7 +135,7 @@ in
 
     input = {
       follow_mouse = 1; # focus change on cursor move
-      sensitivity = -0.7;
+      sensitivity = -0.8;
       accel_profile = "flat";
       off_window_axis_events = true;
       float_switch_override_focus = false;
