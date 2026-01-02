@@ -10,10 +10,9 @@ let
     mkEnableOption
     getExe
     mkMerge
-    mkAfter
     ;
   cfg = config.modules.services.sunshine;
-  user = config.modules.os.mainUser;
+  uexec = program: "uwsm app -- ${program}";
 
   getHyprlandSignature = pkgs.writeShellScript "getHyprlandSignature" ''
     ${pkgs.findutils}/bin/find "$XDG_RUNTIME_DIR/hypr/" -maxdepth 1 -type d |
@@ -23,40 +22,83 @@ let
 
   onConnect = pkgs.writeShellScript "onConnect" ''
     export PATH="${pkgs.hyprland}/bin:$PATH"
-
     HYPRLAND_INSTANCE_SIGNATURE=$(${getHyprlandSignature})
     export HYPRLAND_INSTANCE_SIGNATURE
 
-    hyprctl output create headless Virtual
-    hyprctl keyword monitor Virtual,"$SUNSHINE_CLIENT_WIDTH"x"$SUNSHINE_CLIENT_HEIGHT"@"$SUNSHINE_CLIENT_FPS",auto,1
+    pkill -f ${pkgs.vesktop} || true
 
-    hyprctl dispatch workspace 8
+    # Create virtual monitor first
+    hyprctl output create headless Virtual
+    sleep 0.3
+
+    # Configure virtual monitor with client settings
+    hyprctl keyword monitor Virtual,"$SUNSHINE_CLIENT_WIDTH"x"$SUNSHINE_CLIENT_HEIGHT"@"$SUNSHINE_CLIENT_FPS",auto,1
+    sleep 0.3
+
+    # Move workspace 8 to virtual monitor
     hyprctl dispatch moveworkspacetomonitor "8" "Virtual"
-    # hyprctl dispatch dpms off DP-2
-    # hyprctl dispatch dpms off DP-3
-    ${getExe pkgs.wlopm} --off DP-2
-    ${getExe pkgs.wlopm} --off DP-3
+    sleep 0.3
+
+    # Disable animations and effects for performance
+    hyprctl --batch "\
+      keyword animations:enabled 0;\
+      keyword decoration:shadow:enabled 0;\
+      keyword decoration:blur:enabled 0;\
+      keyword general:gaps_in 0;\
+      keyword general:gaps_out 0;\
+      keyword general:border_size 1;\
+      keyword decoration:rounding 0;\
+      keyword misc:new_window_takes_over_fullscreen 1;\
+      keyword misc:mouse_move_enables_dpms false;\
+      keyword misc:key_press_enables_dpms false;\
+      keyword misc:exit_window_retains_fullscreen true" # if a fullscreen window is closed, the next window will be fullscreened if this is true
+    sleep 0.3
+
+    # Disable physical monitors
+    # DMPS does not work reliably, so just disable the monitors
+    # hyprctl keyword monitor DP-2,disable
+    # hyprctl keyword monitor DP-3,disable
+    hyprctl dispatch dpms off DP-2
+    hyprctl dispatch dpms off DP-3
+    sleep 0.5
+
+    # Switch to workspace 8 to ensure focus
+    hyprctl dispatch workspace 8
+    sleep 0.2
+
+    ${pkgs.steam}/bin/steam steam://open/bigpicture &
   '';
 
   onDisconnect = pkgs.writeShellScript "onDisconnect" ''
     export PATH="${pkgs.hyprland}/bin:$PATH"
-
     HYPRLAND_INSTANCE_SIGNATURE=$(${getHyprlandSignature})
     export HYPRLAND_INSTANCE_SIGNATURE
 
-    ${pkgs.util-linux}/bin/setsid ${pkgs.steam}/bin/steam steam://close/bigpicture
+    ${pkgs.steam}/bin/steam steam://close/bigpicture &
 
+    # Re-enable physical monitors
+    # hyprctl keyword monitor DP-2,enable
+    # hyprctl keyword monitor DP-3,enable
+
+    hyprctl dispatch dpms on DP-2
+    hyprctl dispatch dpms on DP-3
+    sleep 0.5
+
+    # Move workspace back to physical monitor
     hyprctl dispatch moveworkspacetomonitor "8" "DP-2"
+    sleep 0.3
+
     hyprctl output remove Virtual
-    ${getExe pkgs.wlopm} --on DP-2
-    ${getExe pkgs.wlopm} --on DP-3
-    # hyprctl dispatch dpms on DP-2
-    # hyprctl dispatch dpms on DP-3
-    # sleep 1 && hyprctl reload
+    sleep 0.3
+
+    # Reset config and monitors
+    hyprctl reload
+    sleep 0.3
+
+    ${uexec (getExe pkgs.vesktop)} &
   '';
 in
 {
-
   options.modules.services.sunshine = {
     enable = mkEnableOption "Enable sunshine game streaming service";
   };
@@ -72,6 +114,7 @@ in
         capSysAdmin = false;
         openFirewall = true;
         settings = {
+          # Target the virtual monitor created in hyprland config
           output_name = 2;
           min_log_level = "info";
         };
@@ -89,21 +132,14 @@ in
                   undo = onDisconnect;
                 }
               ];
-              detached = [ "${pkgs.util-linux}/bin/setsid ${pkgs.steam}/bin/steam steam://open/bigpicture" ];
+              # detached = [ "${pkgs.util-linux}/bin/setsid ${pkgs.steam}/bin/steam steam://open/bigpicture" ];
               exclude-global-prep-cmd = "false";
               auto-detach = "true";
+              # wait-all = "false";
             }
           ];
         };
       };
     }
-    (mkIf config.modules.display.desktop.hyprland.enable {
-      home-manager.users.${user}.config = {
-        wayland.windowManager.hyprland.settings = {
-          # add a virtual monitor for sunshine
-          monitor = mkAfter [ "Virtual,1920x1080@60,auto,1" ];
-        };
-      };
-    })
   ]);
 }

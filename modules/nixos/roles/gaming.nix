@@ -3,7 +3,6 @@
 # Do not forget to enable Steam capatability for all title in the settings menu
 #
 {
-  inputs,
   pkgs,
   lib,
   config,
@@ -35,16 +34,16 @@ in
     # consoleExperience.enable = true;
 
     # Xbox controller support
-    hardware.xone.enable = true;
+    # hardware.xone.enable = true;
 
     programs = {
       steam = {
         enable = true;
         # Open ports in the firewall for Steam Remote Play
         remotePlay.openFirewall = false;
-        extest.enable = true; # For wayland
-        extraCompatPackages = [
-          inputs.chaotic.packages.${pkgs.system}.proton-cachyos
+        extest.enable = false; # For wayland
+        extraCompatPackages = with pkgs; [
+          proton-ge-bin
         ];
       };
 
