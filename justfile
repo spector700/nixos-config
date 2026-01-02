@@ -46,7 +46,7 @@ sync USER HOST PATH:
 
 # Run nixos-rebuild on the remote host
 rebuild-deploy HOST:
-	NIX_SSHOPTS="-p22" nixos-rebuild --target-host {{HOST}} --use-remote-sudo --show-trace --impure --flake .#"{{HOST}}" switch
+	NIX_SSHOPTS="-p5010" nixos-rebuild --target-host {{HOST}} --sudo --show-trace --impure --flake .#"{{HOST}}" switch
 
 # Called by the rekey recipe
 sops-rekey:

@@ -15,6 +15,7 @@
           # the treefmt command
           config.treefmt.build.wrapper
           just
+          pre-commit
           yq-go
         ];
       };

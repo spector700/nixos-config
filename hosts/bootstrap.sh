@@ -8,15 +8,15 @@ source "$(dirname "${BASH_SOURCE[0]}")/helpers.sh"
 # User variables
 target_hostname=""
 target_destination=""
-target_user=${BOOTSTRAP_USER-$(whoami)} # Set BOOTSTRAP_ defaults in your shell.nix
-ssh_port=${BOOTSTRAP_SSH_PORT-22}
-ssh_key=${BOOTSTRAP_SSH_KEY-}
+target_user="spector"
+ssh_port=5010
+ssh_key=$HOME/.ssh/id_spector
 persist_dir=""
 luks_passphrase="passphrase"
 luks_secondary_drive_labels=""
-nix_src_path="/home/spector/" # path relative to /home/${target_user} where nix-config and nix-secrets are written in the users home
+nix_src_path=$HOME # path relative to /home/${target_user} where nix-config and nix-secrets are written in the users home
 git_root=$(git rev-parse --show-toplevel)
-nix_secrets_dir=${NIX_SECRETS_DIR:-/home/spector/Projects/nix-secrets} # Path to the nix-secrets repository
+nix_secrets_dir=$HOME/Projects/nix-secrets # Path to the nix-secrets repository
 
 # Create a temp directory for generated host keys
 temp=$(mktemp -d)
@@ -172,19 +172,29 @@ function nixos_anywhere() {
   # If you are rebuilding a machine without any hardware changes, this is likely unneeded or even possibly disruptive
   if no_or_yes "Generate a new hardware config for this host? Yes if your nix-config doesn't have an entry for this host."; then
     green "Generating hardware-configuration.nix on $target_hostname and adding it to the local nix-config."
-    $ssh_root_cmd "nixos-generate-config --no-filesystems --root /mnt"
-    $scp_cmd root@"$target_destination":/mnt/etc/nixos/hardware-configuration.nix \
-      "${git_root}"/hosts/"$target_hostname"/hardware-configuration.nix
-    generated_hardware_config=1
-  fi
+    # $ssh_root_cmd "nixos-generate-config --no-filesystems --root /mnt"
+    # $scp_cmd root@"$target_destination":/mnt/etc/nixos/hardware-configuration.nix \
+    #   "${git_root}"/hosts/"$target_hostname"/hardware-configuration.nix
+    SHELL=/bin/sh nix run github:nix-community/nixos-anywhere -- \
+      --ssh-port "$ssh_port" \
+      --post-kexec-ssh-port "$ssh_port" \
+      --extra-files "$temp" \
+      --flake .#"$target_hostname" \
+      root@"$target_destination" \
+      -i "$ssh_key" \
+      --generate-hardware-config nixos-generate-config ./hardware-configuration.nix
 
-  # --extra-files here picks up the ssh host key we generated earlier and puts it onto the target machine
-  SHELL=/bin/sh nix run github:nix-community/nixos-anywhere -- \
-    --ssh-port "$ssh_port" \
-    --post-kexec-ssh-port "$ssh_port" \
-    --extra-files "$temp" \
-    --flake .#"$target_hostname" \
-    root@"$target_destination"
+    generated_hardware_config=1
+  else
+    green "Skipping hardware-configuration.nix generation."
+    SHELL=/bin/sh nix run github:nix-community/nixos-anywhere -- \
+      --ssh-port "$ssh_port" \
+      --post-kexec-ssh-port "$ssh_port" \
+      --extra-files "$temp" \
+      --flake .#"$target_hostname" \
+      root@"$target_destination" \
+      -i "$ssh_key"
+  fi
 
   if ! yes_or_no "Has your system restarted and are you ready to continue? (no exits)"; then
     exit 0
@@ -194,8 +204,8 @@ function nixos_anywhere() {
   ssh-keyscan -p "$ssh_port" "$target_destination" | grep -v '^#' >>~/.ssh/known_hosts || true
 
   if [ -n "$persist_dir" ]; then
-    $ssh_root_cmd "cp /etc/machine-id $persist_dir/etc/machine-id || true"
-    $ssh_root_cmd "cp -R /etc/ssh/ $persist_dir/etc/ssh/ || true"
+    $ssh_cmd "sudo cp /etc/machine-id $persist_dir/etc/machine-id || true"
+    $ssh_cmd "sudo cp -R /etc/ssh/ $persist_dir/etc/ssh/ || true"
   fi
   cd - >/dev/null
 }

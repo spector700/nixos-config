@@ -44,6 +44,8 @@ in
         # Force Screen tearing
         "immediate, class:${games}"
 
+        "fullscreen, class:${games}"
+
         # Ignore maximize requests from apps.
         "suppressevent maximize, class:.*"
 

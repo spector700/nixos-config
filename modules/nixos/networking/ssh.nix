@@ -21,9 +21,12 @@ in
     # commands:
     #   - lpwd & pwd = print (local) parent working directory
     #   - put/get <filename> = send or receive file
+
+    # Change default port
+    ports = [ 5010 ];
     settings = {
       PermitRootLogin = "no";
-      PasswordAuthentication = false; # use ssh keys only
+      PasswordAuthentication = true; # use ssh keys only
     };
 
     hostKeys = [

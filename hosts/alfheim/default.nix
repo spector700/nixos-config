@@ -11,7 +11,6 @@ in
   imports = [
     ./hardware-configuration.nix
     inputs.disko.nixosModules.disko
-    inputs.chaotic.nixosModules.default
     (import ../disks/lvm-btrfs.nix { disks = [ "/dev/sda" ]; })
   ];
 
@@ -20,7 +19,11 @@ in
     kernelPackages = pkgs.linuxPackages_latest;
     #For openrgb with gigabyte motherboard
     kernelParams = [ "acpi_enforce_resources=lax" ];
+    supportedFilesystems = [ "ntfs" ];
+    binfmt.emulatedSystems = [ "aarch64-linux" ];
   };
+
+  programs.nix-ld.enable = true;
 
   networking.hostName = "alfheim";
 
@@ -40,6 +43,20 @@ in
     home.packages = with pkgs; [
       gimp
       jetbrains.idea-community-bin
+      opencode
+
+      fastfetch
+
+      # Video/Audio
+      mpv
+      loupe
+      celluloid
+      pwvucontrol
+
+      signal-desktop
+      obsidian
+      anki
+      vial
     ];
 
     modules = {
@@ -48,7 +65,7 @@ in
         stylix.enable = true;
       };
 
-      desktop.bar = "noctalia";
+      desktop.bar = "dankMaterialShell";
 
       services.nextcloud-client.enable = true;
 
@@ -89,7 +106,10 @@ in
       ollama.enable = true;
     };
 
-    services.sunshine.enable = true;
+    services = {
+      sunshine.enable = true;
+      syncthing.enable = true;
+    };
 
     display = {
       gpuAcceleration.enable = true;
