@@ -35,7 +35,6 @@ in
 
       ollama = {
         enable = true;
-        acceleration = "cuda";
         host = "0.0.0.0";
         loadModels = [
           "gemma3:12b"
@@ -48,11 +47,7 @@ in
 
     environment.persistence."/persist".directories = mkIf config.modules.boot.impermanence.enable [
       {
-        directory = "/var/lib/private/open-webui";
-        mode = "0700";
-      }
-      {
-        directory = "/var/lib/private/ollama";
+        directory = "/var/lib/private";
         mode = "0700";
       }
     ];
