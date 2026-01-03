@@ -22,7 +22,7 @@ in
     homeDirectory = "/home/${config.home.username}";
     # <https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion>
     # this is and should remain the version on which you have initiated your config
-    stateVersion = "23.05";
+    stateVersion = "26.05";
   };
 
   manual = {
