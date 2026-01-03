@@ -40,12 +40,8 @@ in
           {
             monitor = optionals (monitors != [ ]) (head (filter (x: x.primary or false) monitors)).name;
 
-            size = {
-              width = 200;
-              height = 25;
-            };
-
-            position = "0, 300";
+            size = "300, 50";
+            position = "0, 200";
 
             outline_thickness = 1;
 

@@ -42,7 +42,7 @@ in
 
     home.packages = with pkgs; [
       gimp
-      jetbrains.idea-community-bin
+      jetbrains.idea
       opencode
 
       fastfetch

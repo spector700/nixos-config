@@ -15,7 +15,7 @@ in
   config = mkIf config.modules.programs.thunar.enable {
     programs.thunar = {
       enable = true;
-      plugins = with pkgs.xfce; [
+      plugins = with pkgs; [
         thunar-volman
         thunar-archive-plugin
         thunar-media-tags-plugin

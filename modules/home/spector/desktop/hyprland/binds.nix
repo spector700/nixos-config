@@ -9,7 +9,7 @@
 let
   screenshotarea = "hyprctl keyword animation 'fadeOut,0,8,slow'; ${getExe pkgs.grimblast} --notify copysave area; hyprctl keyword animation 'fadeOut,1,8,slow'";
 
-  lumastart = "${getExe inputs.lumastart.packages.${pkgs.system}.default}";
+  lumastart = "${getExe inputs.lumastart.packages.${pkgs.stdenv.hostPlatform.system}.default}";
   volume = "${pkgs.wireplumber}/bin/wpctl";
   brightness = "${getExe pkgs.brightnessctl}";
   media = "${getExe pkgs.playerctl}";
@@ -95,7 +95,7 @@ in
         "CTRL SHIFT, Escape, ${uexec (getExe pkgs.kitty)} -e btop"
 
         # Programs
-        "$mod, B, ${uexec (getExe inputs.zen-browser.packages.${pkgs.system}.default)}"
+        "$mod, B, ${uexec (getExe inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default)}"
         "$mod SHIFT, E, ${uexec (getExe pkgs.xfce.thunar)}"
 
         # Launcher

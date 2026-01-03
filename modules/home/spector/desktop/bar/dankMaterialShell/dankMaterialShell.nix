@@ -102,9 +102,9 @@ in
       provider = "geoclue2";
     };
 
-    programs.dankMaterialShell = {
+    programs.dank-material-shell = {
       enable = true;
-      enableSystemd = false;
+      systemd.enable = false;
       # enableBrightnessControl = mkIf config.modules.roles.laptop.enable;
     };
 

@@ -30,7 +30,7 @@ in
       base16Scheme = "${pkgs.base16-schemes}/share/themes/tokyo-city-dark.yaml";
       polarity = "dark";
 
-      targets.qt.platform = "gtk3";
+      targets.qt.platform = "qtct";
 
       image = config.modules.theme.wallpaper;
 

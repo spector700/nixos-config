@@ -146,7 +146,7 @@ in
     systemd.user.services = {
       noctalia-shell =
         let
-          noctaliaPackage = inputs.noctalia.packages.${pkgs.system}.default;
+          noctaliaPackage = inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default;
           # noctaliaConfig = "/home/${user}/.config/noctalia/gui-settings.json";
         in
         {
