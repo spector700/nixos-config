@@ -112,5 +112,6 @@
 
   # this is the NixOS version that the configuration was generated with
   # this should be change to the version of the NixOS release that the configuration was generated with
+  # unless reinstalling from scratch, in which case it can be updated
   system.stateVersion = "23.05";
 }
