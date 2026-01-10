@@ -19,15 +19,16 @@ in
       "${getExe pkgs.wlsunset} -l 32.7 -L -96.9"
 
       "hyprctl dispatch workspace 1"
-      # ${lib.optionalString config.modules.programs.vesktop.enable "sleep 9 && ${uexec (getExe pkgs.vesktop)}"}
-      # (uexec (getExe config.programs.spicetify.spicedSpotify))
     ]
+
     ++ optionals config.programs.nixcord.vesktop.enable [
       "sleep 9 && ${uexec (getExe pkgs.vesktop)}"
     ]
+
     ++ optionals config.modules.programs.spicetify.enable [
       (uexec (getExe config.programs.spicetify.spicedSpotify))
     ]
+
     ++ optionals osConfig.programs.steam.enable [ (uexec (getExe pkgs.steam)) ];
   };
 }

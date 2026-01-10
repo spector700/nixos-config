@@ -13,6 +13,7 @@ in
   imports = [
     ./binds.nix
     ./config.nix
+    ./rules.nix
     ./startup.nix
   ];
 

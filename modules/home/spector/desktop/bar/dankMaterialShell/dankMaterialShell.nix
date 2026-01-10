@@ -126,10 +126,6 @@ in
           # "$mod, Space, exec, dms ipc call spotlight toggle"
           "$mod, P, exec, dms ipc call clipboard toggle"
         ];
-
-        layerrule = [
-          "blur, quickshell:bar"
-        ];
       };
     };
 
