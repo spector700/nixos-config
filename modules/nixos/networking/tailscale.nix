@@ -20,7 +20,6 @@ in
 
     sops.secrets."tailscale-key" = {
       sopsFile = "${secretsPath}/${config.networking.hostName}.yaml";
-      mode = "400";
     };
 
     environment.persistence."/persist".directories = mkIf config.modules.boot.impermanence.enable [

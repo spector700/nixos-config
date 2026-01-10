@@ -9,7 +9,8 @@ source "$(dirname "${BASH_SOURCE[0]}")/helpers.sh"
 target_hostname=""
 target_destination=""
 target_user="spector"
-ssh_port=5010
+ssh_port_post=5010
+ssh_port=22
 ssh_key=$HOME/.ssh/id_spector
 persist_dir=""
 luks_passphrase="passphrase"
@@ -30,7 +31,7 @@ trap cleanup exit
 # Copy data to the target machine
 function sync() {
   # $1 = user, $2 = source, $3 = destination
-  rsync -av --mkpath --filter=':- .gitignore' -e "ssh -oControlMaster=no -l $1 -oport=${ssh_port}" "$2" "$1@${target_destination}:${nix_src_path}"
+  rsync -av --mkpath --filter=':- .gitignore' -e "ssh -oControlMaster=no -l $1 -oport=${ssh_port_post}" "$2" "$1@${target_destination}:${nix_src_path}"
 }
 
 # Usage function
@@ -50,7 +51,7 @@ function help_and_exit() {
   echo "OPTIONS:"
   echo "  -u <target_user>                        specify target_user with sudo access. nix-config will be cloned to their home."
   echo "                                          Default='${target_user}'."
-  echo "  --port <ssh_port>                       specify the ssh port to use for remote access. Default=${ssh_port}."
+  echo "  --port <ssh_port_post>                       specify the ssh port to use for remote access. Default=${ssh_port_post}."
   echo '  --luks-secondary-drive-labels <drives>  specify the luks device names (as declared with "disko.devices.disk.*.content.luks.name" in host/common/disks/*.nix) separated by commas.'
   echo '                                          Example: --luks-secondary-drive-labels "cryptprimary,cryptextra"'
   echo "  --impermanence                          Use this flag if the target machine has impermanence enabled. WARNING: Assumes /persist path."
@@ -84,7 +85,7 @@ while [[ $# -gt 0 ]]; do
     ;;
   --port)
     shift
-    ssh_port=$1
+    ssh_port_post=$1
     ;;
   --temp-override)
     shift
@@ -114,14 +115,14 @@ fi
 # SSH commands
 ssh_cmd="ssh \
         -oControlPath=none \
-        -oport=${ssh_port} \
+        -oport=${ssh_port_post} \
         -oForwardAgent=yes \
         -oStrictHostKeyChecking=no \
         -oUserKnownHostsFile=/dev/null \
         -i $ssh_key \
         -t $target_user@$target_destination"
 # shellcheck disable=SC2001
-ssh_root_cmd=$(echo "$ssh_cmd" | sed "s|${target_user}@|root@|") # uses @ in the sed switch to avoid it triggering on the $ssh_key value
+ssh_root_cmd=$(echo "$ssh_cmd" | sed -e "s|${target_user}@|root@|" -e "s|${ssh_port_post}|${ssh_port}|") # uses @ in the sed switch to avoid it triggering on the $ssh_key value
 scp_cmd="scp -oControlPath=none -oport=${ssh_port} -oStrictHostKeyChecking=no -i $ssh_key"
 
 git_root=$(git rev-parse --show-toplevel)
@@ -172,9 +173,6 @@ function nixos_anywhere() {
   # If you are rebuilding a machine without any hardware changes, this is likely unneeded or even possibly disruptive
   if no_or_yes "Generate a new hardware config for this host? Yes if your nix-config doesn't have an entry for this host."; then
     green "Generating hardware-configuration.nix on $target_hostname and adding it to the local nix-config."
-    # $ssh_root_cmd "nixos-generate-config --no-filesystems --root /mnt"
-    # $scp_cmd root@"$target_destination":/mnt/etc/nixos/hardware-configuration.nix \
-    #   "${git_root}"/hosts/"$target_hostname"/hardware-configuration.nix
     SHELL=/bin/sh nix run github:nix-community/nixos-anywhere -- \
       --ssh-port "$ssh_port" \
       --post-kexec-ssh-port "$ssh_port" \
@@ -182,7 +180,7 @@ function nixos_anywhere() {
       --flake .#"$target_hostname" \
       root@"$target_destination" \
       -i "$ssh_key" \
-      --generate-hardware-config nixos-generate-config ./hardware-configuration.nix
+      --generate-hardware-config nixos-generate-config "${git_root}"/hosts/"${target_hostname}"/hardware-configuration.nix
 
     generated_hardware_config=1
   else
@@ -201,7 +199,7 @@ function nixos_anywhere() {
   fi
 
   green "Adding $target_destination's ssh host fingerprint to ~/.ssh/known_hosts"
-  ssh-keyscan -p "$ssh_port" "$target_destination" | grep -v '^#' >>~/.ssh/known_hosts || true
+  ssh-keyscan -p "$ssh_port_post" "$target_destination" | grep -v '^#' >>~/.ssh/known_hosts || true
 
   if [ -n "$persist_dir" ]; then
     $ssh_cmd "sudo cp /etc/machine-id $persist_dir/etc/machine-id || true"
@@ -214,7 +212,7 @@ function sops_generate_host_age_key() {
   green "Generating an age key based on the new ssh_host_ed25519_key"
 
   # Get the SSH key
-  target_key=$(ssh-keyscan -p "$ssh_port" -t ssh-ed25519 "$target_destination" 2>&1 | grep ssh-ed25519 | cut -f2- -d" ") || {
+  target_key=$(ssh-keyscan -p "$ssh_port_post" -t ssh-ed25519 "$target_destination" 2>&1 | grep ssh-ed25519 | cut -f2- -d" ") || {
     red "Failed to get ssh key. Host down or maybe SSH port now changed?"
     exit 1
   }
@@ -285,7 +283,7 @@ fi
 
 if yes_or_no "Do you want to copy your full nix-config and nix-secrets to $target_hostname?"; then
   green "Adding ssh host fingerprint at $target_destination to ~/.ssh/known_hosts"
-  ssh-keyscan -p "$ssh_port" "$target_destination" 2>/dev/null | grep -v '^#' >>~/.ssh/known_hosts || true
+  ssh-keyscan -p "$ssh_port_post" "$target_destination" 2>/dev/null | grep -v '^#' >>~/.ssh/known_hosts || true
   green "Copying full nix-config to $target_hostname"
   sync "$target_user" "${git_root}"
   green "Copying full nix-secrets to $target_hostname"

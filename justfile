@@ -2,7 +2,7 @@ SOPS_DIR := "/home/spector/Projects/nix-secrets"
 SOPS_FILE := "@{SOPS_DIR}/.sops.yaml"
 
 # Define path to helpers
-export HELPERS_PATH := justfile_directory() + "/helpers.sh"
+export HELPERS_PATH := justfile_directory() + "/hosts/helpers.sh"
 
 # default recipe to display help information
 default:
@@ -23,10 +23,6 @@ check ARGS="":
 update:
   nix flake update
 
-# Git diff there entire repo expcept for flake.lock
-diff:
-  git diff ':!flake.lock'
-
 # Generate a new age key
 age-key:
   nix-shell -p age --run "age-keygen"
@@ -42,11 +38,13 @@ update-nix-secrets:
 
 # Copy all the config files to the remote host
 sync USER HOST PATH:
-	rsync -av --filter=':- .gitignore' -e "ssh -l {{USER}} -oport=22" . {{USER}}@{{HOST}}:{{PATH}}/nixos-config
+	rsync -av --filter=':- .gitignore' -e "ssh -l {{USER}} -oport=5010" . {{USER}}@{{HOST}}:{{PATH}}/nixos-config
 
 # Run nixos-rebuild on the remote host
 rebuild-deploy HOST:
 	NIX_SSHOPTS="-p5010" nixos-rebuild --target-host {{HOST}} --sudo --show-trace --impure --flake .#"{{HOST}}" switch
+	# Use nh when https://github.com/nix-community/nh/issues/428 is fixed
+	# NIX_SSHOPTS="-p5010" nh os switch -H {{HOST}} --target-host {{HOST}}
 
 # Called by the rekey recipe
 sops-rekey:
