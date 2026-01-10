@@ -78,6 +78,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Nix discord
+    nixcord.url = "github:kaylorben/nixcord";
     # Color theming
     stylix.url = "github:danth/stylix";
     # persist files on boot

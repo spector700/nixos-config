@@ -25,7 +25,6 @@ let
     HYPRLAND_INSTANCE_SIGNATURE=$(${getHyprlandSignature})
     export HYPRLAND_INSTANCE_SIGNATURE
 
-    pkill -f ${pkgs.vesktop} || true
 
     # Create virtual monitor first
     hyprctl output create headless Virtual
@@ -95,7 +94,6 @@ let
     hyprctl reload
     sleep 0.3
 
-    ${uexec (getExe pkgs.vesktop)} &
   '';
 in
 {

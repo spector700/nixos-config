@@ -123,7 +123,7 @@ in
          echo "steam" > ~/.local/state/steamos-session-select
 
         ${lib.optionalString cfg.enableHDR "export ENABLE_HDR_WSI=1"}
-         ${lib.optionalString cfg.enableVRR "export ENABLE_VRR=1"}
+        ${lib.optionalString cfg.enableVRR "export ENABLE_VRR=1"}
 
          width=1920
          height=1080

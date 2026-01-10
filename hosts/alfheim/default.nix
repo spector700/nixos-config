@@ -71,6 +71,7 @@ in
 
       programs = {
         spicetify.enable = true;
+        nixcord.enable = true;
         zathura.enable = true;
         orca-slicer.enable = true;
         rofi.enable = true;
