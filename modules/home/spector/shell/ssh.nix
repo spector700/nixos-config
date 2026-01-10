@@ -34,7 +34,7 @@ in
       };
 
       "vanaheim" = {
-        hostname = "192.168.1.111";
+        hostname = "2a01:4f9:c010:eb77::1";
         inherit user;
         identityFile = "${homeDirectory}/.ssh/id_spector";
       };
