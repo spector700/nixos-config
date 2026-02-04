@@ -88,6 +88,7 @@ in
 
         # Ignore maximize requests from apps.
         # "suppressevent maximize, class:.*"
+        "match:class .*, suppress_event maximize"
 
         # fix fullscreen flashing
         # "suppressevent fullscreen, class:^(steam_app_[0-9]*)$"
@@ -99,9 +100,9 @@ in
 
         #   Games no animation, no blur, no shadow
         "match:class ${games}, workspace 8"
-        "match:class ${games}, noanim on"
-        "match:class ${games}, noblur on"
-        "match:class ${games}, noshadow on"
+        "match:class ${games}, no_anim on"
+        "match:class ${games}, no_blur on"
+        "match:class ${games}, no_shadow on"
 
         "match:title ^(.*((d|D)isc|ArmC|WebC)ord.*|vesktop)$, workspace 4 silent"
         "match:title ^(Spotify.*)$, workspace special:special silent"
