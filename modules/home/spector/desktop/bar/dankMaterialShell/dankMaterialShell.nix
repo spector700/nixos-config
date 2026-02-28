@@ -2,14 +2,11 @@
   inputs,
   lib,
   config,
-  pkgs,
   ...
 }:
 let
   inherit (lib) mkIf;
   cfg = config.modules.desktop.bar;
-
-  inherit (config.lib.stylix) colors;
 in
 {
   imports = [ inputs.dankMaterialShell.homeModules.dank-material-shell ];
@@ -34,8 +31,6 @@ in
       settings = (import ./settings.nix) // {
       };
     };
-
-    # xdg.configFile."DankMaterialShell/stylix-colors.json".text = builtins.toJSON colorTheme;
 
     wayland.windowManager.hyprland = {
       settings = {

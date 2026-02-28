@@ -28,6 +28,8 @@ in
       enable = true;
       autoEnable = true;
       base16Scheme = "${pkgs.base16-schemes}/share/themes/tokyo-city-dark.yaml";
+      # base16Scheme = "${pkgs.base16-schemes}/share/themes/material-darker.yaml";
+      # base16Scheme = "${pkgs.base16-schemes}/share/themes/tokyodark.yaml";
       polarity = "dark";
 
       targets.qt.platform = "qtct";
