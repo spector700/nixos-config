@@ -10,87 +10,38 @@ let
   cfg = config.modules.desktop.bar;
 
   inherit (config.lib.stylix) colors;
-  colorTheme = {
-    dark = with colors.withHashtag; {
-      name = "Stylix generatated dark theme";
-      primary = base0D;
-      primaryText = base00;
-      primaryContainer = base0C;
-      secondary = base0E;
-      surface = base01;
-      surfaceText = base05;
-      surfaceVariant = base02;
-      surfaceVariantText = base04;
-      surfaceTint = base0F;
-      background = base00;
-      backgroundText = base05;
-      outline = base03;
-      surfaceContainer = base01;
-      surfaceContainerHigh = base02;
-      surfaceContainerHighest = base03;
-      error = base08;
-      warning = base0A;
-      info = base0C;
-    };
-    light = with colors.withHashtag; {
-      name = "Stylix generatated light theme";
-      primary = base0D;
-      primaryText = base07;
-      primaryContainer = base0C;
-      secondary = base0E;
-      surface = base06;
-      surfaceText = base01;
-      surfaceVariant = base07;
-      surfaceVariantText = base02;
-      surfaceTint = base0D;
-      background = base07;
-      backgroundText = base00;
-      outline = base04;
-      surfaceContainer = base06;
-      surfaceContainerHigh = base05;
-      surfaceContainerHighest = base04;
-      error = base08;
-      warning = base0A;
-      info = base0C;
-    };
-  };
-
 in
 {
   imports = [ inputs.dankMaterialShell.homeModules.dank-material-shell ];
 
   config = mkIf (cfg == "dankMaterialShell") {
+    # stylix.targets.dank-material-shell.enable = false;
 
-    home.packages = with pkgs; [
-      hyprpicker
-      jq
-    ];
-
-    home.sessionVariables = {
-      DMS_DISABLE_MATUGEN = "1";
-    };
-
-    services.gammastep = {
-      enable = true;
-      provider = "geoclue2";
-    };
+    # home.sessionVariables = {
+    #   DMS_DISABLE_MATUGEN = "1";
+    # };
 
     programs.dank-material-shell = {
       enable = true;
-      systemd.enable = false;
+      systemd = {
+        enable = true;
+        restartIfChanged = true;
+      };
       # enableBrightnessControl = mkIf config.modules.roles.laptop.enable;
+      enableClipboardPaste = false;
+      enableDynamicTheming = true;
+
+      settings = (import ./settings.nix) // {
+      };
     };
 
-    xdg.configFile."DankMaterialShell/stylix-colors.json".text = builtins.toJSON colorTheme;
-    # xdg.configFile."DankMaterialShell/settings.json" = {
-    #   source = ./settings.json;
-    # };
+    # xdg.configFile."DankMaterialShell/stylix-colors.json".text = builtins.toJSON colorTheme;
 
     wayland.windowManager.hyprland = {
       settings = {
-        exec-once = [
-          "sleep 2 && dms run"
-        ];
+        # exec-once = [
+        #   "sleep 2 && dms run"
+        # ];
 
         bind = [
           "$mod, comma, exec, dms ipc call settings toggle"
@@ -98,6 +49,20 @@ in
 
           # "$mod, Space, exec, dms ipc call spotlight toggle"
           "$mod, P, exec, dms ipc call clipboard toggle"
+        ];
+
+        windowrule = [
+          "float on, match:class org.quickshell"
+        ];
+        "$blur_layer" = "dms:(color-picker|clipboard|spotlight|settings)";
+        layerrule = [
+          "blur on, match:namespace dms:.*"
+          "ignore_alpha 0, match:namespace dms:.*"
+
+          "animation slide right, match:namespace dms:control-center"
+          "animation slide top, match:namespace dms:workspace-overview"
+
+          "no_anim on, match:namespace ^(quickshell)$"
         ];
       };
     };

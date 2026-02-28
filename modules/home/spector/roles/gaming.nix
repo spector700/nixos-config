@@ -17,9 +17,8 @@ in
       bottles
       rpcs3
       rusty-psn-gui
-      winetricks
-      wineWowPackages.waylandFull
       protonplus
+      protontricks
       # sgdboop # Get game art work for steam
     ];
   };
