@@ -43,7 +43,6 @@ in
     home.packages = with pkgs; [
       gimp
       jetbrains.idea
-      opencode
 
       fastfetch
 
@@ -61,7 +60,7 @@ in
 
     modules = {
       theme = {
-        wallpaper = ../../modules/home/spector/theming/wallpaper;
+        wallpaper = ../../modules/home/spector/theming/wallpaper2.png;
         stylix.enable = true;
       };
 
