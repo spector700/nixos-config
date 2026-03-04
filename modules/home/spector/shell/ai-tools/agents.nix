@@ -1,0 +1,124 @@
+{ lib, ... }:
+let
+  inherit (lib) mapAttrs;
+
+  agentsBasePath = ./agents;
+
+  agents = {
+    # debugger = {
+    #   name = "debugger";
+    #   description = "Debugging specialist for errors, exceptions, test failures, and unexpected behavior. Use when encountering any issues that need root cause analysis.";
+    #   tools = [
+    #     "Read"
+    #     "Edit"
+    #     "Bash"
+    #     "Grep"
+    #     "Glob"
+    #   ];
+    #   model = {
+    #     claude = "opus";
+    #     opencode = "github-copilot/gpt-5.2";
+    #   };
+    #   permission = {
+    #     edit = "ask";
+    #     bash = "ask";
+    #   };
+    #   content = builtins.readFile (agentsBasePath + "/debugger.md");
+    # };
+    refactorer = {
+      name = "refactorer";
+      description = "Code refactoring specialist for improving code structure, readability, and maintainability without changing behavior. Use for focused refactoring tasks in isolated context.";
+      tools = [
+        "Read"
+        "Edit"
+        "Write"
+        "Grep"
+        "Glob"
+        "Bash"
+      ];
+      model = {
+        claude = "sonnet";
+        opencode = "github-copilot/gpt-5.2";
+      };
+      permission = {
+        edit = "ask";
+        bash = "ask";
+      };
+      content = builtins.readFile (agentsBasePath + "/refactorer.md");
+    };
+    # test-runner = {
+    #   name = "test-runner";
+    #   description = "Test execution specialist. Use after code changes to run tests, analyze failures, and suggest fixes. Keeps verbose test output out of main conversation.";
+    #   tools = [
+    #     "Read"
+    #     "Bash"
+    #     "Grep"
+    #     "Glob"
+    #     "Edit"
+    #   ];
+    #   model = {
+    #     claude = "haiku";
+    #     opencode = "github-copilot/gpt-5-mini";
+    #   };
+    #   permission = {
+    #     edit = "ask";
+    #     bash = "ask";
+    #   };
+    #   content = builtins.readFile (agentsBasePath + "/test-runner.md");
+    # };
+  };
+
+  # Claude Code expects YAML frontmatter with: name, description, tools (comma-sep), model
+  renderClaudeFrontmatter = agent: ''
+    ---
+    name: ${agent.name}
+    description: ${agent.description}
+    tools: ${lib.concatStringsSep ", " agent.tools}
+    model: ${agent.model.claude or agent.model}
+    ---
+  '';
+
+  renderClaudeAgent = agent: ''
+    ${lib.trim (renderClaudeFrontmatter agent)}
+
+    ${lib.trim agent.content}
+  '';
+
+  # OpenCode expects YAML frontmatter with: description, mode, model, tools
+  renderOpenCodeTools =
+    agent:
+    let
+      allowed = map lib.toLower agent.tools;
+      isAllowed = t: lib.elem t allowed;
+      coreTools = [
+        "bash"
+        "edit"
+        "write"
+      ];
+      coreToolLines = map (t: "  ${t}: ${if isAllowed t then "true" else "false"}") coreTools;
+    in
+    lib.concatStringsSep "\n" coreToolLines;
+
+  renderOpenCodeFrontmatter = agent: ''
+    ---
+    description: ${agent.description}
+    mode: all
+    model: ${agent.model.opencode or agent.model}
+
+    tools:
+    ${renderOpenCodeTools agent}
+    ---
+  '';
+
+  renderOpenCodeAgent = agent: ''
+    ${lib.trim (renderOpenCodeFrontmatter agent)}
+
+    ${lib.trim agent.content}
+  '';
+
+  toClaudeMarkdown = mapAttrs (_name: renderClaudeAgent) agents;
+  toOpenCodeMarkdown = mapAttrs (_name: renderOpenCodeAgent) agents;
+in
+{
+  inherit agents toClaudeMarkdown toOpenCodeMarkdown;
+}

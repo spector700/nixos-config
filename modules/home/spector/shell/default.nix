@@ -1,5 +1,6 @@
 {
   imports = [
+    ./opencode
     ./tools
     ./yazi
     ./zellij

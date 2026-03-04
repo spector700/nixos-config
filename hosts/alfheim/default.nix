@@ -58,6 +58,7 @@ in
       vial
     ];
 
+    ## HOME MANAGER
     modules = {
       theme = {
         wallpaper = ../../modules/home/spector/theming/wallpaper2.png;
@@ -67,6 +68,8 @@ in
       desktop.bar = "dankMaterialShell";
 
       services.nextcloud-client.enable = true;
+
+      shell.opencode.enable = true;
 
       programs = {
         spicetify.enable = true;
@@ -80,6 +83,7 @@ in
     };
   };
 
+  ## NIXOS
   modules = {
     roles = {
       development.enable = false;
