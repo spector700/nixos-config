@@ -12,7 +12,7 @@
         Location of the wallpaper to use throughout the system.
       '';
       type = lib.types.path;
-      default = ./wallpaper;
+      default = ./wallpaper.png;
       example = lib.literalExample "./wallpaper.png";
     };
   };

@@ -7,26 +7,40 @@
 {
 
   imports = [
-    ./plugins/git.nix
+    # ./plugins/git.nix
     ./plugins/mediainfo.nix
     ./plugins/ouch.nix
-    ./plugins/starship.nix
+    # ./plugins/starship.nix
   ];
 
   # yazi file manager
   programs.yazi = {
     enable = true;
-
+    shellWrapperName = "y";
     enableZshIntegration = config.programs.zsh.enable;
     plugins = {
       inherit (pkgs.yaziPlugins)
         mount
+        chmod
         ;
 
     };
 
     keymap = {
+      cmp.prepend_keymap = [
+        {
+          on = [ "~" ];
+          run = "help";
+          desc = "Open help";
+        }
+      ];
+
       mgr.prepend_keymap = [
+        {
+          on = [ "q" ];
+          run = "close";
+          desc = "Close the current tab; if it's the last tab, exit the process instead.";
+        }
         {
           on = [
             "g"
@@ -71,7 +85,7 @@
     };
 
     settings = {
-      manager = {
+      mgr = {
         layout = [
           1
           4
@@ -84,6 +98,17 @@
         linemode = "size";
         show_hidden = true;
         show_symlink = true;
+      };
+
+      pick = {
+        open_title = "Open with:";
+        open_origin = "hovered";
+        open_offset = [
+          0
+          1
+          50
+          7
+        ];
       };
 
       preview = {

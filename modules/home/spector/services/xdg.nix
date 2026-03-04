@@ -81,7 +81,7 @@ in
       videos = "$HOME/Videos";
       pictures = "$HOME/Pictures";
       extraConfig = {
-        XDG_SCREENSHOTS_DIR = "${config.xdg.userDirs.pictures}/Screenshots";
+        SCREENSHOTS = "${config.xdg.userDirs.pictures}/Screenshots";
       };
     };
   };

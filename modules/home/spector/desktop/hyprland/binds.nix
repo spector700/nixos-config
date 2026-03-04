@@ -96,7 +96,7 @@ in
 
         # Programs
         "$mod, B, ${uexec (getExe inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default)}"
-        "$mod SHIFT, E, ${uexec (getExe pkgs.xfce.thunar)}"
+        "$mod SHIFT, E, ${uexec (getExe pkgs.thunar)}"
 
         # Launcher
         "$mod, Space, exec, pkill lumastart || ${lumastart}"

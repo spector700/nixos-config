@@ -24,6 +24,11 @@ in
       type = lib.types.bool;
       default = false;
     };
+    displayOutput = lib.mkOption {
+      type = lib.types.str;
+      default = "DP-2";
+      description = "Display output for gamescope (e.g., DP-2, HDMI-A-1)";
+    };
   };
   config = lib.mkIf cfg.enable {
     environment.sessionVariables = {
@@ -129,13 +134,13 @@ in
          height=1080
          refresh_rate=100
 
-         exec gamescope \
-           --steam \
-           -r $refresh_rate \
-           -w $width -h $height \
-           -W $width -H $height \
-           -O DP-2 \
-           --rt \
+          exec gamescope \
+            --steam \
+            -r $refresh_rate \
+            -w $width -h $height \
+            -W $width -H $height \
+            -O ${cfg.displayOutput} \
+            --rt \
            --immediate-flips \
            --force-grab-cursor \
           ${lib.optionalString cfg.enableHDR "--hdr-enabled --hdr-itm-enable"} \

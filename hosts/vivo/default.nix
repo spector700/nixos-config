@@ -35,7 +35,7 @@ in
       };
 
       theme = {
-        wallpaper = ../../modules/home/spector/theming/wallpaper;
+        wallpaper = ../../modules/home/spector/theming/wallpaper.png;
         stylix.enable = true;
       };
 
