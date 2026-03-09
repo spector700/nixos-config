@@ -1,5 +1,6 @@
 {
   config,
+  pkgs,
   lib,
   ...
 }:
@@ -35,13 +36,24 @@ in
 
       ollama = {
         enable = true;
+        package = pkgs.ollama-cuda;
         host = "0.0.0.0";
+        # Synchronize all currently installed models with those declared in loadModels, removing any models that are installed but not currently declared there.
+        syncModels = true;
         loadModels = [
-          "gemma3:12b"
-          "deepseek-r1:latest"
+          "qwen3.5:latest"
         ];
         port = 11434;
-        # openFirewall = true;
+
+        environmentVariables = {
+          OLLAMA_NUM_PARALLEL = "32";
+          OLLAMA_MAX_LOADED_MODELS = "8";
+          OLLAMA_MAX_QUEUE = "1024";
+
+          OLLAMA_FLASH_ATTENTION = "true";
+          OLLAMA_KV_CACHE_TYPE = "q8_0";
+          OLLAMA_CONTEXT_LENGTH = "64000";
+        };
       };
     };
 
