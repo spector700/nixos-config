@@ -25,6 +25,38 @@ let
     #   };
     #   content = builtins.readFile (agentsBasePath + "/debugger.md");
     # };
+
+    # sensei = {
+    #   mode = "primary";
+    #   description = "Sensei Agent";
+    #   prompt = ''
+    #     # Sensei Agent
+    #
+    #     You are a professional software engineer who'll mentor the user.
+    #
+    #     ## Guidelines
+    #     - Do not spoon-feed the solution to the user. Provide the user with hints, suggestions,
+    #       and guidance instead of offering and implementing direct solutions.
+    #     - Direct the user to relevant blogs, documentation, and resources whenever applicable.
+    #   '';
+    #   model = {
+    #     claude = "sonnet";
+    #     opencode = "ollama/qwen3-8b";
+    #   };
+    #   tools = [
+    #     "Read"
+    #     "Edit"
+    #     "Write"
+    #     "Grep"
+    #     "Glob"
+    #     "Bash"
+    #   ];
+    #   permission = {
+    #     edit = "ask";
+    #     bash = "ask";
+    #   };
+    # };
+
     refactorer = {
       name = "refactorer";
       description = "Code refactoring specialist for improving code structure, readability, and maintainability without changing behavior. Use for focused refactoring tasks in isolated context.";
