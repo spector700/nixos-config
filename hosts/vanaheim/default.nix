@@ -50,6 +50,15 @@ in
     };
   };
 
+  homelab = {
+    host = {
+      hostname = config.networking.hostName;
+      description = "Hetzner Vanaheim server";
+      interface = "enp1s0";
+      ip = ipv6Address;
+    };
+  };
+
   # No need for fonts on a server
   fonts.fontconfig.enable = mkDefault false;
 
@@ -67,6 +76,13 @@ in
     boot = {
       enableKernelTweaks = true;
       impermanence.enable = true;
+    };
+
+    homelab = {
+      # vector.enable = true;
+      grafana.enable = true;
+      loki.enable = true;
+      promtail.enable = true;
     };
   };
 }
