@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(nix fmt:*)",
+      "Bash(ssh:*)",
+      "Bash(just rebuild-deploy:*)"
+    ]
+  },
+  "outputStyle": "Explanatory"
+}

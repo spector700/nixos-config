@@ -69,7 +69,10 @@ in
 
       services.nextcloud-client.enable = true;
 
-      shell.opencode.enable = true;
+      shell = {
+        opencode.enable = true;
+        claude-code.enable = true;
+      };
 
       programs = {
         spicetify.enable = true;
