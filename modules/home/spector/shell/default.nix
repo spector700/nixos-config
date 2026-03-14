@@ -1,5 +1,6 @@
 {
   imports = [
+    ./ai-tools
     ./opencode
     ./claude-code
     ./tools

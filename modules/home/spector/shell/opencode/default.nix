@@ -2,7 +2,6 @@
   inputs,
   config,
   lib,
-  pkgs,
   ...
 }:
 let
@@ -10,7 +9,7 @@ let
 
   cfg = config.modules.shell.opencode;
 
-  aiTools = import ../ai-tools { inherit pkgs lib config; };
+  aiTools = import ../ai-tools/lib.nix { inherit lib; };
 
   superpowers = rec {
     src = inputs.superpowers;
@@ -49,10 +48,10 @@ in
             models = {
               "qwen3.5:latest" = {
                 name = "Qwen 3.5";
-                # limit = {
-                #   context = 61440;
-                #   output = 24576;
-                # };
+                limit = {
+                  context = 61440;
+                  output = 24576;
+                };
               };
             };
           };
@@ -67,37 +66,6 @@ in
           "oh-my-opencode@latest"
           "@simonwjackson/opencode-direnv@latest"
         ];
-
-        mcp = {
-          nixos = {
-            type = "local";
-            command = [
-              "nix"
-              "run"
-              "github:utensils/mcp-nixos"
-              "--"
-            ];
-            enabled = true;
-          };
-          gh_grep = {
-            type = "remote";
-            url = "https://mcp.grep.app/";
-            enabled = true;
-            timeout = 10000;
-          };
-          deepwiki = {
-            type = "remote";
-            url = "https://mcp.deepwiki.com/mcp";
-            enabled = true;
-            timeout = 10000;
-          };
-          context7 = {
-            type = "remote";
-            url = "https://mcp.context7.com/mcp";
-            enabled = true;
-            timeout = 10000;
-          };
-        };
       };
 
       inherit (aiTools.opencode) commands;
@@ -105,7 +73,7 @@ in
 
       skills = {
         skills = ../ai-tools/skills;
-        superpowers = superpowers.skills;
+        # superpowers = superpowers.skills;
       };
 
       rules = builtins.readFile ../ai-tools/base.md;

@@ -5,27 +5,6 @@ let
   agentsBasePath = ./agents;
 
   agents = {
-    # debugger = {
-    #   name = "debugger";
-    #   description = "Debugging specialist for errors, exceptions, test failures, and unexpected behavior. Use when encountering any issues that need root cause analysis.";
-    #   tools = [
-    #     "Read"
-    #     "Edit"
-    #     "Bash"
-    #     "Grep"
-    #     "Glob"
-    #   ];
-    #   model = {
-    #     claude = "opus";
-    #     opencode = "github-copilot/gpt-5.2";
-    #   };
-    #   permission = {
-    #     edit = "ask";
-    #     bash = "ask";
-    #   };
-    #   content = builtins.readFile (agentsBasePath + "/debugger.md");
-    # };
-
     # sensei = {
     #   mode = "primary";
     #   description = "Sensei Agent";
@@ -57,6 +36,83 @@ let
     #   };
     # };
 
+    debugger = {
+      name = "debugger";
+      description = "Debugging specialist for errors, exceptions, test failures, and unexpected behavior. Use when encountering issues that need systematic root cause analysis.";
+      tools = [
+        "Read"
+        "Edit"
+        "Bash"
+        "Grep"
+        "Glob"
+      ];
+      model = {
+        claude = "sonnet";
+        opencode = "github-copilot/gpt-5.2";
+      };
+      permission = {
+        edit = "ask";
+        bash = "ask";
+      };
+      content = builtins.readFile (agentsBasePath + "/debugger.md");
+    };
+
+    code-reviewer = {
+      name = "code-reviewer";
+      description = "Code quality guardian performing thorough reviews for correctness, security, maintainability, and best practices. Use before merging or after significant changes.";
+      tools = [
+        "Read"
+        "Grep"
+        "Glob"
+        "Bash"
+      ];
+      model = {
+        claude = "sonnet";
+        opencode = "github-copilot/gpt-5.2";
+      };
+      permission = {
+        bash = "ask";
+      };
+      content = builtins.readFile (agentsBasePath + "/code-reviewer.md");
+    };
+
+    security-auditor = {
+      name = "security-auditor";
+      description = "Security specialist for vulnerability assessment, configuration hardening, and secrets hygiene. Use for NixOS service configs, application security reviews, and infrastructure audits.";
+      tools = [
+        "Read"
+        "Grep"
+        "Glob"
+      ];
+      model = {
+        claude = "sonnet";
+        opencode = "github-copilot/gpt-5.2";
+      };
+      permission = { };
+      content = builtins.readFile (agentsBasePath + "/security-auditor.md");
+    };
+
+    test-runner = {
+      name = "test-runner";
+      description = "Test execution specialist. Use after code changes to run tests, analyze failures, and suggest fixes. Keeps verbose test output out of the main conversation.";
+      tools = [
+        "Read"
+        "Bash"
+        "Grep"
+        "Glob"
+        "Edit"
+      ];
+      model = {
+        claude = "haiku";
+        opencode = "github-copilot/gpt-5-mini";
+      };
+      permission = {
+        edit = "ask";
+        bash = "ask";
+      };
+      content = builtins.readFile (agentsBasePath + "/test-runner.md");
+    };
+
     refactorer = {
       name = "refactorer";
       description = "Code refactoring specialist for improving code structure, readability, and maintainability without changing behavior. Use for focused refactoring tasks in isolated context.";
@@ -78,26 +134,28 @@ let
       };
       content = builtins.readFile (agentsBasePath + "/refactorer.md");
     };
-    # test-runner = {
-    #   name = "test-runner";
-    #   description = "Test execution specialist. Use after code changes to run tests, analyze failures, and suggest fixes. Keeps verbose test output out of main conversation.";
-    #   tools = [
-    #     "Read"
-    #     "Bash"
-    #     "Grep"
-    #     "Glob"
-    #     "Edit"
-    #   ];
-    #   model = {
-    #     claude = "haiku";
-    #     opencode = "github-copilot/gpt-5-mini";
-    #   };
-    #   permission = {
-    #     edit = "ask";
-    #     bash = "ask";
-    #   };
-    #   content = builtins.readFile (agentsBasePath + "/test-runner.md");
-    # };
+
+    researcher = {
+      name = "researcher";
+      description = "Deep research specialist for technology decisions, tool comparisons, and learning new topics. Use when you need current, synthesized information from multiple web sources. Trigger for 'research X', 'compare A vs B', 'what's the best way to do Y', 'is X still maintained'.";
+      tools = [
+        "WebSearch"
+        "WebFetch"
+        "Read"
+        "Write"
+        "Bash"
+      ];
+      model = {
+        claude = "sonnet";
+        opencode = "github-copilot/gpt-5.2";
+      };
+      permission = {
+        bash = "ask";
+        webfetch = "allow";
+      };
+      content = builtins.readFile (agentsBasePath + "/researcher.md");
+    };
+
   };
 
   # Claude Code expects YAML frontmatter with: name, description, tools (comma-sep), model
@@ -125,6 +183,7 @@ let
       coreTools = [
         "bash"
         "edit"
+        "webfetch"
         "write"
       ];
       coreToolLines = map (t: "  ${t}: ${if isAllowed t then "true" else "false"}") coreTools;

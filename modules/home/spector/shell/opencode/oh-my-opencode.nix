@@ -2,7 +2,6 @@
   xdg.configFile."opencode/oh-my-opencode.json".text = builtins.toJSON {
     "$schema" =
       "https://raw.githubusercontent.com/code-yeongyu/oh-my-opencode/master/assets/oh-my-opencode.schema.json";
-    browser_automation_engine.provider = "agent-browser";
     runtime_fallback.enabled = true;
 
     agents = {
