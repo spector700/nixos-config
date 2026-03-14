@@ -64,8 +64,14 @@ modeling, and security hardening across applications and infrastructure.
 
 - Services missing hardening options: `DynamicUser`, `ProtectSystem = "strict"`,
   `PrivateTmp`, `NoNewPrivileges`, `CapabilityBoundingSet`
-- Secrets stored in the Nix store (world-readable) — use `sops-nix`, `agenix`, or
+- Secrets stored in the Nix store (world-readable) — use `sops-nix` or
   `systemd` `LoadCredential` instead
+  - `builtins.readFile ./secret-file` in a module — copies file content into
+    the store at build time, making it world-readable
+  - Secrets as literal strings in `environment.variables`, `extraConfig`,
+    `settings`, or option values — same world-readable store exposure
+  - If a secret is found in source: flag for rotation and recommend
+    `sops-nix` as remediation
 - Overly broad `firewall.allowedTCPPorts` — prefer `allowedTCPPortRanges` or
   per-interface rules
 - `sudo` rules granting unrestricted access to shell-capable commands
@@ -81,7 +87,7 @@ modeling, and security hardening across applications and infrastructure.
 ## Secrets Management
 
 - Never store secrets in source control or the Nix store
-- Prefer secrets managers (Vault, AWS Secrets Manager, sops-nix, agenix)
+- Prefer secrets managers (Vault, AWS Secrets Manager, sops-nix)
 - Rotate secrets that have been exposed
 - Audit secret access: who can read what, and is it logged?
 

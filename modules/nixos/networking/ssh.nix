@@ -26,7 +26,7 @@ in
     ports = [ 5010 ];
     settings = {
       PermitRootLogin = "no";
-      PasswordAuthentication = true; # use ssh keys only
+      PasswordAuthentication = false; # use ssh keys only
     };
 
     hostKeys = [

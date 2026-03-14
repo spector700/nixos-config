@@ -4,6 +4,10 @@ let
 
   agentsBasePath = ./agents;
 
+  # Wrap a string in a YAML single-quoted scalar. No escape sequences apply
+  # inside single-quoted scalars except '' (two single quotes → one literal).
+  yamlQuote = s: "'${lib.replaceStrings [ "'" ] [ "''" ] s}'";
+
   agents = {
     # sensei = {
     #   mode = "primary";
@@ -38,7 +42,7 @@ let
 
     debugger = {
       name = "debugger";
-      description = "Debugging specialist for errors, exceptions, test failures, and unexpected behavior. Use when encountering issues that need systematic root cause analysis.";
+      description = "Debugging specialist for errors, exceptions, test failures, and unexpected behavior. Use when encountering issues that need systematic root cause analysis. Trigger for 'debug X', 'why is X failing', 'there's an error in X', 'trace this crash'.";
       tools = [
         "Read"
         "Edit"
@@ -78,7 +82,7 @@ let
 
     security-auditor = {
       name = "security-auditor";
-      description = "Security specialist for vulnerability assessment, configuration hardening, and secrets hygiene. Use for NixOS service configs, application security reviews, and infrastructure audits.";
+      description = "Security specialist for vulnerability assessment, configuration hardening, and secrets hygiene. Use for NixOS service configs, application security reviews, and infrastructure audits. Trigger for 'audit X', 'check for vulnerabilities in X', 'is this config secure', 'check for secrets'.";
       tools = [
         "Read"
         "Grep"
@@ -162,9 +166,9 @@ let
   renderClaudeFrontmatter = agent: ''
     ---
     name: ${agent.name}
-    description: ${agent.description}
+    description: ${yamlQuote agent.description}
     tools: ${lib.concatStringsSep ", " agent.tools}
-    model: ${agent.model.claude or agent.model}
+    model: ${agent.model.claude}
     ---
   '';
 
@@ -192,9 +196,9 @@ let
 
   renderOpenCodeFrontmatter = agent: ''
     ---
-    description: ${agent.description}
+    description: ${yamlQuote agent.description}
     mode: all
-    model: ${agent.model.opencode or agent.model}
+    model: ${agent.model.opencode}
 
     tools:
     ${renderOpenCodeTools agent}

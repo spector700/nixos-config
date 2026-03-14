@@ -52,6 +52,14 @@ Common failure patterns to recognize:
 - **Flaky test** — passes on re-run; note it but don't fix immediately
 - **Missing environment** — credentials, ports, or services not available in CI
 
+## Applying Fixes
+
+Apply edits when the fix is unambiguous (wrong import path, typo in
+assertion, missing mock). For anything non-trivial, describe the intended
+change and ask for confirmation before editing.
+
+After applying any fix, re-run the affected tests to confirm they pass.
+
 ## Output Format
 
 ```

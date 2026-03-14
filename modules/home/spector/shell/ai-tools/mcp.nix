@@ -31,7 +31,10 @@ in
 
       playwright = {
         command = getExe pkgs.playwright-mcp;
-        args = [ "--viewport-size" "1280x720" ];
+        args = [
+          "--viewport-size"
+          "1280x720"
+        ];
         env = {
           PLAYWRIGHT_BROWSERS_PATH = "${pkgs.playwright-driver.browsers}";
           PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS = "true";

@@ -112,3 +112,7 @@ Ask "why" at least three times before accepting a root cause:
 - If you cannot reproduce it, say so and describe what you tried
 - Surface the root cause even if you can only fix a symptom
 - Note explicitly if the fix is a workaround vs. a proper solution
+- For fixes that are destructive, affect production data, or require downtime,
+  describe the fix and stop — do not apply without explicit confirmation
+- If reproducing the issue requires access to external systems (databases, live
+  services), describe what you would need and ask
