@@ -2,6 +2,7 @@
   inputs,
   lib,
   config,
+  osConfig,
   ...
 }:
 let
@@ -12,44 +13,45 @@ in
   imports = [ inputs.dankMaterialShell.homeModules.dank-material-shell ];
 
   config = mkIf (cfg == "dankMaterialShell") {
-    # stylix.targets.dank-material-shell.enable = false;
-
-    # home.sessionVariables = {
-    #   DMS_DISABLE_MATUGEN = "1";
-    # };
-
     programs.dank-material-shell = {
       enable = true;
       systemd = {
         enable = true;
         restartIfChanged = true;
       };
-      # enableBrightnessControl = mkIf config.modules.roles.laptop.enable;
       enableClipboardPaste = false;
       enableDynamicTheming = true;
 
-      settings = (import ./settings.nix) // {
-      };
+      # settings = (import ./settings.nix) // {
+      #   theme = "dark";
+      #
+      #   # Host-specific: laptop gets battery/brightness widgets, desktop does not
+      #   showBattery = osConfig.modules.roles.laptop.enable;
+      #   controlCenterShowBrightnessIcon = osConfig.modules.roles.laptop.enable;
+      #   controlCenterShowBrightnessPercent = osConfig.modules.roles.laptop.enable;
+      #   hideBrightnessSlider = !osConfig.modules.roles.laptop.enable;
+      #
+      #   # Disable matugen templates for apps not in this config
+      #   matugenTemplateNiri = false;
+      #   matugenTemplateMangowc = false;
+      #   matugenTemplateFoot = false;
+      #   matugenTemplateAlacritty = false;
+      #   matugenTemplateWezterm = false;
+      #   matugenTemplateEmacs = false;
+      # };
     };
 
     wayland.windowManager.hyprland = {
       settings = {
-        # exec-once = [
-        #   "sleep 2 && dms run"
-        # ];
-
         bind = [
           "$mod, comma, exec, dms ipc call settings toggle"
           "$mod CTRL, q, exec, dms ipc call lock lock"
-
-          # "$mod, Space, exec, dms ipc call spotlight toggle"
           "$mod, P, exec, dms ipc call clipboard toggle"
         ];
 
         windowrule = [
           "float on, match:class org.quickshell"
         ];
-        "$blur_layer" = "dms:(color-picker|clipboard|spotlight|settings)";
         layerrule = [
           "blur on, match:namespace dms:.*"
           "ignore_alpha 0, match:namespace dms:.*"
