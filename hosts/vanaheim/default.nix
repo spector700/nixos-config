@@ -82,7 +82,8 @@ in
       # vector.enable = true;
       grafana.enable = true;
       loki.enable = true;
-      promtail.enable = true;
+      alloy.enable = true;
+      prometheus.enable = true;
     };
   };
 }

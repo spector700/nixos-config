@@ -62,7 +62,8 @@ in
     ./grafana.nix
     ./ollama.nix
     ./loki.nix
-    ./promtail.nix
+    ./alloy.nix
+    ./prometheus.nix
   ];
 
   options = {
