@@ -4,6 +4,8 @@
   pkgs,
   ...
 }:
+let
+in
 {
 
   imports = [
@@ -18,12 +20,11 @@
     enable = true;
     shellWrapperName = "y";
     enableZshIntegration = config.programs.zsh.enable;
+    initLua = ''
+      require("gvfs"):setup({})
+    '';
     plugins = {
-      inherit (pkgs.yaziPlugins)
-        mount
-        chmod
-        ;
-
+      inherit (pkgs.yaziPlugins) gvfs chmod;
     };
 
     keymap = {
@@ -50,9 +51,28 @@
           desc = "Go to Nextcloud";
         }
         {
-          run = "plugin mount";
-          on = [ "M" ];
-          desc = "Disk Mounting";
+          run = "plugin gvfs -- select-then-mount jump";
+          on = [
+            "M"
+            "m"
+          ];
+          desc = "Mount and jump to device";
+        }
+        {
+          run = "plugin gvfs -- select-then-unmount --eject";
+          on = [
+            "M"
+            "u"
+          ];
+          desc = "Unmount and eject device";
+        }
+        {
+          run = "plugin gvfs -- jump-to-device";
+          on = [
+            "g"
+            "m"
+          ];
+          desc = "Jump to mounted device";
         }
         {
           run = "plugin chmod";
@@ -116,6 +136,27 @@
         max_width = 1024;
         max_height = 1920;
         cache_dir = "${config.xdg.cacheHome}";
+      };
+
+      # Prevent yazi from freezing while preloading/previewing files over slow
+      # gvfs mounts (MTP, remote filesystems, etc.)
+      plugin = {
+        prepend_preloaders = [
+          {
+            url = "/run/user/1000/gvfs/**/*";
+            run = "noop";
+          }
+        ];
+        prepend_previewers = [
+          {
+            url = "*/";
+            run = "folder";
+          }
+          {
+            url = "/run/user/1000/gvfs/**/*";
+            run = "noop";
+          }
+        ];
       };
     };
   };
