@@ -16,7 +16,7 @@ in
   config = mkIf cfg.enable {
     services = {
       open-webui = {
-        enable = false;
+        enable = true;
         environment = {
           ANONYMIZED_TELEMETRY = "False";
           DO_NOT_TRACK = "True";
@@ -46,13 +46,14 @@ in
         port = 11434;
 
         environmentVariables = {
-          OLLAMA_NUM_PARALLEL = "32";
-          OLLAMA_MAX_LOADED_MODELS = "8";
-          OLLAMA_MAX_QUEUE = "1024";
+          OLLAMA_NUM_PARALLEL = "1";
+          OLLAMA_MAX_LOADED_MODELS = "1";
+          OLLAMA_MAX_QUEUE = "4";
 
-          OLLAMA_FLASH_ATTENTION = "true";
+          # Performance: flash attention + quantized KV cache
+          OLLAMA_FLASH_ATTENTION = "1";
           OLLAMA_KV_CACHE_TYPE = "q8_0";
-          OLLAMA_CONTEXT_LENGTH = "64000";
+          OLLAMA_CONTEXT_LENGTH = "32768";
         };
       };
     };
