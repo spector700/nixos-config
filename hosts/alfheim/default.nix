@@ -2,6 +2,7 @@
   pkgs,
   config,
   inputs,
+  lib,
   ...
 }:
 let
@@ -21,7 +22,13 @@ in
     kernelParams = [ "acpi_enforce_resources=lax" ];
     supportedFilesystems = [ "ntfs" ];
     binfmt.emulatedSystems = [ "aarch64-linux" ];
+
+    # DIAGNOSTIC: disable Plymouth to see which systemd service is hanging at boot
+    plymouth.enable = lib.mkForce false;
   };
+
+  # DIAGNOSTIC: persist journal across reboots so failed boot logs are readable
+  services.journald.extraConfig = "Storage=persistent";
 
   programs.nix-ld.enable = true;
 

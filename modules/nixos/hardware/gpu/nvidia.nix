@@ -24,7 +24,12 @@ in
 
         environment = {
           sessionVariables = mkMerge [
-            { LIBVA_DRIVER_NAME = "nvidia"; }
+            {
+              LIBVA_DRIVER_NAME = "nvidia";
+              # Remove NVIDIA's default 128MB shader cache cap to prevent
+              # full recompilation on every game launch once the limit is hit
+              __GL_SHADER_DISK_CACHE_SKIP_CLEANUP = "1";
+            }
 
             (mkIf desktop.isWayland {
               __GL_VRR_ALLOWED = "1";
@@ -74,7 +79,10 @@ in
               };
 
             powerManagement = {
-              enable = mkDefault true;
+              # NVIDIA 595+ handles suspend via kernel notifiers (UseKernelSuspendNotifiers)
+              # rather than the old NVreg_PreserveVideoMemoryAllocations=1 + systemd services
+              # approach. Enabling the old method on 595 causes a boot freeze.
+              enable = mkDefault false;
               finegrained = mkDefault false;
             };
 
