@@ -61,12 +61,13 @@ in
 
       settings = {
         theme = "dark";
-        "env" = {
-          "CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY" = "1";
-          "DISABLE_TELEMETRY" = "1";
-          "DISABLE_ERROR_REPORTING" = "1";
-          "DISABLE_NON_ESSENTIAL_MODEL_CALLS" = "1";
-          "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC" = "true";
+        env = {
+          CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY = "1";
+          DISABLE_TELEMETRY = "1";
+          DISABLE_ERROR_REPORTING = "1";
+          DISABLE_NON_ESSENTIAL_MODEL_CALLS = "1";
+          CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC = "true";
+          CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS = "1";
         };
 
         verbose = true;
@@ -75,13 +76,8 @@ in
         statusLine = {
           type = "command";
           command = statuslineScript;
-          # command = "input=$(cat); echo \"[$(echo \"$input\" | jq -r '.model.display_name')] 📁 $(basename \"$(echo \"$input\" | jq -r '.workspace.current_dir')\")\"";
           padding = 0;
         };
-
-        # env = {
-        #   USE_BUILTIN_RIPGREP = "0";
-        # };
       };
 
       agents = aiAgents.toClaudeMarkdown;
