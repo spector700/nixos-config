@@ -15,7 +15,6 @@ in
       lutris
       prismlauncher # Minecraft
       bottles
-      rpcs3
       rusty-psn-gui
       protonplus
       protontricks
