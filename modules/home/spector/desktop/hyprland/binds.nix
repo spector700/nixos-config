@@ -17,7 +17,7 @@ let
   inherit (config.modules.desktop) bar;
   inherit (lib) optionals mkIf;
 
-  # binds $mod + [alt +] {1..10} to [move to] workspace {1..10}
+  # binds $mod + [alt + Shift] {1..10} to [move to] workspace {1..10}
   workspaces = builtins.concatLists (
     builtins.genList (
       x:
@@ -26,7 +26,7 @@ let
           let
             c = (x + 1) / 10;
           in
-          builtins.toString (x + 1 - (c * 10));
+          toString (x + 1 - (c * 10));
       in
       [
         "$mod, ${ws}, workspace, ${toString (x + 1)}"
