@@ -89,6 +89,16 @@
     nixPath = lib.mapAttrsToList (key: _: "${key}=flake:${key}") config.nix.registry;
   };
 
+  #TODO:
+  nixpkgs.overlays = [
+    # https://github.com/NixOS/nixpkgs/issues/514113
+    (_: prev: {
+      openldap = prev.openldap.overrideAttrs {
+        doCheck = !prev.stdenv.hostPlatform.isi686;
+      };
+    })
+  ];
+
   nixpkgs.config = {
     allowUnfree = true;
 
