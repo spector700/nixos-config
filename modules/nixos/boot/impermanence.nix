@@ -10,7 +10,6 @@ let
     mkOption
     types
     mkIf
-    mkAfter
     ;
   cfg = config.modules.boot.impermanence;
 in
@@ -32,34 +31,55 @@ in
   };
 
   config = mkIf cfg.enable {
-    #TODO: https://github.com/nix-community/impermanence/issues/229
-    boot.initrd.systemd.suppressedUnits = [ "systemd-machine-id-commit.service" ];
-    systemd.suppressedSystemUnits = [ "systemd-machine-id-commit.service" ];
+    boot.initrd.systemd = {
+      initrdBin = with pkgs; [
+        btrfs-progs
+        coreutils
+        util-linux
+        findutils
+      ];
 
-    boot.initrd.postDeviceCommands = mkAfter ''
-      mkdir /btrfs_tmp
-      mount /dev/root_vg/root /btrfs_tmp
-      if [[ -e /btrfs_tmp/root ]]; then
-        mkdir -p /btrfs_tmp/old_roots
-        timestamp=$(date --date="@$(stat -c %Y /btrfs_tmp/root)" "+%Y-%m-%-d_%H:%M:%S")
-        mv /btrfs_tmp/root "/btrfs_tmp/old_roots/$timestamp"
-      fi
+      services.prune-subvolumes = {
+        requiredBy = [ "initrd.target" ];
+        before = [ "local-fs-pre.target" ];
+        after = [
+          "initrd-root-device.target"
+          "systemd-hibernate-resume.service"
+          "systemd-cryptsetup@crypted.service"
+        ];
+        unitConfig.DefaultDependencies = false;
+        serviceConfig = {
+          Type = "oneshot";
+          # also print to TTY
+          StandardOutput = "journal+console";
+          StandardError = "journal+console";
+        };
+        script = ''
+          mkdir /btrfs_tmp
+          mount /dev/root_vg/root /btrfs_tmp
+          if [[ -e /btrfs_tmp/root ]]; then
+              mkdir -p /btrfs_tmp/old_roots
+              timestamp=$(date --date="@$(stat -c %Y /btrfs_tmp/root)" "+%Y-%m-%-d_%H:%M:%S")
+              mv /btrfs_tmp/root "/btrfs_tmp/old_roots/$timestamp"
+          fi
 
-      delete_subvolume_recursively() {
-        IFS=$'\n'
-        for i in $(btrfs subvolume list -o "$1" | cut -f 9- -d ' '); do
-          delete_subvolume_recursively "/btrfs_tmp/$i"
-        done
-        btrfs subvolume delete "$1"
-      }
+          delete_subvolume_recursively() {
+              IFS=$'\n'
+              for i in $(btrfs subvolume list -o "$1" | cut -f 9- -d ' '); do
+                  delete_subvolume_recursively "/btrfs_tmp/$i"
+              done
+              btrfs subvolume delete "$1"
+          }
 
-      for i in $(find /btrfs_tmp/old_roots/ -maxdepth 1 -mtime +${builtins.toString cfg.removeTmpFilesOlderThan}); do
-      delete_subvolume_recursively "$i"
-      done
+          for i in $(find /btrfs_tmp/old_roots/ -maxdepth 1 -mtime +30); do
+              delete_subvolume_recursively "$i"
+          done
 
-      btrfs subvolume create /btrfs_tmp/root
-      umount /btrfs_tmp
-    '';
+          btrfs subvolume create /btrfs_tmp/root
+          umount /btrfs_tmp
+        '';
+      };
+    };
 
     fileSystems."/persist".neededForBoot = true;
 
