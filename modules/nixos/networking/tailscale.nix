@@ -5,7 +5,7 @@
   ...
 }:
 let
-  secretsPath = (builtins.toString inputs.nix-secrets) + "/sops";
+  secretsPath = (toString inputs.nix-secrets) + "/sops";
   inherit (lib) mkIf;
 in
 {
@@ -16,6 +16,7 @@ in
       enable = true;
       useRoutingFeatures = "client";
       authKeyFile = config.sops.secrets.tailscale-key.path;
+      extraDaemonFlags = [ "--no-logs-no-support" ];
     };
 
     sops.secrets."tailscale-key" = {
