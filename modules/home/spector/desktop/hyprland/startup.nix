@@ -15,7 +15,7 @@ in
 {
   wayland.windowManager.hyprland.settings = {
     exec-once = [
-      "hyprctl setcursor ${pointer.name} ${toString pointer.size}"
+      # "hyprctl setcursor ${pointer.name} ${toString pointer.size}"
       "wl-paste --watch cliphist store"
       "hyprctl dispatch workspace 1"
     ]
@@ -25,7 +25,7 @@ in
     ]
 
     ++ optionals config.programs.nixcord.vesktop.enable [
-      "sleep 9 && ${uexec (getExe pkgs.vesktop)}"
+      "sleep 9 && ${uexec (getExe config.programs.nixcord.vesktop.package)}"
     ]
 
     ++ optionals config.modules.programs.spicetify.enable [

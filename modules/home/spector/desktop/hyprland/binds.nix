@@ -9,7 +9,6 @@
 let
   screenshotarea = "hyprctl keyword animation 'fadeOut,0,8,slow'; ${getExe pkgs.grimblast} --notify copysave area; hyprctl keyword animation 'fadeOut,1,8,slow'";
 
-  lumastart = "${getExe inputs.lumastart.packages.${pkgs.stdenv.hostPlatform.system}.default}";
   volume = "${pkgs.wireplumber}/bin/wpctl";
   brightness = "${getExe pkgs.brightnessctl}";
   media = "${getExe pkgs.playerctl}";
@@ -97,13 +96,6 @@ in
         # Programs
         "$mod, B, ${uexec (getExe inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default)}"
         "$mod SHIFT, E, ${uexec "thunar"}"
-
-        # Launcher
-        "$mod, Space, exec, pkill lumastart || ${lumastart}"
-        "$mod, V, exec, pkill rofi || ${getExe pkgs.cliphist} list | ${getExe pkgs.rofi} -dmenu -display-columns 2 | ${getExe pkgs.cliphist} decode | wl-copy"
-
-        # lock screen
-        "$mod, L, ${uexec (getExe config.programs.hyprlock.package)}"
 
         # Screenshot
         ", Print, exec, ${screenshotarea}"

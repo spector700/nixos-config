@@ -18,8 +18,6 @@ in
         enable = true;
         restartIfChanged = true;
       };
-      enableClipboardPaste = false;
-      enableDynamicTheming = true;
 
       # settings = (import ./settings.nix) // {
       #   theme = "dark";
@@ -44,22 +42,23 @@ in
       settings = {
         bind = [
           "$mod, comma, exec, dms ipc call settings toggle"
-          "$mod CTRL, q, exec, dms ipc call lock lock"
-          "$mod, P, exec, dms ipc call clipboard toggle"
+          "$mod, L, exec, dms ipc call lock lock"
+          "$mod, V, exec, dms ipc call clipboard toggle"
+          "$mod, space, exec, dms ipc call spotlight toggle"
         ];
 
-        windowrule = [
-          "float on, match:class org.quickshell"
-        ];
-        layerrule = [
-          "blur on, match:namespace dms:.*"
-          "ignore_alpha 0, match:namespace dms:.*"
-
-          "animation slide right, match:namespace dms:control-center"
-          "animation slide top, match:namespace dms:workspace-overview"
-
-          "no_anim on, match:namespace ^(quickshell)$"
-        ];
+        # windowrule = [
+        #   "float on, match:class org.quickshell"
+        # ];
+        # layerrule = [
+        #   "blur on, match:namespace dms:.*"
+        #   "ignore_alpha 0, match:namespace dms:.*"
+        #
+        #   "animation slide right, match:namespace dms:control-center"
+        #   "animation slide top, match:namespace dms:workspace-overview"
+        #
+        #   "no_anim on, match:namespace ^(quickshell)$"
+        # ];
       };
     };
 
