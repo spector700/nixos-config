@@ -50,19 +50,6 @@ in
     home.packages = with pkgs; [
       gimp
       jetbrains.idea
-
-      fastfetch
-
-      # Video/Audio
-      mpv
-      loupe
-      celluloid
-      pwvucontrol
-
-      signal-desktop
-      obsidian
-      anki
-      vial
     ];
 
     ## HOME MANAGER

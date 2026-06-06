@@ -4,7 +4,7 @@
     ./rofi
     ./nixcord.nix
     ./orcaslicer.nix
-    # ./packages.nix
+    ./packages.nix
     ./spicetify.nix
     # ./vesktop
     ./zathura.nix

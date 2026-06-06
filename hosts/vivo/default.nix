@@ -29,6 +29,12 @@ in
   # home-manager modules
   home-manager.users.${user}.config = {
 
+    home.packages = with pkgs; [
+      moonlight-qt
+      parsec-bin
+    ];
+
+    ## HOME MANAGER
     modules = {
       desktop = {
         bar = "dankMaterialShell";
@@ -43,6 +49,7 @@ in
 
       programs = {
         spicetify.enable = true;
+        nixcord.enable = true;
         zathura.enable = true;
         rofi.enable = true;
         zen.enable = true;
