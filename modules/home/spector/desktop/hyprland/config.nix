@@ -41,7 +41,7 @@
 
     input = {
       follow_mouse = 1; # focus change on cursor move
-      sensitivity = -0.8;
+      # sensitivity = -0.8;
       accel_profile = "flat";
       off_window_axis_events = true;
       float_switch_override_focus = false;

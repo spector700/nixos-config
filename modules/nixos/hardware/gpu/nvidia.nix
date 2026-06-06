@@ -34,7 +34,6 @@ in
             (mkIf desktop.isWayland {
               __GL_VRR_ALLOWED = "1";
               __GL_GSYNC_ALLOWED = "1";
-              NIXOS_OZONE_WL = "1";
               QT_QPA_PLATFORM = "wayland";
               QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
             })

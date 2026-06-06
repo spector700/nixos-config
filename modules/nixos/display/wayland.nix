@@ -17,6 +17,8 @@ in
         NIXOS_OZONE_WL = "1";
         _JAVA_AWT_WM_NONEREPARENTING = "1";
         ANKI_WAYLAND = "1";
+        QT_QPA_PLATFORM = "wayland;xcb";
+        QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
         WLR_DRM_NO_ATOMIC = "1";
       };
     })
@@ -36,16 +38,7 @@ in
 
       xdg.portal = {
         enable = true;
-        # xdgOpenUsePortal = true;
-        # config.common = {
-        #   "org.freedesktop.impl.portal.Secret" = [ "gnome-keyring" ];
-        #   "org.freedesktop.impl.portal.ScreenCast" = [ "hyprland" ];
-        #   "org.freedesktop.impl.portal.Screenshot" = [ "hyprland" ];
-        #   "org.freedesktop.portal.FileChooser" = [ "xdg-desktop-portal-gtk" ];
-        # };
-
         extraPortals = with pkgs; [
-          # xdg-desktop-portal-hyprland
           xdg-desktop-portal-gtk
         ];
       };
