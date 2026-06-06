@@ -7,7 +7,12 @@
   ...
 }:
 let
-  inherit (lib) mkIf mkEnableOption mkForce;
+  inherit (lib)
+    mkIf
+    mkEnableOption
+    mkForce
+    mkDefault
+    ;
   cfg = config.modules.hardware.sound;
 in
 {
@@ -34,7 +39,7 @@ in
         };
         pulse.enable = true;
         jack.enable = false;
-        lowLatency.enable = true;
+        lowLatency.enable = mkDefault true;
       };
     };
 
