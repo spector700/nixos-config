@@ -1,6 +1,5 @@
 {
   pkgs,
-  lib,
   config,
   inputs,
   ...
@@ -19,24 +18,25 @@ in
     kernelPackages = pkgs.linuxPackages_latest;
   };
 
+  # For niri
+  environment.pathsToLink = [
+    "/share/applications"
+    "/share/xdg-desktop-portal"
+  ];
+
   networking.hostName = "vivo";
 
   # home-manager modules
   home-manager.users.${user}.config = {
-    # sops.secrets = {
-    #   "keys/ssh/${user}_${config.networking.hostName}" = {
-    #     path = "/home/${user}/.ssh/id_spector";
-    #   };
-    # };
 
     modules = {
       desktop = {
-        bar = lib.mkForce "hyprpanel";
+        bar = "dankMaterialShell";
       };
 
       theme = {
-        wallpaper = ../../modules/home/spector/theming/wallpaper.png;
-        stylix.enable = true;
+        wallpaper = ../../modules/home/spector/theming/wallpaper2.png;
+        stylix.enable = false;
       };
 
       services.nextcloud-client.enable = true;
@@ -55,9 +55,32 @@ in
       enable = true; # run sudo fprintd-enroll
     };
 
+    power-profiles-daemon.enable = true;
+    pipewire.lowLatency.enable = false;
+
     fwupd.enable = true;
+
+    libinput = {
+      enable = true;
+
+      # disable mouse acceleration (yes im gamer)
+      mouse = {
+        accelProfile = "flat";
+        accelSpeed = "0";
+        middleEmulation = false;
+      };
+
+      # touchpad settings
+      touchpad = {
+        naturalScrolling = true;
+        tapping = true;
+        clickMethod = "clickfinger";
+        disableWhileTyping = true;
+      };
+    };
   };
 
+  ## NIXOS
   modules = {
     roles = {
       laptop.enable = true;
@@ -77,8 +100,8 @@ in
     };
 
     display = {
-      # gpuAcceleration.enable = true;
-      desktop.hyprland.enable = true;
+      gpuAcceleration.enable = true;
+      desktop.niri.enable = true;
 
       monitors = [
         {

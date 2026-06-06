@@ -2,6 +2,7 @@
   inputs,
   lib,
   config,
+  pkgs,
   ...
 }:
 let
@@ -9,9 +10,16 @@ let
   cfg = config.modules.desktop.bar;
 in
 {
-  imports = [ inputs.dankMaterialShell.homeModules.dank-material-shell ];
+  imports = [
+    inputs.dankMaterialShell.homeModules.dank-material-shell
+    inputs.dankMaterialShell.homeModules.niri
+  ];
 
   config = mkIf (cfg == "dankMaterialShell") {
+    home.packages = with pkgs; [
+      dgop
+    ];
+
     programs.dank-material-shell = {
       enable = true;
       systemd = {
@@ -19,24 +27,45 @@ in
         restartIfChanged = true;
       };
 
-      # settings = (import ./settings.nix) // {
-      #   theme = "dark";
-      #
-      #   # Host-specific: laptop gets battery/brightness widgets, desktop does not
-      #   showBattery = osConfig.modules.roles.laptop.enable;
-      #   controlCenterShowBrightnessIcon = osConfig.modules.roles.laptop.enable;
-      #   controlCenterShowBrightnessPercent = osConfig.modules.roles.laptop.enable;
-      #   hideBrightnessSlider = !osConfig.modules.roles.laptop.enable;
-      #
-      #   # Disable matugen templates for apps not in this config
-      #   matugenTemplateNiri = false;
-      #   matugenTemplateMangowc = false;
-      #   matugenTemplateFoot = false;
-      #   matugenTemplateAlacritty = false;
-      #   matugenTemplateWezterm = false;
-      #   matugenTemplateEmacs = false;
-      # };
+      niri.includes = {
+        enable = true;
+        filesToInclude = [
+          "alttab"
+          "binds"
+          "colors"
+          "layout"
+          "outputs"
+          "wpblur"
+        ];
+        originalFileName = "hm";
+      };
     };
+
+    programs.niri =
+      let
+        dms =
+          cmd:
+          [
+            "dms"
+            "ipc"
+            "call"
+          ]
+          ++ (lib.splitString " " cmd);
+      in
+      {
+        settings = {
+          switch-events.lid-close.action.spawn = dms "lock lock";
+
+          binds = {
+            "Mod+Space".action.spawn = dms "spotlight toggle";
+            "Mod+V".action.spawn = dms "clipboard toggle";
+            "Ctrl+Alt+Delete".action.spawn = dms "session toggle";
+            "Mod+Escape".action.spawn = dms "lock lock";
+            "Mod+Comma".action.spawn = dms "settings toggle";
+            # "Print".action.spawn = dms "niri screenshot";
+          };
+        };
+      };
 
     wayland.windowManager.hyprland = {
       settings = {
