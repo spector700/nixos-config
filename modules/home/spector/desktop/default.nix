@@ -10,7 +10,6 @@ in
   imports = [
     ./bar
     ./hyprland
-    # ./anyrun.nix
     ./hypridle.nix
     ./hyprlock.nix
     ./hyprpaper.nix
