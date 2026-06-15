@@ -1,15 +1,15 @@
 {
   systemd =
     let
-      timeoutConfig = ''
-        DefaultTimeoutStartSec=10s
-        DefaultTimeoutStopSec=10s
-        DefaultTimeoutAbortSec=10s
-        DefaultDeviceTimeoutSec=10s
-      '';
+      timeoutConfig = {
+        DefaultTimeoutStartSec = 10;
+        DefaultTimeoutStopSec = 10;
+        DefaultTimeoutAbortSec = 10;
+        DefaultDeviceTimeoutSec = 10;
+      };
     in
     {
       # avoid hanging the system for too long on boot or shutdown.
-      user.extraConfig = timeoutConfig;
+      user.settings.Manager = timeoutConfig;
     };
 }
