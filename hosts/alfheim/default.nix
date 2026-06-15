@@ -49,14 +49,13 @@ in
 
     home.packages = with pkgs; [
       gimp
-      jetbrains.idea
     ];
 
     ## HOME MANAGER
     modules = {
       theme = {
         wallpaper = ../../modules/home/spector/theming/wallpaper2.png;
-        stylix.enable = true;
+        stylix.enable = false;
       };
 
       desktop.bar = "dankMaterialShell";
@@ -73,7 +72,7 @@ in
         nixcord.enable = true;
         zathura.enable = true;
         orca-slicer.enable = true;
-        rofi.enable = true;
+        rofi.enable = false;
         brave.enable = true;
         zen.enable = true;
       };
@@ -114,7 +113,7 @@ in
 
     display = {
       gpuAcceleration.enable = true;
-      desktop.hyprland.enable = true;
+      desktop.niri.enable = true;
 
       monitors = [
         {
