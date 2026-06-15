@@ -43,7 +43,7 @@ sync USER HOST PATH:
 # Run nixos-rebuild on the remote host
 rebuild-deploy HOST:
 	NIX_SSHOPTS="-p5010" nixos-rebuild --target-host {{HOST}} --sudo --show-trace --impure --flake .#"{{HOST}}" switch
-	# Use nh when https://github.com/nix-community/nh/issues/428 is fixed
+	# Use nh when https://github.com/nix-community/nh/issues/428 is fixed, does not ssh correctly
 	# NIX_SSHOPTS="-p5010" nh os switch -H {{HOST}} --target-host {{HOST}}
 
 # Called by the rekey recipe
