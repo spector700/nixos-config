@@ -1,0 +1,43 @@
+{
+  "dankGifSearch": {
+    "enabled": true
+  },
+  "dankLauncherKeys": {
+    "enabled": true
+  },
+  "dankHyprlandWindows": {
+    "enabled": true
+  },
+  "dankBatteryAlerts": {
+    "enabled": true
+  },
+  "dankClight": {
+    "enabled": false
+  },
+  "discordVoice": {
+    "enabled": false
+  },
+  "developerUtilities": {
+    "enabled": false,
+    "autoPaste": false
+  },
+  "tailscale": {
+    "enabled": true
+  },
+  "powerUsagePlugin": {
+    "enabled": false
+  },
+  "wallpaperBing": {
+    "enabled": true
+  },
+  "obsidianSearch": {
+    "enabled": true
+  },
+  "unifiedTaskbar": {
+    "enabled": false,
+    "compactMode": true,
+    "groupByApp": true,
+    "allMonitors": true,
+    "filledPills": false
+  }
+}

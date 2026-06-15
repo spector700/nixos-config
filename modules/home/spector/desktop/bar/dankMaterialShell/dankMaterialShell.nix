@@ -20,6 +20,16 @@ in
       dgop
     ];
 
+    # Symlink ~/.config/DankMaterialShell/ → repo config/ so the DMS GUI
+    # writes directly to the repo. Git tracks every settings change.
+    home.activation.dmsConfigLink = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      TARGET="$HOME/.config/DankMaterialShell"
+      if [ -e "$TARGET" ] && [ ! -L "$TARGET" ]; then
+        rm -rf "$TARGET"
+      fi
+      ln -sfn "$HOME/nixos-config/modules/home/spector/desktop/bar/dankMaterialShell/config" "$TARGET"
+    '';
+
     programs.dank-material-shell = {
       enable = true;
       systemd = {
