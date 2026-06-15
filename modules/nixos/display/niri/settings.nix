@@ -12,16 +12,6 @@ let
 
   brightness = "${getExe pkgs.brightnessctl}";
   volume = "${pkgs.wireplumber}/bin/wpctl";
-
-  noctalia =
-    cmd:
-    [
-      "noctalia-shell"
-      "ipc"
-      "call"
-    ]
-    ++ (lib.splitString " " cmd);
-
 in
 {
 
@@ -35,7 +25,63 @@ in
     programs.niri = {
       settings =
         let
-          noctaliaExe = lib.getExe inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default;
+          monitorsList = osConfig.modules.display.monitors;
+
+          # Derive Niri output config from the shared monitors list
+          outputs = builtins.listToAttrs (
+            map (
+              m:
+              let
+                inherit (lib)
+                  splitString
+                  toInt
+                  optionalAttrs
+                  hasPrefix
+                  last
+                  elemAt
+                  nameValuePair
+                  ;
+
+                resParts = splitString "x" m.resolution;
+                posParts = splitString "x" m.position;
+
+                rotationDeg =
+                  if hasPrefix "transform" m.rotation then (toInt (last (splitString "," m.rotation))) * 90 else null;
+              in
+              nameValuePair m.name (
+                {
+                  scale = builtins.fromJSON m.scale;
+                }
+
+                # Mode — skip when resolution is "preferred" (auto-detect)
+                // optionalAttrs (m.resolution != "preferred") {
+                  mode = {
+                    width = toInt (elemAt resParts 0);
+                    height = toInt (elemAt resParts 1);
+                    refresh = 1.0 * m.refreshRate;
+                  };
+                }
+
+                # Position — only skip when "auto" (let niri auto-place)
+                // optionalAttrs (!(hasPrefix "auto" m.position)) {
+                  position = {
+                    x = toInt (elemAt posParts 0);
+                    y = toInt (elemAt posParts 1);
+                  };
+                }
+
+                # Rotation
+                // optionalAttrs (rotationDeg != null) {
+                  transform.rotation = rotationDeg;
+                }
+
+                # VRR — matches Hyprland's misc.vrr = 1 (adaptive sync)
+                // {
+                  variable-refresh-rate = true;
+                }
+              )
+            ) monitorsList
+          );
         in
         {
           environment = {
@@ -91,6 +137,11 @@ in
           # };
 
           # ==========================================
+          # OUTPUT / MONITOR CONFIGURATION
+          # ==========================================
+          inherit outputs;
+
+          # ==========================================
           # LAYOUT STYLE, WINDOW GAPS, & BLUR
           # ==========================================
           layout = {
@@ -119,18 +170,11 @@ in
               "Mod+E".action.spawn-sh = "${lib.getExe pkgs.kitty} -e yazi";
               "Ctrl+Shift+Escape".action.spawn-sh = "${lib.getExe pkgs.kitty} -e btop";
 
-              "Mod+B".action.spawn = (
-                getExe inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
-              );
+              "Mod+B".action.spawn =
+                getExe
+                  inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default;
 
               "Mod+S".action = focus-workspace "spotify";
-
-              # "Mod+Space".action.spawn = noctalia "launcher toggle";
-              # "Mod+V".action.spawn = noctalia "launcher clipboard";
-              # "Ctrl+Alt+Delete".action.spawn = noctalia "sessionMenu toggle";
-              # "Mod+Escape".action.spawn = noctalia "lockScreen lock";
-              # "Mod+S".action.spawn = noctalia "controlCenter";
-              # "Mod+Comma".action.spawn = noctalia "settingd toggle";
 
               "Mod+Slash".action = show-hotkey-overlay;
               "Mod+Q".action = close-window;
@@ -154,9 +198,13 @@ in
               "Mod+Ctrl+K".action = focus-workspace-up;
 
               "Mod+Shift+H".action = move-column-to-monitor-left;
+              "Mod+Shift+Left".action = consume-or-expel-window-left;
               "Mod+Shift+L".action = move-column-to-monitor-right;
+              "Mod+Shift+Right".action = consume-or-expel-window-right;
               "Mod+Shift+J".action = move-window-to-monitor-down;
+              "Mod+Shift+Down".action = move-window-to-monitor-down;
               "Mod+Shift+K".action = move-window-to-monitor-up;
+              "Mod+Shift+Up".action = move-window-to-monitor-up;
 
               "Mod+Ctrl+H".action = consume-or-expel-window-left;
               "Mod+Ctrl+L".action = consume-or-expel-window-right;
@@ -316,24 +364,22 @@ in
             }
           ];
 
-          spawn-at-startup = [
-            # { command = [ noctaliaExe ]; }
-          ]
-          ++ optionals config.programs.nixcord.vesktop.enable [
-            {
-              command = [
-                (getExe config.programs.nixcord.vesktop.package)
-              ];
-            }
-          ]
+          spawn-at-startup =
+            optionals config.programs.nixcord.vesktop.enable [
+              {
+                command = [
+                  (getExe config.programs.nixcord.vesktop.package)
+                ];
+              }
+            ]
 
-          ++ optionals config.modules.programs.spicetify.enable [
-            {
-              command = [
-                (getExe config.programs.spicetify.spicedSpotify)
-              ];
-            }
-          ];
+            ++ optionals config.modules.programs.spicetify.enable [
+              {
+                command = [
+                  (getExe config.programs.spicetify.spicedSpotify)
+                ];
+              }
+            ];
         };
     };
   };
