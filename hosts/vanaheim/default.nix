@@ -8,7 +8,7 @@
 let
   inherit (lib) mkDefault;
 
-  secretsPath = (builtins.toString inputs.nix-secrets) + "/sops";
+  secretsPath = (toString inputs.nix-secrets) + "/sops";
 
   macAddress = "92:00:06:ed:33:ca";
   networkInterface = "enp1s0";
@@ -66,6 +66,7 @@ in
     networking = {
       avahi.enable = true;
       optomizeTcp = true;
+      tailscale.enable = true;
     };
 
     os = {
@@ -79,7 +80,6 @@ in
     };
 
     homelab = {
-      # vector.enable = true;
       grafana.enable = true;
       loki.enable = true;
       alloy = {
