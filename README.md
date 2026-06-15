@@ -7,13 +7,11 @@
 
 ---
 
-- **Window Manager** • [Hyprland](https://github.com/hyprwm/Hyprland)🎨
-- **Shell** • [Zsh](https://www.zsh.org) 🐚 with
-  [starship](https://github.com/starship/starship)
-- **Terminal** • [Kitty](https://sw.kovidgoyal.net/kitty/) 💻
-- **Panel** • [Hyprpanel](https://hyprpanel.com/)🍧
-- **Launcher** • [Lumastart](https://github.com/spector700/lumastart) 🚀
-- **File Manager** • [yazi](https://yazi-rs.github.io)🔖
+- **Window Manager** • Niri
+- **Shell** • zsh with starship
+- **Terminal** • Kitty
+- **Panel** • Dank Material Shell
+- **File Manager** • Yazi
 - **Neovim** • [Akari](https://github.com/spector700/Akari)
 
 ---
