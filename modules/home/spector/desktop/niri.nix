@@ -109,9 +109,9 @@ in
               "Mod+E".action.spawn-sh = "${lib.getExe pkgs.kitty} -e yazi";
               "Ctrl+Shift+Escape".action.spawn-sh = "${lib.getExe pkgs.kitty} -e btop";
 
-              "Mod+B".action.spawn = (
-                getExe inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
-              );
+              "Mod+B".action.spawn =
+                getExe
+                  inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default;
 
               "Mod+S".action = focus-workspace "spotify";
 

@@ -139,28 +139,34 @@ in
       # Alert rules
       rules = lib.optional cfg.enableDefaultAlerts defaultAlertRules;
 
-      scrapeConfigs =
-        [
-          # vanaheim itself
-          {
-            job_name = "vanaheim-node";
-            static_configs = [
-              {
-                targets = [ "localhost:9100" ];
-              }
-            ];
-          }
-        ]
-        ++
+      scrapeConfigs = [
+        # vanaheim itself
+        {
+          job_name = "vanaheim-node";
+          static_configs = [
+            {
+              targets = [ "localhost:9100" ];
+            }
+          ];
+        }
+      ]
+      ++
         # Remote targets (Unraid, HA VM, etc.) over Tailscale
-        map (t: {
-          inherit (t) job_name;
-          static_configs = [ { inherit (t) targets; } ];
-        } // lib.optionalAttrs (t.scrape_interval != null) { scrape_interval = t.scrape_interval; }) cfg.remoteTargets;
+        map (
+          t:
+          {
+            inherit (t) job_name;
+            static_configs = [ { inherit (t) targets; } ];
+          }
+          // lib.optionalAttrs (t.scrape_interval != null) { inherit (t) scrape_interval; }
+        ) cfg.remoteTargets;
     };
 
     # Allow Prometheus to be scraped from Tailscale (e.g. for federation later)
-    networking.firewall.interfaces."tailscale0".allowedTCPPorts = [ 9090 9100 ];
+    networking.firewall.interfaces."tailscale0".allowedTCPPorts = [
+      9090
+      9100
+    ];
 
     environment.persistence."/persist".directories = mkIf config.modules.boot.impermanence.enable [
       {

@@ -27,7 +27,10 @@ in
         };
 
         route = {
-          group_by = [ "alertname" "instance" ];
+          group_by = [
+            "alertname"
+            "instance"
+          ];
           # Wait to batch alerts before sending
           group_wait = "30s";
           group_interval = "5m";

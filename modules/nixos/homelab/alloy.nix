@@ -91,6 +91,8 @@ in
     };
 
     # Open Tailscale interface for remote log ingestion
-    networking.firewall.interfaces."tailscale0".allowedTCPPorts = mkIf cfg.enableRemoteIngestion [ 3031 ];
+    networking.firewall.interfaces."tailscale0".allowedTCPPorts = mkIf cfg.enableRemoteIngestion [
+      3031
+    ];
   };
 }
