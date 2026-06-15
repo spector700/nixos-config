@@ -20,7 +20,6 @@ in
       type =
         with types;
         nullOr (enum [
-          "hyprpanel"
           "dankMaterialShell"
           "noctalia"
         ]);

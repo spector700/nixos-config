@@ -100,12 +100,7 @@ in
         # Screenshot
         ", Print, exec, ${screenshotarea}"
       ]
-      ++ workspaces
-      ++ optionals (bar == "hyprpanel") [
-        "$mod SHIFT, R, ${uexec pkgs.hyprland}/bin/hyprctl reload && hyprpanel quit; hyprpanel"
-        # Power menu
-        ", XF86PowerOff, exec, hyprpanel -t powermenu"
-      ];
+      ++ workspaces;
 
     binde = [
       # resize with arrowkeys

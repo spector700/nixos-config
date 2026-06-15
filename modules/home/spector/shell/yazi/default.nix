@@ -4,8 +4,6 @@
   pkgs,
   ...
 }:
-let
-in
 {
 
   imports = [
