@@ -86,6 +86,9 @@ in
           compactor = {
             working_directory = "/var/lib/loki/compactor";
             retention_enabled = true;
+            # Required when retention is enabled -- tells compactor where to store
+            # delete requests. filesystem is correct for single-node deployments.
+            delete_request_store = "filesystem";
           };
         };
       };
