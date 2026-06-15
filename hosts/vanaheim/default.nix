@@ -102,7 +102,6 @@ in
         ];
       };
       alertmanager.enable = true;
-      tailscale.enable = true;
     };
   };
 }

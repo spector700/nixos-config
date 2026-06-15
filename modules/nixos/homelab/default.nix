@@ -65,7 +65,6 @@ in
     ./alloy.nix
     ./prometheus.nix
     ./alertmanager.nix
-    ./tailscale.nix
   ];
 
   options = {
