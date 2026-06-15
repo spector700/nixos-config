@@ -64,6 +64,7 @@ in
     ./loki.nix
     ./alloy.nix
     ./prometheus.nix
+    ./alertmanager.nix
   ];
 
   options = {

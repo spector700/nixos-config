@@ -3,17 +3,21 @@ name: Check
 on: [push, pull_request, workflow_dispatch]
 
 jobs:
-  checks:
-    name: Check expressions
-    runs-on: ubuntu-latest
+  flake-check:
+    name: Check flake expressions
+    uses: ./.github/workflows/prelude.yml
+    secrets:
+      GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+    with:
+      command: |
+        nix flake check --keep-going --show-trace
 
-    steps:
-      - uses: actions/checkout@v4.2.2
-      - uses: cachix/install-nix-action@v20
-        with:
-          install_url: https://nixos.org/nix/install
-          extra_nix_config: |
-            auto-optimise-store = true
-            access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
-            experimental-features = nix-command flakes
-      - run: nix flake check
+  build-vanaheim:
+    name: Build vanaheim system
+    uses: ./.github/workflows/prelude.yml
+    secrets:
+      GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+    with:
+      command: |
+        nix-fast-build --skip-cached --no-nom \
+          --flake ".#nixosConfigurations.vanaheim.config.system.build.toplevel"

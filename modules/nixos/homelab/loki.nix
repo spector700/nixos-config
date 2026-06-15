@@ -1,5 +1,4 @@
 {
-
   config,
   lib,
   ...
@@ -19,13 +18,16 @@ in
       loki = {
         enable = true;
         configuration = {
-          server.http_listen_port = 3030;
+          server = {
+            http_listen_port = 3030;
+            # Bind to localhost only -- remote agents push via Alloy relay on Tailscale
+            http_listen_address = "127.0.0.1";
+          };
           auth_enabled = false;
 
           common = {
             instance_interface_names = [ ];
             instance_addr = "127.0.0.1";
-            # Use inmemory kvstore for all rings (distributor, query-scheduler, ingester)
             ring = {
               kvstore.store = "inmemory";
             };
@@ -47,11 +49,12 @@ in
             chunk_idle_period = "5m";
             chunk_retain_period = "30s";
           };
+
           schema_config = {
             configs = [
               {
                 from = "2020-10-24";
-                store = "boltdb-shipper";
+                store = "tsdb";
                 object_store = "filesystem";
                 schema = "v13";
                 index = {
@@ -61,25 +64,40 @@ in
               }
             ];
           };
+
           storage_config = {
-            boltdb_shipper = {
-              active_index_directory = "/var/lib/loki/index";
-              cache_location = "/var/lib/loki/cache";
+            tsdb_shipper = {
+              active_index_directory = "/var/lib/loki/tsdb-index";
+              cache_location = "/var/lib/loki/tsdb-cache";
             };
             filesystem = {
               directory = "/var/lib/loki/chunks";
             };
           };
+
           limits_config = {
             reject_old_samples = true;
             reject_old_samples_max_age = "168h";
             allow_structured_metadata = false;
+            # Retain logs for 15 days
+            retention_period = "15d";
           };
+
           compactor = {
             working_directory = "/var/lib/loki/compactor";
+            retention_enabled = true;
           };
         };
       };
     };
+
+    environment.persistence."/persist".directories = mkIf config.modules.boot.impermanence.enable [
+      {
+        directory = "/var/lib/loki";
+        user = "loki";
+        group = "loki";
+        mode = "0750";
+      }
+    ];
   };
 }
