@@ -20,22 +20,25 @@ let
     // ----------------------------------------------------------------
     // Local: ship vanaheim's own systemd journal to Loki
     // ----------------------------------------------------------------
+    // relabel_rules are consumed by loki.source.journal below; forward_to
+    // is empty because the rules are referenced, not chained.
+    loki.relabel "journal" {
+      forward_to = []
+
+      rule {
+        source_labels = ["__journal__systemd_unit"]
+        target_label  = "unit"
+      }
+    }
+
     loki.source.journal "system" {
       max_age    = "12h"
       labels     = {
         job  = "systemd-journal",
         host = constants.hostname,
       }
-      forward_to = [loki.relabel.journal.receiver]
-    }
-
-    loki.relabel "journal" {
-      forward_to = [loki.write.local.receiver]
-
-      rule {
-        source_labels = ["__journal__systemd_unit"]
-        target_label  = "unit"
-      }
+      forward_to    = [loki.write.local.receiver]
+      relabel_rules = loki.relabel.journal.rules
     }
 
     loki.write "local" {
