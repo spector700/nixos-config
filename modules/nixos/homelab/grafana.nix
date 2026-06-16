@@ -99,7 +99,7 @@ let
               type = "loki";
               uid = lokiUid;
             };
-            expr = "sum by(unit) (rate({job=\"systemd-journal\", host=~\"$host\"}[$__rate_interval]))";
+            expr = "sum by(unit) (rate({job=\"systemd-journal\", host=~\"$host\"}[5m]))";
             legendFormat = "{{unit}}";
             refId = "A";
           }
