@@ -112,18 +112,10 @@ in
       enable = true;
       port = 9090;
       # Reduce retention from 30d to 15d -- VPS disk is limited
-      extraFlags = [ "--storage.tsdb.retention.time=15d" ];
-
-      exporters.node = {
-        enable = true;
-        port = 9100;
-        enabledCollectors = [
-          "systemd"
-          "processes"
-          "interrupts"
-          "tcpstat"
-        ];
-      };
+      extraFlags = [
+        "--storage.tsdb.retention.time=15d"
+        "--web.enable-remote-write-receiver"
+      ];
 
       # Wire up Alertmanager
       alertmanagers = mkIf config.modules.homelab.alertmanager.enable [
@@ -139,27 +131,17 @@ in
       # Alert rules
       rules = lib.optional cfg.enableDefaultAlerts defaultAlertRules;
 
-      scrapeConfigs = [
-        # vanaheim itself
-        {
-          job_name = "vanaheim-node";
-          static_configs = [
-            {
-              targets = [ "localhost:9100" ];
-            }
-          ];
-        }
-      ]
-      ++
-        # Remote targets (Unraid, HA VM, etc.) over Tailscale
+      # Scrape config kept intentionally empty — Alloy remote-writes node metrics via prometheus.remote_write.
+      # Additional remoteTargets can be added via the modules.homelab.prometheus.remoteTargets option.
+      scrapeConfigs =
         map (
-          t:
-          {
-            inherit (t) job_name;
-            static_configs = [ { inherit (t) targets; } ];
-          }
-          // lib.optionalAttrs (t.scrape_interval != null) { inherit (t) scrape_interval; }
-        ) cfg.remoteTargets;
+            t:
+            {
+              inherit (t) job_name;
+              static_configs = [ { inherit (t) targets; } ];
+            }
+            // lib.optionalAttrs (t.scrape_interval != null) { inherit (t) scrape_interval; }
+          ) cfg.remoteTargets;
     };
 
     # Allow Prometheus to be scraped from Tailscale (e.g. for federation later)

@@ -88,18 +88,6 @@ in
       };
       prometheus = {
         enable = true;
-        remoteTargets = [
-          {
-            job_name = "unraid-node";
-            # TODO: replace with Unraid Tailscale IP once node_exporter is running there
-            targets = [ "UNRAID_TAILSCALE_IP:9100" ];
-          }
-          {
-            job_name = "homeassistant-node";
-            # TODO: replace with HA VM Tailscale IP once node_exporter is running there
-            targets = [ "HA_VM_TAILSCALE_IP:9100" ];
-          }
-        ];
       };
       alertmanager.enable = true;
     };

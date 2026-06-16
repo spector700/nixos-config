@@ -47,6 +47,36 @@ let
       }
     }
 
+    // ----------------------------------------------------------------
+    // Metrics: ship vanaheim's own node metrics to Prometheus via remote write
+    // Replaces the standalone node_exporter service
+    // ----------------------------------------------------------------
+    prometheus.exporter.unix "node" {
+      set_collectors = [
+        "cpu",
+        "diskstats",
+        "filesystem",
+        "loadavg",
+        "meminfo",
+        "netdev",
+        "netstat",
+        "processes",
+        "systemd",
+        "tcpstat",
+      ]
+    }
+
+    prometheus.scrape "node" {
+      targets    = prometheus.exporter.unix.node.targets
+      forward_to = [prometheus.remote_write.prometheus.receiver]
+    }
+
+    prometheus.remote_write "prometheus" {
+      endpoint {
+        url = "http://127.0.0.1:9090/api/v1/write"
+      }
+    }
+
     ${lib.optionalString cfg.enableRemoteIngestion ''
       // ----------------------------------------------------------------
       // Remote ingestion: accept log pushes from homelab Alloy agents
