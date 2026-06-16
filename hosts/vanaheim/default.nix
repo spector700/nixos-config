@@ -59,7 +59,6 @@ in
     };
   };
 
-  # No need for fonts on a server
   fonts.fontconfig.enable = mkDefault false;
 
   modules = {

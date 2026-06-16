@@ -59,7 +59,7 @@ let
 in
 {
   imports = [
-    ./grafana.nix
+    ./grafana
     ./ollama.nix
     ./loki.nix
     ./alloy.nix

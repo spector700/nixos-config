@@ -133,15 +133,14 @@ in
 
       # Scrape config kept intentionally empty — Alloy remote-writes node metrics via prometheus.remote_write.
       # Additional remoteTargets can be added via the modules.homelab.prometheus.remoteTargets option.
-      scrapeConfigs =
-        map (
-            t:
-            {
-              inherit (t) job_name;
-              static_configs = [ { inherit (t) targets; } ];
-            }
-            // lib.optionalAttrs (t.scrape_interval != null) { inherit (t) scrape_interval; }
-          ) cfg.remoteTargets;
+      scrapeConfigs = map (
+        t:
+        {
+          inherit (t) job_name;
+          static_configs = [ { inherit (t) targets; } ];
+        }
+        // lib.optionalAttrs (t.scrape_interval != null) { inherit (t) scrape_interval; }
+      ) cfg.remoteTargets;
     };
 
     # Allow Prometheus to be scraped from Tailscale (e.g. for federation later)
