@@ -99,8 +99,8 @@ let
               type = "loki";
               uid = lokiUid;
             };
-            expr = "sum by(host) (rate({host=~\"$host\"}[$__rate_interval]))";
-            legendFormat = "{{host}}";
+            expr = "sum by(unit) (rate({job=\"systemd-journal\", host=~\"$host\"}[$__rate_interval]))";
+            legendFormat = "{{unit}}";
             refId = "A";
           }
         ];
@@ -373,8 +373,8 @@ let
               type = "prometheus";
               uid = prometheusUid;
             };
-            expr = "(1 - node_filesystem_avail_bytes{fstype!~\"tmpfs|overlay\"} / node_filesystem_size_bytes{fstype!~\"tmpfs|overlay\"}) * 100";
-            legendFormat = "{{mountpoint}}";
+            expr = "(1 - node_filesystem_avail_bytes{mountpoint=\"/\",fstype!~\"tmpfs|overlay|ramfs\"} / node_filesystem_size_bytes{mountpoint=\"/\",fstype!~\"tmpfs|overlay|ramfs\"}) * 100";
+            legendFormat = "{{mountpoint}} / {{device}}";
             refId = "A";
             instant = true;
           }
