@@ -12,7 +12,7 @@ let
   prometheusUid = "prometheus";
 
   # Dashboard JSON defined as a Nix attrset — serialised at build time.
-  # Labels shipped by promtail: job="systemd-journal", host=<hostname>, unit=<systemd-unit>
+  # Labels: host=<hostname> — also job="systemd-journal", unit=<systemd-unit> from vanaheim alloy
   systemLogsDashboard = {
     id = null;
     uid = "system-logs";
@@ -41,9 +41,9 @@ let
           type = "loki";
           uid = lokiUid;
         };
-        definition = "label_values({job=\"systemd-journal\"},host)";
+        definition = "label_values(host)";
         query = {
-          query = "label_values({job=\"systemd-journal\"},host)";
+          query = "label_values(host)";
           refId = "LokiVariableQueryEditor-VariableQuery";
         };
         refresh = 2;
@@ -99,8 +99,8 @@ let
               type = "loki";
               uid = lokiUid;
             };
-            expr = "sum by(unit) (rate({job=\"systemd-journal\",host=~\"$host\",unit=~\"$unit\"}[$__rate_interval]))";
-            legendFormat = "{{unit}}";
+            expr = "sum by(host) (rate({host=~\"$host\"}[$__rate_interval]))";
+            legendFormat = "{{host}}";
             refId = "A";
           }
         ];
@@ -153,7 +153,7 @@ let
               type = "loki";
               uid = lokiUid;
             };
-            expr = "{job=\"systemd-journal\",host=~\"$host\",unit=~\"$unit\"}";
+            expr = "{host=~\"$host\"}";
             refId = "A";
           }
         ];
