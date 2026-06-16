@@ -34,6 +34,29 @@ let
     # Dropdown to filter by systemd unit
     templating.list = [
       {
+        name = "host";
+        label = "Host";
+        type = "query";
+        datasource = {
+          type = "loki";
+          uid = lokiUid;
+        };
+        definition = "label_values({job=\"systemd-journal\"},host)";
+        query = {
+          query = "label_values({job=\"systemd-journal\"},host)";
+          refId = "LokiVariableQueryEditor-VariableQuery";
+        };
+        refresh = 2;
+        multi = true;
+        includeAll = true;
+        allValue = ".+";
+        current = {
+          selected = true;
+          text = "All";
+          value = "$__all";
+        };
+      }
+      {
         name = "unit";
         label = "Unit";
         type = "query";
@@ -41,9 +64,9 @@ let
           type = "loki";
           uid = lokiUid;
         };
-        definition = "label_values({job=\"systemd-journal\",host=\"vanaheim\"},unit)";
+        definition = "label_values({job=\"systemd-journal\",host=~\"$host\"},unit)";
         query = {
-          query = "label_values({job=\"systemd-journal\",host=\"vanaheim\"},unit)";
+          query = "label_values({job=\"systemd-journal\",host=~\"$host\"},unit)";
           refId = "LokiVariableQueryEditor-VariableQuery";
         };
         refresh = 2;
@@ -76,7 +99,7 @@ let
               type = "loki";
               uid = lokiUid;
             };
-            expr = "sum by(unit) (rate({job=\"systemd-journal\",host=\"vanaheim\",unit=~\"$unit\"}[$__rate_interval]))";
+            expr = "sum by(unit) (rate({job=\"systemd-journal\",host=~\"$host\",unit=~\"$unit\"}[$__rate_interval]))";
             legendFormat = "{{unit}}";
             refId = "A";
           }
@@ -130,7 +153,7 @@ let
               type = "loki";
               uid = lokiUid;
             };
-            expr = "{job=\"systemd-journal\",host=\"vanaheim\",unit=~\"$unit\"}";
+            expr = "{job=\"systemd-journal\",host=~\"$host\",unit=~\"$unit\"}";
             refId = "A";
           }
         ];
