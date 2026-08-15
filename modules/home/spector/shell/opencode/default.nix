@@ -21,7 +21,7 @@ in
   imports = [
     ./permission.nix
     ./lsp.nix
-    ./oh-my-opencode.nix
+    # ./oh-my-opencode.nix
   ];
 
   options.modules.shell.opencode = {
@@ -38,24 +38,24 @@ in
         autoshare = false;
         autoupdate = false;
 
-        provider = {
-          ollama = {
-            npm = "@ai-sdk/openai-compatible";
-            name = "Ollama";
-            options = {
-              baseURL = "http://localhost:11434/v1";
-            };
-            models = {
-              "qwen3.5:latest" = {
-                name = "Qwen 3.5";
-                limit = {
-                  context = 61440;
-                  output = 24576;
-                };
-              };
-            };
-          };
-        };
+        # provider = {
+        #   ollama = {
+        #     npm = "@ai-sdk/openai-compatible";
+        #     name = "Ollama";
+        #     options = {
+        #       baseURL = "http://localhost:11434/v1";
+        #     };
+        #     models = {
+        #       "qwen3.5:latest" = {
+        #         name = "Qwen 3.5";
+        #         limit = {
+        #           context = 61440;
+        #           output = 24576;
+        #         };
+        #       };
+        #     };
+        #   };
+        # };
 
         plugin = [
           # Dynamic context pruning
@@ -76,7 +76,7 @@ in
         # superpowers = superpowers.skills;
       };
 
-      rules = builtins.readFile ../ai-tools/base.md;
+      context = ../ai-tools/base.md;
     };
   };
 }

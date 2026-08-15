@@ -84,9 +84,9 @@ in
 
       commands = aiCommands.toClaudeMarkdown;
 
-      skillsDir = ../ai-tools/skills;
+      skills = ../ai-tools/skills;
 
-      memory.source = ../ai-tools/base.md;
+      context = ../ai-tools/base.md;
     };
   };
 }

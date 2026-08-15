@@ -1,5 +1,6 @@
 {
   pkgs,
+  config,
   location,
   inputs,
   ...
@@ -15,7 +16,7 @@
   programs = {
     zsh = {
       enable = true;
-      dotDir = ".config/zsh";
+      dotDir = "${config.xdg.configHome}/zsh";
       autosuggestion.enable = true;
       syntaxHighlighting = {
         enable = true;
@@ -113,11 +114,11 @@
       enable = true;
       enableZshIntegration = true;
       # Ctrl - T | find file
-      fileWidgetOptions = [ "--preview '$show_file_or_dir_preview'" ];
+      fileWidget.options = [ "--preview '$show_file_or_dir_preview'" ];
       # Alt - C | chang directory
-      changeDirWidgetOptions = [ "--preview 'eza --tree --color=always {} | head -200'" ];
+      changeDirWidget.options = [ "--preview 'eza --tree --color=always {} | head -200'" ];
       # Ctrl - R
-      historyWidgetOptions = [
+      historyWidget.options = [
         "--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
       ];
     };
