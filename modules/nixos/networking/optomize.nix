@@ -4,7 +4,7 @@ let
   cfg = config.modules.networking;
 in
 {
-  config = mkIf cfg.optomizeTcp {
+  config = mkIf cfg.optimizeTcp {
     boot = {
       kernelModules = [
         "tls"

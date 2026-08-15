@@ -61,10 +61,16 @@ in
 
   fonts.fontconfig.enable = mkDefault false;
 
+  services.fail2ban = {
+    enable = true;
+    bantime = "1h";
+    maxretry = 5;
+  };
+
   modules = {
     networking = {
       avahi.enable = true;
-      optomizeTcp = true;
+      optimizeTcp = true;
       tailscale.enable = true;
     };
 

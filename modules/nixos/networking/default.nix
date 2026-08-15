@@ -11,7 +11,7 @@ in
   ];
 
   options.modules.networking = {
-    optomizeTcp = mkEnableOption "TCP Optimizations";
+    optimizeTcp = mkEnableOption "TCP Optimizations";
   };
 
   config = {
