@@ -89,7 +89,7 @@
     nixPath = lib.mapAttrsToList (key: _: "${key}=flake:${key}") config.nix.registry;
   };
 
-  #TODO:
+  # Work around the upstream OpenLDAP test failure on non-i686 systems.
   nixpkgs.overlays = [
     # https://github.com/NixOS/nixpkgs/issues/514113
     (_: prev: {
