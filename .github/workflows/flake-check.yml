@@ -1,6 +1,7 @@
 name: Check
 
 on: [push, pull_request, workflow_dispatch]
+permissions: {}
 
 jobs:
   flake-check:
@@ -12,12 +13,20 @@ jobs:
       command: |
         nix flake check --keep-going --show-trace
 
-  build-vanaheim:
-    name: Build vanaheim system
+  build-hosts:
+    name: Build ${{ matrix.host }} system
     uses: ./.github/workflows/prelude.yml
+    strategy:
+      fail-fast: false
+      matrix:
+        host:
+          - alfheim
+          - vivo
+          - vanaheim
+          - minimal
     secrets:
       GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
     with:
       command: |
         nix-fast-build --skip-cached --no-nom \
-          --flake ".#nixosConfigurations.vanaheim.config.system.build.toplevel"
+          --flake ".#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel"

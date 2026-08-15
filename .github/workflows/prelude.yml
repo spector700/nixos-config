@@ -16,13 +16,14 @@ on:
     secrets:
       GH_TOKEN:
         required: true
+permissions: {}
 jobs:
   nix:
     runs-on: "${{ inputs.platform }}-latest"
     steps:
       - name: "Maximize build space"
         if: ${{ inputs.optimize-space }}
-        uses: easimon/maximize-build-space@v10
+        uses: easimon/maximize-build-space@fc881a613ad2a34aca9c9624518214ebc21dfc0c # v10
         with:
           overprovision-lvm: true
           remove-android: true
@@ -30,15 +31,15 @@ jobs:
           remove-haskell: true
           remove-codeql: true
       - name: "Checkout"
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           token: "${{ secrets.GH_TOKEN }}"
       - name: Set up QEMU support
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@c7c53464625b32c7a7e944ae62b3e17d2b600130 # v3
         with:
           platforms: arm64
       - name: Install Lix
-        uses: DeterminateSystems/nix-installer-action@v12
+        uses: DeterminateSystems/nix-installer-action@7993355175c2765e5733dae74f3e0786fe0e5c4f # v12
         with:
           source-url: "https://install.lix.systems/lix/lix-installer-x86_64-linux"
           diagnostic-endpoint: ""
@@ -55,7 +56,7 @@ jobs:
             extra-trusted-public-keys = nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=
 
       - name: "Nix Magic Cache"
-        uses: DeterminateSystems/magic-nix-cache-action@main
+        uses: DeterminateSystems/magic-nix-cache-action@55718cd9ebf1737a061487d5ada21abf31e99a98 # main
 
       - name: "Install nix-fast-build"
         run: nix profile install nixpkgs#nix-fast-build
