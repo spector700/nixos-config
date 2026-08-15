@@ -10,6 +10,7 @@ in
 {
   imports = [
     ./hardware-configuration.nix
+    ./home.nix
     inputs.disko.nixosModules.disko
     (import ../disks/lvm-btrfs.nix { disks = [ "/dev/nvme0n1" ]; })
   ];
@@ -25,37 +26,6 @@ in
   ];
 
   networking.hostName = "vivo";
-
-  # home-manager modules
-  home-manager.users.${user}.config = {
-
-    home.packages = with pkgs; [
-      moonlight-qt
-      parsec-bin
-    ];
-
-    ## HOME MANAGER
-    modules = {
-      desktop = {
-        bar = "dankMaterialShell";
-      };
-
-      theme = {
-        wallpaper = ../../modules/home/spector/theming/wallpaper2.png;
-        stylix.enable = false;
-      };
-
-      services.nextcloud-client.enable = true;
-
-      programs = {
-        spicetify.enable = true;
-        nixcord.enable = true;
-        zathura.enable = true;
-        rofi.enable = true;
-        zen.enable = true;
-      };
-    };
-  };
 
   services = {
     fprintd = {
@@ -95,7 +65,7 @@ in
 
     networking = {
       tailscale.enable = true;
-      optomizeTcp = true;
+      optimizeTcp = true;
     };
 
     hardware = {
