@@ -11,6 +11,7 @@ in
 {
   imports = [
     ./hardware-configuration.nix
+    ./home.nix
     inputs.disko.nixosModules.disko
     (import ../disks/lvm-btrfs.nix { disks = [ "/dev/sda" ]; })
   ];
@@ -39,46 +40,6 @@ in
     setSocketVariable = true;
   };
 
-  # home-manager modules
-  home-manager.users.${user}.config = {
-    sops.secrets = {
-      "keys/ssh/${user}_${config.networking.hostName}" = {
-        path = "/home/${user}/.ssh/id_spector";
-      };
-    };
-
-    home.packages = with pkgs; [
-      gimp
-    ];
-
-    ## HOME MANAGER
-    modules = {
-      theme = {
-        wallpaper = ../../modules/home/spector/theming/wallpaper2.png;
-        stylix.enable = false;
-      };
-
-      desktop.bar = "dankMaterialShell";
-
-      services.nextcloud-client.enable = true;
-
-      shell = {
-        opencode.enable = true;
-        claude-code.enable = true;
-      };
-
-      programs = {
-        spicetify.enable = true;
-        nixcord.enable = true;
-        zathura.enable = true;
-        orca-slicer.enable = true;
-        rofi.enable = false;
-        brave.enable = true;
-        zen.enable = true;
-      };
-    };
-  };
-
   ## NIXOS
   modules = {
     roles = {
@@ -89,7 +50,7 @@ in
 
     networking = {
       avahi.enable = true;
-      optomizeTcp = true;
+      optimizeTcp = true;
     };
 
     hardware = {
@@ -103,7 +64,7 @@ in
     };
 
     homelab = {
-      ollama.enable = true;
+      ollama.enable = false;
     };
 
     services = {
