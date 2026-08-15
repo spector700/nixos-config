@@ -53,7 +53,7 @@ in
           imageZoom.enable = true;
           memberCount.enable = true;
           permissionsViewer.enable = true;
-          PinDMs.enable = true;
+          pinDms.enable = true;
           quickMention.enable = true;
           readAllNotificationsButton.enable = true;
           revealAllSpoilers.enable = true;
@@ -69,7 +69,7 @@ in
 
           # === Privacy ===
           anonymiseFileNames.enable = true;
-          ClearURLs.enable = true;
+          clearUrls.enable = true;
 
           # === Logging / Notifications ===
           messageLogger.enable = true;
