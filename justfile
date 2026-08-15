@@ -23,6 +23,14 @@ check ARGS="":
 update:
   nix flake update
 
+# Compare a host's current system with a freshly built configuration
+diff HOST:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    current_system=$(readlink -f /run/current-system)
+    next_system=$(nix build ".#nixosConfigurations.{{HOST}}.config.system.build.toplevel" --no-link --print-out-paths)
+    nix run nixpkgs#nvd -- diff "$current_system" "$next_system"
+
 # Generate a new age key
 age-key:
   nix-shell -p age --run "age-keygen"

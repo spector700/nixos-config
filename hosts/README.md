@@ -2,7 +2,7 @@
 
 1. Create a config in `/hosts/<host>/default.nix`
 
-2. Add to the file `profile.nix` and add both files to git
+2. Add the host to `profiles.nix` and add both files to git
    ```nix
    # Homelab
    vanaheim = nixosSystem {
@@ -60,7 +60,26 @@
       };
    ```
 
-3. Use the `script.sh` for nixos-anywhere to install the config to the system.
+3. Use `bootstrap.sh` to install the config with nixos-anywhere.
    - `-k` for the ssh key to use
    - `--impermanence` to enable impermanence on the system.
    - `./hosts/bootstrap.sh -n vanaheim -d 192.168.1.104 -k /home/spector/.ssh/id_spector --impermanence`
+
+Before deployment, validate the host locally with:
+
+```bash
+nix build .#nixosConfigurations.<host>.config.system.build.toplevel
+```
+
+For an existing host, compare the active generation with a fresh build before
+switching:
+
+```bash
+just diff <host>
+```
+
+Then deploy it remotely:
+
+```bash
+just rebuild-deploy <host>
+```
