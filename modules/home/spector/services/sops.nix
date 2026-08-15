@@ -16,6 +16,6 @@ in
     age.keyFile = "${homeDirectory}/.config/sops/age/keys.txt";
 
     defaultSopsFile = "${secretsFolder}/${osConfig.networking.hostName}.yaml";
-    validateSopsFiles = false;
+    validateSopsFiles = osConfig.networking.hostName != "minimal";
   };
 }

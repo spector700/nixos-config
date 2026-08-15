@@ -25,7 +25,7 @@ in
 
   sops = {
     defaultSopsFile = "${secretsPath}/${hostName}.yaml";
-    validateSopsFiles = false;
+    validateSopsFiles = hostName != "minimal";
 
     age = {
       # automatically import host SSH keys as age keys
