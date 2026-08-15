@@ -41,8 +41,6 @@ in
         material-design-icons
         noto-fonts-color-emoji
         twemoji-color-font
-        openmoji-color
-        openmoji-black
       ];
 
       # causes more issues than it solves
