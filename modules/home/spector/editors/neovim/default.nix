@@ -3,5 +3,5 @@
 { inputs, pkgs, ... }:
 {
 
-  home.packages = with pkgs; [ inputs.Akari.packages.${system}.default ];
+  home.packages = [ inputs.Akari.packages.${pkgs.stdenv.hostPlatform.system}.default ];
 }
