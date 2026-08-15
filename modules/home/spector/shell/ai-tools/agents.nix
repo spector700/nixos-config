@@ -52,7 +52,7 @@ let
       ];
       model = {
         claude = "sonnet";
-        opencode = "github-copilot/gpt-5.2";
+        opencode = "openai/gpt-5.6-luna";
       };
       permission = {
         edit = "ask";
@@ -72,7 +72,7 @@ let
       ];
       model = {
         claude = "sonnet";
-        opencode = "github-copilot/gpt-5.2";
+        opencode = "openai/gpt-5.6-luna";
       };
       permission = {
         bash = "ask";
@@ -90,7 +90,7 @@ let
       ];
       model = {
         claude = "sonnet";
-        opencode = "github-copilot/gpt-5.2";
+        opencode = "openai/gpt-5.6-luna";
       };
       permission = { };
       content = builtins.readFile (agentsBasePath + "/security-auditor.md");
@@ -108,7 +108,7 @@ let
       ];
       model = {
         claude = "haiku";
-        opencode = "github-copilot/gpt-5-mini";
+        opencode = "openai/gpt-5.6-luna";
       };
       permission = {
         edit = "ask";
@@ -130,7 +130,7 @@ let
       ];
       model = {
         claude = "sonnet";
-        opencode = "github-copilot/gpt-5.2";
+        opencode = "openai/gpt-5.6-luna";
       };
       permission = {
         edit = "ask";
@@ -151,7 +151,7 @@ let
       ];
       model = {
         claude = "sonnet";
-        opencode = "github-copilot/gpt-5.2";
+        opencode = "openai/gpt-5.6-luna";
       };
       permission = {
         bash = "ask";
