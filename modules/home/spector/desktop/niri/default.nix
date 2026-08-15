@@ -14,86 +14,72 @@ let
   volume = "${pkgs.wireplumber}/bin/wpctl";
 in
 {
+  imports = [
+    { nixpkgs.overlays = [ inputs.niri-flake.overlays.niri ]; }
+  ];
 
   config = mkIf cfg.niri.enable {
 
-    # programs.noctalia-shell = {
-    #   enable = true;
-    #   package = inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default;
-    # };
+    home.packages = [ pkgs.nautilus ];
 
     programs.niri = {
       settings =
         let
           monitorsList = osConfig.modules.display.monitors;
 
-          # Derive Niri output config from the shared monitors list
-          outputs = builtins.listToAttrs (
-            map (
-              m:
-              let
-                inherit (lib)
-                  splitString
-                  toInt
-                  optionalAttrs
-                  hasPrefix
-                  last
-                  elemAt
-                  nameValuePair
-                  ;
+          mkOutput =
+            monitor:
+            let
+              inherit (lib)
+                elemAt
+                hasPrefix
+                last
+                nameValuePair
+                optionalAttrs
+                splitString
+                toInt
+                ;
 
-                resParts = splitString "x" m.resolution;
-                posParts = splitString "x" m.position;
+              resolution = splitString "x" monitor.resolution;
+              position = splitString "x" monitor.position;
+              rotation =
+                if hasPrefix "transform" monitor.rotation then
+                  (toInt (last (splitString "," monitor.rotation))) * 90
+                else
+                  null;
+            in
+            nameValuePair monitor.name (
+              {
+                scale = builtins.fromJSON monitor.scale;
+                focus-at-startup = monitor.primary;
+                variable-refresh-rate = true;
+              }
+              // optionalAttrs (monitor.resolution != "preferred") {
+                mode = {
+                  width = toInt (elemAt resolution 0);
+                  height = toInt (elemAt resolution 1);
+                  refresh = 1.0 * monitor.refreshRate;
+                };
+              }
+              // optionalAttrs (!(hasPrefix "auto" monitor.position)) {
+                position = {
+                  x = toInt (elemAt position 0);
+                  y = toInt (elemAt position 1);
+                };
+              }
+              // optionalAttrs (rotation != null) {
+                transform.rotation = rotation;
+              }
+            );
 
-                rotationDeg =
-                  if hasPrefix "transform" m.rotation then (toInt (last (splitString "," m.rotation))) * 90 else null;
-              in
-              nameValuePair m.name (
-                {
-                  scale = builtins.fromJSON m.scale;
-                }
-
-                # Mode — skip when resolution is "preferred" (auto-detect)
-                // optionalAttrs (m.resolution != "preferred") {
-                  mode = {
-                    width = toInt (elemAt resParts 0);
-                    height = toInt (elemAt resParts 1);
-                    refresh = 1.0 * m.refreshRate;
-                  };
-                }
-
-                # Position — only skip when "auto" (let niri auto-place)
-                // optionalAttrs (!(hasPrefix "auto" m.position)) {
-                  position = {
-                    x = toInt (elemAt posParts 0);
-                    y = toInt (elemAt posParts 1);
-                  };
-                }
-
-                # Rotation
-                // optionalAttrs (rotationDeg != null) {
-                  transform.rotation = rotationDeg;
-                }
-
-                # VRR — matches Hyprland's misc.vrr = 1 (adaptive sync)
-                // {
-                  variable-refresh-rate = true;
-                }
-              )
-            ) monitorsList
-          );
+          outputs = builtins.listToAttrs (map mkOutput monitorsList);
         in
         {
           environment = {
             CLUTTER_BACKEND = "wayland";
             MOZ_ENABLE_WAYLAND = "1";
             SDL_VIDEODRIVER = "wayland";
-            WLR_RENDERER = "vulkan";
             WLR_NO_HARDWARE_CURSORS = "1";
-            QT_QPA_PLATFORMTHEME = "qt6ct";
-            GTK_IM_MODULE = "simple";
-            XDG_CURRENT_DESKTOP = "niri";
-            XDG_SESSION_DESKTOP = "niri";
           };
 
           prefer-no-csd = true;
@@ -163,7 +149,9 @@ in
           # KEYBINDINGS & WORKFLOW CONTROLS
           # ==========================================
           binds =
-            with config.lib.niri.actions;
+            let
+              actions = config.lib.niri.actions;
+            in
             {
               # terminal
               "Mod+T".action.spawn = "${lib.getExe pkgs.kitty}";
@@ -174,48 +162,46 @@ in
                 getExe
                   inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default;
 
-              "Mod+S".action = focus-workspace "spotify";
+              "Mod+S".action = actions.focus-workspace "spotify";
 
-              "Mod+Slash".action = show-hotkey-overlay;
-              "Mod+Q".action = close-window;
-              "Mod+F".action = fullscreen-window;
-              "Mod+Shift+F".action = toggle-window-floating;
-              "Mod+O".action = toggle-overview;
-              "Mod+C".action = center-column;
-              "Mod+M".action = maximize-column;
-              "Mod+W".action = toggle-column-tabbed-display;
+              "Mod+Slash".action = actions.show-hotkey-overlay;
+              "Mod+Q".action = actions.close-window;
+              "Mod+F".action = actions.fullscreen-window;
+              "Mod+Shift+F".action = actions.toggle-window-floating;
+              "Mod+O".action = actions.toggle-overview;
+              "Mod+C".action = actions.center-column;
+              "Mod+M".action = actions.maximize-column;
+              "Mod+W".action = actions.toggle-column-tabbed-display;
 
-              "Mod+H".action = focus-column-or-monitor-left;
-              "Mod+Left".action = focus-column-or-monitor-left;
-              "Mod+L".action = focus-column-or-monitor-right;
-              "Mod+Right".action = focus-column-or-monitor-right;
-              "Mod+K".action = focus-window-or-workspace-up;
-              "Mod+Up".action = focus-window-or-workspace-up;
-              "Mod+J".action = focus-window-or-workspace-down;
-              "Mod+Down".action = focus-window-or-workspace-down;
+              "Mod+H".action = actions.focus-column-or-monitor-left;
+              "Mod+Left".action = actions.focus-column-or-monitor-left;
+              "Mod+L".action = actions.focus-column-or-monitor-right;
+              "Mod+Right".action = actions.focus-column-or-monitor-right;
+              "Mod+K".action = actions.focus-window-or-workspace-up;
+              "Mod+Up".action = actions.focus-window-or-workspace-up;
+              "Mod+J".action = actions.focus-window-or-workspace-down;
+              "Mod+Down".action = actions.focus-window-or-workspace-down;
 
-              "Mod+Ctrl+J".action = focus-workspace-down;
-              "Mod+Ctrl+K".action = focus-workspace-up;
+              "Mod+Ctrl+J".action = actions.focus-workspace-down;
+              "Mod+Ctrl+K".action = actions.focus-workspace-up;
 
-              "Mod+Shift+H".action = move-column-to-monitor-left;
-              "Mod+Shift+Left".action = consume-or-expel-window-left;
-              "Mod+Shift+L".action = move-column-to-monitor-right;
-              "Mod+Shift+Right".action = consume-or-expel-window-right;
-              "Mod+Shift+J".action = move-window-to-monitor-down;
-              "Mod+Shift+Down".action = move-window-to-monitor-down;
-              "Mod+Shift+K".action = move-window-to-monitor-up;
-              "Mod+Shift+Up".action = move-window-to-monitor-up;
+              "Mod+Shift+H".action = actions.move-column-to-monitor-left;
+              "Mod+Shift+Left".action = actions.consume-or-expel-window-left;
+              "Mod+Shift+L".action = actions.move-column-to-monitor-right;
+              "Mod+Shift+Right".action = actions.consume-or-expel-window-right;
+              "Mod+Shift+J".action = actions.move-window-to-monitor-down;
+              "Mod+Shift+Down".action = actions.move-window-to-monitor-down;
+              "Mod+Shift+K".action = actions.move-window-to-monitor-up;
+              "Mod+Shift+Up".action = actions.move-window-to-monitor-up;
 
-              "Mod+Ctrl+H".action = consume-or-expel-window-left;
-              "Mod+Ctrl+L".action = consume-or-expel-window-right;
+              "Mod+Ctrl+H".action = actions.consume-or-expel-window-left;
+              "Mod+Ctrl+L".action = actions.consume-or-expel-window-right;
 
-              "Mod+R".action = switch-preset-column-width;
+              "Mod+R".action = actions.switch-preset-column-width;
               "Mod+Equal".action.set-column-width = "+10%";
               "Mod+Minus".action.set-column-width = "-10%";
               "Mod+Shift+Equal".action.set-window-height = "+10%";
               "Mod+Shift+Minus".action.set-window-height = "-10%";
-
-              # "Mod+M".spawn-sh = "${config.pkgs.alsa-utils}/bin/amixer sset Capture toggle";
 
               "XF86AudioRaiseVolume".action.spawn-sh = "${volume} set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+";
               "XF86AudioLowerVolume".action.spawn-sh = "${volume} set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%-";
@@ -263,9 +249,6 @@ in
               opacity = 0.97;
               clip-to-geometry = true;
               draw-border-with-background = false;
-              # background-effect = {
-              #   blur = true;
-              # };
             }
             {
               matches = [ { app-id = "^discord$"; } ];
@@ -288,7 +271,6 @@ in
                 { app-id = "zen"; }
                 { app-id = "brave"; }
               ];
-              # open-maximized = true;
               opacity = 1.0;
             }
             {
@@ -339,20 +321,6 @@ in
               ];
               open-floating = true;
             }
-            # {
-            #   matches = [{
-            #     app-id = "io.github.didley.CamOverla";
-            #   }];
-            #   open-floating = true;
-            #   open-on-output = "HDMI-A-1";
-            #   default-window-height.fixed = 370;
-            #   default-column-width.fixed = 280;
-            #   default-floating-position = {
-            #     x = 15;
-            #     y = 402;
-            #     relative-to = "bottom-left";
-            #   };
-            # }
           ];
 
           layer-rules = [
