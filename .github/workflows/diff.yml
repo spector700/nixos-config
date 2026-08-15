@@ -1,0 +1,47 @@
+name: Nix Diff
+
+on:
+  pull_request:
+    paths:
+      - "flake.lock"
+      - "flake.nix"
+      - "hosts/**"
+      - "modules/**"
+
+permissions: {}
+
+jobs:
+  nix-diff:
+    name: Compare system derivations
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+
+      - name: Install Lix
+        uses: DeterminateSystems/nix-installer-action@7993355175c2765e5733dae74f3e0786fe0e5c4f
+        with:
+          source-url: "https://install.lix.systems/lix/lix-installer-x86_64-linux"
+          diagnostic-endpoint: ""
+          extra-conf: |
+            experimental-features = nix-command flakes fetch-tree
+            allow-import-from-derivation = false
+
+      - name: Compare derivations
+        uses: natsukium/nix-diff-action@4091452e4c7b3c7ea4ecbaec84be7f0066d810d7
+        with:
+          attributes: |
+            - displayName: alfheim
+              attribute: nixosConfigurations.alfheim.config.system.build.toplevel
+            - displayName: vivo
+              attribute: nixosConfigurations.vivo.config.system.build.toplevel
+            - displayName: vanaheim
+              attribute: nixosConfigurations.vanaheim.config.system.build.toplevel
+            - displayName: minimal
+              attribute: nixosConfigurations.minimal.config.system.build.toplevel
+          comment-strategy: update
