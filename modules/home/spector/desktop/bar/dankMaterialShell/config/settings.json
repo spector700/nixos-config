@@ -1,7 +1,7 @@
 {
   "currentThemeName": "custom",
   "currentThemeCategory": "registry",
-  "customThemeFile": "/home/spector/.config/DankMaterialShell/themes/modus/theme.json",
+  "customThemeFile": "/home/spector/.config/DankMaterialShell/themes/deepsage/theme.json",
   "registryThemeVariants": {
     "deepdark": {
       "dark": {
@@ -16,14 +16,28 @@
         "accent": "warmer-blue"
       }
     },
-    "oxocarbon": "pink"
+    "oxocarbon": "pink",
+    "deepsage": {
+      "dark": {
+        "flavor": "sage",
+        "accent": "deep"
+      }
+    },
+    "everforest": "hard"
   },
-  "popupTransparency": 0.8,
+  "popupTransparency": 0.9,
+  "floatingWindowSyncGlobal": false,
+  "floatingWindowTransparency": 0.85,
+  "floatingWindowForegroundTransparency": 0.95,
+  "cornerRadius": 12,
   "niriLayoutGapsOverride": -2,
+  "mouseAccelProfile": "adaptive",
+  "touchpadAccelProfile": "flat",
   "clockFormat": "24h",
   "animationSpeed": 4,
   "customAnimationDuration": 200,
   "blurEnabled": true,
+  "foregroundLayerTransparency": 0.95,
   "blurredWallpaperLayer": true,
   "blurWallpaperOnOverview": true,
   "controlCenterWidgets": [
@@ -76,9 +90,33 @@
   "showWorkspaceApps": true,
   "scrollTitleEnabled": false,
   "audioVisualizerEnabled": false,
+  "mediaUseAlbumArtAccent": true,
+  "appIdSubstitutions": [
+    {
+      "pattern": "beepertexts",
+      "replacement": "beeper",
+      "type": "exact"
+    },
+    {
+      "pattern": "home assistant desktop",
+      "replacement": "homeassistant-desktop",
+      "type": "exact"
+    },
+    {
+      "pattern": "com.transmissionbt.transmission",
+      "replacement": "transmission-gtk",
+      "type": "contains"
+    },
+    {
+      "pattern": "^steam_app_(\\d+)$",
+      "replacement": "steam_icon_$1",
+      "type": "regex"
+    }
+  ],
   "greeterEnableFprint": true,
   "sortAppsAlphabetically": true,
   "rememberLastQuery": true,
+  "launcherStyle": "spotlight",
   "useAutoLocation": true,
   "networkPreference": "wifi",
   "cursorSettings": {
@@ -108,18 +146,18 @@
   "terminalsAlwaysDark": true,
   "muxType": "zellij",
   "matugenTemplateNeovim": true,
+  "matugenTemplateNeovimSettings": {
+    "dark": {
+      "baseTheme": "gruvbox",
+      "harmony": 0.5
+    },
+    "light": {
+      "baseTheme": "onenord_light",
+      "harmony": 0.5
+    }
+  },
   "notificationOverlayEnabled": true,
   "enableFprint": true,
-  "notificationRules": [
-    {
-      "enabled": true,
-      "field": "appName",
-      "pattern": "spotify",
-      "matchType": "contains",
-      "action": "ignore",
-      "urgency": "default"
-    }
-  ],
   "powerActionConfirm": false,
   "powerMenuActions": [
     "reboot",
@@ -132,7 +170,9 @@
     "dock": [
       "all"
     ],
-    "wallpaper": []
+    "wallpaper": [
+      "all"
+    ]
   },
   "showOnLastDisplay": {
     "dock": true
@@ -162,7 +202,11 @@
         }
       ],
       "centerWidgets": [
-        "music",
+        {
+          "id": "music",
+          "enabled": true,
+          "mediaSize": 2
+        },
         {
           "id": "clock",
           "enabled": true,
@@ -170,6 +214,10 @@
         }
       ],
       "rightWidgets": [
+        {
+          "id": "wallpaperDiscovery",
+          "enabled": true
+        },
         {
           "id": "cpuUsage",
           "enabled": true,
@@ -187,7 +235,10 @@
         },
         {
           "id": "battery",
-          "enabled": true
+          "enabled": true,
+          "showBatteryPercent": true,
+          "showBatteryPercentOnlyOnBattery": false,
+          "batteryPillStyle": false
         },
         {
           "id": "systemTray",
@@ -275,6 +326,9 @@
     },
     "dms_clipboard_search": {
       "trigger": "cb"
+    },
+    "dms_qr_generator": {
+      "trigger": "qrg"
     }
   },
   "frameMode": "separate",

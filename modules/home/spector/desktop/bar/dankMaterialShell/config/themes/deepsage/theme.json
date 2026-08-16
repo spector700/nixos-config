@@ -1,0 +1,194 @@
+{
+  "id": "deepsage",
+  "name": "Deep Sage",
+  "version": "1.0.0",
+  "author": "viewerofall",
+  "description": "Muted sage green theme, easy on the eyes at night, with bright/deep button variants",
+  "dark": {},
+  "light": {},
+  "variants": {
+    "type": "multi",
+    "defaults": {
+      "dark": {
+        "accent": "deep",
+        "flavor": "sage"
+      },
+      "light": {
+        "accent": "bright",
+        "flavor": "sage-light"
+      }
+    },
+    "flavors": [
+      {
+        "id": "sage",
+        "name": "Sage",
+        "dark": {
+          "surface": "#121915",
+          "surfaceText": "#d7e2d9",
+          "surfaceVariant": "#1b251f",
+          "surfaceVariantText": "#9fb3a3",
+          "background": "#0d120f",
+          "backgroundText": "#dce6df",
+          "outline": "#2c3a30",
+          "surfaceContainer": "#161e19",
+          "surfaceContainerHigh": "#1e2922",
+          "surfaceContainerHighest": "#27342c",
+          "error": "#e07a7a",
+          "warning": "#d9a256",
+          "info": "#7fa8a3"
+        },
+        "light": {}
+      },
+      {
+        "id": "sage-light",
+        "name": "Sage Light",
+        "dark": {},
+        "light": {
+          "surface": "#eef3ee",
+          "surfaceText": "#1d2820",
+          "surfaceVariant": "#e1e9e2",
+          "surfaceVariantText": "#46524a",
+          "background": "#f4f7f4",
+          "backgroundText": "#19231c",
+          "outline": "#c7d2c8",
+          "surfaceContainer": "#eef2ee",
+          "surfaceContainerHigh": "#e3e9e3",
+          "surfaceContainerHighest": "#d8e0d8",
+          "error": "#c4453f",
+          "warning": "#a8732e",
+          "info": "#3f6f68"
+        }
+      }
+    ],
+    "accents": [
+      {
+        "id": "bright",
+        "name": "Bright Sage",
+        "sage": {
+          "primary": "#8bbf8a",
+          "primaryText": "#0d150f",
+          "primaryContainer": "#4d6f4f",
+          "secondary": "#a9cda7",
+          "surfaceTint": "#8bbf8a"
+        },
+        "sage-light": {
+          "primary": "#5c8c5e",
+          "primaryText": "#ffffff",
+          "primaryContainer": "#d3e6d2",
+          "secondary": "#6f9c70",
+          "surfaceTint": "#5c8c5e"
+        }
+      },
+      {
+        "id": "deep",
+        "name": "Deep Sage",
+        "sage": {
+          "primary": "#5c7a5e",
+          "primaryText": "#e8f0e8",
+          "primaryContainer": "#3a4f3c",
+          "secondary": "#7a9279",
+          "surfaceTint": "#5c7a5e"
+        },
+        "sage-light": {
+          "primary": "#3f5940",
+          "primaryText": "#f0f5ef",
+          "primaryContainer": "#c3d3c2",
+          "secondary": "#5c785c",
+          "surfaceTint": "#3f5940"
+        }
+      }
+    ]
+  },
+  "wcag": {
+    "level": "fail",
+    "dark": {
+      "level": "fail",
+      "minRatio": 3.57,
+      "worstPair": [
+        "primary",
+        "surfaceContainer"
+      ],
+      "body": {
+        "level": "AA",
+        "minRatio": 6.77,
+        "worstPair": [
+          "surfaceVariantText",
+          "surfaceContainerHigh"
+        ]
+      },
+      "accent": {
+        "level": "fail",
+        "minRatio": 3.57,
+        "worstPair": [
+          "primary",
+          "surfaceContainer"
+        ]
+      },
+      "nonText": {
+        "level": "AA",
+        "minRatio": 5.86,
+        "worstPair": [
+          "error",
+          "surfaceContainer"
+        ]
+      },
+      "variants": {
+        "sage-bright": "AA",
+        "sage-deep": "fail"
+      },
+      "breakdown": [
+        {
+          "name": "Sage",
+          "mode": "dark",
+          "level": "fail",
+          "bodyLevel": "AA"
+        }
+      ]
+    },
+    "light": {
+      "level": "fail",
+      "minRatio": 3.46,
+      "worstPair": [
+        "primary",
+        "surfaceContainer"
+      ],
+      "body": {
+        "level": "AA",
+        "minRatio": 6.64,
+        "worstPair": [
+          "surfaceVariantText",
+          "surfaceContainerHigh"
+        ]
+      },
+      "accent": {
+        "level": "fail",
+        "minRatio": 3.46,
+        "worstPair": [
+          "primary",
+          "surfaceContainer"
+        ]
+      },
+      "nonText": {
+        "level": "AA",
+        "minRatio": 3.6,
+        "worstPair": [
+          "warning",
+          "surfaceContainer"
+        ]
+      },
+      "variants": {
+        "sage-light-bright": "fail",
+        "sage-light-deep": "AA"
+      },
+      "breakdown": [
+        {
+          "name": "Sage Light",
+          "mode": "light",
+          "level": "fail",
+          "bodyLevel": "AA"
+        }
+      ]
+    }
+  },
+  "sourceDir": "deepsage"
+}

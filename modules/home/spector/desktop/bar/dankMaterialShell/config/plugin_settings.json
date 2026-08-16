@@ -15,7 +15,8 @@
     "enabled": false
   },
   "discordVoice": {
-    "enabled": false
+    "enabled": false,
+    "maxBarAvatars": 5
   },
   "developerUtilities": {
     "enabled": false,
@@ -39,5 +40,22 @@
     "groupByApp": true,
     "allMonitors": true,
     "filledPills": false
+  },
+  "wallpaperCarousel": {
+    "enabled": true,
+    "overlayOpacity": 80
+  },
+  "wallpaperDiscovery": {
+    "enabled": true,
+    "downloadLocation": "~/nixos-config/modules/home/spector/theming"
+  },
+  "screenCaptureToolbar": {
+    "enabled": true,
+    "multiMonitorScreenshot": true,
+    "showAdvancedSettings": true,
+    "videoQuality": "high",
+    "recPillScreenName": "DP-2",
+    "recPillX": 2288,
+    "recPillY": 43
   }
 }
