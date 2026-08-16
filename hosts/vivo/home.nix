@@ -18,7 +18,7 @@ in
 
       theme = {
         wallpaper = ../../modules/home/spector/theming/wallpaper2.png;
-        stylix.enable = false;
+        stylix.enable = true;
       };
 
       services.nextcloud-client.enable = true;

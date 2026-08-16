@@ -25,7 +25,7 @@ in
     modules = {
       theme = {
         wallpaper = ../../modules/home/spector/theming/wallpaper2.png;
-        stylix.enable = false;
+        stylix.enable = true;
       };
 
       desktop.bar = "dankMaterialShell";

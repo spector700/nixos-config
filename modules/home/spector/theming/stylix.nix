@@ -32,7 +32,18 @@ in
       # base16Scheme = "${pkgs.base16-schemes}/share/themes/tokyodark.yaml";
       polarity = "dark";
 
-      targets.qt.platform = "qtct";
+      targets.dank-material-shell.enable = false;
+
+      targets.gtk = {
+        enable = true;
+        # colors.enable = false;
+      };
+
+      targets.qt = {
+        enable = true;
+        # colors.enable = false;
+        platform = "qtct";
+      };
 
       image = config.modules.theme.wallpaper;
 
@@ -42,12 +53,12 @@ in
         size = 30;
       };
 
-      opacity = {
-        applications = 1.0;
-        terminal = 0.97;
-        desktop = 1.0;
-        popups = 0.8;
-      };
+      # opacity = {
+      #   applications = 1.0;
+      #   terminal = 0.97;
+      #   desktop = 1.0;
+      #   popups = 0.8;
+      # };
 
       fonts = {
         sizes = {

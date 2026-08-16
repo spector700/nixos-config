@@ -6,7 +6,7 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
+  inherit (lib) mkIf mkForce;
   cfg = config.modules.display.desktop.niri;
 in
 {
@@ -27,6 +27,6 @@ in
       XDG_SESSION_DESKTOP = "niri";
     };
 
-    systemd.user.services.niri-flake-polkit.enable = false;
+    systemd.user.services.niri-flake-polkit.enable = mkForce false;
   };
 }

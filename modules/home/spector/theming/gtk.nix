@@ -1,7 +1,8 @@
 { pkgs, ... }:
 {
+  home.packages = [ pkgs.adw-gtk3 ];
+
   gtk = {
-    gtk4.theme = null;
     enable = true;
     iconTheme = {
       name = "Papirus-Dark";
