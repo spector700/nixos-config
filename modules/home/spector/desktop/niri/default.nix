@@ -22,6 +22,15 @@ in
 
     home.packages = [ pkgs.nautilus ];
 
+    # Import the animation file
+    xdg.configFile."niri/animations.kdl".source = ./burn-ashes.kdl;
+    xdg.configFile.niri-config.source = mkForce (
+      inputs.niri-flake.lib.internal.validated-config-for pkgs config.programs.niri.package ''
+        ${config.programs.niri.finalConfig}
+        include optional=true "animations.kdl"
+      ''
+    );
+
     programs.niri = {
       settings =
         let
