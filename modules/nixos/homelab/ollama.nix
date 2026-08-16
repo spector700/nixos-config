@@ -41,7 +41,9 @@ in
         # Synchronize all currently installed models with those declared in loadModels, removing any models that are installed but not currently declared there.
         syncModels = true;
         loadModels = [
+          "gemma4:12b"
           "qwen3.5:latest"
+          "qwen3:14b"
         ];
         port = 11434;
 
@@ -52,10 +54,21 @@ in
 
           # Performance: flash attention + quantized KV cache
           OLLAMA_FLASH_ATTENTION = "1";
-          OLLAMA_KV_CACHE_TYPE = "q8_0";
-          OLLAMA_CONTEXT_LENGTH = "32768";
+          OLLAMA_KV_CACHE_TYPE = "q4_0";
+          OLLAMA_CONTEXT_LENGTH = "131072";
         };
       };
+    };
+
+    # Open firewall for LAN access
+    networking.firewall.allowedTCPPorts = [ 11434 ];
+
+    # The nixpkgs ollama module's default hardening blocks CUDA GPU access.
+    # Relax the restrictive settings so ollama can use the NVIDIA GPU.
+    systemd.services.ollama.serviceConfig = {
+      PrivateUsers = lib.mkForce false;
+      ProtectKernelModules = lib.mkForce false;
+      SystemCallFilter = lib.mkForce [ ];
     };
 
     environment.persistence."/persist".directories = mkIf config.modules.boot.impermanence.enable [
