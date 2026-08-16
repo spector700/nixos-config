@@ -63,7 +63,7 @@ in
           # Support background shell commands
           "opencode-pty"
 
-          "oh-my-opencode@latest"
+          "oh-my-openagent@latest"
           "@simonwjackson/opencode-direnv@latest"
         ];
       };
