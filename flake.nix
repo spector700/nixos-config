@@ -61,6 +61,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    niri-scratchpad.url = "github:argosnothing/niri-scratchpad-rs";
+
     dankMaterialShell = {
       url = "github:AvengeMedia/DankMaterialShell";
       inputs.nixpkgs.follows = "nixpkgs";

@@ -1,6 +1,6 @@
 {
   imports = [
     ./dankMaterialShell/dankMaterialShell.nix
-    # ./noctalia/noctalia.nix
+    ./noctalia/noctalia.nix
   ];
 }

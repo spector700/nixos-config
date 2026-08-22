@@ -1,7 +1,7 @@
 {
   "currentThemeName": "custom",
   "currentThemeCategory": "registry",
-  "customThemeFile": "/home/spector/.config/DankMaterialShell/themes/deepsage/theme.json",
+  "customThemeFile": "/home/spector/.config/DankMaterialShell/themes/flexoki/theme.json",
   "registryThemeVariants": {
     "deepdark": {
       "dark": {
@@ -13,7 +13,7 @@
     "modus": {
       "dark": {
         "flavor": "vivendi",
-        "accent": "warmer-blue"
+        "accent": "blue"
       }
     },
     "oxocarbon": "pink",
@@ -214,10 +214,6 @@
         }
       ],
       "rightWidgets": [
-        {
-          "id": "wallpaperDiscovery",
-          "enabled": true
-        },
         {
           "id": "cpuUsage",
           "enabled": true,

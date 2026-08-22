@@ -46,7 +46,7 @@
     "overlayOpacity": 80
   },
   "wallpaperDiscovery": {
-    "enabled": true,
+    "enabled": false,
     "downloadLocation": "~/nixos-config/modules/home/spector/theming"
   },
   "screenCaptureToolbar": {

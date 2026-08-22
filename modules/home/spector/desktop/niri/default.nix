@@ -7,10 +7,16 @@
   ...
 }:
 let
-  inherit (lib) mkIf optionals getExe;
+  inherit (lib)
+    mkForce
+    mkIf
+    optionals
+    getExe
+    ;
   cfg = osConfig.modules.display.desktop;
 
   brightness = "${getExe pkgs.brightnessctl}";
+  media = "${getExe pkgs.playerctl}";
   volume = "${pkgs.wireplumber}/bin/wpctl";
 in
 {
@@ -27,12 +33,16 @@ in
     xdg.configFile.niri-config.source = mkForce (
       inputs.niri-flake.lib.internal.validated-config-for pkgs config.programs.niri.package ''
         ${config.programs.niri.finalConfig}
-        include optional=true "animations.kdl"
+        include optional=true "${./burn-ashes.kdl}"
       ''
     );
 
     programs.niri = {
       settings =
+
+        # ==========================================
+        # OUTPUT / MONITOR CONFIGURATION
+        # ==========================================
         let
           monitorsList = osConfig.modules.display.monitors;
 
@@ -100,7 +110,7 @@ in
           # ==========================================
           input = {
             focus-follows-mouse.enable = true;
-            warp-mouse-to-focus.enable = true;
+            warp-mouse-to-focus.enable = false;
 
             keyboard = {
               xkb = {
@@ -123,29 +133,26 @@ in
             };
           };
 
-          # blur = {
-          #   enable = true; # set false to kill all blur globally
-          #   passes = 4; # more passes = larger/smoother blur, more GPU
-          #   offset = 3.0; # pixel offset multiplier per pass
-          #   noise = 0.2; # reduces color banding
-          #   saturation = 1.5; # > 1.0 boosts colors in blurred area
-          # };
-
-          # ==========================================
-          # OUTPUT / MONITOR CONFIGURATION
-          # ==========================================
           inherit outputs;
 
           # ==========================================
           # LAYOUT STYLE, WINDOW GAPS, & BLUR
           # ==========================================
           layout = {
-            default-column-width.proportion = 0.5;
-            always-center-single-column = false;
+            # default-column-width.proportion = 0.5;
+            always-center-single-column = true;
             gaps = 6;
             struts.left = 4;
             struts.right = 4;
             border.width = 1;
+
+            tab-indicator = {
+              place-within-column = true;
+              width = 4;
+              gap = 2;
+              corner-radius = 20;
+              gaps-between-tabs = 6;
+            };
 
             preset-column-widths = [
               { proportion = 1.0 / 3.0; }
@@ -171,7 +178,22 @@ in
                 getExe
                   inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default;
 
-              "Mod+S".action = actions.focus-workspace "spotify";
+              "Mod+N" = {
+                hotkey-overlay.title = "Focus or Launch Obsidian";
+                action.spawn = "${lib.getExe pkgs.obsidian}";
+              };
+
+              # "Mod+S".action.spawn-sh =
+              #   "niri msg workspaces | grep \"\\*.*special\" && niri msg action focus-workspace-previous || niri msg action focus-workspace special";
+              # Stable niri-scratchpad uses a visible named stash workspace.
+              "Mod+S".action.spawn = [
+                "niri-scratchpad"
+                "target"
+                "--spawn"
+                "feishin"
+                "appid"
+                "feishin"
+              ];
 
               "Mod+Slash".action = actions.show-hotkey-overlay;
               "Mod+Q".action = actions.close-window;
@@ -182,36 +204,46 @@ in
               "Mod+M".action = actions.maximize-column;
               "Mod+W".action = actions.toggle-column-tabbed-display;
 
-              "Mod+H".action = actions.focus-column-or-monitor-left;
-              "Mod+Left".action = actions.focus-column-or-monitor-left;
-              "Mod+L".action = actions.focus-column-or-monitor-right;
-              "Mod+Right".action = actions.focus-column-or-monitor-right;
-              "Mod+K".action = actions.focus-window-or-workspace-up;
-              "Mod+Up".action = actions.focus-window-or-workspace-up;
-              "Mod+J".action = actions.focus-window-or-workspace-down;
-              "Mod+Down".action = actions.focus-window-or-workspace-down;
+              # MOVE FOCUS
 
+              "Mod+H".action = actions.focus-column-or-monitor-left;
+              "Mod+L".action = actions.focus-column-or-monitor-right;
+              "Mod+K".action = actions.focus-window-or-workspace-up;
+              "Mod+J".action = actions.focus-window-or-workspace-down;
+
+              "Mod+Left".action = actions.focus-column-or-monitor-left;
+              "Mod+Right".action = actions.focus-column-or-monitor-right;
+              "Mod+Up".action = actions.focus-window-up;
+              "Mod+Down".action = actions.focus-window-down;
+
+              "Mod+Ctrl+H".action = actions.consume-or-expel-window-left;
+              "Mod+Ctrl+L".action = actions.consume-or-expel-window-right;
               "Mod+Ctrl+J".action = actions.focus-workspace-down;
               "Mod+Ctrl+K".action = actions.focus-workspace-up;
 
               "Mod+Shift+H".action = actions.move-column-to-monitor-left;
-              "Mod+Shift+Left".action = actions.consume-or-expel-window-left;
               "Mod+Shift+L".action = actions.move-column-to-monitor-right;
-              "Mod+Shift+Right".action = actions.consume-or-expel-window-right;
               "Mod+Shift+J".action = actions.move-window-to-monitor-down;
-              "Mod+Shift+Down".action = actions.move-window-to-monitor-down;
               "Mod+Shift+K".action = actions.move-window-to-monitor-up;
-              "Mod+Shift+Up".action = actions.move-window-to-monitor-up;
 
-              "Mod+Ctrl+H".action = actions.consume-or-expel-window-left;
-              "Mod+Ctrl+L".action = actions.consume-or-expel-window-right;
+              "Mod+Shift+Left".action = actions.consume-or-expel-window-left;
+              "Mod+Shift+Right".action = actions.consume-or-expel-window-right;
+              "Mod+Shift+Down".action = actions.move-window-to-workspace-down;
+              "Mod+Shift+Up".action = actions.move-window-to-workspace-up;
+              # "Mod+Shift+Down".action = actions.move-window-to-monitor-down;
+              # "Mod+Shift+Up".action = actions.move-window-to-monitor-up;
 
               "Mod+R".action = actions.switch-preset-column-width;
-              "Mod+Equal".action.set-column-width = "+10%";
-              "Mod+Minus".action.set-column-width = "-10%";
-              "Mod+Shift+Equal".action.set-window-height = "+10%";
-              "Mod+Shift+Minus".action.set-window-height = "-10%";
+              # "Mod+Equal".action.set-column-width = "+10%";
+              # "Mod+Minus".action.set-column-width = "-10%";
+              # "Mod+Shift+Equal".action.set-window-height = "+10%";
+              # "Mod+Shift+Minus".action.set-window-height = "-10%";
 
+              "XF86AudioPlay".action.spawn-sh = "${media} play-pause";
+              "XF86AudioNext".action.spawn-sh = "${media} next";
+              "XF86AudioPrev".action.spawn-sh = "${media} previous";
+              "XF86AudioMute".action.spawn-sh = "${volume} set-mute @DEFAULT_AUDIO_SINK@ toggle";
+              "XF86AudioMicMute".action.spawn-sh = "${volume} set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
               "XF86AudioRaiseVolume".action.spawn-sh = "${volume} set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+";
               "XF86AudioLowerVolume".action.spawn-sh = "${volume} set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%-";
 
@@ -232,8 +264,8 @@ in
                 in
                 {
                   "Mod+${toString i}".action.focus-workspace = ws;
-                  "Mod+Shift+${toString i}".action.move-window-to-workspace = ws;
-                  "Mod+Ctrl+Shift+${toString i}".action.move-column-to-workspace = ws;
+                  "Shift+ALT+${toString i}".action.move-window-to-workspace = ws;
+                  # "Shift+ALT+${toString i}".action.move-column-to-workspace = ws;
                 }
               ) 9
             ));
@@ -241,13 +273,42 @@ in
           xwayland-satellite.path = lib.getExe pkgs.xwayland-satellite;
 
           workspaces = {
-            "spotify" = { };
+            "special" = {
+              open-on-output = "DP-1";
+            };
+            "stash" = { };
           };
 
           # ==========================================
           # WINDOW RULES, TRANSPARENCY & GEOMETRY
           # ==========================================
+
           window-rules = [
+            {
+              matches = [
+                {
+                  is-window-cast-target = true;
+                }
+              ];
+              focus-ring = {
+                active.color = "#f38ba8";
+                inactive.color = "#7d0d2d";
+              };
+              border.inactive.color = "#7d0d2d";
+              shadow.color = "#7d0d2d70";
+              tab-indicator = {
+                active.color = "#f38ba8";
+                inactive.color = "#7d0d2d";
+              };
+            }
+            {
+              matches = [ { app-id = "feishin"; } ];
+              max-width = 1000;
+              max-height = 800;
+              open-on-workspace = "stash";
+              open-floating = true;
+              open-focused = false;
+            }
             {
               geometry-corner-radius = {
                 top-left = 8.0;
@@ -260,8 +321,28 @@ in
               draw-border-with-background = false;
             }
             {
-              matches = [ { app-id = "^discord$"; } ];
-              open-on-workspace = "4";
+              matches = [ { app-id = "^vesktop$"; } ];
+              open-on-output = (builtins.elemAt monitorsList 1).name;
+            }
+            {
+              matches = [
+                {
+                  app-id = "^(steam_app_.*|lutris_game_class|ffxiv|minigalaxy|playnite_game_class|gamescope|chiaki|.*[Ww]ine.*)$";
+                }
+              ];
+              open-fullscreen = true;
+            }
+            {
+              matches = [
+                { app-id = "steam"; }
+                { title = "^notificationtoasts_\\d+_desktop$"; }
+              ];
+
+              default-floating-position = {
+                relative-to = "bottom-right";
+                x = 10;
+                y = 10;
+              };
             }
             {
               matches = [ { app-id = "^steam.*$"; } ];
@@ -329,15 +410,6 @@ in
                 { title = "Error"; }
               ];
               open-floating = true;
-            }
-          ];
-
-          layer-rules = [
-            {
-              matches = [
-                { namespace = "^noctalia-wallpaper*"; }
-              ];
-              place-within-backdrop = true;
             }
           ];
 

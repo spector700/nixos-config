@@ -1,0 +1,298 @@
+config_version = 13
+
+[accessibility]
+ui_scale = 1.2500000111758709
+
+[audio]
+enable_sounds = true
+
+[backdrop]
+enabled = true
+
+[bar.default]
+background_opacity = 0.9499999787658453
+capsule = true
+capsule_padding = 4.0
+center = [ "media", "spacer_1", "clock" ]
+end = [
+    "bar",
+    "widget_3",
+    "widget_4",
+    "widget_2",
+    "spacer_2",
+    "tray",
+    "network",
+    "bluetooth",
+    "volume",
+    "brightness",
+    "battery",
+    "notifications",
+    "nix-monitor"
+]
+margin_ends = 0
+padding = 16
+radius_top_left = 0
+radius_top_right = 0
+scale = 1.2500000111758709
+start = [ "workspaces", "active_window", "widget", "privacy" ]
+thickness = 42
+
+[desktop_widgets]
+enabled = false
+
+[idle]
+behavior_order = [ "lock", "screen-off", "lock-and-suspend" ]
+
+    [idle.behavior.lock]
+    action = "lock"
+    enabled = false
+    timeout = 600.0
+
+    [idle.behavior.lock-and-suspend]
+    action = "lock_and_suspend"
+    enabled = false
+    timeout = 900.0
+
+    [idle.behavior.screen-off]
+    action = "screen_off"
+    enabled = true
+    timeout = 660.0
+
+[location]
+auto_locate = true
+
+[lockscreen_widgets]
+enabled = true
+schema_version = 2
+widget_order = [ "lockscreen-login-box@DP-3", "lockscreen-login-box@DP-2", "lockscreen-widget-0000000000000001" ]
+
+    [lockscreen_widgets.grid]
+    cell_size = 16
+    major_interval = 4
+    visible = true
+
+    [lockscreen_widgets.widget."lockscreen-login-box@DP-2"]
+    box_height = 196.0
+    box_width = 810.0
+    cx = 1376.0
+    cy = 862.0
+    output = "DP-2"
+    placement_height = 1152.0
+    placement_width = 2752.0
+    rotation = 0.0
+    type = "login_box"
+
+        [lockscreen_widgets.widget."lockscreen-login-box@DP-2".settings]
+        background_color = "surface_variant"
+        background_opacity = 0.88
+        background_radius = 12.0
+        center_password_text = false
+        input_opacity = 1.0
+        input_radius = 6.0
+        layout = "regular"
+        show_caps_lock = true
+        show_keyboard_layout = true
+        show_login_button = true
+        show_media = true
+        show_session_buttons = true
+        show_unlock_hint = true
+        show_weather = true
+
+    [lockscreen_widgets.widget."lockscreen-login-box@DP-3"]
+    box_height = 196.0
+    box_width = 810.0
+    cx = 576.0
+    cy = 1866.0
+    output = "DP-3"
+    placement_height = 2048.0
+    placement_width = 1152.0
+    rotation = 0.0
+    type = "login_box"
+
+        [lockscreen_widgets.widget."lockscreen-login-box@DP-3".settings]
+        background_color = "surface_variant"
+        background_opacity = 0.88
+        background_radius = 12.0
+        center_password_text = false
+        input_opacity = 1.0
+        input_radius = 6.0
+        layout = "regular"
+        show_caps_lock = true
+        show_keyboard_layout = true
+        show_login_button = true
+        show_media = true
+        show_session_buttons = true
+        show_unlock_hint = true
+        show_weather = true
+
+    [lockscreen_widgets.widget.lockscreen-widget-0000000000000001]
+    box_height = 0.0
+    box_width = 0.0
+    cx = 1376.0
+    cy = 576.0
+    output = "DP-2"
+    placement_height = 1152.0
+    placement_width = 2752.0
+    rotation = 0.0
+    type = "clock"
+
+[nightlight]
+enabled = true
+
+[osd.kinds]
+media = false
+
+[plugin_settings."alexander/screen-toolkit"]
+search-engine-url = "hppts://search/brave.com/search?q="
+
+[plugin_settings."avivbintangaringga/nix-monitor"]
+system_stats_check_mode = "on_start"
+
+[plugin_settings."raycursive/discord-voice"]
+discord_binary = "vesktop"
+
+[plugin_settings."weinguyen/opencode-companion"]
+default_workspace = "/home/spector/nixos-config"
+
+[plugin_settings."weinguyen/procmon"]
+refresh_interval = 3000
+sort_by = "mem"
+
+[plugins]
+enabled = [
+    "tadomika_ari/config-swap",
+    "raycursive/discord-voice",
+    "avivbintangaringga/nix-monitor",
+    "imjustdoingmypart/niri-animations",
+    "weinguyen/opencode-companion",
+    "weinguyen/procmon",
+    "alexander/screen-toolkit"
+]
+
+[shell]
+app_icon_color = "tertiary"
+font_family = "JetBrainsMonoNL NFM"
+screen_time_enabled = true
+
+    [shell.launcher]
+    categories = false
+    compact = true
+
+    [shell.panel]
+    open_near_click_control_center = true
+
+    [[shell.session.actions]]
+    action = "lock"
+    countdown_seconds = 0.0
+    enabled = true
+    shortcut = "1"
+    variant = "default"
+
+    [[shell.session.actions]]
+    action = "logout"
+    countdown_seconds = 0.0
+    enabled = true
+    shortcut = "2"
+    variant = "default"
+
+    [[shell.session.actions]]
+    action = "lock_and_suspend"
+    countdown_seconds = 0.0
+    enabled = false
+    shortcut = "3"
+    variant = "default"
+
+    [[shell.session.actions]]
+    action = "reboot"
+    countdown_seconds = 0.0
+    enabled = true
+    shortcut = "4"
+    variant = "default"
+
+    [[shell.session.actions]]
+    action = "shutdown"
+    countdown_seconds = 0.0
+    enabled = true
+    shortcut = "5"
+    variant = "destructive"
+
+[theme]
+builtin = "Nord"
+community_palette = "Matecito"
+custom_palette = "stylix"
+mode = "dark"
+source = "community"
+wallpaper_scheme = "m3-content"
+
+    [theme.templates]
+    builtin_ids = [ "gtk3", "gtk4", "kcolorscheme", "kitty", "niri", "qt", "starship" ]
+    community_ids = [
+        "opencode",
+        "feishin",
+        "zen-browser",
+        "discord",
+        "gimp",
+        "neovim",
+        "heroiclauncher",
+        "prismlauncher",
+        "fastfetch",
+        "obs",
+        "zathura",
+        "papirus-icons",
+        "bat",
+        "lazygit",
+        "yazi"
+    ]
+
+[wallpaper]
+directory = "/home/spector/Downloads/walls-main"
+transition_on_startup = true
+
+    [wallpaper.default]
+    path = "/home/spector/Downloads/walls-main/Fog-Forest-Everforest.png"
+
+    [wallpaper.last]
+    path = "/home/spector/Downloads/walls-main/Fog-Forest-Everforest.png"
+
+[widget.bar]
+type = "raycursive/discord-voice:bar"
+
+[widget.clock]
+anchor = true
+
+[widget.network]
+show_label = false
+
+[widget.nix-monitor]
+colorize_text = true
+show_text = false
+type = "avivbintangaringga/nix-monitor:nix-monitor"
+
+[widget.privacy]
+hide_inactive = true
+
+[widget.spacer_1]
+type = "spacer"
+
+[widget.spacer_2]
+type = "spacer"
+
+[widget.tray]
+hidden = [ "blueman" ]
+
+[widget.widget]
+type = "tadomika_ari/config-swap:widget"
+
+[widget.widget_2]
+show_count = false
+type = "weinguyen/procmon:widget"
+
+[widget.widget_3]
+type = "weinguyen/opencode-companion:widget"
+
+[widget.widget_4]
+type = "alexander/screen-toolkit:widget"
+
+[widget.workspaces]
+focused_output_only = true
+hide_when_empty = true
