@@ -7,6 +7,24 @@
 }:
 let
   user = config.modules.os.mainUser;
+  toPyBoolStr = value: if value then "True" else "False";
+
+  # Disable openrazer setting the DPI
+  openrazerDaemonConfig = pkgs.writeText "openrazer-razer.conf" ''
+    [General]
+    verbose_logging = ${toPyBoolStr config.hardware.openrazer.verboseLogging}
+
+    [Startup]
+    sync_effects_enabled = ${toPyBoolStr config.hardware.openrazer.syncEffectsEnabled}
+    devices_off_on_screensaver = ${toPyBoolStr config.hardware.openrazer.devicesOffOnScreensaver}
+    battery_notifier = ${toPyBoolStr config.hardware.openrazer.batteryNotifier.enable}
+    battery_notifier_freq = ${toString config.hardware.openrazer.batteryNotifier.frequency}
+    battery_notifier_percent = ${toString config.hardware.openrazer.batteryNotifier.percentage}
+    restore_persistence = False
+
+    [Statistics]
+    key_statistics = ${toPyBoolStr config.hardware.openrazer.keyStatistics}
+  '';
 in
 {
   imports = [
@@ -25,7 +43,7 @@ in
     binfmt.emulatedSystems = [ "aarch64-linux" ];
 
     # DIAGNOSTIC: disable Plymouth to see which systemd service is hanging at boot
-    plymouth.enable = lib.mkForce false;
+    # plymouth.enable = lib.mkForce false;
   };
 
   # DIAGNOSTIC: persist journal across reboots so failed boot logs are readable
@@ -68,7 +86,17 @@ in
     };
 
     services = {
-      sunshine.enable = true;
+      sunshine = {
+        enable = true;
+        niri = {
+          enable = true;
+          # DP-2 remains active as Sunshine's capture output; Niri currently
+          # has no compositor-side headless output equivalent to Hyprland's.
+          streamingOutput = "DP-2";
+          localOutputs = [ "DP-3" ];
+          restoreOutput = "DP-2";
+        };
+      };
       syncthing.enable = true;
     };
 
@@ -129,8 +157,18 @@ in
 
     openrazer = {
       enable = true;
-      batteryNotifier.enable = false;
+      batteryNotifier = {
+        enable = true;
+        frequency = 6000;
+        percentage = 10;
+      };
+      syncEffectsEnabled = false;
       users = [ "${user}" ];
     };
   };
+
+  systemd.user.services.openrazer-daemon.serviceConfig.ExecStart = lib.mkForce (
+    "${config.hardware.openrazer.packages.daemon}/bin/openrazer-daemon "
+    + "--config ${openrazerDaemonConfig} --foreground"
+  );
 }
