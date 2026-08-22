@@ -5,6 +5,7 @@
 }:
 let
   user = config.modules.os.mainUser;
+  bambuStudioWithCert = pkgs.callPackage ../../pkgs/bambu-studio-with-bambuddy-cert.nix { };
 in
 {
   home-manager.users.${user}.config = {
@@ -14,21 +15,19 @@ in
       };
     };
 
-    home.packages = with pkgs; [
-      gimp
-      (pkgs.bambu-studio.override {
-        withNvidiaGLWorkaround = true;
-      })
-      feishin
+    home.packages = [
+      pkgs.gimp
+      bambuStudioWithCert
+      pkgs.feishin
     ];
 
     modules = {
       theme = {
         wallpaper = ../../modules/home/spector/theming/wallpaper2.png;
-        stylix.enable = true;
+        stylix.enable = false;
       };
 
-      desktop.bar = "dankMaterialShell";
+      desktop.bar = "noctalia";
 
       services.nextcloud-client.enable = true;
 
