@@ -48,7 +48,7 @@
 
       # let the system decide the number of max jobs
       max-jobs = "auto";
-      cores = 4;
+      cores = 6;
 
       # continue building derivations even if one fails
       keep-going = true;

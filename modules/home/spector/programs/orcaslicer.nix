@@ -6,6 +6,42 @@
   ...
 }:
 let
+  orcaSlicerWithBambuddyCert =
+    pkgs.runCommand "orca-slicer-${pkgs.orca-slicer.version}"
+      {
+        nativeBuildInputs = [ pkgs.perl ];
+        meta = pkgs.orca-slicer.meta;
+      }
+      ''
+        mkdir -p "$out"
+        cp -aL "${pkgs.orca-slicer}/." "$out/"
+
+        old_package="${pkgs.orca-slicer}"
+        old_hash="''${old_package#/nix/store/}"
+        old_hash="''${old_hash%%-*}"
+        new_hash="''${out#/nix/store/}"
+        new_hash="''${new_hash%%-*}"
+        test "''${#old_hash}" -eq 32
+        test "''${#new_hash}" -eq 32
+
+        chmod u+w "$out/bin"
+        for launcher in "$out/bin/orca-slicer" "$out/bin/.orca-slicer-wrapped"; do
+          rewritten_launcher="$TMPDIR/$(basename "$launcher")"
+          cp "$launcher" "$rewritten_launcher"
+          mv "$rewritten_launcher" "$launcher"
+          OLD_HASH="$old_hash" NEW_HASH="$new_hash" \
+            perl -0pi -e 's/\Q$ENV{OLD_HASH}\E/$ENV{NEW_HASH}/g' "$launcher"
+        done
+
+        certificate="$out/share/OrcaSlicer/cert/printer.cer"
+        chmod u+w "$certificate"
+        original_certificate="$TMPDIR/printer.cer.original"
+        cp "$certificate" "$original_certificate"
+        cat "${./bambuddy-virtual-printer-ca.crt}" > "$certificate"
+        printf '\n' >> "$certificate"
+        cat "$original_certificate" >> "$certificate"
+      '';
+
   # software rendering workaround for nvidia, see:
   # https://github.com/SoftFever/OrcaSlicer/issues/6433#issuecomment-2552029299
   nvidiaSoftwareRenderingWorkaround =
@@ -48,7 +84,8 @@ in
     home.packages = with pkgs; [
       # orca-slicer doesn't show the prepare / preview pane on nvidia 565:
       # https://github.com/SoftFever/OrcaSlicer/issues/6433#issuecomment-2552029299
-      (nvidiaSoftwareRenderingWorkaround "orca-slicer" orca-slicer)
+      # (nvidiaSoftwareRenderingWorkaround "orca-slicer" orcaSlicerWithBambuddyCert)
+      orcaSlicerWithBambuddyCert
       # associate step files with orca-slicer
       (pkgs.writeTextFile {
         name = "model-step.xml";
@@ -67,16 +104,16 @@ in
         destination = "/share/mime/packages/model-step.xml";
       })
     ];
-
-    # allow orca-slicer to be open bambu studio links
-    xdg.mimeApps = {
-      associations.added."model/step" = "OrcaSlicer.desktop";
-      defaultApplications = {
-        "model/step" = "OrcaSlicer.desktop";
-        "x-scheme-handler/orcaslicer" = "OrcaSlicer.desktop";
-        "x-scheme-handler/bambustudio" = "OrcaSlicer.desktop"; # makerworld
-        "x-scheme-handler/prusaslicer" = "OrcaSlicer.desktop"; # printables
-      };
-    };
+    #
+    # # allow orca-slicer to be open bambu studio links
+    # xdg.mimeApps = {
+    #   associations.added."model/step" = "OrcaSlicer.desktop";
+    #   defaultApplications = {
+    #     "model/step" = "OrcaSlicer.desktop";
+    #     "x-scheme-handler/orcaslicer" = "OrcaSlicer.desktop";
+    #     "x-scheme-handler/bambustudio" = "OrcaSlicer.desktop"; # makerworld
+    #     "x-scheme-handler/prusaslicer" = "OrcaSlicer.desktop"; # printables
+    #   };
+    # };
   };
 }

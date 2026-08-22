@@ -2,6 +2,7 @@
   pkgs,
   lib,
   osConfig,
+  inputs,
   ...
 }:
 let
@@ -24,6 +25,8 @@ in
       obsidian
       anki
       vial
+
+      inputs.niri-scratchpad.packages.${pkgs.system}.default
     ];
   };
 }
