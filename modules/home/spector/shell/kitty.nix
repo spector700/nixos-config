@@ -21,7 +21,6 @@
   };
 
   home.shellAliases = {
-    # change color on ssh
-    ssh = "kitten ssh --kitten=color_scheme=Dracula";
+    kssh = "kitten ssh --kitten=color_scheme=Dracula";
   };
 }

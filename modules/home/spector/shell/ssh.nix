@@ -37,6 +37,18 @@ in
         User = user;
         IdentityFile = "${homeDirectory}/.ssh/id_spector";
       };
+
+      "hermes" = {
+        HostName = "192.168.1.109";
+        User = user;
+        IdentityFile = "${homeDirectory}/.ssh/id_ed25519_hermes";
+      };
+
+      "minecraft" = {
+        HostName = "192.168.1.106";
+        User = "minecraft";
+        IdentityFile = "${homeDirectory}/.ssh/gitkey";
+      };
     };
   };
 }
