@@ -7,31 +7,32 @@
 }:
 let
   uexec = program: "uwsm app -- ${program}";
-
-  pointer = config.home.pointerCursor;
   inherit (config.modules.desktop) bar;
-  inherit (lib) getExe optionals;
+  inherit (lib) optionals getExe;
 in
 {
-  wayland.windowManager.hyprland.settings = {
-    exec-once = [
-      # "hyprctl setcursor ${pointer.name} ${toString pointer.size}"
-      "wl-paste --watch cliphist store"
-      "hyprctl dispatch workspace 1"
-    ]
-
-    ++ optionals (bar != "dankMaterialShell") [
-      "${getExe pkgs.wlsunset} -l 32.7 -L -96.9"
-    ]
-
-    ++ optionals config.programs.nixcord.vesktop.enable [
-      "sleep 9 && ${uexec (getExe config.programs.nixcord.vesktop.package)}"
-    ]
-
-    ++ optionals config.modules.programs.spicetify.enable [
-      (uexec (getExe config.programs.spicetify.spicedSpotify))
-    ]
-
-    ++ optionals osConfig.programs.steam.enable [ (uexec "steam") ];
+  wayland.windowManager.hyprland = {
+    extraLuaFiles."nix/startup" = builtins.concatStringsSep "\n" (
+      [
+        ''
+          hl.on("hyprland.start", function()
+            hl.exec_cmd("wl-paste --watch cliphist store")
+            hl.exec_cmd("hyprctl dispatch workspace 1")
+        ''
+      ]
+      ++ optionals (bar != "dankMaterialShell") [
+        ''hl.exec_cmd("${getExe pkgs.wlsunset} -l 32.7 -L -96.9")''
+      ]
+      ++ optionals config.programs.nixcord.vesktop.enable [
+        ''hl.exec_cmd("sleep 9 && ${uexec "vesktop"}")''
+      ]
+      ++ optionals config.modules.programs.spicetify.enable [
+        ''hl.exec_cmd("${uexec (getExe config.modules.programs.spicetify.spicedSpotify)}")''
+      ]
+      ++ optionals osConfig.programs.steam.enable [
+        ''hl.exec_cmd("${uexec "steam"}")''
+      ]
+      ++ [ "end)" ]
+    );
   };
 }

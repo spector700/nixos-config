@@ -72,26 +72,27 @@ in
     programs.dank-material-shell = {
       enable = true;
       enableDynamicTheming = true;
+
       systemd = {
         enable = true;
         restartIfChanged = true;
       };
 
-      niri.includes = {
-        enable = true;
-        override = true;
-        filesToInclude = [
-          "alttab"
-          "binds"
-          "colors"
-          "layout"
-          "outputs"
-          "windowrules"
-          "blur"
-          "wpblur"
-        ];
-        originalFileName = "hm";
-      };
+      # niri.includes = {
+      #   enable = true;
+      #   override = true;
+      #   filesToInclude = [
+      #     "alttab"
+      #     "binds"
+      #     "colors"
+      #     "layout"
+      #     "outputs"
+      #     "windowrules"
+      #     "blur"
+      #     "wpblur"
+      #   ];
+      #   originalFileName = "hm";
+      # };
     };
 
     programs.niri =
@@ -186,16 +187,12 @@ in
         };
       };
 
-    wayland.windowManager.hyprland = {
-      settings = {
-        bind = [
-          "$mod, comma, exec, dms ipc call settings toggle"
-          "$mod, L, exec, dms ipc call lock lock"
-          "$mod, V, exec, dms ipc call clipboard toggle"
-          "$mod, space, exec, dms ipc call spotlight toggle"
-        ];
-      };
-    };
+    wayland.windowManager.hyprland.extraLuaFiles."nix/dms-binds" = ''
+      hl.bind("SUPER + comma", hl.dsp.exec_cmd("dms ipc call settings toggle"))
+      hl.bind("SUPER + L", hl.dsp.exec_cmd("dms ipc call lock lock"))
+      hl.bind("SUPER + V", hl.dsp.exec_cmd("dms ipc call clipboard toggle"))
+      hl.bind("SUPER + space", hl.dsp.exec_cmd("dms ipc call spotlight toggle"))
+    '';
 
   };
 }

@@ -7,7 +7,6 @@
 let
   inherit (lib) mkIf mkDefault;
   cfg = osConfig.modules.display.desktop;
-
 in
 {
   imports = [
@@ -28,10 +27,15 @@ in
 
     wayland.windowManager.hyprland = {
       enable = true;
+      configType = "lua";
       # conflicts with programs.hyprland.withUWSM in nixos
       systemd.enable = false;
       package = null;
       portalPackage = null;
+
+      # extraConfig = ''
+      #   require("dms.colors")
+      # '';
     };
 
     modules = {

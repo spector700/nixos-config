@@ -57,5 +57,9 @@
     "recPillScreenName": "DP-2",
     "recPillX": 2288,
     "recPillY": 43
+  },
+  "nixPackageRunner": {
+    "enabled": true,
+    "runSourceMode": "local_locked"
   }
 }

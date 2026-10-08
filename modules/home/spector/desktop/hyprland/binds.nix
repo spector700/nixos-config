@@ -1,133 +1,111 @@
 {
   pkgs,
-  config,
   osConfig,
   inputs,
   lib,
   ...
 }:
 let
-  screenshotarea = "hyprctl keyword animation 'fadeOut,0,8,slow'; ${getExe pkgs.grimblast} --notify copysave area; hyprctl keyword animation 'fadeOut,1,8,slow'";
-
+  screenshotarea = "hyprctl keyword animation 'fadeOut,0,8,slow'; ${lib.getExe pkgs.grimblast} --notify copysave area; hyprctl keyword animation 'fadeOut,1,8,slow'";
   volume = "${pkgs.wireplumber}/bin/wpctl";
-  brightness = "${getExe pkgs.brightnessctl}";
-  media = "${getExe pkgs.playerctl}";
+  brightness = "${lib.getExe pkgs.brightnessctl}";
+  media = "${lib.getExe pkgs.playerctl}";
+  inherit (lib) optionals;
 
-  inherit (config.modules.desktop) bar;
-  inherit (lib) optionals mkIf;
+  mod = "SUPER";
+  alt = "ALT";
 
-  # binds $mod + [alt + Shift] {1..10} to [move to] workspace {1..10}
-  workspaces = builtins.concatLists (
-    builtins.genList (
-      x:
+  mkWorkspaceBinds =
+    modifier: dispatcher:
+    lib.concatMap (
+      workspace:
       let
-        ws =
-          let
-            c = (x + 1) / 10;
-          in
-          toString (x + 1 - (c * 10));
+        key = if workspace == 10 then "0" else toString workspace;
+        workspace' = toString workspace;
       in
-      [
-        "$mod, ${ws}, workspace, ${toString (x + 1)}"
-        "ALT SHIFT, ${ws}, movetoworkspace, ${toString (x + 1)}"
-      ]
-    ) 10
+      [ ''hl.bind("${modifier} + ${key}", ${dispatcher workspace'})'' ]
+    ) (lib.range 1 10);
+
+  workspaceBinds = lib.concatStringsSep "\n" (
+    mkWorkspaceBinds mod (workspace: ''hl.dsp.focus({ workspace = "${workspace}" })'')
+    ++ mkWorkspaceBinds "${alt} + SHIFT" (
+      workspace: ''hl.dsp.window.move({ workspace = "${workspace}" })''
+    )
   );
 
-  inherit (lib) getExe;
+  laptopBinds = lib.concatStrings (
+    optionals osConfig.modules.roles.laptop.enable [
+      ''
+        hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("${volume} set-volume -l '1.0' @DEFAULT_SINK@ 5%+"), { locked = true })
+        hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("${volume} set-volume -l '1.0' @DEFAULT_SINK@ 5%-"), { locked = true })
+        hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("${brightness} s 5%+"), { locked = true })
+        hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("${brightness} s 5%-"), { locked = true })
+      ''
+    ]
+  );
 in
 {
-  # l -> locked, will also work when an input inhibitor (e.g. a lockscreen) is active.
-  # r -> release, will trigger on release of a key.
-  # e -> repeat, will repeat when held.
-  # n -> non-consuming, key/mouse events will be passed to the active window in addition to triggering the dispatcher.
-  # m -> mouse.
-  # t -> transparent, cannot be shadowed by other binds.
-  # i -> ignore mods, will ignore modifiers.
-  # s -> separate, will arbitrarily combine keys between each mod/key, see [Keysym combos](#keysym-combos) above.
-  # d -> has description, will allow you to write a description for your bind.
+  wayland.windowManager.hyprland.extraLuaFiles."nix/hyprland" = ''
 
-  wayland.windowManager.hyprland.settings = {
-    "$mod" = "SUPER";
+    -- Gestures (function actions not serializable via settings)
+    hl.gesture({ fingers = 4, direction = "left", action = function() hl.dsp.window.move({ monitor = "l" }) end })
+    hl.gesture({ fingers = 4, direction = "right", action = function() hl.dsp.window.move({ monitor = "r" }) end })
 
-    # Mouse Moveements
-    bindm = [
-      "$mod, mouse:272, movewindow"
-      "$mod, mouse:273, resizewindow"
-    ];
+    -- Mouse binds
+    hl.bind("${mod} + mouse:272", hl.dsp.window.drag(), { mouse = true, description = "Move window" })
+    hl.bind("${mod} + mouse:273", hl.dsp.window.resize(), { mouse = true, description = "Resize window" })
 
-    bindd = [
-      "Super, Tab, Toggle overview, global, quickshell:overviewToggle"
-    ];
+    -- Compositor
+    hl.bind("${mod} + Q", hl.dsp.window.close())
+    hl.bind("${mod} + F", hl.dsp.window.fullscreen({ mode = "maximized", action = "toggle" }))
+    hl.bind("${mod} + G", hl.dsp.window.float({ action = "toggle" }))
 
-    # Binds
-    bind =
-      let
-        uexec = program: "exec, uwsm app -- ${program}";
-      in
-      [
-        # Compositor
-        "$mod, Q, killactive,"
-        "$mod, F, fullscreen,"
-        "$mod, G, togglefloating"
+    -- Move focus
+    hl.bind("${mod} + left", hl.dsp.focus({ direction = "l" }))
+    hl.bind("${mod} + right", hl.dsp.focus({ direction = "r" }))
+    hl.bind("${mod} + up", hl.dsp.focus({ direction = "u" }))
+    hl.bind("${mod} + down", hl.dsp.focus({ direction = "d" }))
+    hl.bind("${alt} + Tab", hl.dsp.focus({ urgent_or_last = true }))
 
-        # move focus
-        "$mod, left, movefocus, l"
-        "$mod, right, movefocus, r"
-        "$mod, up, movefocus, u"
-        "$mod, down, movefocus, d"
-        "ALT, Tab, focuscurrentorlast"
+    -- Move window
+    hl.bind("${mod} + SHIFT + left", hl.dsp.window.move({ direction = "l" }))
+    hl.bind("${mod} + SHIFT + right", hl.dsp.window.move({ direction = "r" }))
+    hl.bind("${mod} + SHIFT + up", hl.dsp.window.move({ direction = "u" }))
+    hl.bind("${mod} + SHIFT + down", hl.dsp.window.move({ direction = "d" }))
 
-        # move window
-        "$mod SHIFT, left, movewindow, l"
-        "$mod SHIFT, right, movewindow, r"
-        "$mod SHIFT, up, movewindow, u"
-        "$mod SHIFT, down, movewindow, d"
+    -- Special workspaces
+    hl.bind("${mod} + S", hl.dsp.workspace.toggle_special("special"))
+    hl.bind("${alt} + SHIFT + S", hl.dsp.window.move({ workspace = "special:special" }))
 
-        # special workspaces
-        "$mod, S, togglespecialworkspace, special"
-        "ALT SHIFT, S, movetoworkspace, special:special"
+    -- Terminal
+    hl.bind("${mod} + T", hl.dsp.exec_cmd("uwsm app -- ${lib.getExe pkgs.kitty}"))
+    hl.bind("${mod} + E", hl.dsp.exec_cmd("uwsm app -- ${lib.getExe pkgs.kitty} -e yazi"))
+    hl.bind("CTRL + SHIFT + Escape", hl.dsp.exec_cmd("uwsm app -- ${lib.getExe pkgs.kitty} -e btop"))
 
-        # terminal
-        "$mod, T, ${uexec (getExe pkgs.kitty)}"
-        "$mod, E, ${uexec (getExe pkgs.kitty)} -e yazi"
-        "CTRL SHIFT, Escape, ${uexec (getExe pkgs.kitty)} -e btop"
+    -- Programs
+    hl.bind("${mod} + B", hl.dsp.exec_cmd("uwsm app -- ${
+      lib.getExe inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
+    }"))
+    hl.bind("${mod} + SHIFT + E", hl.dsp.exec_cmd("uwsm app -- thunar"))
 
-        # Programs
-        "$mod, B, ${uexec (getExe inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default)}"
-        "$mod SHIFT, E, ${uexec "thunar"}"
+    -- Screenshot
+    hl.bind("Print", hl.dsp.exec_cmd("${screenshotarea}"))
 
-        # Screenshot
-        ", Print, exec, ${screenshotarea}"
-      ]
-      ++ workspaces;
+    -- Resize
+    hl.bind("${mod} + CTRL + UP", hl.dsp.window.resize({ x = 0, y = -20 }), { repeating = true })
+    hl.bind("${mod} + CTRL + DOWN", hl.dsp.window.resize({ x = 0, y = 20 }), { repeating = true })
+    hl.bind("${mod} + CTRL + LEFT", hl.dsp.window.resize({ x = -20, y = 0 }), { repeating = true })
+    hl.bind("${mod} + CTRL + RIGHT", hl.dsp.window.resize({ x = 20, y = 0 }), { repeating = true })
 
-    binde = [
-      # resize with arrowkeys
-      "$mod CTRL, UP, resizeactive, 0 -20"
-      "$mod CTRL, DOWN, resizeactive, 0 20"
-      "$mod CTRL, LEFT, resizeactive, -20 0"
-      "$mod CTRL, RIGHT, resizeactive, 20 0"
-    ];
+    -- Media
+    hl.bind("XF86AudioPlay", hl.dsp.exec_cmd("${media} play-pause"), { locked = true })
+    hl.bind("XF86AudioNext", hl.dsp.exec_cmd("${media} next"), { locked = true })
+    hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("${media} previous"), { locked = true })
+    hl.bind("XF86AudioMute", hl.dsp.exec_cmd("${volume} set-mute @DEFAULT_SINK@ toggle"), { locked = true })
+    hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd("${volume} set-mute @DEFAULT_SOURCE@ toggle"), { locked = true })
+    ${laptopBinds}
 
-    bindl = [
-      # Media Controls
-      ", XF86AudioPlay, exec, ${media} play-pause"
-      ", XF86AudioNext, exec, ${media} next"
-      ", XF86AudioPrev, exec, ${media} previous"
-      # Mute
-      ", XF86AudioMute, exec, ${volume} set-mute @DEFAULT_SINK@ toggle"
-      ", XF86AudioMicMute, exec, ${volume} set-mute @DEFAULT_SOURCE@ toggle"
-    ];
-
-    bindle = mkIf osConfig.modules.roles.laptop.enable [
-      # Volume
-      ", XF86AudioRaiseVolume, exec, ${volume} set-volume -l '1.0' @DEFAULT_SINK@ 5%+"
-      ", XF86AudioLowerVolume, exec, ${volume} set-volume -l '1.0' @DEFAULT_SINK@ 5%-"
-
-      # Brightness
-      ", XF86MonBrightnessUp, exec, ${brightness} s 5%+"
-      ", XF86MonBrightnessDown, exec, ${brightness} s 5%-"
-    ];
-  };
+    -- Workspaces
+    ${workspaceBinds}
+  '';
 }

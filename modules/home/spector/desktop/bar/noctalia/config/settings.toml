@@ -15,7 +15,6 @@ capsule = true
 capsule_padding = 4.0
 center = [ "media", "spacer_1", "clock" ]
 end = [
-    "bar",
     "widget_3",
     "widget_4",
     "widget_2",
@@ -161,7 +160,6 @@ sort_by = "mem"
 [plugins]
 enabled = [
     "tadomika_ari/config-swap",
-    "raycursive/discord-voice",
     "avivbintangaringga/nix-monitor",
     "imjustdoingmypart/niri-animations",
     "weinguyen/opencode-companion",
@@ -253,9 +251,6 @@ transition_on_startup = true
 
     [wallpaper.last]
     path = "/home/spector/Downloads/walls-main/Fog-Forest-Everforest.png"
-
-[widget.bar]
-type = "raycursive/discord-voice:bar"
 
 [widget.clock]
 anchor = true
