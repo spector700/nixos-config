@@ -26,5 +26,10 @@ in
       tumbler.enable = true;
       gvfs.enable = true;
     };
+
+    environment.systemPackages = with pkgs; [
+      file-roller
+      unar
+    ];
   };
 }

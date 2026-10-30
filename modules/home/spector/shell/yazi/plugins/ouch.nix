@@ -1,6 +1,6 @@
 { pkgs, ... }:
 {
-  home.packages = with pkgs; [ ouch ];
+  home.packages = with pkgs; [ ouch-rar ];
   programs.yazi = {
     plugins = with pkgs.yaziPlugins; {
       inherit ouch;
@@ -13,7 +13,7 @@
           for = "windows";
         }
         {
-          run = "ouch d -y \"$@\"";
+          run = "ouch d -y %s";
           desc = "Extract here with ouch";
           for = "unix";
         }
