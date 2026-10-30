@@ -54,7 +54,7 @@ let
       "application/pdf" = [ "org.pwmt.zathura-pdf-mupdf" ];
       "text/html" = browser;
       "inode/directory" = [ "yazi" ];
-      "text/plain" = [ "nvim" ];
+      "text/plain" = [ "nvim-kitty" ];
       "x-scheme-handler/chrome" = [ "chromium-browser" ];
     }
     // image
@@ -71,6 +71,22 @@ in
     mimeApps = {
       enable = true;
       defaultApplications = associations;
+    };
+
+    desktopEntries.nvim-kitty = {
+      name = "Neovim";
+      genericName = "Text Editor";
+      exec = "kitty nvim %F";
+      terminal = false;
+      categories = [
+        "Utility"
+        "TextEditor"
+      ];
+      mimeType = [
+        "text/plain"
+        "text/markdown"
+        "application/x-zerosize"
+      ];
     };
 
     userDirs = {
