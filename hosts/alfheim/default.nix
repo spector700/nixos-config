@@ -37,8 +37,6 @@ in
   boot = {
     # kernelPackages = pkgs.linuxPackages_6_6; # fix Freezing in games
     kernelPackages = pkgs.linuxPackages_latest;
-    #For openrgb with gigabyte motherboard
-    kernelParams = [ "acpi_enforce_resources=lax" ];
     supportedFilesystems = [ "ntfs" ];
     binfmt.emulatedSystems = [ "aarch64-linux" ];
 
@@ -47,9 +45,38 @@ in
   };
 
   # DIAGNOSTIC: persist journal across reboots so failed boot logs are readable
-  services.journald.extraConfig = "Storage=persistent";
+  services.journald.settings.Journal = {
+    Storage = "persistent";
+    SyncIntervalSec = 1;
+    SystemMaxUse = "2G";
+  };
+
+  environment.persistence."/persist".directories = [
+    "/var/log"
+    "/var/lib/systemd/pstore"
+  ];
 
   programs.nix-ld.enable = true;
+
+  # Blackmagic republished the 21.1 Linux archive at the same URL. Keep the
+  # package's fixed-output integrity check, pinned to the archive now served.
+  nixpkgs.overlays = [
+    (final: prev: {
+      davinci-resolve = final.callPackage (builtins.toFile "davinci-resolve-package.nix" (
+        prev.lib.replaceStrings
+          [ "sha256-bQ4Yag4xfIF9Fs0UVKaYFhObMsAof5n+Sy4osw35a9g=" ]
+          [ "sha256-+3SB32EHpH9/0hM3h8CrO6f7V4ZAmxUFh3P8m6QDeO0=" ]
+          (builtins.readFile "${prev.path}/pkgs/by-name/da/davinci-resolve/package.nix")
+      )) { };
+    })
+    (final: prev: {
+      lutris = final.callPackage (builtins.toFile "lutris-package.nix" (
+        prev.lib.replaceStrings [ "      gtk2\n" ] [ "" ] (
+          builtins.readFile "${prev.path}/pkgs/by-name/lu/lutris/package.nix"
+        )
+      )) { };
+    })
+  ];
 
   networking.hostName = "alfheim";
 
