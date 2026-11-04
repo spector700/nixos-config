@@ -15,8 +15,6 @@ in
       lutris
       prismlauncher # Minecraft
       bottles
-      rusty-psn-gui
-      protonplus
       protontricks
       # sgdboop # Get game art work for steam
     ];

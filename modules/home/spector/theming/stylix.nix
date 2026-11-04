@@ -26,7 +26,7 @@ in
 
     stylix = {
       enable = true;
-      autoEnable = true;
+      autoEnable = false;
       # base16Scheme = "${pkgs.base16-schemes}/share/themes/tokyo-city-dark.yaml";
       base16Scheme = "${pkgs.base16-schemes}/share/themes/material-darker.yaml";
       # base16Scheme = "${pkgs.base16-schemes}/share/themes/tokyodark.yaml";
@@ -35,17 +35,17 @@ in
       targets.dank-material-shell.enable = false;
 
       targets.gtk = {
-        enable = true;
+        enable = false;
         # colors.enable = false;
       };
 
       targets.qt = {
-        enable = true;
+        enable = false;
         # colors.enable = false;
         platform = "qtct";
       };
 
-      image = config.modules.theme.wallpaper;
+      # image = config.modules.theme.wallpaper;
 
       cursor = {
         name = "capitaine-cursors-white";

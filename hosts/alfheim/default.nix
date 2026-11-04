@@ -116,7 +116,7 @@ in
       sunshine = {
         enable = true;
         niri = {
-          enable = true;
+          enable = false;
           # DP-2 remains active as Sunshine's capture output; Niri currently
           # has no compositor-side headless output equivalent to Hyprland's.
           streamingOutput = "DP-2";
@@ -129,7 +129,8 @@ in
 
     display = {
       gpuAcceleration.enable = true;
-      desktop.niri.enable = true;
+      desktop.niri.enable = false;
+      desktop.hyprland.enable = true;
 
       monitors = [
         {

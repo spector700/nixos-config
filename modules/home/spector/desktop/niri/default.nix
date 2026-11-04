@@ -20,10 +20,6 @@ let
   volume = "${pkgs.wireplumber}/bin/wpctl";
 in
 {
-  imports = [
-    { nixpkgs.overlays = [ inputs.niri-flake.overlays.niri ]; }
-  ];
-
   config = mkIf cfg.niri.enable {
 
     home.packages = [ pkgs.nautilus ];
