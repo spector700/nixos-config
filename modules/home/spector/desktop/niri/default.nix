@@ -16,7 +16,6 @@ let
   cfg = osConfig.modules.display.desktop;
 
   brightness = "${getExe pkgs.brightnessctl}";
-  media = "${getExe pkgs.playerctl}";
   volume = "${pkgs.wireplumber}/bin/wpctl";
 in
 {
@@ -235,9 +234,6 @@ in
               # "Mod+Shift+Equal".action.set-window-height = "+10%";
               # "Mod+Shift+Minus".action.set-window-height = "-10%";
 
-              "XF86AudioPlay".action.spawn-sh = "${media} play-pause";
-              "XF86AudioNext".action.spawn-sh = "${media} next";
-              "XF86AudioPrev".action.spawn-sh = "${media} previous";
               "XF86AudioMute".action.spawn-sh = "${volume} set-mute @DEFAULT_AUDIO_SINK@ toggle";
               "XF86AudioMicMute".action.spawn-sh = "${volume} set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
               "XF86AudioRaiseVolume".action.spawn-sh = "${volume} set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+";
@@ -318,7 +314,8 @@ in
             }
             {
               matches = [ { app-id = "^vesktop$"; } ];
-              open-on-output = (builtins.elemAt monitorsList 1).name;
+              open-on-output =
+                (builtins.elemAt monitorsList (if builtins.length monitorsList > 1 then 1 else 0)).name;
             }
             {
               matches = [

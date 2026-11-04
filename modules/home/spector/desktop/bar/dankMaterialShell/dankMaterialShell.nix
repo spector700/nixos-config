@@ -17,7 +17,7 @@ in
 
   config = mkIf (cfg == "dankMaterialShell") {
     home.packages = with pkgs; [
-      dgop
+      dux-gop
     ];
 
     # Keep the root real: DMS's plugin manager passes plugin paths to go-git,

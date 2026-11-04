@@ -16,7 +16,6 @@ in
       prismlauncher # Minecraft
       bottles
       protontricks
-      # sgdboop # Get game art work for steam
     ];
   };
 }

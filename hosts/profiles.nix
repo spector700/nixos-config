@@ -49,7 +49,6 @@ in
   # Homelab
   vanaheim = nixosSystem {
     inherit specialArgs;
-    system = "aarch64-linux";
     # Modules that are used
     modules = [
       ./vanaheim

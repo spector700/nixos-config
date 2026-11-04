@@ -35,13 +35,9 @@ in
   ];
 
   boot = {
-    # kernelPackages = pkgs.linuxPackages_6_6; # fix Freezing in games
     kernelPackages = pkgs.linuxPackages_latest;
     supportedFilesystems = [ "ntfs" ];
     binfmt.emulatedSystems = [ "aarch64-linux" ];
-
-    # DIAGNOSTIC: disable Plymouth to see which systemd service is hanging at boot
-    # plymouth.enable = lib.mkForce false;
   };
 
   # DIAGNOSTIC: persist journal across reboots so failed boot logs are readable
@@ -69,6 +65,7 @@ in
           (builtins.readFile "${prev.path}/pkgs/by-name/da/davinci-resolve/package.nix")
       )) { };
     })
+    #FIXME: when lutris updates gtk2
     (final: prev: {
       lutris = final.callPackage (builtins.toFile "lutris-package.nix" (
         prev.lib.replaceStrings [ "      gtk2\n" ] [ "" ] (

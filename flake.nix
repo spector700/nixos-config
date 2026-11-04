@@ -9,9 +9,6 @@
       inputs.nixpkgs-lib.follows = "nixpkgs";
     };
 
-    # CachyOS Kernel
-    chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
-
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -89,14 +86,10 @@
     impermanence.url = "github:nix-community/impermanence";
     # create nix project automatically
     dev-assistant.url = "github:spector700/DevAssistant";
-    # My app launcher
-    lumastart.url = "github:spector700/lumastart";
     # my neovim flake
     Akari.url = "github:spector700/Akari";
     # gaming tweaks and addons
     gaming.url = "github:fufexan/nix-gaming";
-    # FFxiv
-    xivlauncher-rb.url = "github:drakon64/nixos-xivlauncher-rb";
     # star citizen
     nix-citizen.url = "github:LovingMelody/nix-citizen";
   };

@@ -16,13 +16,13 @@ in
     services.avahi = {
       enable = true;
       nssmdns4 = true;
-      publish = {
-        enable = true;
-        addresses = true;
-        domain = true;
-        hinfo = true;
-        userServices = true;
-        workstation = true;
+      settings.publish = {
+        "disable-publishing" = false;
+        "disable-user-service-publishing" = false;
+        "publish-addresses" = true;
+        "publish-domain" = true;
+        "publish-hinfo" = true;
+        "publish-workstation" = true;
       };
     };
   };

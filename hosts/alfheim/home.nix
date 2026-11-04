@@ -27,7 +27,6 @@ in
         bubblewrap
         codex
         gale
-        qtscrcpy
       ];
 
       programs.codexDesktopLinux = {
