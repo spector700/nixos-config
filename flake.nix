@@ -79,6 +79,8 @@
       flake = false;
     };
 
+    # Codex desktop
+    codex-desktop-linux.url = "github:ilysenko/codex-desktop-linux";
     # Nix discord
     nixcord.url = "github:kaylorben/nixcord";
     # Color theming

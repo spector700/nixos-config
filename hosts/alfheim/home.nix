@@ -19,11 +19,16 @@ in
         };
       };
 
-    home.packages = [
-      pkgs.gimp
-      bambuStudioWithCert
-      pkgs.feishin
-    ];
+      home.packages = with pkgs; [
+        gimp
+        bambuStudioWithCert
+        feishin
+        # For codex
+        bubblewrap
+        codex
+        gale
+        qtscrcpy
+      ];
 
       programs.codexDesktopLinux = {
         enable = true;
