@@ -73,6 +73,15 @@ in
         )
       )) { };
     })
+    # Nixpkgs' OpenCode 2.2.5 fixed-output hash is stale on x86_64 Linux.
+    # Remove once <https://github.com/NixOS/nixpkgs/issues/582673> reaches this pin.
+    (_: prev: {
+      opencode = prev.opencode.overrideAttrs (old: {
+        node_modules = old.node_modules.overrideAttrs {
+          outputHash = "sha256-prx9dX7kUvs/E3zopkaPk5LXh3xJAy5sZeum/W8L7cA=";
+        };
+      });
+    })
   ];
 
   networking.hostName = "alfheim";

@@ -1,5 +1,4 @@
 {
-  inputs,
   config,
   lib,
   ...
@@ -8,14 +7,7 @@ let
   inherit (lib) mkIf mkEnableOption;
 
   cfg = config.modules.shell.opencode;
-
   aiTools = import ../ai-tools/lib.nix { inherit lib; };
-
-  superpowers = rec {
-    src = inputs.superpowers;
-    skills = "${src}/skills";
-    opencode-plugin = "${src}/.opencode/plugins/superpowers.js";
-  };
 in
 {
   imports = [
@@ -74,7 +66,6 @@ in
 
       skills = {
         skills = ../ai-tools/skills;
-        # superpowers = superpowers.skills;
       };
 
       context = ../ai-tools/base.md;

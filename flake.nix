@@ -70,12 +70,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Skills plugin for opencode
-    superpowers = {
-      url = "github:obra/superpowers";
-      flake = false;
-    };
-
     # Codex desktop
     codex-desktop-linux.url = "github:ilysenko/codex-desktop-linux";
     # Nix discord

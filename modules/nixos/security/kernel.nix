@@ -80,7 +80,8 @@ in
       # Only allow kernel modules that have been signed with a valid key to be
       # loaded, which increases security by making it much harder to load a
       # malicious kernel module
-      "module.sig_enforce=1"
+      # FIXME: doesnt work with kernal 7.3
+      ## "module.sig_enforce=1"
 
       # The kernel lockdown LSM can eliminate many methods that user space code
       # could abuse to escalate to kernel privileges and extract sensitive
@@ -90,7 +91,8 @@ in
       #             are disabled
       #  confidentiality: kernel features that allow userland to extract confidential
       #             information from the kernel are also disabled
-      "lockdown=confidentiality"
+      # FIXME: doesnt work with kernal 7.3
+      ## "lockdown=confidentiality"
 
       # enable buddy allocator free poisoning
       #  on: memory will befilled with a specific byte pattern
