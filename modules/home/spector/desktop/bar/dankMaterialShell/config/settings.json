@@ -51,6 +51,7 @@
       "showOnLastDisplay": true,
       "position": 1,
       "mode": "compact",
+      "middleClickAction": "close",
       "taskbarAlign": "center",
       "widgetExpansion": "popout",
       "iconSize": 40,
@@ -88,6 +89,10 @@
       "showTrash": false,
       "trashFileManager": "default",
       "trashCustomCommand": "",
+      "magnification": false,
+      "magnificationScale": 130,
+      "magnificationProfile": "parabolic",
+      "magnificationExpand": false,
       "order": [],
       "widgets": [
         {
@@ -113,6 +118,9 @@
   "floatingWindowSyncGlobal": false,
   "floatingWindowTransparency": 0.85,
   "floatingWindowForegroundTransparency": 0.95,
+  "dmsWindowsFloatingSeeded": [
+    "hyprland"
+  ],
   "niriLayoutGapsOverride": -2,
   "mouseAccelProfile": "adaptive",
   "touchpadAccelProfile": "flat",
@@ -122,6 +130,33 @@
   "blurredWallpaperLayer": true,
   "blurWallpaperOnOverview": true,
   "controlCenterWidgets": [
+    {
+      "id": "user",
+      "enabled": true,
+      "w": 5,
+      "h": 1
+    },
+    {
+      "id": "settings",
+      "enabled": true,
+      "w": 1,
+      "h": 1,
+      "small": true
+    },
+    {
+      "id": "lock",
+      "enabled": true,
+      "w": 1,
+      "h": 1,
+      "small": true
+    },
+    {
+      "id": "power",
+      "enabled": true,
+      "w": 1,
+      "h": 1,
+      "small": true
+    },
     {
       "id": "volumeSlider",
       "enabled": true,
@@ -175,6 +210,24 @@
       "enabled": true,
       "w": 4,
       "h": 1
+    },
+    {
+      "id": "runningApps",
+      "enabled": true,
+      "w": 4,
+      "h": 1,
+      "small": true,
+      "col": 0,
+      "row": 6
+    },
+    {
+      "id": "edit",
+      "enabled": true,
+      "w": 1,
+      "h": 1,
+      "small": true,
+      "col": 7,
+      "row": 6
     }
   ],
   "scrollTitleEnabled": false,
@@ -204,6 +257,12 @@
   "sortAppsAlphabetically": true,
   "rememberLastQuery": true,
   "launcherStyle": "spotlight",
+  "avatarRing": "primary",
+  "dashOptions": {
+    "media": {
+      "lyrics": false
+    }
+  },
   "networkPreference": "wifi",
   "cursorSettings": {
     "theme": "System Default",
@@ -222,6 +281,7 @@
     }
   },
   "soundLogin": true,
+  "acMonitorTimeout": 3600,
   "acProfileName": "2",
   "batteryLockTimeout": 600,
   "batteryProfileName": "0",
@@ -365,7 +425,8 @@
       "maximizeWidgetText": false,
       "widgetOutlineEnabled": false,
       "scrollEnabled": false,
-      "followInterfaceStyle": false
+      "followInterfaceStyle": false,
+      "widgetFollowInterfaceStyle": false
     }
   ],
   "builtInPluginSettings": {
@@ -383,5 +444,5 @@
     }
   },
   "frameMode": "separate",
-  "configVersion": 29
+  "configVersion": 42
 }
