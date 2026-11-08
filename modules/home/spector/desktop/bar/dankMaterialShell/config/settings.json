@@ -119,7 +119,8 @@
   "floatingWindowTransparency": 0.85,
   "floatingWindowForegroundTransparency": 0.95,
   "dmsWindowsFloatingSeeded": [
-    "hyprland"
+    "hyprland",
+    "niri"
   ],
   "niriLayoutGapsOverride": -2,
   "mouseAccelProfile": "adaptive",

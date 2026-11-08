@@ -24,10 +24,8 @@ in
       services.nextcloud-client.enable = true;
 
       programs = {
-        spicetify.enable = true;
         nixcord.enable = true;
         zathura.enable = true;
-        rofi.enable = true;
         zen.enable = true;
       };
     };

@@ -1,12 +1,8 @@
 {
   pkgs,
-  config,
   inputs,
   ...
 }:
-let
-  user = config.modules.os.mainUser;
-in
 {
   imports = [
     ./hardware-configuration.nix
@@ -33,6 +29,7 @@ in
     };
 
     power-profiles-daemon.enable = true;
+    # Causes audio crackeling
     pipewire.lowLatency.enable = false;
 
     fwupd.enable = true;
