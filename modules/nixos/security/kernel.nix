@@ -18,9 +18,6 @@ in
       # Disable bpf() JIT (to eliminate spray attacks)
       "net.core.bpf_jit_enable" = false;
 
-      # Disable ftrace debugging
-      "kernel.ftrace_enabled" = false;
-
       # Avoid kernel memory address exposures via dmesg (this value can also be set by CONFIG_SECURITY_DMESG_RESTRICT).
       "kernel.dmesg_restrict" = 1;
 
@@ -38,7 +35,7 @@ in
       "kernel.perf_event_paranoid" = 3;
 
       # Require CAP_BPF to use bpf
-      "kernel.unprvileged_bpf_disabled" = 1;
+      "kernel.unprivileged_bpf_disabled" = 1;
 
       # Prevent boot console kernel log information leaks
       "kernel.printk" = "3 3 3 3";
