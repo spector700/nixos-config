@@ -25,8 +25,7 @@ in
         feishin
         # For codex
         bubblewrap
-        codex
-        gale
+        # codex
       ];
 
       programs.codexDesktopLinux = {

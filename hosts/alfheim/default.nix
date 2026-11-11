@@ -54,36 +54,6 @@ in
 
   programs.nix-ld.enable = true;
 
-  # Blackmagic republished the 21.1 Linux archive at the same URL. Keep the
-  # package's fixed-output integrity check, pinned to the archive now served.
-  nixpkgs.overlays = [
-    (final: prev: {
-      davinci-resolve = final.callPackage (builtins.toFile "davinci-resolve-package.nix" (
-        prev.lib.replaceStrings
-          [ "sha256-bQ4Yag4xfIF9Fs0UVKaYFhObMsAof5n+Sy4osw35a9g=" ]
-          [ "sha256-+3SB32EHpH9/0hM3h8CrO6f7V4ZAmxUFh3P8m6QDeO0=" ]
-          (builtins.readFile "${prev.path}/pkgs/by-name/da/davinci-resolve/package.nix")
-      )) { };
-    })
-    #FIXME: when lutris updates gtk2
-    (final: prev: {
-      lutris = final.callPackage (builtins.toFile "lutris-package.nix" (
-        prev.lib.replaceStrings [ "      gtk2\n" ] [ "" ] (
-          builtins.readFile "${prev.path}/pkgs/by-name/lu/lutris/package.nix"
-        )
-      )) { };
-    })
-    # Nixpkgs' OpenCode 2.2.5 fixed-output hash is stale on x86_64 Linux.
-    # Remove once <https://github.com/NixOS/nixpkgs/issues/582673> reaches this pin.
-    (_: prev: {
-      opencode = prev.opencode.overrideAttrs (old: {
-        node_modules = old.node_modules.overrideAttrs {
-          outputHash = "sha256-prx9dX7kUvs/E3zopkaPk5LXh3xJAy5sZeum/W8L7cA=";
-        };
-      });
-    })
-  ];
-
   networking.hostName = "alfheim";
 
   virtualisation.docker.rootless = {
