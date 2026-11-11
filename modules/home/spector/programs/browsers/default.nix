@@ -22,7 +22,7 @@ in
       programs.brave.enable = true;
     })
     (mkIf cfg.zen.enable {
-      home.packages = with pkgs; [
+      home.packages = [
         inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
       ];
     })

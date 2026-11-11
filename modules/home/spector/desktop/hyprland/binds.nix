@@ -57,7 +57,7 @@ in
 
     -- Compositor
     hl.bind("${mod} + Q", hl.dsp.window.close())
-    hl.bind("${mod} + F", hl.dsp.window.fullscreen({ mode = "maximized", action = "toggle" }))
+    hl.bind("${mod} + F", hl.dsp.window.fullscreen())
     hl.bind("${mod} + G", hl.dsp.window.float({ action = "toggle" }))
 
     -- Move focus

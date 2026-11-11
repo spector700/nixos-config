@@ -12,32 +12,14 @@ let
       0
     else
       lib.toInt (lib.last parts);
-  toRegex = list: "^(${lib.concatStringsSep "|" list})$";
-  lowopacity = [
-    "bar"
-    "calendar"
-    "notifications"
-    "system-menu"
-    "quickshell:bar"
-    "quickshell:notifications:overlay"
-    "quickshell:osd"
-  ];
-  highopacity = [
-    "vicinae"
-    "osd"
-    "logout_dialog"
-    "quickshell:sidebar"
-  ];
-  blurred = lowopacity ++ highopacity;
-  games = "^(steam_app_.*|lutris_game_class|ffxiv|playnite_game_class|gamescope|chiaki|.*[Ww]ine.*|^Minecraft*)$";
+  games = "^(steam_app.*|lutris_game_class|ffxiv|playnite_game_class|gamescope|chiaki|.*[Ww]ine.*|^Minecraft*)$";
 in
 {
   wayland.windowManager.hyprland.settings = {
     monitor = map (monitor: {
       output = monitor.name;
       mode = "${monitor.resolution}@${toString monitor.refreshRate}";
-      inherit (monitor) position;
-      inherit (monitor) scale;
+      inherit (monitor) position scale;
       transform = monitorTransform monitor;
     }) monitors;
 
@@ -50,37 +32,6 @@ in
     ) monitors;
 
     layer_rule = [
-      {
-        match.namespace = "${toRegex blurred}";
-        blur = true;
-      }
-      {
-        match.namespace = "^quickshell.*$";
-        blur_popups = true;
-      }
-      {
-        match.namespace = toRegex [
-          "bar"
-          "quickshell:bar"
-        ];
-        xray = true;
-      }
-      {
-        match.namespace = toRegex (highopacity ++ [ "music" ]);
-        ignore_alpha = 0.5;
-      }
-      {
-        match.namespace = toRegex lowopacity;
-        ignore_alpha = 0.2;
-      }
-      {
-        match.namespace = toRegex [
-          "notifications"
-          "quickshell:notifications:overlay"
-          "quickshell:notifictaions:panel"
-        ];
-        no_anim = true;
-      }
     ];
 
     window_rule = [
@@ -89,30 +40,29 @@ in
         float = true;
         pin = true;
       }
+      # fix xwayland apps
       {
-        match.class = "^(.*blueman-manager(-wrapped)?|nm-applet|nm-connection-editor)$";
+        match.xwayland = true;
+        match.float = true;
+        rounding = 0;
+      }
+      {
+        match.class = "feh|wlogout|file_progress|confirm|dialog|download|notification|error|splash|confirmreset|org.kde.polkit-kde-authentication-agent-1|org.kde.ark|^(wdisplays)$|^(blueman-manager)$|^(nm-connection-editor)$|it.mijorus.smile";
         float = true;
       }
       {
         match.class = games;
         immediate = true;
         fullscreen = true;
+        fullscreen_state = "2 2";
         workspace = "8";
         no_anim = true;
         no_blur = true;
         no_shadow = true;
       }
       {
-        match.class = ".*";
-        suppress_event = "maximize";
-      }
-      {
-        match.title = "^(Steam)$";
+        match.title = "^(Steam|Lutris)$";
         workspace = "8 silent";
-      }
-      {
-        match.title = "^(Lutris)$";
-        workspace = "8";
       }
       {
         match.title = "^(.*((d|D)isc|ArmC|WebC)ord.*|vesktop)$";

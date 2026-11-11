@@ -34,7 +34,7 @@
         };
         dwindle = {
           preserve_split = true;
-          special_scale_factor = 0.9;
+          # special_scale_factor = 0.9;
         };
         binds.movefocus_cycles_fullscreen = false;
         misc = {
