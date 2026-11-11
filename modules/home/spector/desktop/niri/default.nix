@@ -406,22 +406,13 @@ in
             }
           ];
 
-          spawn-at-startup =
-            optionals config.programs.nixcord.vesktop.enable [
-              {
-                command = [
-                  (getExe config.programs.nixcord.vesktop.package)
-                ];
-              }
-            ]
-
-            ++ optionals config.modules.programs.spicetify.enable [
-              {
-                command = [
-                  (getExe config.programs.spicetify.spicedSpotify)
-                ];
-              }
-            ];
+          spawn-at-startup = optionals config.programs.nixcord.vesktop.enable [
+            {
+              command = [
+                (getExe config.programs.nixcord.vesktop.package)
+              ];
+            }
+          ];
         };
     };
   };

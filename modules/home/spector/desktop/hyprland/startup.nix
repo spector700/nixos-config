@@ -26,9 +26,6 @@ in
       ++ optionals config.programs.nixcord.vesktop.enable [
         ''hl.exec_cmd("sleep 9 && ${uexec "vesktop"}")''
       ]
-      ++ optionals config.modules.programs.spicetify.enable [
-        ''hl.exec_cmd("${uexec (getExe config.modules.programs.spicetify.spicedSpotify)}")''
-      ]
       ++ optionals osConfig.programs.steam.enable [
         ''hl.exec_cmd("${uexec "steam"}")''
       ]
