@@ -7,7 +7,7 @@
   ...
 }:
 let
-  inherit (lib) mkIf mkEnableOption mkMerge;
+  inherit (lib) mkIf mkEnableOption;
 
   inherit (osConfig.modules.os) font;
   cfg = config.modules.theme.stylix;
@@ -19,75 +19,63 @@ in
     enable = mkEnableOption "Enable stylix theming";
   };
 
-  config = mkMerge [
-    {
-      # Home Manager reuses the NixOS package set, including when Stylix is disabled.
-      stylix.overlays.enable = false;
-    }
-    (mkIf cfg.enable {
-      home.packages = with pkgs; [
-        nerd-fonts.symbols-only
-      ];
+  config = mkIf cfg.enable {
+    home.packages = with pkgs; [
+      nerd-fonts.symbols-only
+    ];
 
-      stylix = {
-        enable = true;
-        autoEnable = false;
-        # base16Scheme = "${pkgs.base16-schemes}/share/themes/tokyo-city-dark.yaml";
-        base16Scheme = "${pkgs.base16-schemes}/share/themes/material-darker.yaml";
-        # base16Scheme = "${pkgs.base16-schemes}/share/themes/tokyodark.yaml";
-        polarity = "dark";
+    stylix = {
+      enable = true;
+      autoEnable = false;
+      # base16Scheme = "${pkgs.base16-schemes}/share/themes/tokyo-city-dark.yaml";
+      base16Scheme = "${pkgs.base16-schemes}/share/themes/material-darker.yaml";
+      # base16Scheme = "${pkgs.base16-schemes}/share/themes/tokyodark.yaml";
+      polarity = "dark";
 
-        targets.dank-material-shell.enable = false;
+      targets.dank-material-shell.enable = false;
 
-        targets.gtk = {
-          enable = false;
-          # colors.enable = false;
+      # image = config.modules.theme.wallpaper;
+
+      cursor = {
+        name = "capitaine-cursors-white";
+        package = pkgs.capitaine-cursors;
+        size = 30;
+      };
+
+      # opacity = {
+      #   applications = 1.0;
+      #   terminal = 0.97;
+      #   desktop = 1.0;
+      #   popups = 0.8;
+      # };
+
+      fonts = {
+        sizes = {
+          terminal = font.size;
+          applications = font.size;
+          desktop = 12;
+          popups = font.size;
         };
 
-        targets.qt = {
-          enable = false;
-          # colors.enable = false;
-          platform = "qtct";
+        monospace = {
+          inherit (font) package name;
         };
 
-        # image = config.modules.theme.wallpaper;
-
-        cursor = {
-          name = "capitaine-cursors-white";
-          package = pkgs.capitaine-cursors;
-          size = 30;
+        serif = {
+          name = "Source Serif";
+          package = pkgs.source-serif;
         };
 
-        # opacity = {
-        #   applications = 1.0;
-        #   terminal = 0.97;
-        #   desktop = 1.0;
-        #   popups = 0.8;
-        # };
+        sansSerif = {
+          name = "Noto Sans";
+          package = pkgs.noto-fonts;
+        };
 
-        fonts = {
-          sizes = {
-            terminal = font.size;
-            applications = font.size;
-            desktop = 12;
-            popups = font.size;
-          };
-
-          monospace = {
-            inherit (font) package name;
-          };
-
-          serif = {
-            name = "Source Serif";
-            package = pkgs.source-serif;
-          };
-
-          sansSerif = {
-            name = "Noto Sans";
-            package = pkgs.noto-fonts;
-          };
+        emoji = {
+          package = pkgs.noto-fonts-color-emoji;
+          name = "Noto Color Emoji";
         };
       };
-    })
-  ];
+    };
+  };
 }

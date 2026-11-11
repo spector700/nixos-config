@@ -44,7 +44,7 @@ in
       {
         match.xwayland = true;
         match.float = true;
-        rounding = 0;
+        # rounding = 0;
       }
       {
         match.class = "feh|wlogout|file_progress|confirm|dialog|download|notification|error|splash|confirmreset|org.kde.polkit-kde-authentication-agent-1|org.kde.ark|^(wdisplays)$|^(blueman-manager)$|^(nm-connection-editor)$|it.mijorus.smile";

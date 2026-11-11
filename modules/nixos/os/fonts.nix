@@ -45,11 +45,13 @@ in
 
       # causes more issues than it solves
       enableDefaultPackages = false;
+      fontDir.enable = true;
 
       fontconfig = {
         enable = true;
         hinting.enable = true;
         antialias = true;
+        useEmbeddedBitmaps = true;
 
         defaultFonts =
           let
