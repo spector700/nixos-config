@@ -12,6 +12,7 @@ _: {
         logrotate
         sudo
         user
+        zsh
       ];
 
       nixos = { pkgs, ... }: {

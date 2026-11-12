@@ -1,4 +1,3 @@
-{ pkgs, ... }:
 {
   time.timeZone = "America/Chicago"; # Time zone and internationalisation
   i18n = {
@@ -17,7 +16,5 @@
       SUDO_EDITOR = "nvim";
       MANPAGER = "nvim +Man!";
     };
-
-    pathsToLink = [ "/share/zsh" ];
   };
 }

@@ -10,6 +10,5 @@
     ./kitty.nix
     ./nix-search-tv.nix
     ./starship.nix
-    ./zsh.nix
   ];
 }
