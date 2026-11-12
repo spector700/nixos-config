@@ -12,25 +12,21 @@ _: {
       subPath = "passwords/${user}";
     in
     {
-      disabledModules = [ ../../../modules/nixos/os/user.nix ];
+      users = {
+        # allow password to be set by sops-nix
+        mutableUsers = false;
 
-      config = {
-        users = {
-          # allow password to be set by sops-nix
-          mutableUsers = false;
-
-          users.${user} = {
-            # System User
-            isNormalUser = true;
-            extraGroups = [
-              "wheel"
-              "dialout" # for USB Serial
-            ]
-            ++ optionals config.networking.networkmanager.enable [ "networkmanager" ];
-            hashedPasswordFile = config.sops.secrets.${subPath}.path;
-            # initialPassword = "nixos";
-            shell = pkgs.zsh; # Default shell
-          };
+        users.${user} = {
+          # System User
+          isNormalUser = true;
+          extraGroups = [
+            "wheel"
+            "dialout" # for USB Serial
+          ]
+          ++ optionals config.networking.networkmanager.enable [ "networkmanager" ];
+          hashedPasswordFile = config.sops.secrets.${subPath}.path;
+          # initialPassword = "nixos";
+          shell = pkgs.zsh; # Default shell
         };
       };
 

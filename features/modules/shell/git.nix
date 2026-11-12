@@ -9,8 +9,6 @@ _: {
     };
 
     homeManager = { config, ... }: {
-      disabledModules = [ ../../../modules/home/spector/shell/git.nix ];
-
       programs = {
         git = {
           enable = true;

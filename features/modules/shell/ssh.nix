@@ -15,8 +15,6 @@ _: {
         isPersistence = config.modules.boot.impermanence.enable;
       in
       {
-        disabledModules = [ ../../../modules/nixos/networking/ssh.nix ];
-
         users.users.${config.modules.os.mainUser}.openssh.authorizedKeys.keys = [
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDTXJzakLW2xSxhfre6KN/0KEg0zabNIKrqT7YcDzMUf spector@alfheim"
         ];
@@ -102,8 +100,6 @@ _: {
         user = osConfig.modules.os.mainUser;
       in
       {
-        disabledModules = [ ../../../modules/home/spector/shell/ssh.nix ];
-
         programs.ssh = {
           enable = true;
           enableDefaultConfig = false;
