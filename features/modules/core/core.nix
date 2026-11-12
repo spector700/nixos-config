@@ -5,6 +5,7 @@ _: {
         avahi
         bootloader
         fonts
+        fs
         direnv
         git
         network

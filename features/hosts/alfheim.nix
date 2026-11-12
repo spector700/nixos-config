@@ -8,6 +8,7 @@ _: {
         printing
         sound
         core
+        impermanence
       ];
 
       nixos = { };

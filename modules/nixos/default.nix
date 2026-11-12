@@ -1,7 +1,6 @@
 { ... }:
 {
   imports = [
-    ./boot
     ./display
     ./hardware
     ./homelab
