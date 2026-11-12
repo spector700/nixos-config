@@ -7,6 +7,7 @@ _: {
         greetd
         sound
         fonts
+        kitty
       ];
 
       nixos =

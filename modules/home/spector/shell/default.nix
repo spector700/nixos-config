@@ -5,8 +5,6 @@
     ./claude-code
     ./yazi
     ./zellij
-    ./gpg.nix
-    ./kitty.nix
     ./nix-search-tv.nix
     ./starship.nix
   ];

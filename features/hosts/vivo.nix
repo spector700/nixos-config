@@ -7,6 +7,7 @@ _: {
         bluetooth
         core
         cpu-amd
+        gpg
         impermanence
         niri
         printing

@@ -54,7 +54,6 @@ in
   ## NIXOS
   modules = {
     roles = {
-      development.enable = false;
       gaming.enable = true;
       video.enable = true;
     };

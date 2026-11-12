@@ -7,6 +7,7 @@ _: {
         core
         cpu-amd
         gpu-nvidia
+        gpg
         hyprland
         openrgb
         ssh
