@@ -8,12 +8,11 @@ _: {
         cpu-amd
         gpu-nvidia
         hyprland
-        fonts
+        openrgb
         ssh
         printing
         impermanence
         sops
-
       ];
 
       nixos = { pkgs, ... }: {
@@ -30,15 +29,17 @@ _: {
         };
 
         modules = {
+          boot = {
+            enableKernelTweaks = true;
+          };
+
+          networking.optimizeTcp = true;
+
           hardware.gpu = "nvidia";
 
           os = {
             mainUser = "spector";
             autoLogin = true;
-          };
-
-          boot = {
-            enableKernelTweaks = true;
           };
 
           desktop = {

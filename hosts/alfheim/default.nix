@@ -59,10 +59,6 @@ in
       video.enable = true;
     };
 
-    hardware = {
-      openrgb.enable = true;
-    };
-
     services = {
       sunshine.enable = true;
       syncthing.enable = true;
@@ -71,7 +67,6 @@ in
     programs = {
       thunar.enable = true;
     };
-
   };
 
   hardware = {

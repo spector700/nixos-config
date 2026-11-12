@@ -1,6 +1,5 @@
 {
   pkgs,
-  osConfig,
   inputs,
   lib,
   ...
@@ -10,7 +9,6 @@ let
   volume = "${pkgs.wireplumber}/bin/wpctl";
   brightness = "${lib.getExe pkgs.brightnessctl}";
   media = "${lib.getExe pkgs.playerctl}";
-  inherit (lib) optionals;
 
   mod = "SUPER";
   alt = "ALT";
@@ -31,17 +29,6 @@ let
     ++ mkWorkspaceBinds "${alt} + SHIFT" (
       workspace: ''hl.dsp.window.move({ workspace = "${workspace}" })''
     )
-  );
-
-  laptopBinds = lib.concatStrings (
-    optionals osConfig.modules.roles.laptop.enable [
-      ''
-        hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("${volume} set-volume -l '1.0' @DEFAULT_SINK@ 5%+"), { locked = true })
-        hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("${volume} set-volume -l '1.0' @DEFAULT_SINK@ 5%-"), { locked = true })
-        hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("${brightness} s 5%+"), { locked = true })
-        hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("${brightness} s 5%-"), { locked = true })
-      ''
-    ]
   );
 in
 {
@@ -103,7 +90,10 @@ in
     hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("${media} previous"), { locked = true })
     hl.bind("XF86AudioMute", hl.dsp.exec_cmd("${volume} set-mute @DEFAULT_SINK@ toggle"), { locked = true })
     hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd("${volume} set-mute @DEFAULT_SOURCE@ toggle"), { locked = true })
-    ${laptopBinds}
+    hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("${volume} set-volume -l '1.0' @DEFAULT_SINK@ 5%+"), { locked = true })
+    hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("${volume} set-volume -l '1.0' @DEFAULT_SINK@ 5%-"), { locked = true })
+    hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("${brightness} s 5%+"), { locked = true })
+    hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("${brightness} s 5%-"), { locked = true })
 
     -- Workspaces
     ${workspaceBinds}
