@@ -8,7 +8,6 @@ in
     ./gpu
     ./power
     ./rgb
-    ./printing.nix
     ./sound.nix
   ];
 
