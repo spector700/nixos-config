@@ -4,6 +4,7 @@ _: {
       includes = with aspects; [
         avahi
         bootloader
+        fonts
         git
         network
         logrotate
