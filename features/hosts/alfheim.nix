@@ -13,6 +13,8 @@ _: {
         printing
         impermanence
         sops
+        syncthing
+        sunshine
       ];
 
       nixos = { pkgs, ... }: {

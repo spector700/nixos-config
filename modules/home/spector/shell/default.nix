@@ -3,7 +3,6 @@
     ./ai-tools
     ./opencode
     ./claude-code
-    ./tools
     ./yazi
     ./zellij
     ./gpg.nix

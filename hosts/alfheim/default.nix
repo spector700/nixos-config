@@ -59,11 +59,6 @@ in
       video.enable = true;
     };
 
-    services = {
-      sunshine.enable = true;
-      syncthing.enable = true;
-    };
-
     programs = {
       thunar.enable = true;
     };

@@ -5,6 +5,5 @@
     ./os
     ./programs
     ./roles
-    ./services
   ];
 }

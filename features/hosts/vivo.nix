@@ -12,6 +12,7 @@ _: {
         printing
         ssh
         sops
+        syncthing
         tailscale
         upower
       ];
