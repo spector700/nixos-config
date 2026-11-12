@@ -10,6 +10,7 @@ _: {
         network
         nix
         logrotate
+        locale
         sudo
         user
         zsh
