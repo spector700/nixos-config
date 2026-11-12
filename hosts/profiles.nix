@@ -31,6 +31,10 @@ in
     modules = [
       ./alfheim
       ../modules/nixos
+      self.modules.nixos.alfheim
+      {
+        home-manager.users.spector.imports = [ self.modules.homeManager.alfheim ];
+      }
     ]
     ++ concatLists [ homeManager ];
   };
