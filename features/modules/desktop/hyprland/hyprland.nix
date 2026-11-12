@@ -5,6 +5,7 @@ _: {
         graphical
         monitors
         greetd
+        sound
       ];
 
       nixos =
@@ -45,10 +46,10 @@ _: {
         }:
         {
           imports = [
-            ./_hyprland/binds.nix
-            ./_hyprland/config.nix
-            ./_hyprland/rules.nix
-            ./_hyprland/startup.nix
+            ./_binds.nix
+            ./_config.nix
+            ./_rules.nix
+            ./_startup.nix
           ];
 
           home.packages = with pkgs; [

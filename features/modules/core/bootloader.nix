@@ -58,6 +58,7 @@ _: {
               systemd-boot = {
                 enable = mkDefault true;
                 configurationLimit = 20;
+                memtest86.enable = true;
                 consoleMode = mkDefault "max"; # the default is "keep", can be overriden per host if need be
 
                 # Fix a security hole in place for backwards compatibility. See desc in

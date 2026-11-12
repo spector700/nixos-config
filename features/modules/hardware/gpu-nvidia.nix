@@ -19,6 +19,7 @@ _: {
     in
     {
 
+      # GPU type must be set in host config
       options.modules.hardware = {
         gpu = mkOption {
           type =

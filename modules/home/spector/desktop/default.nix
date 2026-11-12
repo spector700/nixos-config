@@ -9,7 +9,6 @@ in
 {
   imports = [
     ./bar
-    ./niri
   ];
 
   options.modules.desktop = {

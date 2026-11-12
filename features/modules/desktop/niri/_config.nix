@@ -9,17 +9,14 @@
 let
   inherit (lib)
     mkForce
-    mkIf
     optionals
     getExe
     ;
-  cfg = osConfig.modules.display.desktop;
-
   brightness = "${getExe pkgs.brightnessctl}";
   volume = "${pkgs.wireplumber}/bin/wpctl";
 in
 {
-  config = mkIf cfg.niri.enable {
+  config = {
 
     home.packages = [ pkgs.nautilus ];
 
@@ -39,7 +36,7 @@ in
         # OUTPUT / MONITOR CONFIGURATION
         # ==========================================
         let
-          monitorsList = osConfig.modules.display.monitors;
+          monitorsList = osConfig.modules.desktop.monitors;
 
           mkOutput =
             monitor:

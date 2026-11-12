@@ -6,7 +6,6 @@ _: {
         ssh
         bluetooth
         printing
-        sound
         core
         impermanence
         sops
