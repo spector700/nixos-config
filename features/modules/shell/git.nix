@@ -1,45 +1,55 @@
 _: {
-  flake.aspects.git.homeManager = { config, ... }: {
-    disabledModules = [ ../../../modules/home/spector/shell/git.nix ];
+  flake.aspects.git = {
 
-    programs = {
-      git = {
+    nixos = { pkgs, ... }: {
+      programs.git = {
         enable = true;
-        lfs.enable = true;
+        package = pkgs.gitMinimal;
+      };
+    };
 
-        ignores = [
-          ".direnv"
-          "result"
-          "node_modules"
-        ];
+    homeManager = { config, ... }: {
+      disabledModules = [ ../../../modules/home/spector/shell/git.nix ];
 
-        settings = {
-          extraConfig = {
-            init = {
-              defaultBranch = "main";
+      programs = {
+        git = {
+          enable = true;
+          lfs.enable = true;
+
+          ignores = [
+            ".direnv"
+            "result"
+            "node_modules"
+          ];
+
+          settings = {
+            extraConfig = {
+              init = {
+                defaultBranch = "main";
+              };
+
+              core.askPass = "";
+
+              diff.colorMoved = "default";
+              commit.gpgSign = true;
+              gpg.format = "ssh";
+              user.signingkey = "${config.home.homeDirectory}/.ssh/gitkey";
+
+              push = {
+                default = "current";
+                followTags = true;
+                autoSetupRemote = true;
+              };
+              signing = {
+                signByDefault = true;
+                key = "${config.home.homeDirectory}/.ssh/gitkey";
+              };
             };
 
-            core.askPass = "";
-
-            diff.colorMoved = "default";
-            commit.gpgSign = true;
-            gpg.format = "ssh";
-            user.signingkey = "${config.home.homeDirectory}/.ssh/gitkey";
-
-            push = {
-              default = "current";
-              followTags = true;
-              autoSetupRemote = true;
+            user = {
+              email = "72362399+spector700@users.noreply.github.com";
+              name = "spector700";
             };
-            signing = {
-              signByDefault = true;
-              key = "${config.home.homeDirectory}/.ssh/gitkey";
-            };
-          };
-
-          user = {
-            email = "72362399+spector700@users.noreply.github.com";
-            name = "spector700";
           };
         };
       };

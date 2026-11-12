@@ -3,7 +3,6 @@
   imports = [
     ./fonts.nix
     ./nix.nix
-    ./user.nix
   ];
 
   time.timeZone = "America/Chicago"; # Time zone and internationalisation
@@ -18,11 +17,6 @@
 
   # also have to enable the nixos zsh if using the home-manager one
   programs = {
-    git = {
-      enable = true;
-      package = pkgs.gitMinimal;
-    };
-
     zsh = {
       enable = true;
       autosuggestions.enable = true;

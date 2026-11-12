@@ -5,6 +5,7 @@ _: {
         hyprland
         git
         ssh
+        user
       ];
 
       nixos = { };
