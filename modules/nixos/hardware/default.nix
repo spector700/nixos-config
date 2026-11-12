@@ -8,7 +8,6 @@ in
     ./gpu
     ./power
     ./rgb
-    ./bluetooth.nix
     ./printing.nix
     ./sound.nix
   ];
