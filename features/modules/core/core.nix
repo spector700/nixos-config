@@ -7,6 +7,7 @@ _: {
         fonts
         git
         network
+        nix
         logrotate
         sudo
         user

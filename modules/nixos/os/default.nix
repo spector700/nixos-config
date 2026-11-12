@@ -1,9 +1,5 @@
 { pkgs, ... }:
 {
-  imports = [
-    ./nix.nix
-  ];
-
   time.timeZone = "America/Chicago"; # Time zone and internationalisation
   i18n = {
     defaultLocale = "en_US.UTF-8";
