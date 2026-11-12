@@ -8,7 +8,6 @@ in
     ./gpu
     ./power
     ./rgb
-    ./sound.nix
   ];
 
   options.modules.hardware = {

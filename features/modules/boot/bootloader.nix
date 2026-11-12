@@ -40,7 +40,6 @@ _: {
                 # allow installation to modify EFI variables
                 efi.canTouchEfiVariables = true;
               }
-
             ]
             ++ [
               mkIf
