@@ -3,9 +3,12 @@ _: {
     alfheim = {
       includes = with aspects; [
         hyprland
-        git
         ssh
-        user
+        bluetooth
+        printing
+        sound
+        tailscale
+        core
       ];
 
       nixos = { };

@@ -22,8 +22,6 @@
       autosuggestions.enable = true;
     };
 
-    dconf.enable = true;
-
     direnv = {
       enable = true;
       silent = true;
@@ -44,24 +42,7 @@
     };
   };
 
-  console = {
-    font = "ter-powerline-v18n";
-    packages = with pkgs; [
-      terminus_font
-      powerline-fonts
-    ];
-    keyMap = "us";
-  };
-
   environment = {
-    # packages that will be shared across all users and and all systems
-    systemPackages = with pkgs; [
-      curl
-      wget
-      unzip
-      unrar
-    ];
-
     variables = {
       EDITOR = "nvim";
       VISUAL = "nvim";
