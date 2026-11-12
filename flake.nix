@@ -58,8 +58,8 @@
 
     niri-scratchpad.url = "github:argosnothing/niri-scratchpad-rs";
 
-    dankMaterialShell = {
-      url = "github:AvengeMedia/DankMaterialShell";
+    dms = {
+      url = "github:duxlabs-dev/dux-shell/stable";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

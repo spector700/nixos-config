@@ -61,5 +61,8 @@
   "nixPackageRunner": {
     "enabled": true,
     "runSourceMode": "local_locked"
+  },
+  "dankscale": {
+    "enabled": true
   }
 }

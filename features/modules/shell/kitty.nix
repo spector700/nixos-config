@@ -20,9 +20,5 @@ _: {
         };
       };
     };
-
-    home.shellAliases = {
-      kssh = "kitten ssh --kitten=color_scheme=Dracula";
-    };
   };
 }

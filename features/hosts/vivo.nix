@@ -7,6 +7,7 @@ _: {
         bluetooth
         core
         cpu-amd
+        dms
         gpg
         home-manager
         impermanence

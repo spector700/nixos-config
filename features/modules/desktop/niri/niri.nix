@@ -17,7 +17,6 @@ _: {
         {
           config,
           inputs,
-          lib,
           pkgs,
           ...
         }:
@@ -44,8 +43,6 @@ _: {
             QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
             QT_QPA_PLATFORM = "wayland";
           };
-
-          systemd.user.services.niri-flake-polkit.enable = lib.mkForce false;
         };
 
       homeManager = {
