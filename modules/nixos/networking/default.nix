@@ -5,7 +5,6 @@ in
 {
   imports = [
     ./optomize.nix
-    ./tailscale.nix
   ];
 
   options.modules.networking = {
