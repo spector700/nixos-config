@@ -23,7 +23,6 @@ in
 
       signal-desktop
       obsidian
-      anki
       vial
 
       inputs.niri-scratchpad.packages.${pkgs.stdenv.hostPlatform.system}.default

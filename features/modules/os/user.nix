@@ -12,7 +12,7 @@ _: {
       subPath = "passwords/${user}";
     in
     {
-      users = {
+      config.users = {
         # allow password to be set by sops-nix
         mutableUsers = false;
 

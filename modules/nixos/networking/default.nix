@@ -4,7 +4,6 @@ let
 in
 {
   imports = [
-    ./avahi.nix
     ./optomize.nix
     ./tailscale.nix
   ];

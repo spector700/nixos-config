@@ -5,7 +5,6 @@ let
     optionals
     concatLists
     mkEnableOption
-    mkMerge
     ;
   cfg = config.hardware;
 in
@@ -58,109 +57,108 @@ in
       };
 
       # https://www.kernel.org/doc/html/latest/admin-guide/kernel-parameters.html
-      kernelParams =
-        mkMerge [
-          # make stack-based attacks on the kernel harder
-          "randomize_kstack_offset=on"
+      kernelParams = [
+        # make stack-based attacks on the kernel harder
+        "randomize_kstack_offset=on"
 
-          # Disable vsyscalls as they are obsolete and have been replaced with vDSO.
-          # vsyscalls are also at fixed addresses in memory, making them a potential
-          # target for ROP attacks
-          # this breaks really old binaries for security
-          "vsyscall=none"
+        # Disable vsyscalls as they are obsolete and have been replaced with vDSO.
+        # vsyscalls are also at fixed addresses in memory, making them a potential
+        # target for ROP attacks
+        # this breaks really old binaries for security
+        "vsyscall=none"
 
-          # reduce most of the exposure of a heap attack to a single cache
-          # Disable slab merging which significantly increases the difficulty of heap
-          # exploitation by preventing overwriting objects from merged caches and by
-          # making it harder to influence slab cache layout
-          "slab_nomerge"
+        # reduce most of the exposure of a heap attack to a single cache
+        # Disable slab merging which significantly increases the difficulty of heap
+        # exploitation by preventing overwriting objects from merged caches and by
+        # making it harder to influence slab cache layout
+        "slab_nomerge"
 
-          # Disable debugfs which exposes a lot of sensitive information about the
-          # kernel. Some programs, such as powertop, use this interface to gather
-          # information about the system, but it is not necessary for the system to
-          # actually publish those. I can live without it.
-          "debugfs=off"
+        # Disable debugfs which exposes a lot of sensitive information about the
+        # kernel. Some programs, such as powertop, use this interface to gather
+        # information about the system, but it is not necessary for the system to
+        # actually publish those. I can live without it.
+        "debugfs=off"
 
-          # Sometimes certain kernel exploits will cause what is known as an "oops".
-          # This parameter will cause the kernel to panic on such oopses, thereby
-          # preventing those exploits
-          "oops=panic"
+        # Sometimes certain kernel exploits will cause what is known as an "oops".
+        # This parameter will cause the kernel to panic on such oopses, thereby
+        # preventing those exploits
+        "oops=panic"
 
-          # Only allow kernel modules that have been signed with a valid key to be
-          # loaded, which increases security by making it much harder to load a
-          # malicious kernel module
-          # FIXME: doesnt work with kernal 7.3
-          ## "module.sig_enforce=1"
+        # Only allow kernel modules that have been signed with a valid key to be
+        # loaded, which increases security by making it much harder to load a
+        # malicious kernel module
+        # FIXME: doesnt work with kernal 7.3
+        ## "module.sig_enforce=1"
 
-          # The kernel lockdown LSM can eliminate many methods that user space code
-          # could abuse to escalate to kernel privileges and extract sensitive
-          # information. This LSM is necessary to implement a clear security boundary
-          # between user space and the kernel
-          #  integrity: kernel features that allow userland to modify the running kernel
-          #             are disabled
-          #  confidentiality: kernel features that allow userland to extract confidential
-          #             information from the kernel are also disabled
-          # FIXME: doesnt work with kernal 7.3
-          ## "lockdown=confidentiality"
+        # The kernel lockdown LSM can eliminate many methods that user space code
+        # could abuse to escalate to kernel privileges and extract sensitive
+        # information. This LSM is necessary to implement a clear security boundary
+        # between user space and the kernel
+        #  integrity: kernel features that allow userland to modify the running kernel
+        #             are disabled
+        #  confidentiality: kernel features that allow userland to extract confidential
+        #             information from the kernel are also disabled
+        # FIXME: doesnt work with kernal 7.3
+        ## "lockdown=confidentiality"
 
-          # enable buddy allocator free poisoning
-          #  on: memory will befilled with a specific byte pattern
-          #      that is unlikely to occur in normal operation.
-          #  off (default): page poisoning will be disabled
-          "page_poison=on"
+        # enable buddy allocator free poisoning
+        #  on: memory will befilled with a specific byte pattern
+        #      that is unlikely to occur in normal operation.
+        #  off (default): page poisoning will be disabled
+        "page_poison=on"
 
-          # performance improvement for direct-mapped memory-side-cache utilization
-          # reduces the predictability of page allocations
-          "page_alloc.shuffle=1"
+        # performance improvement for direct-mapped memory-side-cache utilization
+        # reduces the predictability of page allocations
+        "page_alloc.shuffle=1"
 
-          # for debugging kernel-level slab issues
-          "slub_debug=FZP"
+        # for debugging kernel-level slab issues
+        "slub_debug=FZP"
 
-          # ignore access time (atime) updates on files
-          # except when they coincide with updates to the ctime or mtime
-          "rootflags=noatime"
+        # ignore access time (atime) updates on files
+        # except when they coincide with updates to the ctime or mtime
+        "rootflags=noatime"
 
-          # linux security modules
-          "lsm=landlock,lockdown,yama,integrity,apparmor,bpf,tomoyo,selinux"
+        # linux security modules
+        "lsm=landlock,lockdown,yama,integrity,apparmor,bpf,tomoyo,selinux"
 
-          # prevent the kernel from blanking plymouth out of the fb
-          "fbcon=nodefer"
+        # prevent the kernel from blanking plymouth out of the fb
+        "fbcon=nodefer"
 
-          # the format that will be used for integrity audit logs
-          #  0 (default): basic integrity auditing messages
-          #  1: additional integrity auditing messages
-          "integrity_audit=1"
-        ]
-        ++ optionals cfg.enableKernelTweaks [
-          # https://en.wikipedia.org/wiki/Kernel_page-table_isolation
-          # auto means kernel will automatically decide the pti state
-          "pti=auto" # on | off
+        # the format that will be used for integrity audit logs
+        #  0 (default): basic integrity auditing messages
+        #  1: additional integrity auditing messages
+        "integrity_audit=1"
+      ]
+      ++ optionals config.modules.boot.enableKernelTweaks [
+        # https://en.wikipedia.org/wiki/Kernel_page-table_isolation
+        # auto means kernel will automatically decide the pti state
+        "pti=auto" # on | off
 
-          # CPU idle behaviour
-          #  poll: slightly improve performance at cost of a hotter system (not recommended)
-          #  halt: halt is forced to be used for CPU idle
-          #  nomwait: Disable mwait for CPU C-states
-          "idle=nomwait" # poll | halt | nomwait
+        # CPU idle behaviour
+        #  poll: slightly improve performance at cost of a hotter system (not recommended)
+        #  halt: halt is forced to be used for CPU idle
+        #  nomwait: Disable mwait for CPU C-states
+        "idle=nomwait" # poll | halt | nomwait
 
-          # enable IOMMU for devices used in passthrough
-          # and provide better host performance in virtualization
-          "iommu=pt"
+        # enable IOMMU for devices used in passthrough
+        # and provide better host performance in virtualization
+        "iommu=pt"
 
-          # disable usb autosuspend
-          "usbcore.autosuspend=-1"
+        # disable usb autosuspend
+        "usbcore.autosuspend=-1"
 
-          # disables resume and restores original swap space
-          "noresume"
+        # disables resume and restores original swap space
+        "noresume"
 
-          # allows systemd to set and save the backlight state
-          "acpi_backlight=native" # none | vendor | video | native
+        # allows systemd to set and save the backlight state
+        "acpi_backlight=native" # none | vendor | video | native
 
-          # disable the cursor in vt to get a black screen during intermissions
-          "vt.global_cursor_default=0"
+        # disable the cursor in vt to get a black screen during intermissions
+        "vt.global_cursor_default=0"
 
-          # disable displaying of the built-in Linux logo
-          "logo.nologo"
-        ];
+        # disable displaying of the built-in Linux logo
+        "logo.nologo"
+      ];
 
       blacklistedKernelModules = concatLists [
         # Obscure network protocols
