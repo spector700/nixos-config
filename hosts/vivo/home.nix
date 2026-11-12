@@ -14,7 +14,6 @@ in
     ];
 
     modules = {
-      desktop.bar = "dankMaterialShell";
 
       theme = {
         wallpaper = ../../modules/home/spector/theming/wallpaper2.png;

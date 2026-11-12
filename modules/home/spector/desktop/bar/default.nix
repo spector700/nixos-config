@@ -1,5 +1,0 @@
-{
-  imports = [
-    ./dankMaterialShell/dankMaterialShell.nix
-  ];
-}

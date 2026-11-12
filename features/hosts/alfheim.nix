@@ -10,6 +10,7 @@ _: {
         gpg
         gaming
         hyprland
+        dms
         home-manager
         openrgb
         ssh

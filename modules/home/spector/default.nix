@@ -8,7 +8,6 @@ let
 in
 {
   imports = [
-    ./desktop
     ./programs
     ./roles
     ./services

@@ -39,8 +39,6 @@ in
           stylix.enable = true;
         };
 
-        desktop.bar = "dankMaterialShell";
-
         services.nextcloud-client.enable = true;
 
         shell = {

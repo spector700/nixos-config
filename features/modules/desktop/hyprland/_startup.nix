@@ -7,7 +7,6 @@
 }:
 let
   uexec = program: "uwsm app -- ${program}";
-  inherit (config.modules.desktop) bar;
   inherit (lib) optionals getExe;
 in
 {
@@ -20,7 +19,7 @@ in
             hl.exec_cmd("hyprctl dispatch workspace 1")
         ''
       ]
-      ++ optionals (bar != "dankMaterialShell") [
+      ++ optionals config.programs.dank-material-shell.enable [
         ''hl.exec_cmd("${getExe pkgs.wlsunset} -l 32.7 -L -96.9")''
       ]
       ++ optionals config.programs.nixcord.vesktop.enable [
