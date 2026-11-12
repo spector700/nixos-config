@@ -1,5 +1,5 @@
 {
-  "currentThemeName": "custom",
+  "currentThemeName": "dynamic",
   "customThemeFile": "/home/spector/.config/dms/themes/deepsage/theme.json",
   "registryThemeVariants": {
     "deepdark": {
@@ -19,7 +19,7 @@
     "deepsage": {
       "dark": {
         "flavor": "sage",
-        "accent": "deep"
+        "accent": "bright"
       }
     },
     "everforest": "hard"
@@ -113,7 +113,7 @@
       ]
     }
   ],
-  "currentThemeCategory": "registry",
+  "currentThemeCategory": "dynamic",
   "popupTransparency": 0.9,
   "floatingWindowSyncGlobal": false,
   "floatingWindowTransparency": 0.85,
@@ -288,7 +288,7 @@
   "batteryProfileName": "0",
   "terminalsAlwaysDark": true,
   "muxType": "zellij",
-  "matugenTemplateNeovim": true,
+  "matugenTemplateNeovim": false,
   "matugenTemplateNeovimSettings": {
     "dark": {
       "baseTheme": "material-darker",
@@ -771,5 +771,11 @@
   "hyprlandLayoutBorderSize": -1,
   "hyprlandGlowEnabled": false,
   "hyprlandWobbleEnabled": false,
-  "hyprlandWobbleIntensity": 8
+  "hyprlandWobbleIntensity": 8,
+  "terminalOpacity": 100,
+  "syncModeWithPortal": true,
+  "matugenSpec": "dms",
+  "matugenScheme": "scheme-neutral",
+  "matugenSourceMode": "dominant",
+  "matugenContrast": 0
 }

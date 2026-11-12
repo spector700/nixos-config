@@ -80,14 +80,19 @@
               done
             '';
 
-          programs.dank-material-shell = {
-            enable = true;
-            enableDynamicTheming = true;
-
-            systemd = {
+          programs = {
+            dank-material-shell = {
               enable = true;
-              restartIfChanged = true;
+              enableDynamicTheming = true;
+
+              systemd = {
+                enable = true;
+                restartIfChanged = true;
+              };
             };
+            kitty.extraConfig = ''
+              include dank-theme.conf
+            '';
           };
 
           # Force Themeing
