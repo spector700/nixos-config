@@ -22,12 +22,6 @@ in
       };
 
       services.nextcloud-client.enable = true;
-
-      programs = {
-        nixcord.enable = true;
-        zathura.enable = true;
-        zen.enable = true;
-      };
     };
   };
 }

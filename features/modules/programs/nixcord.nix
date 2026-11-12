@@ -1,21 +1,8 @@
+{ inputs, ... }:
 {
-  inputs,
-  config,
-  lib,
-  ...
-}:
-let
-  cfg = config.modules.programs.nixcord;
-  inherit (lib) mkIf mkEnableOption;
-in
-{
-  imports = [ inputs.nixcord.homeModules.nixcord ];
+  flake.aspects.nixcord.homeManager = {
+    imports = [ inputs.nixcord.homeModules.nixcord ];
 
-  options.modules.programs.nixcord = {
-    enable = mkEnableOption "Enable nixcord";
-  };
-
-  config = mkIf cfg.enable {
     programs.nixcord = {
       enable = true;
 

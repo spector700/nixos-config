@@ -35,8 +35,7 @@ in
       {
         home-manager.users.spector.imports = [ self.modules.homeManager.alfheim ];
       }
-    ]
-    ++ concatLists [ homeManager ];
+    ];
   };
 
   # Laptop
@@ -46,8 +45,11 @@ in
     modules = [
       ./vivo
       ../modules/nixos
-    ]
-    ++ concatLists [ homeManager ];
+      self.modules.nixos.vivo
+      {
+        home-manager.users.spector.imports = [ self.modules.homeManager.vivo ];
+      }
+    ];
   };
 
   # Homelab

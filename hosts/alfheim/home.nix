@@ -49,12 +49,7 @@ in
         };
 
         programs = {
-          nixcord.enable = true;
-          zathura.enable = true;
           orca-slicer.enable = true;
-          # rofi.enable = false;
-          # brave.enable = true;
-          zen.enable = true;
         };
       };
     };

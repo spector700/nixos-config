@@ -8,6 +8,7 @@ _: {
         core
         cpu-amd
         gpg
+        home-manager
         impermanence
         niri
         printing

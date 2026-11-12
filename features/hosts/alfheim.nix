@@ -10,6 +10,7 @@ _: {
         gpg
         gaming
         hyprland
+        home-manager
         openrgb
         ssh
         printing

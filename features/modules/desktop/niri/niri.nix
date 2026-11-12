@@ -8,6 +8,9 @@ _: {
         sound
         fonts
         kitty
+        zathura
+        nixcord
+        zen
       ];
 
       nixos =
