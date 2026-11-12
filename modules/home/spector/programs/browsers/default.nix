@@ -11,7 +11,6 @@ let
 in
 {
   options.modules.programs = {
-    firefox.enable = mkEnableOption "Enable Firefox";
     brave.enable = mkEnableOption "Enable Brave";
     zen.enable = mkEnableOption "Enable Zen Browser";
   };
