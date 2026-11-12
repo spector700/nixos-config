@@ -2,10 +2,8 @@ _: {
   flake.aspects = { aspects, ... }: {
     core = {
       includes = with aspects; [
-        avahi
         bootloader
         direnv
-        fonts
         fs
         git
         kernel

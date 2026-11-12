@@ -6,6 +6,7 @@ _: {
         monitors
         greetd
         sound
+        fonts
       ];
 
       nixos =

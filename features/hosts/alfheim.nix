@@ -2,15 +2,17 @@ _: {
   flake.aspects = { aspects, ... }: {
     alfheim = {
       includes = with aspects; [
-        hyprland
-        ssh
+        avahi
         bluetooth
-        printing
         core
-        impermanence
-        sops
         cpu-amd
         gpu-nvidia
+        hyprland
+        fonts
+        ssh
+        printing
+        impermanence
+        sops
 
       ];
 
