@@ -9,6 +9,7 @@ _: {
         sound
         core
         impermanence
+        sops
       ];
 
       nixos = { };

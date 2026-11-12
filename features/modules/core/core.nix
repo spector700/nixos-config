@@ -4,10 +4,11 @@ _: {
       includes = with aspects; [
         avahi
         bootloader
+        direnv
         fonts
         fs
-        direnv
         git
+        kernel
         network
         nix
         logrotate
