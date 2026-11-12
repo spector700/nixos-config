@@ -1,31 +1,23 @@
 {
   pkgs,
-  lib,
-  osConfig,
   inputs,
   ...
 }:
-let
-  cfg = osConfig.modules.display.desktop;
-  inherit (lib) mkIf;
-in
 {
-  config = mkIf cfg.isWayland {
-    home.packages = with pkgs; [
-      # Terminal Utils
-      fastfetch
+  home.packages = with pkgs; [
+    # Terminal Utils
+    fastfetch
 
-      # Video/Audio
-      mpv
-      loupe
-      celluloid
-      pwvucontrol
+    # Video/Audio
+    mpv
+    loupe
+    celluloid
+    pwvucontrol
 
-      signal-desktop
-      obsidian
-      vial
+    signal-desktop
+    obsidian
+    vial
 
-      inputs.niri-scratchpad.packages.${pkgs.stdenv.hostPlatform.system}.default
-    ];
-  };
+    inputs.niri-scratchpad.packages.${pkgs.stdenv.hostPlatform.system}.default
+  ];
 }

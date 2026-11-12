@@ -20,7 +20,7 @@ _: {
 
       options.modules.boot.impermanence = {
         enable = mkOption {
-          default = false;
+          default = true;
           type = types.bool;
           description = "Wipe root filesystem and restore blank root BTRFS subvolume on boot.";
         };

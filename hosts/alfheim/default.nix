@@ -81,10 +81,7 @@ in
       syncthing.enable = true;
     };
 
-    display = {
-      gpuAcceleration.enable = true;
-      desktop.hyprland.enable = true;
-
+    desktop = {
       monitors = [
         {
           name = "DP-2";
@@ -128,7 +125,6 @@ in
 
     boot = {
       enableKernelTweaks = true;
-      impermanence.enable = true;
     };
   };
 

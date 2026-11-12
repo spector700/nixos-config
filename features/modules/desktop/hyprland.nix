@@ -1,21 +1,32 @@
-{
-  flake.aspects.hyprland = {
-    nixos =
-      {
-        config,
-        lib,
-        pkgs,
-        ...
-      }:
-      let
-        inherit (lib) mkIf;
-      in
-      {
-        config = mkIf config.modules.display.desktop.hyprland.enable {
+_: {
+  flake.aspects = { aspects, ... }: {
+    hyprland = {
+      includes = with aspects; [
+        graphical
+        monitors
+        greetd
+      ];
+
+      nixos =
+        {
+          pkgs,
+          ...
+        }:
+        {
           programs.hyprland = {
             enable = true;
             # needed for setting the wayland environment variables
             withUWSM = true;
+          };
+
+          modules.desktop.startCommand = "uwsm start hyprland-uwsm.desktop";
+
+          environment.variables = {
+            NIXOS_OZONE_WL = "1";
+            _JAVA_AWT_WM_NONEREPARENTING = "1";
+            ANKI_WAYLAND = "1";
+            QT_QPA_PLATFORM = "wayland";
+            QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
           };
 
           xdg.portal = {
@@ -26,27 +37,20 @@
           # allow wayland lockers to unlock the screen
           security.pam.services.hyprlock.text = "auth include login";
         };
-      };
 
-    homeManager =
-      {
-        pkgs,
-        lib,
-        osConfig,
-        ...
-      }:
-      let
-        inherit (lib) mkIf;
-      in
-      {
-        imports = [
-          ./_hyprland/binds.nix
-          ./_hyprland/config.nix
-          ./_hyprland/rules.nix
-          ./_hyprland/startup.nix
-        ];
+      homeManager =
+        {
+          pkgs,
+          ...
+        }:
+        {
+          imports = [
+            ./_hyprland/binds.nix
+            ./_hyprland/config.nix
+            ./_hyprland/rules.nix
+            ./_hyprland/startup.nix
+          ];
 
-        config = mkIf osConfig.modules.display.desktop.hyprland.enable {
           home.packages = with pkgs; [
             grimblast
             wl-clipboard
@@ -64,6 +68,6 @@
             portalPackage = null;
           };
         };
-      };
+    };
   };
 }

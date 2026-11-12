@@ -1,6 +1,6 @@
 { osConfig, lib, ... }:
 let
-  inherit (osConfig.modules.display) monitors;
+  inherit (osConfig.modules.desktop) monitors;
   # rotation is stored as a Hyprlang string like "transform,1" or "".
   # Extract the numeric transform index for the Lua hl.monitor API.
   monitorTransform =

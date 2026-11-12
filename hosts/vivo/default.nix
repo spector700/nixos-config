@@ -74,7 +74,6 @@
     };
 
     display = {
-      gpuAcceleration.enable = true;
       desktop.niri.enable = true;
 
       monitors = [

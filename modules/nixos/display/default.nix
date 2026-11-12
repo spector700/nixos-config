@@ -11,11 +11,7 @@ let
 in
 {
   imports = [
-    ./login
-    ./graphical.nix
     ./niri
-    ./monitors.nix
-    ./wayland.nix
   ];
 
   options.modules.display.desktop = {

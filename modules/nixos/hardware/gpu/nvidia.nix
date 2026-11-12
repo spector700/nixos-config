@@ -6,10 +6,9 @@
 }:
 let
   inherit (lib) mkIf mkDefault mkMerge;
+  inherit (config.modules) desktop;
 
-  inherit (config.modules.display) desktop;
   cfg = config.modules.hardware;
-
   nvidiaPackage = config.boot.kernelPackages.nvidiaPackages.latest;
 in
 {
@@ -20,7 +19,9 @@ in
         "hybrid-nv"
       ])
       {
-        services.xserver = mkMerge [ { videoDrivers = [ "nvidia" ]; } ];
+        services.xserver = {
+          videoDrivers = [ "nvidia" ];
+        };
 
         environment = {
           sessionVariables = mkMerge [
@@ -34,16 +35,14 @@ in
             (mkIf desktop.isWayland {
               __GL_VRR_ALLOWED = "1";
               __GL_GSYNC_ALLOWED = "1";
-              QT_QPA_PLATFORM = "wayland";
-              QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
             })
 
-            (mkIf (desktop.isWayland && (cfg.gpu == "hybrid-nv")) {
+            (mkIf (cfg.gpu == "hybrid-nv") {
               #__NV_PRIME_RENDER_OFFLOAD = "1";
               #WLR_DRM_DEVICES = mkDefault "/dev/dri/card1:/dev/dri/card0";
             })
 
-            (mkIf (desktop.isWayland && (cfg == "vm")) { WLR_RENDERER_ALLOW_SOFTWARE = "1"; })
+            (mkIf (cfg == "vm") { WLR_RENDERER_ALLOW_SOFTWARE = "1"; })
           ];
           systemPackages = with pkgs; [
             nvtopPackages.nvidia
