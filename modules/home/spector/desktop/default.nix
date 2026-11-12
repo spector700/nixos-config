@@ -10,9 +10,6 @@ in
   imports = [
     ./bar
     ./niri
-    ./hypridle.nix
-    ./hyprlock.nix
-    ./hyprpaper.nix
   ];
 
   options.modules.desktop = {

@@ -36,7 +36,7 @@
         ...
       }:
       let
-        inherit (lib) mkIf mkDefault;
+        inherit (lib) mkIf;
       in
       {
         imports = [
@@ -62,14 +62,6 @@
             systemd.enable = false;
             package = null;
             portalPackage = null;
-          };
-
-          modules = {
-            desktop = {
-              hyprpaper.enable = mkDefault false;
-              hypridle.enable = mkDefault false;
-              hyprlock.enable = mkDefault false;
-            };
           };
         };
       };
