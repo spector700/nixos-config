@@ -8,6 +8,7 @@ _: {
         cpu-amd
         gpu-nvidia
         gpg
+        gaming
         hyprland
         openrgb
         ssh
