@@ -35,10 +35,9 @@ _: {
             # enables flakes, needed for this config
             "flakes"
 
-            # enables the nix3 commands, a requirement for flakes
+            # enables the nix commands, a requirement for flakes
             "nix-command"
           ];
-          # flake-registry = "/etc/nix/registry.json";
 
           # we don't want to track the registry, but we do want to allow the usage
           # of the `flake:` references, so we need to enable use-registries
@@ -92,25 +91,8 @@ _: {
         nixPath = lib.mapAttrsToList (key: _: "${key}=flake:${key}") config.nix.registry;
       };
 
-      # Work around the upstream OpenLDAP test failure on non-i686 systems.
-      nixpkgs.overlays = [
-        # https://github.com/NixOS/nixpkgs/issues/514113
-        (_: prev: {
-          openldap = prev.openldap.overrideAttrs {
-            doCheck = !prev.stdenv.hostPlatform.isi686;
-          };
-        })
-      ];
-
       nixpkgs.config = {
         allowUnfree = true;
-
-        # But occasionally we need to install some anyway so we can predicated those
-        # these are usually packages like electron
-        permittedInsecurePackages = [
-          # FIX when updated, part of orcaslicer
-          "libsoup-2.74.3"
-        ];
       };
 
       # By default nix-gc makes no effort to respect battery life by avoiding
