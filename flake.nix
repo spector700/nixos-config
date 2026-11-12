@@ -9,6 +9,10 @@
       inputs.nixpkgs-lib.follows = "nixpkgs";
     };
 
+    import-tree.url = "github:vic/import-tree";
+
+    flake-aspects.url = "github:denful/flake-aspects";
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -101,10 +105,13 @@
 
       imports = [
         inputs.treefmt-nix.flakeModule
+        inputs.flake-aspects.flakeModule
+        inputs.flake-parts.flakeModules.modules
 
         # the flake utilities
         ./flake
         ./pkgs
+        (inputs.import-tree ./features)
       ];
 
       flake = {

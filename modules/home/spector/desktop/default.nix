@@ -9,7 +9,6 @@ in
 {
   imports = [
     ./bar
-    ./hyprland
     ./niri
     ./hypridle.nix
     ./hyprlock.nix
