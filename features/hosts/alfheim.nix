@@ -7,7 +7,6 @@ _: {
         bluetooth
         printing
         sound
-        tailscale
         core
       ];
 

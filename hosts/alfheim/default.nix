@@ -37,6 +37,7 @@ in
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
     supportedFilesystems = [ "ntfs" ];
+    # For building other systems on this system
     binfmt.emulatedSystems = [ "aarch64-linux" ];
   };
 
@@ -69,39 +70,19 @@ in
       video.enable = true;
     };
 
-    networking = {
-      avahi.enable = true;
-      optimizeTcp = true;
-    };
-
     hardware = {
       cpu.type = "amd";
       gpu.type = "nvidia";
       openrgb.enable = true;
     };
 
-    homelab = {
-      ollama.enable = false;
-    };
-
     services = {
-      sunshine = {
-        enable = true;
-        niri = {
-          enable = false;
-          # DP-2 remains active as Sunshine's capture output; Niri currently
-          # has no compositor-side headless output equivalent to Hyprland's.
-          streamingOutput = "DP-2";
-          localOutputs = [ "DP-3" ];
-          restoreOutput = "DP-2";
-        };
-      };
+      sunshine.enable = true;
       syncthing.enable = true;
     };
 
     display = {
       gpuAcceleration.enable = true;
-      desktop.niri.enable = false;
       desktop.hyprland.enable = true;
 
       monitors = [

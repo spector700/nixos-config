@@ -2,12 +2,13 @@ _: {
   flake.aspects = { aspects, ... }: {
     core = {
       includes = with aspects; [
-        bootloader
-        logrotate
-        user
-        sudo
-        git
         avahi
+        bootloader
+        git
+        network
+        logrotate
+        sudo
+        user
       ];
 
       nixos = { pkgs, ... }: {
