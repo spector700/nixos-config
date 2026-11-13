@@ -20,6 +20,7 @@ _: {
         nextcloud-client
         syncthing
         sunshine
+        openrazer
 
         # PROGRAMS
         hyprland
