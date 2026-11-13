@@ -11,6 +11,7 @@ let
     mkForce
     optionals
     getExe
+    mergeAttrsList
     ;
   brightness = "${getExe pkgs.brightnessctl}";
   volume = "${pkgs.wireplumber}/bin/wpctl";
@@ -162,9 +163,9 @@ in
             in
             {
               # terminal
-              "Mod+T".action.spawn = "${lib.getExe pkgs.kitty}";
-              "Mod+E".action.spawn-sh = "${lib.getExe pkgs.kitty} -e yazi";
-              "Ctrl+Shift+Escape".action.spawn-sh = "${lib.getExe pkgs.kitty} -e btop";
+              "Mod+T".action.spawn = "${getExe pkgs.kitty}";
+              "Mod+E".action.spawn-sh = "${getExe pkgs.kitty} -e yazi";
+              "Ctrl+Shift+Escape".action.spawn-sh = "${getExe pkgs.kitty} -e btop";
 
               "Mod+B".action.spawn =
                 getExe
@@ -172,7 +173,7 @@ in
 
               "Mod+N" = {
                 hotkey-overlay.title = "Focus or Launch Obsidian";
-                action.spawn = "${lib.getExe pkgs.obsidian}";
+                action.spawn = "${getExe pkgs.obsidian}";
               };
 
               # "Mod+S".action.spawn-sh =
@@ -245,7 +246,7 @@ in
                 "${pkgs.grim}/bin/grim -g \"$(${pkgs.slurp}/bin/slurp)\" - | ${pkgs.swappy}/bin/swappy -f -"
               ];
             }
-            // (lib.mergeAttrsList (
+            // (mergeAttrsList (
               builtins.genList (
                 i:
                 let
@@ -259,7 +260,7 @@ in
               ) 9
             ));
 
-          xwayland-satellite.path = lib.getExe pkgs.xwayland-satellite;
+          xwayland-satellite.path = getExe pkgs.xwayland-satellite;
 
           workspaces = {
             "special" = {

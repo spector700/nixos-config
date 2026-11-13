@@ -5,26 +5,33 @@
   ...
 }:
 let
-  screenshotarea = "hyprctl keyword animation 'fadeOut,0,8,slow'; ${lib.getExe pkgs.grimblast} --notify copysave area; hyprctl keyword animation 'fadeOut,1,8,slow'";
+  screenshotarea = "hyprctl keyword animation 'fadeOut,0,8,slow'; ${getExe pkgs.grimblast} --notify copysave area; hyprctl keyword animation 'fadeOut,1,8,slow'";
+  inherit (lib)
+    getExe
+    range
+    concatMap
+    concatStringsSep
+    ;
+
   volume = "${pkgs.wireplumber}/bin/wpctl";
-  brightness = "${lib.getExe pkgs.brightnessctl}";
-  media = "${lib.getExe pkgs.playerctl}";
+  brightness = "${getExe pkgs.brightnessctl}";
+  media = "${getExe pkgs.playerctl}";
 
   mod = "SUPER";
   alt = "ALT";
 
   mkWorkspaceBinds =
     modifier: dispatcher:
-    lib.concatMap (
+    concatMap (
       workspace:
       let
         key = if workspace == 10 then "0" else toString workspace;
         workspace' = toString workspace;
       in
       [ ''hl.bind("${modifier} + ${key}", ${dispatcher workspace'})'' ]
-    ) (lib.range 1 10);
+    ) (range 1 10);
 
-  workspaceBinds = lib.concatStringsSep "\n" (
+  workspaceBinds = concatStringsSep "\n" (
     mkWorkspaceBinds mod (workspace: ''hl.dsp.focus({ workspace = "${workspace}" })'')
     ++ mkWorkspaceBinds "${alt} + SHIFT" (
       workspace: ''hl.dsp.window.move({ workspace = "${workspace}" })''
@@ -65,13 +72,13 @@ in
     hl.bind("${alt} + SHIFT + S", hl.dsp.window.move({ workspace = "special:special" }))
 
     -- Terminal
-    hl.bind("${mod} + T", hl.dsp.exec_cmd("uwsm app -- ${lib.getExe pkgs.kitty}"))
-    hl.bind("${mod} + E", hl.dsp.exec_cmd("uwsm app -- ${lib.getExe pkgs.kitty} -e yazi"))
-    hl.bind("CTRL + SHIFT + Escape", hl.dsp.exec_cmd("uwsm app -- ${lib.getExe pkgs.kitty} -e btop"))
+    hl.bind("${mod} + T", hl.dsp.exec_cmd("uwsm app -- ${getExe pkgs.kitty}"))
+    hl.bind("${mod} + E", hl.dsp.exec_cmd("uwsm app -- ${getExe pkgs.kitty} -e yazi"))
+    hl.bind("CTRL + SHIFT + Escape", hl.dsp.exec_cmd("uwsm app -- ${getExe pkgs.kitty} -e btop"))
 
     -- Programs
     hl.bind("${mod} + B", hl.dsp.exec_cmd("uwsm app -- ${
-      lib.getExe inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
+      getExe inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
     }"))
     hl.bind("${mod} + SHIFT + E", hl.dsp.exec_cmd("uwsm app -- thunar"))
 

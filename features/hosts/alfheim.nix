@@ -26,6 +26,8 @@ _: {
         dms
         gaming
         vscode
+        opencode
+        codex
       ];
 
       nixos = { pkgs, ... }: {

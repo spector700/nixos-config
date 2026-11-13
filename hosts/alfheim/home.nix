@@ -1,7 +1,6 @@
 {
   pkgs,
   config,
-  inputs,
   ...
 }:
 let
@@ -10,7 +9,6 @@ let
 in
 {
   home-manager.users.${user} = {
-    imports = [ inputs.codex-desktop-linux.homeManagerModules.default ];
 
     config = {
       sops.secrets = {
@@ -23,25 +21,12 @@ in
         gimp
         bambuStudioWithCert
         feishin
-        # For codex
-        bubblewrap
-        # codex
       ];
-
-      programs.codexDesktopLinux = {
-        enable = true;
-        linuxFeatures = [ "codex-micro" ];
-      };
 
       modules = {
         theme = {
           # wallpaper = ../../modules/home/spector/theming/wallpaper2.png;
           stylix.enable = true;
-        };
-
-        shell = {
-          opencode.enable = true;
-          claude-code.enable = true;
         };
 
         programs = {

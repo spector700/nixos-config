@@ -1,8 +1,9 @@
-{ inputs, ... }:
+{ moduleWithSystem, ... }:
 {
-  flake.aspects.zen.homeManager =
-    { pkgs, ... }:
+  flake.aspects.zen.homeManager = moduleWithSystem (
+    { inputs', ... }:
     {
-      home.packages = [ inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default ];
-    };
+      home.packages = [ inputs'.zen-browser.packages.default ];
+    }
+  );
 }

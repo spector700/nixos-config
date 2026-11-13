@@ -1,8 +1,9 @@
-{ inputs, ... }:
+{ moduleWithSystem, ... }:
 {
-  flake.aspects.neovim.homeManager =
-    { pkgs, ... }:
+  flake.aspects.neovim.homeManager = moduleWithSystem (
+    { inputs', ... }:
     {
-      home.packages = [ inputs.Akari.packages.${pkgs.stdenv.hostPlatform.system}.default ];
-    };
+      home.packages = [ inputs'.Akari.packages.default ];
+    }
+  );
 }
