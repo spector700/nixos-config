@@ -10,8 +10,9 @@ _: {
         dms
         gpg
         home-manager
-        impermanence
         niri
+        impermanence
+        vscode
         printing
         ssh
         sops

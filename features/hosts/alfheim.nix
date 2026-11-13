@@ -16,6 +16,7 @@ _: {
         ssh
         printing
         impermanence
+        vscode
         sops
         syncthing
         sunshine

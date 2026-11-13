@@ -778,5 +778,6 @@
   "matugenScheme": "scheme-neutral",
   "matugenSourceMode": "dominant",
   "matugenContrast": 0,
-  "matugenTemplateGtk": true
+  "matugenTemplateGtk": true,
+  "wallpaperFillMode": "Fill"
 }

@@ -8,6 +8,7 @@ _: {
         git
         kernel
         network
+        neovim
         nix
         logrotate
         locale

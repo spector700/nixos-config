@@ -13,7 +13,6 @@ in
     ./services
     ./shell
     ./theming
-    ./editors
   ];
 
 }
