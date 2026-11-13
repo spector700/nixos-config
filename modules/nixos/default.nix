@@ -4,6 +4,5 @@
     ./homelab
     ./os
     ./programs
-    ./roles
   ];
 }

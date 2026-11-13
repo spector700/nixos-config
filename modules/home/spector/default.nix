@@ -9,7 +9,6 @@ in
 {
   imports = [
     ./programs
-    ./roles
     ./shell
     ./theming
   ];

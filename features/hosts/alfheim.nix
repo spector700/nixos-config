@@ -28,6 +28,8 @@ _: {
         vscode
         opencode
         codex
+        obs
+        davinci-resolve
       ];
 
       nixos = { pkgs, ... }: {

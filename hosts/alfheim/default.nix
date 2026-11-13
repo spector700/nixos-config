@@ -53,9 +53,6 @@ in
 
   ## NIXOS
   modules = {
-    roles = {
-      video.enable = true;
-    };
 
     programs = {
       thunar.enable = true;
