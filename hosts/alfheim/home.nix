@@ -39,8 +39,6 @@ in
           stylix.enable = true;
         };
 
-        services.nextcloud-client.enable = true;
-
         shell = {
           opencode.enable = true;
           claude-code.enable = true;

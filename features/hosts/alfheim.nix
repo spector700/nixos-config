@@ -12,6 +12,7 @@ _: {
         hyprland
         dms
         home-manager
+        nextcloud-client
         openrgb
         ssh
         printing

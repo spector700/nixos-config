@@ -11,6 +11,7 @@ _: {
         zathura
         nixcord
         zen
+        xdg
       ];
 
       nixos =

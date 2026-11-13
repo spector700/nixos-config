@@ -10,7 +10,6 @@ in
   imports = [
     ./programs
     ./roles
-    ./services
     ./shell
     ./theming
   ];
