@@ -2,25 +2,30 @@ _: {
   flake.aspects = { aspects, ... }: {
     alfheim = {
       includes = with aspects; [
-        avahi
-        bluetooth
+        # CORE
         core
+        impermanence
         cpu-amd
         gpu-nvidia
-        gpg
-        gaming
-        hyprland
-        dms
-        home-manager
-        nextcloud-client
-        openrgb
+
+        # SERVICES
+        avahi
         ssh
-        printing
-        impermanence
-        vscode
         sops
+        bluetooth
+        printing
+        home-manager
+        gpg
+        openrgb
+        nextcloud-client
         syncthing
         sunshine
+
+        # PROGRAMS
+        hyprland
+        dms
+        gaming
+        vscode
       ];
 
       nixos = { pkgs, ... }: {

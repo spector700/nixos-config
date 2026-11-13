@@ -2,23 +2,28 @@ _: {
   flake.aspects = { aspects, ... }: {
     vivo = {
       includes = with aspects; [
-        acpid
-        avahi
-        bluetooth
+        # CORE
         core
-        cpu-amd
-        dms
-        gpg
-        home-manager
-        niri
         impermanence
-        vscode
-        printing
+        cpu-amd
+
+        # SERVICES
+        avahi
+        acpid
+        upower
         ssh
         sops
+        gpg
+        bluetooth
+        printing
+        home-manager
         syncthing
         tailscale
-        upower
+
+        # PROGRAMS
+        niri
+        dms
+        vscode
       ];
 
       nixos = { pkgs, ... }: {
