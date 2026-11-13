@@ -25,60 +25,11 @@
             adw-gtk3
           ];
 
-          # Keep the root real: DMS's plugin manager passes plugin paths to go-git,
-          # which rejects a symlinked plugins directory.
-          home.activation.dmsConfigLink =
+          xdg.configFile."dms".source =
             let
-              # Makes the config relative to this file
               configPath = lib.removePrefix "${self.outPath}/" (toString ./_config);
             in
-            lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-              TARGET="$HOME/.config/dms"
-              SOURCE=${lib.escapeShellArg "${location}/${configPath}"}
-              PLUGINS_SOURCE="$SOURCE/plugins"
-
-              if [ -L "$TARGET" ]; then
-                unlink "$TARGET"
-              elif [ -e "$TARGET" ] && [ ! -d "$TARGET" ]; then
-                printf 'error: %s exists and is not a directory\n' "$TARGET" >&2
-                exit 1
-              fi
-              mkdir -p "$TARGET"
-
-              link_entry() {
-                source="$SOURCE/$1"
-                target="$TARGET/$1"
-                if [ -L "$target" ]; then
-                  if [ "$(readlink "$target")" = "$source" ]; then
-                    return
-                  fi
-                  unlink "$target"
-                elif [ -e "$target" ]; then
-                  return
-                fi
-                ln -s "$source" "$target"
-              }
-
-              for entry in .firstlaunch clsettings.json plugin_settings.json plugins.lock.json settings.json themes zen.css; do
-                link_entry "$entry"
-              done
-
-              PLUGINS_TARGET="$TARGET/plugins"
-              if [ -L "$PLUGINS_TARGET" ]; then
-                unlink "$PLUGINS_TARGET"
-              elif [ -e "$PLUGINS_TARGET" ] && [ ! -d "$PLUGINS_TARGET" ]; then
-                printf 'error: %s exists and is not a directory\n' "$PLUGINS_TARGET" >&2
-                exit 1
-              fi
-              mkdir -p "$PLUGINS_TARGET"
-
-              for source in "$PLUGINS_SOURCE"/* "$PLUGINS_SOURCE"/.[!.]*; do
-                [ -e "$source" ] || [ -L "$source" ] || continue
-                [ "$(basename "$source")" = ".repos" ] && continue
-                target="$PLUGINS_TARGET/$(basename "$source")"
-                [ -e "$target" ] || [ -L "$target" ] || ln -s "$source" "$target"
-              done
-            '';
+            config.lib.file.mkOutOfStoreSymlink "${location}/${configPath}";
 
           programs = {
             dank-material-shell = {

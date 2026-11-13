@@ -578,7 +578,7 @@
   "frameMode": "separate",
   "configVersion": 42,
   "motionEffect": 0,
-  "terminalPalette": "default",
+  "terminalPalette": "low",
   "frameEnabled": false,
   "barInsetPaddingSyncAll": false,
   "notificationDedupeEnabled": false,
@@ -777,5 +777,6 @@
   "matugenSpec": "dms",
   "matugenScheme": "scheme-neutral",
   "matugenSourceMode": "dominant",
-  "matugenContrast": 0
+  "matugenContrast": 0,
+  "matugenTemplateGtk": true
 }
