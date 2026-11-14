@@ -1,9 +1,9 @@
 { pkgs, ... }:
 {
-  home.packages = with pkgs; [ ouch-rar ];
+  home.packages = [ pkgs.ouch-rar ];
   programs.yazi = {
-    plugins = with pkgs.yaziPlugins; {
-      inherit ouch;
+    plugins = {
+      inherit (pkgs.yaziPlugins) ouch;
     };
     settings = {
       opener.extract = [

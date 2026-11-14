@@ -1,6 +1,0 @@
-{
-  imports = [
-    ./yazi
-    ./starship.nix
-  ];
-}

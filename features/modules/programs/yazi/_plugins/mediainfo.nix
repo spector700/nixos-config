@@ -1,9 +1,9 @@
 { pkgs, ... }:
 {
-  home.packages = with pkgs; [ mediainfo ];
+  home.packages = [ pkgs.mediainfo ];
   programs.yazi = {
-    plugins = with pkgs.yaziPlugins; {
-      inherit mediainfo;
+    plugins = {
+      inherit (pkgs.yaziPlugins) mediainfo;
     };
     settings.plugin = {
       prepend_preloaders = [

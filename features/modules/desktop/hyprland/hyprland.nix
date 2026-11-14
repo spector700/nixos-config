@@ -8,6 +8,8 @@ _: {
         sound
         fonts
         kitty
+        starship
+        yazi
         zathura
         nixcord
         zen

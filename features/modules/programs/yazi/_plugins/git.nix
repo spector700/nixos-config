@@ -1,8 +1,8 @@
 { pkgs, ... }:
 {
   programs.yazi = {
-    plugins = with pkgs.yaziPlugins; {
-      inherit git;
+    plugins = {
+      inherit (pkgs.yaziPlugins) git;
     };
 
     initLua = ''
@@ -12,13 +12,13 @@
     settings.plugin = {
       prepend_fetchers = [
         {
-          id = "git";
-          name = "*";
+          group = "git";
+          url = "*";
           run = "git";
         }
         {
-          id = "git";
-          name = "*/";
+          group = "git";
+          url = "*/";
           run = "git";
         }
       ];
