@@ -19,6 +19,7 @@ _: {
         home-manager
         syncthing
         tailscale
+        stylix
 
         # PROGRAMS
         niri
@@ -27,6 +28,10 @@ _: {
       ];
 
       nixos = { pkgs, ... }: {
+
+        imports = [
+          ./_hardware-configuration.nix
+        ];
 
         networking.hostName = "vivo";
 

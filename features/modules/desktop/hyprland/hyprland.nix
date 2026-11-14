@@ -14,6 +14,8 @@ _: {
         nixcord
         zen
         xdg
+        gtk
+        qt
       ];
 
       nixos =

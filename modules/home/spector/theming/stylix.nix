@@ -34,8 +34,6 @@ in
 
       targets.dank-material-shell.enable = false;
 
-      # image = config.modules.theme.wallpaper;
-
       cursor = {
         name = "capitaine-cursors-white";
         package = pkgs.capitaine-cursors;

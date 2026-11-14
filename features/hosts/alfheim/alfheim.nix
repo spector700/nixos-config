@@ -21,6 +21,7 @@ _: {
         syncthing
         sunshine
         openrazer
+        stylix
 
         # PROGRAMS
         hyprland
@@ -35,6 +36,10 @@ _: {
       ];
 
       nixos = { pkgs, ... }: {
+
+        imports = [
+          ./_hardware-configuration.nix
+        ];
 
         networking.hostName = "alfheim";
 
@@ -98,7 +103,13 @@ _: {
         };
       };
 
-      homeManager = { };
+      homeManager = { pkgs, ... }: {
+
+        home.packages = with pkgs; [
+          gimp
+          feishin
+        ];
+      };
     };
   };
 }

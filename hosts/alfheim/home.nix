@@ -1,5 +1,4 @@
 {
-  pkgs,
   config,
   ...
 }:
@@ -16,16 +15,6 @@ in
         };
       };
 
-      home.packages = with pkgs; [
-        gimp
-        feishin
-      ];
-
-      modules = {
-        theme = {
-          stylix.enable = true;
-        };
-      };
     };
   };
 }

@@ -5,7 +5,6 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ./home.nix
     inputs.disko.nixosModules.disko
     (import ../disks/lvm-btrfs.nix { disks = [ "/dev/nvme0n1" ]; })
   ];
