@@ -107,7 +107,12 @@ _: {
         };
       };
 
-      homeManager = { };
+      homeManager = { pkgs, ... }: {
+
+        home.packages = with pkgs; [
+          feishin
+        ];
+      };
     };
   };
 }

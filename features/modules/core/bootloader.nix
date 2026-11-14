@@ -41,6 +41,8 @@ _: {
         boot = {
           # whether to enable support for Linux MD RAID arrays
           swraid.enable = mkDefault false;
+          # For building this system on other systems
+          binfmt.emulatedSystems = [ "aarch64-linux" ];
 
           loader = mkMerge [
             {

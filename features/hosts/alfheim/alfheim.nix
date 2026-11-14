@@ -48,9 +48,6 @@ _: {
 
         boot = {
           kernelPackages = pkgs.linuxPackages_latest;
-          supportedFilesystems = [ "ntfs" ];
-          # For building other systems on this system
-          binfmt.emulatedSystems = [ "aarch64-linux" ];
           # For openrgb to work
           kernelParams = [ "acpi_enforce_resources=lax" ];
         };

@@ -4,7 +4,7 @@ _: {
       includes = with aspects; [
         bootloader
         direnv
-        fs
+        filesystem
         git
         kernel
         network
