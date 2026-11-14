@@ -56,16 +56,24 @@ in
 
     -- Move focus
     hl.bind("${mod} + left", hl.dsp.focus({ direction = "l" }))
+    hl.bind("${mod} + H", hl.dsp.focus({ direction = "l" }))
     hl.bind("${mod} + right", hl.dsp.focus({ direction = "r" }))
+    hl.bind("${mod} + L", hl.dsp.focus({ direction = "r" }))
     hl.bind("${mod} + up", hl.dsp.focus({ direction = "u" }))
+    hl.bind("${mod} + K", hl.dsp.focus({ direction = "u" }))
     hl.bind("${mod} + down", hl.dsp.focus({ direction = "d" }))
+    hl.bind("${mod} + J", hl.dsp.focus({ direction = "d" }))
     hl.bind("${alt} + Tab", hl.dsp.focus({ urgent_or_last = true }))
 
     -- Move window
     hl.bind("${mod} + SHIFT + left", hl.dsp.window.move({ direction = "l" }))
+    hl.bind("${mod} + SHIFT + H", hl.dsp.window.move({ direction = "l" }))
     hl.bind("${mod} + SHIFT + right", hl.dsp.window.move({ direction = "r" }))
+    hl.bind("${mod} + SHIFT + L", hl.dsp.window.move({ direction = "r" }))
     hl.bind("${mod} + SHIFT + up", hl.dsp.window.move({ direction = "u" }))
+    hl.bind("${mod} + SHIFT + K", hl.dsp.window.move({ direction = "u" }))
     hl.bind("${mod} + SHIFT + down", hl.dsp.window.move({ direction = "d" }))
+    hl.bind("${mod} + SHIFT + J", hl.dsp.window.move({ direction = "d" }))
 
     -- Special workspaces
     hl.bind("${mod} + S", hl.dsp.workspace.toggle_special("special"))

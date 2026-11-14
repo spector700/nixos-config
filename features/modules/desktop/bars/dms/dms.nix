@@ -163,7 +163,7 @@
 
             extraLuaFiles."nix/dms-binds" = ''
               hl.bind("SUPER + comma", hl.dsp.exec_cmd("dms ipc call settings toggle"))
-              hl.bind("SUPER + L", hl.dsp.exec_cmd("dms ipc call lock lock"))
+              hl.bind("SUPER + escape", hl.dsp.exec_cmd("dms ipc call lock lock"))
               hl.bind("SUPER + V", hl.dsp.exec_cmd("dms ipc call clipboard toggle"))
               hl.bind("SUPER + space", hl.dsp.exec_cmd("dms ipc call spotlight toggle"))
             '';
