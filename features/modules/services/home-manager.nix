@@ -24,7 +24,6 @@
       {
         config,
         lib,
-        pkgs,
         ...
       }:
       {
@@ -43,21 +42,6 @@
         programs.home-manager.enable = true;
         xdg.userDirs.setSessionVariables = true;
         systemd.user.startServices = lib.mkDefault "sd-switch";
-
-        home.packages = with pkgs; [
-          # Terminal Utils
-          fastfetch
-
-          # Video/Audio
-          mpv
-          loupe
-          celluloid
-          pwvucontrol
-
-          signal-desktop
-          obsidian
-          vial
-        ];
       };
   };
 }

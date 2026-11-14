@@ -52,6 +52,11 @@ _: {
           kernelParams = [ "acpi_enforce_resources=lax" ];
         };
 
+        hardware = {
+          # Udev rules for vial
+          keyboard.qmk.enable = true;
+        };
+
         modules = {
           boot = {
             enableKernelTweaks = true;
@@ -106,6 +111,7 @@ _: {
         home.packages = with pkgs; [
           gimp
           feishin
+          vial
         ];
       };
     };
