@@ -3,8 +3,6 @@
   flake.aspects.home-manager = {
     nixos =
       {
-        config,
-        lib,
         self,
         location,
         ...
@@ -18,7 +16,7 @@
           useGlobalPkgs = true;
           useUserPackages = true;
           extraSpecialArgs = { inherit inputs self location; };
-          users = lib.genAttrs config.modules.os.users (name: ../../../modules/home + "/${name}");
+          # users = lib.genAttrs config.modules.os.users (name: ../../../modules/home + "/${name}");
         };
       };
 
