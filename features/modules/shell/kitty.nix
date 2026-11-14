@@ -11,6 +11,7 @@ _: {
         settings = {
           confirm_os_window_close = 0;
           placement_strategy = "center";
+          remember_window_size = false;
 
           enable_audio_bell = false;
         };
