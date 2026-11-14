@@ -10,12 +10,6 @@
   ];
 
   ## NIXOS
-  modules = {
-    programs = {
-      thunar.enable = true;
-    };
-  };
-
   hardware = {
     # Udev rules for vial
     keyboard.qmk.enable = true;

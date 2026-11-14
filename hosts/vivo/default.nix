@@ -10,18 +10,6 @@
   ];
 
   ## NIXOS
-  modules = {
-    programs = {
-      thunar.enable = true;
-    };
-
-    os = {
-      mainUser = "spector";
-      autoLogin = true;
-    };
-
-  };
-
   hardware = {
     # Udev rules for vial
     keyboard.qmk.enable = true;

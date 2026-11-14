@@ -27,6 +27,7 @@ _: {
         hyprland
         dms
         gaming
+        thunar
         vscode
         opencode
         codex

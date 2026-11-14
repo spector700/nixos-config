@@ -2,7 +2,5 @@
 {
   imports = [
     ./homelab
-    ./os
-    ./programs
   ];
 }

@@ -25,6 +25,7 @@ _: {
         niri
         dms
         vscode
+        thunar
       ];
 
       nixos = { pkgs, ... }: {
