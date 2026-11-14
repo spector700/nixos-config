@@ -8,7 +8,6 @@ let
 in
 {
   imports = [
-    ./programs
     ./shell
     ./theming
   ];

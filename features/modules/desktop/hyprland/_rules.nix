@@ -31,9 +31,6 @@ in
       }) monitor.workspaces
     ) monitors;
 
-    layer_rule = [
-    ];
-
     window_rule = [
       {
         match.title = "^(Picture-in-Picture)$";

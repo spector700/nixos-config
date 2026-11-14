@@ -5,7 +5,6 @@
 }:
 let
   user = config.modules.os.mainUser;
-  bambuStudioWithCert = pkgs.callPackage ../../pkgs/bambu-studio-with-bambuddy-cert.nix { };
 in
 {
   home-manager.users.${user} = {
@@ -19,18 +18,12 @@ in
 
       home.packages = with pkgs; [
         gimp
-        bambuStudioWithCert
         feishin
       ];
 
       modules = {
         theme = {
-          # wallpaper = ../../modules/home/spector/theming/wallpaper2.png;
           stylix.enable = true;
-        };
-
-        programs = {
-          orca-slicer.enable = true;
         };
       };
     };

@@ -31,6 +31,7 @@ _: {
         codex
         obs
         davinci-resolve
+        orcaslicer
       ];
 
       nixos = { pkgs, ... }: {
