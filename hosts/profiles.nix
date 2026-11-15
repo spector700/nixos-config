@@ -47,8 +47,6 @@ in
     inherit specialArgs;
     # Modules that are used
     modules = [
-      ./vanaheim
-      ../modules/nixos
       self.modules.nixos.vanaheim
       {
         home-manager.users.spector.imports = [ self.modules.homeManager.vanaheim ];
