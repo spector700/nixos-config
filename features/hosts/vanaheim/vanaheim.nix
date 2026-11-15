@@ -17,6 +17,11 @@ _: {
         tailscale
 
         # HOMELAB
+        grafana
+        prometheus
+        alertmanager
+        alloy
+        loki
       ];
 
       nixos =

@@ -1,0 +1,132 @@
+_: {
+  flake.aspects.alloy.nixos =
+    {
+      config,
+      lib,
+      pkgs,
+      ...
+    }:
+
+    let
+      inherit (lib)
+        mkIf
+        mkOption
+        types
+        optionalString
+        ;
+      cfg = config.modules.homelab.alloy;
+      lokiPort = toString config.services.loki.configuration.server.http_listen_port;
+      tailscaleIP = "100.105.161.102";
+
+      alloyConfig = pkgs.writeText "config.alloy" ''
+        // ----------------------------------------------------------------
+        // Local: ship vanaheim's own systemd journal to Loki
+        // ----------------------------------------------------------------
+        // relabel_rules are consumed by loki.source.journal below; forward_to
+        // is empty because the rules are referenced, not chained.
+        loki.relabel "journal" {
+          forward_to = []
+
+          rule {
+            source_labels = ["__journal__systemd_unit"]
+            target_label  = "unit"
+          }
+        }
+
+        loki.source.journal "system" {
+          max_age    = "12h"
+          labels     = {
+            job  = "systemd-journal",
+            host = constants.hostname,
+          }
+          forward_to    = [loki.write.local.receiver]
+          relabel_rules = loki.relabel.journal.rules
+        }
+
+        loki.write "local" {
+          endpoint {
+            url = "http://127.0.0.1:${lokiPort}/loki/api/v1/push"
+          }
+        }
+
+        // ----------------------------------------------------------------
+        // Metrics: ship vanaheim's own node metrics to Prometheus via remote write
+        // Replaces the standalone node_exporter service
+        // ----------------------------------------------------------------
+        prometheus.exporter.unix "node" {
+          set_collectors = [
+            "cpu",
+            "diskstats",
+            "filesystem",
+            "loadavg",
+            "meminfo",
+            "netdev",
+            "netstat",
+            "processes",
+            "systemd",
+            "tcpstat",
+          ]
+        }
+
+        prometheus.scrape "node" {
+          targets    = prometheus.exporter.unix.node.targets
+          forward_to = [prometheus.remote_write.prometheus.receiver]
+        }
+
+        prometheus.remote_write "prometheus" {
+          endpoint {
+            url = "http://127.0.0.1:9090/api/v1/write"
+          }
+        }
+
+        ${optionalString cfg.enableRemoteIngestion ''
+          // ----------------------------------------------------------------
+          // Remote ingestion: accept log pushes from homelab Alloy agents
+          // Listens on Tailscale interface only (${tailscaleIP}:3031)
+          // ----------------------------------------------------------------
+          loki.source.api "remote_agents" {
+            http {
+              listen_address = "${tailscaleIP}"
+              listen_port    = 3031
+            }
+            forward_to = [loki.relabel.remote.receiver]
+          }
+
+          loki.relabel "remote" {
+            forward_to = [loki.write.local.receiver]
+
+            // Preserve all labels sent by remote agents
+            rule {
+              action = "labelmap"
+              regex  = "(.*)"
+            }
+          }
+        ''}
+      '';
+    in
+    {
+      options.modules.homelab.alloy = {
+        enableRemoteIngestion = mkOption {
+          type = types.bool;
+          default = true;
+          description = ''
+            Accept log pushes from remote Alloy agents (Unraid, HA VM, etc.)
+            via a Loki-compatible HTTP endpoint on the Tailscale interface.
+            Listens on ${tailscaleIP}:3031.
+          '';
+        };
+      };
+
+      config = {
+        services.alloy = {
+          enable = true;
+          configPath = alloyConfig;
+        };
+
+        # Open Tailscale interface for remote log ingestion
+        networking.firewall.interfaces."tailscale0".allowedTCPPorts = mkIf cfg.enableRemoteIngestion [
+          3031
+        ];
+      };
+    };
+}
