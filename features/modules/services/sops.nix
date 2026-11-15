@@ -83,6 +83,8 @@ _: {
       let
         secretsFolder = (toString inputs.nix-secrets) + "/sops";
         inherit (config.home) homeDirectory;
+        user = osConfig.modules.os.mainUser;
+        hostname = osConfig.networking.hostName;
       in
       {
         imports = [ inputs.sops-nix.homeManagerModules.sops ];
@@ -91,8 +93,14 @@ _: {
           # This is the age key and needs to have been copied to this location on the host
           age.keyFile = "${homeDirectory}/.config/sops/age/keys.txt";
 
-          defaultSopsFile = "${secretsFolder}/${osConfig.networking.hostName}.yaml";
-          validateSopsFiles = osConfig.networking.hostName != "minimal";
+          defaultSopsFile = "${secretsFolder}/${hostname}.yaml";
+          validateSopsFiles = hostname != "minimal";
+
+          secrets = {
+            "keys/ssh/${user}_${hostname}" = {
+              path = "/home/${user}/.ssh/id_spector";
+            };
+          };
         };
       };
   };

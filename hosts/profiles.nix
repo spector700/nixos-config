@@ -6,12 +6,7 @@
   ...
 }:
 let
-  inherit (inputs.nixpkgs.lib) concatLists nixosSystem;
-
-  # combine hm flake input and the home module to be imported together
-  homeManager = [
-    inputs.home-manager.nixosModules.home-manager
-  ];
+  inherit (inputs.nixpkgs.lib) nixosSystem;
 
   specialArgs = {
     inherit
@@ -28,7 +23,6 @@ in
     inherit specialArgs;
     # Modules that are used
     modules = [
-      ./alfheim
       ../modules/nixos
       self.modules.nixos.alfheim
       {
@@ -42,7 +36,6 @@ in
     inherit specialArgs;
     # Modules that are used
     modules = [
-      ./vivo
       ../modules/nixos
       self.modules.nixos.vivo
       {
@@ -58,8 +51,7 @@ in
     modules = [
       ./vanaheim
       ../modules/nixos
-    ]
-    ++ concatLists [ homeManager ];
+    ];
   };
 
   # minimal build for initial install
@@ -69,7 +61,6 @@ in
     modules = [
       ./minimal
       ../modules/nixos
-    ]
-    ++ concatLists [ homeManager ];
+    ];
   };
 }

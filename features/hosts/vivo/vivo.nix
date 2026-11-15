@@ -3,6 +3,7 @@ _: {
     vivo = {
       includes = with aspects; [
         # CORE
+        lvm-btrfs
         core
         impermanence
         cpu-amd
@@ -80,6 +81,8 @@ _: {
             mainUser = "spector";
             autoLogin = true;
           };
+
+          disko.disk = "/dev/nvme0n1";
 
           desktop = {
             monitors = [

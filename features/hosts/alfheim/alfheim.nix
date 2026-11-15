@@ -3,6 +3,7 @@ _: {
     alfheim = {
       includes = with aspects; [
         # CORE
+        lvm-btrfs
         core
         impermanence
         cpu-amd
@@ -70,6 +71,8 @@ _: {
             mainUser = "spector";
             autoLogin = true;
           };
+
+          disko.disk = "/dev/sda";
 
           desktop = {
             monitors = [
