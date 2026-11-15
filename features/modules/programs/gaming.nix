@@ -88,7 +88,6 @@ _: {
 
     homeManager = { pkgs, ... }: {
       home.packages = with pkgs; [
-        # inputs.nix-citizen.packages.${system}.star-citizen
         lutris
         prismlauncher # Minecraft
         bottles

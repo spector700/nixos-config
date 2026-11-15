@@ -1,5 +1,14 @@
 { inputs, ... }:
 {
+  flake.aspects.dms.nixos =
+    { config, lib, ... }:
+    let
+      inherit (lib) mkIf;
+    in
+    {
+      systemd.user.services.niri-flake-polkit.enable = mkIf (config.programs.niri.enable or false) false;
+    };
+
   flake.aspects.dms.homeManager =
     {
       lib,
@@ -11,7 +20,12 @@
       ...
     }:
     let
-      inherit (lib) mkMerge optionalAttrs splitString;
+      inherit (lib)
+        mkMerge
+        optionalAttrs
+        splitString
+        removePrefix
+        ;
     in
     {
       imports = [
@@ -27,7 +41,7 @@
 
           xdg.configFile."dms".source =
             let
-              configPath = lib.removePrefix "${self.outPath}/" (toString ./_config);
+              configPath = removePrefix "${self.outPath}/" (toString ./_config);
             in
             config.lib.file.mkOutOfStoreSymlink "${location}/${configPath}";
 
@@ -57,9 +71,9 @@
             '';
           };
         }
-        (optionalAttrs (osConfig.programs.niri.enable or false) {
-          systemd.user.services.niri-flake-polkit.enable = false;
 
+        # NIRI
+        (optionalAttrs (osConfig.programs.niri.enable or false) {
           programs.niri =
             let
               dms =
@@ -153,6 +167,7 @@
             };
         })
 
+        # HYPRLAND
         (optionalAttrs (osConfig.programs.hyprland.enable or false) {
           wayland.windowManager.hyprland = {
             extraConfig = ''

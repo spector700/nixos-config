@@ -51,6 +51,8 @@ _: {
           kernelPackages = pkgs.linuxPackages_latest;
           # For openrgb to work
           kernelParams = [ "acpi_enforce_resources=lax" ];
+          # For building this system on other systems
+          binfmt.emulatedSystems = [ "aarch64-linux" ];
         };
 
         hardware = {

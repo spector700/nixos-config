@@ -10,7 +10,6 @@
     };
 
     import-tree.url = "github:vic/import-tree";
-
     flake-aspects.url = "github:denful/flake-aspects";
 
     home-manager = {
@@ -56,15 +55,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    niri-scratchpad.url = "github:argosnothing/niri-scratchpad-rs";
-
     dms = {
       url = "github:duxlabs-dev/dux-shell/stable";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    noctalia = {
-      url = "github:noctalia-dev/noctalia-shell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -82,8 +74,6 @@
     Akari.url = "github:spector700/Akari";
     # gaming tweaks and addons
     gaming.url = "github:fufexan/nix-gaming";
-    # star citizen
-    nix-citizen.url = "github:LovingMelody/nix-citizen";
   };
 
   outputs =

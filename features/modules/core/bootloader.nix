@@ -1,6 +1,12 @@
 _: {
   flake.aspects.bootloader.nixos =
-    { config, lib, ... }:
+    {
+      config,
+      pkgs,
+      lib,
+      lib',
+      ...
+    }:
     let
       inherit (lib)
         mkDefault
@@ -41,8 +47,6 @@ _: {
         boot = {
           # whether to enable support for Linux MD RAID arrays
           swraid.enable = mkDefault false;
-          # For building this system on other systems
-          binfmt.emulatedSystems = [ "aarch64-linux" ];
 
           loader = mkMerge [
             {
@@ -60,7 +64,7 @@ _: {
               systemd-boot = {
                 enable = mkDefault true;
                 configurationLimit = 20;
-                memtest86.enable = true;
+                memtest86.enable = lib'.isx86Linux pkgs;
                 consoleMode = mkDefault "max"; # the default is "keep", can be overriden per host if need be
 
                 # Fix a security hole in place for backwards compatibility. See desc in
