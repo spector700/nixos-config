@@ -34,7 +34,12 @@ in
         trim-trailing-whitespace = mkHook "trim-trailing-whitespace" { enable = true; };
         check-case-conflicts = mkHook "check-case-conflict" { enable = true; };
         check-symlinks = mkHook "check-symlinks" { enable = true; };
-        end-of-file-fixer = mkHook "end-of-file-fixer" { enable = true; };
+        end-of-file-fixer = mkHook "end-of-file-fixer" {
+          enable = true;
+          excludes = excludes ++ [
+            "^features/modules/desktop/bars/dms/_config/.*$"
+          ];
+        };
 
         treefmt = mkHook "treefmt" { enable = true; };
       };
