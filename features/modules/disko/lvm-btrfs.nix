@@ -13,7 +13,7 @@
       config.disko.devices = {
         disk.main = {
           type = "disk";
-          device = config.modules.storage.disk;
+          device = config.modules.disko.disk;
           content = {
             type = "gpt";
             partitions = {

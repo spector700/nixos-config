@@ -26,7 +26,7 @@ _: {
         };
 
         removeTmpFilesOlderThan = mkOption {
-          default = 14;
+          default = 20;
           type = types.int;
           description = "Number of days to keep old btrfs_tmp files";
         };
@@ -75,7 +75,7 @@ _: {
                   btrfs subvolume delete "$1"
               }
 
-              for i in $(find /btrfs_tmp/old_roots/ -maxdepth 1 -mtime +30); do
+              for i in $(find /btrfs_tmp/old_roots/ -maxdepth 1 -mtime +${toString config.modules.boot.impermanence.removeTmpFilesOlderThan}); do
                   delete_subvolume_recursively "$i"
               done
 
