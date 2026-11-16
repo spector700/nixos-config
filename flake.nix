@@ -101,12 +101,15 @@
         # the flake utilities
         ./flake
         ./pkgs
-        (inputs.import-tree ./features)
+        (inputs.import-tree [
+          ./features
+          ./hosts
+        ])
       ];
 
       flake = {
         # entry-point for nixosConfigurations
-        nixosConfigurations = import ./hosts/profiles.nix {
+        nixosConfigurations = import ./hosts/_hosts.nix {
           inherit
             inputs
             self
