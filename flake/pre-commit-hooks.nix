@@ -37,7 +37,7 @@ in
         end-of-file-fixer = mkHook "end-of-file-fixer" {
           enable = true;
           excludes = excludes ++ [
-            "^features/modules/desktop/bars/dms/_config/.*$"
+            "^features/desktop/bars/dms/_config/.*$"
           ];
         };
 
