@@ -64,8 +64,11 @@ intentional.
 
 ## Module Design — NixOS
 
-Every NixOS module in this repo follows this exact structure. Custom options
-live under `modules.<category>.<name>` — never a top-level NixOS namespace.
+Features are flake-aspects under `features/`; an aspect can provide both
+`nixos` and `homeManager` modules and include other aspects. Selecting an
+aspect often enables its feature directly. Add a custom option only when it
+serves a real configuration need; custom options generally use `modules.*`.
+The following pattern applies when an enable option is actually needed:
 
 ```nix
 {
@@ -112,7 +115,8 @@ Key conventions:
 
 ## Module Design — home-manager
 
-Home-manager modules live under `modules/home/spector/` and come in two forms:
+Home Manager configuration normally lives in the `homeManager` class of an
+aspect under `features/`. Modules can use options or direct configuration:
 
 ### With options (optional features)
 
@@ -159,8 +163,10 @@ always active when imported:
 }
 ```
 
-`specialArgs` always in scope: `inputs`, `self`, `lib'` (custom lib — note the
-apostrophe, distinct from standard `lib`), `location` (string path to config dir).
+NixOS `specialArgs` include `inputs`, `self`, `lib'` (custom lib, distinct
+from `lib`) and `location` (writable checkout path). The Home Manager aspect
+passes `inputs`, `self` and `location` via `extraSpecialArgs`; do not assume
+`lib'` is available there.
 
 ## Common Patterns
 
@@ -226,9 +232,28 @@ final: prev: {
 }
 ```
 
-## flake-parts `perSystem`
+## flake-parts and aspects
 
-This repo uses flake-parts. The `perSystem` module pattern:
+`import-tree` discovers modules in `features/` and `hosts/`, excluding paths
+with underscore-prefixed components. Host aspects select features with
+`includes`; `hosts/_hosts.nix` instantiates the resolved host modules.
+
+`inputs'` is a system-specific flake-parts argument, not a normal NixOS or
+Home Manager module argument. Use `moduleWithSystem` to capture it:
+
+```nix
+{ moduleWithSystem, ... }:
+{
+  flake.aspects.example.nixos = moduleWithSystem (
+    { inputs', ... }:
+    { pkgs, ... }: {
+      environment.systemPackages = [ inputs'.example.packages.default ];
+    }
+  );
+}
+```
+
+For exported per-system packages and development shells:
 
 ```nix
 { inputs, ... }:
@@ -281,7 +306,8 @@ After edits, run in order:
 ```bash
 nix fmt           # format (required before committing — CI enforces this)
 deadnix .         # find unused variables/imports
-nix flake check   # validate all flake outputs
+nix flake check   # run flake checks
+nix build .#nixosConfigurations.alfheim.config.system.build.toplevel # force host evaluation/build
 ```
 
 ## Output Contract

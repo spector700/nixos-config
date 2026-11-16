@@ -23,7 +23,7 @@ Derive scope from the area of code changed:
 ```
 src/auth/login.ts     → auth
 src/api/users.ts      → api or users
-modules/home/git/     → git
+features/core/git.nix  → git
 lib/utils/format.ts   → utils
 ```
 
@@ -63,7 +63,7 @@ Used in some monorepos or specific projects (e.g., Nixpkgs-style).
 **Examples:**
 
 - `programs/waybar: update to 0.9.13`
-- `modules/nixos/docker: fix socket permissions`
+- `features/services/docker: fix socket permissions`
 - `init.lua: refactor plugin loading`
 
 **When to use:**

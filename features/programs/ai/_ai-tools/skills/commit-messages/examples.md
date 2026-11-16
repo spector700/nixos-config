@@ -36,7 +36,7 @@ into single source of truth. No behavior change.
 ### Path-Based (Alternative)
 
 ```
-modules/home/git: enable delta diff viewer
+features/core/git: enable delta diff viewer
 
 Adds delta configuration to git config and ensures
 package is installed in home profile.

@@ -1,85 +1,49 @@
-# Bootstrapping a new host
+# Adding and bootstrapping a host
 
-1. Create a config in `/hosts/<host>/default.nix`
+## Configure the host
 
-2. Add the host to `profiles.nix` and add both files to git
-   ```nix
-   # Homelab
-   vanaheim = nixosSystem {
-     inherit specialArgs;
-     # Modules that are used
-     modules = [
-       ./vanaheim
-       ../modules/nixos
-     ]
-     ++ concatLists [ homeManager ];
-   };
+1. Create `hosts/<host>/<host>.nix` as a flake-parts module defining
+   `flake.aspects.<host>`. Select existing features with `includes`, set
+   host-specific NixOS settings, and add a `homeManager` block if needed. Use an
+   existing host as a template.
+2. Generate and review a hardware configuration for the target and import it
+   explicitly from the host aspect, for example `./_hardware-configuration.nix`.
+   import-tree skips underscore-prefixed paths.
+3. Register the host in `hosts/_hosts.nix`, for example
+   `myhost = mkHost "myhost" { homeManager = true; };`. The helper defaults to
+   no Home Manager. For Home Manager, include `aspects.home-manager` and ensure
+   the host aspect provides a Home Manager class; the helper currently assigns
+   it to `spector`. A host without Home Manager must not depend on it.
+4. Configure networking, the main user, SOPS secrets and SSH access. For a
+   remote host verify the interface, addresses, gateway, credentials and port
+   before switching; the existing SSH aspect uses port 5010.
+5. If selecting `lvm-btrfs`, set `modules.disko.disk` to the intended target
+   device. Review `features/disko/lvm-btrfs.nix` and the impermanence aspect:
+   they assume a particular LVM/Btrfs layout and root volume.
+6. Add the new files to Git so the flake can see them, then evaluate and build:
+
+   ```bash
+   just check
+   rebuild
    ```
 
-   - Check for ssh access if using ssh key:
-     `ssh root@<ipv4>/<ipv6> -i ~/.ssh/id_spector`
+   A build does not format disks or activate the configuration. Cross-system
+   builds may require an appropriate builder or emulation.
 
-   - Get drive name from the server: `lsblk` Then add it to the disko config
-   ```nix
-   imports = [
-     ./hardware-configuration.nix
-     inputs.disko.nixosModules.disko
-     (import ../disks/lvm-btrfs.nix { disks = [ "/dev/sda" ]; })
-   ];
-   ```
+## Installation and deployment
 
-   If using IPv6, we need to set the ip address statically in the config for ssh
-   to work after nixos installation.
+**Disko installation can erase the target disk.** Back up data and independently
+verify the device and layout before running any formatting or bootstrap command.
+Review `hosts/bootstrap.sh` and `hosts/helpers.sh` before use: they encode
+repository-specific secrets paths, SSH assumptions and installation behavior.
+The script's `--help` describes its arguments; `--impermanence` assumes
+`/persist`. Generated hardware configuration goes to
+`hosts/<host>/_hardware-configuration.nix`; an existing file is not overwritten.
+The host aspect must import it. SSH host-key checking is disabled by parts of
+the script, so verify fingerprints independently. No bootstrap or deployment
+has been tested by these instructions.
 
-   ```nix
-      let
-        macAddress = "92:00:06:ed:33:ca";
-         networkInterface = "enp1s0";
-         ipv6Address = "c9de:66d0:24b1:8da6:2ea5:8c27:b662:ad90::1";
-         gateway = "fe80::1";
-      in
-
-      # rename the external interface based on the MAC of the interface
-      services.udev.extraRules = ''SUBSYSTEM=="net", ATTR{address}=="${macAddress}", NAME="${networkInterface}"'';
-
-      networking = {
-        hostName = "vanaheim";
-
-        interfaces."${networkInterface}" = {
-          ipv6.addresses = [
-            {
-              address = "${ipv6Address}";
-              prefixLength = 64;
-            }
-          ];
-        };
-        defaultGateway6 = {
-          address = "${gateway}";
-          interface = "${networkInterface}";
-        };
-      };
-   ```
-
-3. Use `bootstrap.sh` to install the config with nixos-anywhere.
-   - `-k` for the ssh key to use
-   - `--impermanence` to enable impermanence on the system.
-   - `./hosts/bootstrap.sh -n vanaheim -d 192.168.1.104 -k /home/spector/.ssh/id_spector --impermanence`
-
-Before deployment, validate the host locally with:
-
-```bash
-nix build .#nixosConfigurations.<host>.config.system.build.toplevel
-```
-
-For an existing host, compare the active generation with a fresh build before
-switching:
-
-```bash
-just diff <host>
-```
-
-Then deploy it remotely:
-
-```bash
-just rebuild-deploy <host>
-```
+For an existing machine, `just diff <host>` compares the **local** active
+generation with a freshly built host configuration. To deploy over SSH port
+5010, use `just rebuild-deploy <host>` only after checking target access and the
+configuration. It performs a remote switch; it is not a dry run.

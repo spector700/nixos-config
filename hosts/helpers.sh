@@ -168,7 +168,7 @@ function sops_setup_user_age_key() {
     sops --config "$config" -e "$secret_file" >"$secret_file.enc"
     mv "$secret_file.enc" "$secret_file"
   fi
-  if ! sops --config "$config" -d --extract '["keys]["age"]' "$secret_file" >/dev/null 2>&1; then
+  if ! sops --config "$config" -d --extract '["keys"]["age"]' "$secret_file" >/dev/null 2>&1; then
     if [ -z "$age_secret_key" ]; then
       sops_generate_user_age_key "${target_user}" "${target_hostname}"
     fi
