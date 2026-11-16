@@ -6,51 +6,38 @@
   ...
 }:
 let
-  inherit (inputs.nixpkgs.lib) nixosSystem;
+  inherit (inputs.nixpkgs.lib) nixosSystem optional;
 
-  specialArgs = {
-    inherit
-      inputs
-      self
-      lib'
-      location
-      ;
-  };
+  mkHost =
+    host:
+    {
+      homeManager ? false,
+    }:
+    nixosSystem {
+      specialArgs = {
+        inherit
+          inputs
+          self
+          lib'
+          location
+          ;
+      };
+
+      modules = [
+        self.modules.nixos.${host}
+      ]
+      ++ optional homeManager {
+        home-manager.users.spector.imports = [
+          self.modules.homeManager.${host}
+        ];
+      };
+    };
 in
 {
   # Desktop
-  alfheim = nixosSystem {
-    inherit specialArgs;
-    # Modules that are used
-    modules = [
-      self.modules.nixos.alfheim
-      {
-        home-manager.users.spector.imports = [ self.modules.homeManager.alfheim ];
-      }
-    ];
-  };
-
+  alfheim = mkHost "alfheim" { homeManager = true; };
   # Laptop
-  vivo = nixosSystem {
-    inherit specialArgs;
-    # Modules that are used
-    modules = [
-      self.modules.nixos.vivo
-      {
-        home-manager.users.spector.imports = [ self.modules.homeManager.vivo ];
-      }
-    ];
-  };
-
-  # Homelab
-  vanaheim = nixosSystem {
-    inherit specialArgs;
-    # Modules that are used
-    modules = [
-      self.modules.nixos.vanaheim
-      {
-        home-manager.users.spector.imports = [ self.modules.homeManager.vanaheim ];
-      }
-    ];
-  };
+  vivo = mkHost "vivo" { homeManager = true; };
+  # VPS
+  vanaheim = mkHost "vanaheim" { homeManager = true; };
 }

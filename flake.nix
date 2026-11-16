@@ -101,6 +101,7 @@
         # the flake utilities
         ./flake
         ./pkgs
+        # Automaticly search for modules
         (inputs.import-tree [
           ./features
           ./hosts
