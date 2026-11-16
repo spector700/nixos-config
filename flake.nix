@@ -64,6 +64,8 @@
     codex-desktop-linux.url = "github:ilysenko/codex-desktop-linux";
     # Nix discord
     nixcord.url = "github:kaylorben/nixcord";
+    # The good version
+    davinci.url = "git+https://git.voidarc.co.uk/voidarc/nixos.davinci";
     # Color theming
     stylix.url = "github:danth/stylix";
     # persist files on boot

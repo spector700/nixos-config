@@ -34,6 +34,7 @@ _: {
             # Open ports in the firewall for Steam Remote Play
             remotePlay.openFirewall = false;
             extest.enable = false; # For wayland
+            protontricks.enable = true;
             extraCompatPackages = [
               pkgs.proton-ge-bin
             ];
@@ -91,7 +92,6 @@ _: {
         lutris
         prismlauncher # Minecraft
         bottles
-        protontricks
       ];
     };
   };

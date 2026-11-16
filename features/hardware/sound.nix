@@ -30,7 +30,7 @@ _: {
           enable = true;
           alsa = {
             enable = true;
-            # support32Bit = lib'.isx86Linux pkgs; # if we're on x86 linux, we can support 32 bit
+            support32Bit = lib'.isx86Linux pkgs; # if we're on x86 linux, we can support 32 bit
           };
           pulse.enable = true;
           jack.enable = false;
